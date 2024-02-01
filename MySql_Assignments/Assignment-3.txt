@@ -1,0 +1,209 @@
+create table Department (dept_id int primary key,dept_name varchar(100) not null);
+
+INSERT INTO department VALUES 
+(10, 'Administration'),
+(20, 'Marketing'),
+(30, 'Purchasing'),
+(40, 'Human Resources'),
+(50, 'Shipping'),
+(60, 'IT'),
+(70, 'Public Relations'),
+(80, 'Sales'),
+(90, 'Executive'),
+(100, 'Finance'),
+(110, 'Accounting'),
+(120, 'Treasury'),
+(130, 'Corporate Tax'),
+(140, 'Control And Credit'),
+(150, 'Shareholder Services'),
+(160, 'Benefits'),
+(170, 'Manufacturing'),
+(180, 'Construction'),
+(190, 'Contracting'),
+(200, 'Operations'),
+(210, 'IT Support'),
+(220, 'NOC'),
+(230, 'IT Helpdesk'),
+(240, 'Government Sales'),
+(250, 'Retail Sales'),
+(260, 'Recruiting'),
+(270, 'Payroll');
+
+mysql> select * from department;
++---------+------------------+
+| dept_id | dept_name        |
++---------+------------------+
+|      10 | Administration   |
+|      20 | Marketing        |
+|      30 | Purchasing       |
+|      40 | Human Resources  |
+|      50 | Shipping         |
+|      60 | IT               |
+|      70 | Public Relations |
+|      80 | Sales            |
+|      90 | Executive        |
+|     100 | Finance          |
++---------+------------------+
+10 rows in set (0.00 sec)
+
+create table employee (emp_id int primary key,dept_id int not null,mngr_id int not null,
+emp_name varchar(100) not null,salary int not null, foreign key(dept_id) references department(dept_id));
+
+insert into employee values (100,90,100,'Steven King',50000);
+insert into employee values(101, 90, 100, 'Neena Kochhar', 17000);
+insert into employee values(102, 90, 100, 'Lex De Haan', 17000);
+insert into employee values(103, 90, 102, 'Alexander Hunold', 9000);
+insert into employee values(104, 80, 103, 'Bruce Ernst', 6000);
+insert into employee values(105, 80, 103, 'David Austin', 4800);
+insert into employee values(106, 70, 103, 'Valli Pataballa', 4800);
+insert into employee values(107, 70, 103, 'Diana Lorentz', 4200);
+insert into employee values(108, 70, 101, 'Nancy Greenberg', 12008);
+insert into employee values(109, 70, 108, 'Daniel Faviet', 9000);
+insert into employee values(110, 60, 108, 'John Chen', 8200);
+insert into employee values(111, 60, 108, 'Ismael Sciarra', 7700);
+insert into employee values(112, 60, 108, 'Jose Manuel Urman', 7800);
+insert into employee values(113, 50, 108, 'Luis Popp', 6900);
+insert into employee values(114, 50, 108, 'Den Raphaely', 11000);
+insert into employee values(115, 50, 114, 'Alexander Khoo', 3100);
+insert into employee values(116, 50, 114, 'Shelli Baida', 2900);
+insert into employee values(117, 40, 114, 'Sigal Tobias', 2800);
+insert into employee values(118, 40, 114, 'Guy Himuro', 2600);
+insert into employee values(119, 30, 114, 'Karen Colmenares', 2500);
+insert into employee values(120, 30, 114, 'Matthew Weiss', 8000);
+insert into employee values(121, 30, 114, 'Adam Fripp', 8200);
+insert into employee values(122, 20, 114, 'Payam Kaufling', 7900);
+insert into employee values(123, 20, 114, 'Shanta Vollman', 6500);
+insert into employee values(124, 20, 114, 'Kevin Mourgos', 5800);
+insert into employee values(125, 20, 114, 'Julia Nayer', 3200);
+insert into employee values(126, 20, 114, 'Irene Mikkilineni', 2700);
+insert into employee values(127, 100, 114, 'James Landry', 2400);
+insert into employee values(128, 100, 114, 'Steven Markle', 2200);
+insert into employee values(129, 100, 114, 'Laura Bissot', 3300);
+insert into employee values(130, 10, 114, 'Mozhe Atkinson', 2800);
+insert into employee values(131, 10, 114, 'James Marlow', 2500);
+insert into employee values(132, 10, 114, 'TJ Olson', 2100);
+insert into employee values(133, 20, 102, 'Mark Olson', 3000);
+insert into employee values(134, 50, 102, 'Joey Atkinson', 2800);
+insert into employee values(135, 30, 102, 'Chandler Marlow', 2500);
+insert into employee values(136, 60, 103, 'Ross Gellar', 2100);
+insert into employee values(137, 30, 103, 'Rachel Olson', 3000);
+
+mysql> select * from employee;
++--------+---------+---------+-------------------+--------+
+| emp_id | dept_id | mngr_id | emp_name          | salary |
++--------+---------+---------+-------------------+--------+
+|    100 |      90 |     100 | Steven King       |  50000 |
+|    101 |      90 |     100 | Neena Kochhar     |  17000 |
+|    102 |      90 |     100 | Lex De Haan       |  17000 |
+|    103 |      90 |     102 | Alexander Hunold  |   9000 |
+|    104 |      80 |     103 | Bruce Ernst       |   6000 |
+|    105 |      80 |     103 | David Austin      |   4800 |
+|    106 |      70 |     103 | Valli Pataballa   |   4800 |
+|    107 |      70 |     103 | Diana Lorentz     |   4200 |
+|    108 |      70 |     101 | Nancy Greenberg   |  12008 |
+|    109 |      70 |     108 | Daniel Faviet     |   9000 |
+|    110 |      60 |     108 | John Chen         |   8200 |
+|    111 |      60 |     108 | Ismael Sciarra    |   7700 |
+|    112 |      60 |     108 | Jose Manuel Urman |   7800 |
+|    113 |      50 |     108 | Luis Popp         |   6900 |
+|    114 |      50 |     108 | Den Raphaely      |  11000 |
+|    115 |      50 |     114 | Alexander Khoo    |   3100 |
+|    116 |      50 |     114 | Shelli Baida      |   2900 |
+|    117 |      40 |     114 | Sigal Tobias      |   2800 |
+|    118 |      40 |     114 | Guy Himuro        |   2600 |
+|    119 |      30 |     114 | Karen Colmenares  |   2500 |
+|    120 |      30 |     114 | Matthew Weiss     |   8000 |
+|    121 |      30 |     114 | Adam Fripp        |   8200 |
+|    122 |      20 |     114 | Payam Kaufling    |   7900 |
+|    123 |      20 |     114 | Shanta Vollman    |   6500 |
+|    124 |      20 |     114 | Kevin Mourgos     |   5800 |
+|    125 |      20 |     114 | Julia Nayer       |   3200 |
+|    126 |      20 |     114 | Irene Mikkilineni |   2700 |
+|    127 |     100 |     114 | James Landry      |   2400 |
+|    128 |     100 |     114 | Steven Markle     |   2200 |
+|    129 |     100 |     114 | Laura Bissot      |   3300 |
+|    130 |      10 |     114 | Mozhe Atkinson    |   2800 |
+|    131 |      10 |     114 | James Marlow      |   2500 |
+|    132 |      10 |     114 | TJ Olson          |   2100 |
+|    133 |      20 |     102 | Mark Olson        |   3000 |
+|    134 |      50 |     102 | Joey Atkinson     |   2800 |
+|    135 |      30 |     102 | Chandler Marlow   |   2500 |
+|    136 |      60 |     103 | Ross Gellar       |   2100 |
+|    137 |      30 |     103 | Rachel Olson      |   3000 |
++--------+---------+---------+-------------------+--------+
+
+1)write a SQL query to find Employees who have the biggest salary in their Department
+
+mysql> select emp_id,emp_name,dept_id,salary from employee where (dept_id,salary) IN (select dept_id,max(salary) from employee group by dept_id) order by dept_id;
++--------+-----------------+---------+--------+
+| emp_id | emp_name        | dept_id | salary |
++--------+-----------------+---------+--------+
+|    130 | Mozhe Atkinson  |      10 |   2800 |
+|    122 | Payam Kaufling  |      20 |   7900 |
+|    121 | Adam Fripp      |      30 |   8200 |
+|    117 | Sigal Tobias    |      40 |   2800 |
+|    114 | Den Raphaely    |      50 |  11000 |
+|    110 | John Chen       |      60 |   8200 |
+|    108 | Nancy Greenberg |      70 |  12008 |
+|    104 | Bruce Ernst     |      80 |   6000 |
+|    100 | Steven King     |      90 |  50000 |
+|    129 | Laura Bissot    |     100 |   3300 |
++--------+-----------------+---------+--------+
+10 rows in set (0.00 sec)
+      
+2) write a SQL query to find Departments that have less than 3 people in it
+
+mysql> (select count(*) as Employee_Count,dept_id as Department_ID from employee group by dept_id having count(*)<3) 
+UNION (select CASE WHEN dept_id NOT IN (select DISTINCT(dept_id) from employee) THEN '0' END AS Employee_Count,dept_id as Department_ID from department where dept_id NOT IN 
+(select DISTINCT(dept_id) from employee) group by dept_id) ;
++----------------+---------------+
+| Employee_Count | Department_ID |
++----------------+---------------+
+| 2              |            40 |
+| 2              |            80 |
+| 0              |            29 |
+| 0              |            63 |
++----------------+---------------+
+4 rows in set (0.00 sec)
+
+3) write a SQL query to find All Department along with the number of people there
+
+mysql>  select count(*) as Employee_Count,dept_id as Department_ID from employee group by dept_id UNION  (select CASE WHEN dept_id NOT IN (select DISTINCT(dept_id) from employee) THEN '0' END AS Employee_Count,dept_id as Department_ID from department where dept_id NOT IN (select DISTINCT(dept_id) from employee) group by dept_id) ;
++----------------+---------------+
+| Employee_Count | Department_ID |
++----------------+---------------+
+| 3              |            10 |
+| 6              |            20 |
+| 5              |            30 |
+| 2              |            40 |
+| 5              |            50 |
+| 4              |            60 |
+| 4              |            70 |
+| 2              |            80 |
+| 4              |            90 |
+| 3              |           100 |
+| 0              |            29 |
+| 0              |            63 |
++----------------+---------------+
+12 rows in set (0.00 sec)
+
+4) write a SQL query to find All Department along with the total salary there
+
+mysql>  select dept_id as Department_ID,SUM(salary) as Salary from employee group by dept_id UNION  (select dept_id as Department_ID, CASE WHEN dept_id NOT IN (select DISTINCT(dept_id) from employee) THEN '0' END AS Salary from department where dept_id NOT IN (select DISTINCT(dept_id) from employee) group by dept_id) ;
++---------------+--------+
+| Department_ID | Salary |
++---------------+--------+
+|            10 | 7400   |
+|            20 | 29100  |
+|            30 | 24200  |
+|            40 | 5400   |
+|            50 | 26700  |
+|            60 | 25800  |
+|            70 | 30008  |
+|            80 | 10800  |
+|            90 | 93000  |
+|           100 | 7900   |
+|            29 | 0      |
+|            63 | 0      |
++---------------+--------+
+12 rows in set (0.00 sec)

@@ -1,0 +1,10 @@
+INSERT into Products VALUES('A41','Jack''s New England Clam Chowder','S19','F8','12 - 12 oz cans',9.65,85,0,10,0);
+INSERT into Products VALUES('A42','Singaporean Hokkien Fried Mee','S20','F5','32 - 1 kg pkgs.',14,26,0,0,1);
+INSERT into Products VALUES('A43','Ipoh Coffee','S20','F1','16 - 500 g tins',46,17,10,25,0);
+INSERT into Products VALUES('A44','Gula Malacca','S20','F2','20 - 2 kg bags',19.45,27,0,15,0);
+INSERT into Products VALUES('A45','Rogede sild','S21','F8','1k pkg.',9.5,5,70,15,0);
+INSERT into Products VALUES('A46','Spegesild','S21','F8','4 - 450 g glasses',12,95,0,0,0);
+INSERT into Products VALUES('A47','Zaanse koeken','S22','F3','10 - 4 oz boxes',9.5,36,0,0,0);
+INSERT into Products VALUES('A48','Chocolade','S22','F3','10 pkgs.',12.75,15,70,25,0);
+INSERT into Products VALUES('A49','Maxilaku','S23','F3','24 - 50 g pkgs.',20,10,60,15,0);
+INSERT into Products VALUES('A50','Valkoinen suklaa','S23','F3','12 - 100 g bars',16.25,65,0,30,0);

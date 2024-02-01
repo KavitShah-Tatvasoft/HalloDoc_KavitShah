@@ -1,0 +1,270 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    position: relative;
+    z-index: 2;
+}
+.main-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-img{
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    top: 0;
+}
+
+.back-img-patient{
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    opacity: 0.2;
+    top: 0;
+    z-index: 1;
+    filter: blur(2px);
+}
+/* <-------------left side------------------> */
+
+.main-left{
+    flex-basis: 50%;
+    height: 100vh;
+}
+
+.login-img{
+    width: 100%;
+    height: 100vh;
+}
+
+/* <-------------right side------------------> */
+
+.main-right{
+    flex-basis: 50%;
+    background-color: #FAFAFA;
+    height: 100vh; 
+    position: relative;
+    z-index: 2;
+}
+
+.sub-right{
+    display: flex;
+    flex-direction: column;
+}
+
+.moon-flex{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.moon{
+    border: 0.5px solid rgba(83, 67, 67,0.5);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 8px;
+}
+
+.moon:hover{
+    border: 1px solid rgba(46, 40, 40, 0.5);
+}
+
+.moon-flex-1{
+    position: absolute;
+    top: 7px;
+    left: 1135px;
+}
+
+.sun{
+    display: none;
+    border: 0.5px solid white;
+    border-radius: 5px;
+    margin: 7px;
+    padding: 1px;
+}
+
+.inp{
+    position: relative;
+}
+
+.user-btn-img{
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    width: 21px;
+    height: 22px;
+}
+
+.open-eye{
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    width: 21px;
+    height: 22px;
+}
+
+.close-eye{
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    width: 21px;
+    height: 22px;
+    display: none;
+}
+
+.hide-btn{
+    display: none;
+}
+
+#floatingInput, #floatingPassword{
+    padding-right: 40px;
+}
+
+.theme-btn{
+    display: none;
+}
+.main-logo{
+    width: 200px;
+    height: auto;
+    margin-bottom: 40px;
+}
+
+.login-username{
+    position: relative;
+}
+
+.user-logo{
+    position: absolute;
+    top: 55;
+    left: 1200px;
+    width: 15px;
+    height: auto;
+}   
+
+.Login-text{
+    margin: 10px 20px 30px 20px;
+}
+
+.Login-text-patient{
+    margin: 10px 10px 10px 10px;
+}
+
+.submit-btn{
+    width: 100%;
+    height: 57px;
+    border-radius: 5px;
+    border: none;
+    background-color: #01bce9;
+    color: white;
+}
+
+.reset-btn{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-color: #01bce9;
+    color: white;
+}
+
+.forget-pass{
+    font-weight: 500;
+    color: #01bce9 ;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.bottom-txt-1{
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+}
+
+.bottom-txt{
+    position: absolute;
+    bottom: 20px;
+}
+
+.bottom-txt-patient{
+    position: absolute;
+    top: 595px; 
+}
+.username-clr{
+    background-color: transparent;
+}
+
+.form-control:focus {
+    border:0.5px solid #01bce9;
+    box-shadow: none;
+}
+
+.bottom-txt-1:focus{
+    text-decoration: solid black;
+    color: black;
+    font-weight: 600;
+}
+
+.bottom-txt-1:hover{
+    text-decoration: solid black;
+    color: black;
+    font-weight: 600;
+}
+
+.forget-pass:hover{
+    text-decoration: 1px solid black;
+    color: #01bce9;
+    font-weight: 700;
+}
+
+
+a.hover{
+    text-decoration: solid #01bce9;
+}
+
+.submit-btn:hover{
+    background-color: #20accf
+}
+
+.form-floating .username-clr input:focus{
+        color: #20accf;
+}
+
+@media screen and (max-width:975px) {   
+    .main-left{
+        flex-basis: 53%;
+    }
+
+    .main-right{
+        flex-basis: 47%;
+    }
+}
+
+@media screen and (max-width:755px) {   
+    .main-left{
+        flex-basis: 56%;
+    }
+
+    .main-right{
+        flex-basis: 44%;
+    }
+}
+
+@media screen and (max-width:670px) {   
+    .main-left{
+        flex-basis: 0%;
+    }
+
+    .main-right{
+        flex-basis: 100%;
+        opacity: 0.9;
+    }
+
+    .back-img{
+        z-index: 1;
+        opacity: 0.9;
+        filter: blur(2px);
+    }
+}

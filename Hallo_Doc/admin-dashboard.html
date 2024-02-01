@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/admin-dashboard.css">
+    <script src="./js/admin-dashboard.js"></script>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
+    <div class="container-fluid shadow p-2 bg-white rounded">
+        <div class="nav nav-flex">
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
+                    </button>
+
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                        aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
+                        <div class="offcanvas-body">
+                            <div class="sidebar-profile-text">
+                                <span>
+                                    Welcome,
+                                </span>
+                                <span>
+                                    <strong>Admin admin2</strong>
+                                </span>
+                            </div>
+                            <ul class="nav sidebar-list-flex">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Provider Location</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">My Profile</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Dropdown
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Partners</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Access</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Records</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="ms-2">
+                    <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
+                </span>
+            </div>
+
+            <div class="nav-right">
+                <span class="mx-1 profile-name">
+                    Welcome
+                </span>
+                <span class="mx-1 profile-name">
+                    <strong>Admin admin2</strong>
+                </span>
+                <div>
+                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                    <!-- <button type="button" class="logout-btn">
+                        <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
+                        <span class="logout-btn-text">Logout</span>
+                    </button> -->
+                </div>
+
+                <div>
+                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <label for="moon-btn">
+                        <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
+                    </label>
+
+                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <label for="sun-btn">
+                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                            id="sun-id">
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
+        <ul class="nav nav-underline cm-margin ms-3 inner-nav">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Provider Location</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">My Profile</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Provider</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Partners</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Access</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ---------------------------------------------------------------INNER NAV BAR OVER------------------------------------------------------ -->
+
+    <!-- ---------------------------------------------------------------NAV BAR OVER---------------------------------------------------------------------------- -->
+
+    <!-- ---------------------------------------------------------------MAIN BODY START---------------------------------------------------------------------------- -->
+
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-4 mb-2">
+
+                <div class="row-cards new new-active" id="card1" onclick="changeStatus(this)">
+                    <div class="inner-row-cards">
+                        <img src="./SRS Screen Shorts/airplane.svg" alt="" class="row-card-img hidden" id="new">
+                        <img src="./SRS Screen Shorts/airplane-white.svg" alt="" class="row-card-img" id="new-active">
+                        <span class="row-card-text">NEW</span>
+                    </div>
+                    <h4 class="type_no_txt">1449</h4>
+                    <div id="new-img" class="absolutivity">
+                        <img src="./SRS Screen Shorts/down-arrow-card1.svg" alt="" class="arrow-width">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-4 mb-2">
+                <div class="row-cards pending" id="card2" onclick="changeStatus(this)">
+                    <div>
+                        <img src="./SRS Screen Shorts/airplane.svg" alt="" class="row-card-img" id="pending">
+                        <img src="./SRS Screen Shorts/airplane-white.svg" alt="" class="row-card-img hidden"
+                            id="pending-active">
+                        <span class="row-card-text">PENDING</span>
+                    </div>
+                    <h4 class="type_no_txt">271</h4>
+                    <div id="pending-img" class="absolutivity hidden">
+                        <img src="./SRS Screen Shorts/down-arrow-card2.svg" alt="" class="arrow-width">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-4 mb-2">
+                <div class="row-cards active" id="card3" onclick="changeStatus(this)">
+                    <div>
+                        <img src="./SRS Screen Shorts/airplane.svg" alt="" class="row-card-img" id="active">
+                        <img src="./SRS Screen Shorts/airplane-white.svg" alt="" class="row-card-img hidden"
+                            id="active-active">
+                        <span class="row-card-text">ACTIVE</span>
+                    </div>
+                    <h4 class="type_no_txt">22</h4>
+                    <div id="active-img" class="absolutivity hidden">
+                        <img src="./SRS Screen Shorts/down-arrow-card3.svg" alt="" class="arrow-width">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-4 mb-2">
+                <div class="row-cards conclude" id="card4" onclick="changeStatus(this)">
+                    <div>
+                        <img src="./SRS Screen Shorts/airplane.svg" alt="" class="row-card-img" id="conclude">
+                        <img src="./SRS Screen Shorts/airplane-white.svg" alt="" class="row-card-img hidden"
+                            id="conclude-active">
+                        <span class="row-card-text">CONCLUDE</span>
+                    </div>
+                    <h4 class="type_no_txt">1079</h4>
+                    <div id="conclude-img" class="absolutivity hidden">
+                        <img src="./SRS Screen Shorts/down-arrow-card4.svg" alt="" class="arrow-width">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-4 mb-2">
+                <div class="row-cards to-close" id="card5" onclick="changeStatus(this)">
+                    <div>
+                        <img src="./SRS Screen Shorts/airplane.svg" alt="" class="row-card-img" id="to-close">
+                        <img src="./SRS Screen Shorts/airplane-white.svg" alt="" class="row-card-img hidden"
+                            id="to-close-active">
+                        <span class="row-card-text">TO CLOSE</span>
+                    </div>
+                    <h4 class="type_no_txt">1452</h4>
+                    <div id="to-close-img" class="absolutivity hidden">
+                        <img src="./SRS Screen Shorts/down-arrow-card5.svg" alt="" class="arrow-width">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-4 mb-2">
+                <div class="row-cards unpaid" id="card6" onclick="changeStatus(this)">
+                    <div>
+                        <img src="./SRS Screen Shorts/airplane.svg" alt="" class="row-card-img" id="unpaid">
+                        <img src="./SRS Screen Shorts/airplane-white.svg" alt="" class="row-card-img hidden"
+                            id="unpaid-active">
+                        <span class="row-card-text">UNPAID</span>
+                    </div>
+                    <h4 class="type_no_txt">1452</h4>
+                    <div id="unpaid-img" class="absolutivity hidden">
+                        <img src="./SRS Screen Shorts/down-arrow-card6.svg" alt="" class="arrow-width">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="patient-btns-flex mt-4">
+                    <div class="d-flex align-items-center">
+                        <h4 id="remove-extra-margin">Patients</h4>
+                        <span id="type-text">(New)</span>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-info mx-1" role="button" onclick="switchBlack()">
+                            <img src="./SRS Screen Shorts/send.svg" class="btn-info-img"> <span class="btns-text">Send Link</span>
+                        </a>
+                        <a href="#" class="btn btn-info mx-1" role="button" onclick="switchBlack()">
+                            <img src="./SRS Screen Shorts/send.svg" class="btn-info-img"> <span class="btns-text">Create Request</span>
+                        </a>
+                        <a href="#" class="btn btn-info mx-1" role="button" onclick="switchBlack()">
+                            <img src="./SRS Screen Shorts/send.svg" class="btn-info-img"> <span class="btns-text">Export</span>
+                        </a>
+                        <a href="#" class="btn btn-info mx-1" role="button" onclick="switchBlack()">
+                            <img src="./SRS Screen Shorts/send.svg" class="btn-info-img"> <span class="btns-text">Export All</span>
+                        </a>
+                        <a href="#" class="btn btn-info mx-1" role="button" onclick="switchBlack()">
+                            <img src="./SRS Screen Shorts/send.svg" class="btn-info-img"> <span class="btns-text">Request DTY Support</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <div class="table-top-flex">
+                    <div class="cover table-top-flex">
+                        <div class="inner-table-top-flex-left">
+
+                            <div class="relativity search-1">
+                                <input class="form-control search-btn" type="text" placeholder="Search Patients">
+                                <img src="./SRS Screen Shorts/search.svg" alt="" class="search-img">
+                            </div>
+
+                            <div class="dropdown-center relativity ms-2 search-2">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="region_dropdown">All Region</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Action two</a></li>
+                                    <li><a class="dropdown-item" href="#">Action three</a></li>
+                                </ul>
+                                <img src="./SRS Screen Shorts/search.svg" alt="" class="search-img">
+                            </div>
+
+                        </div>
+
+                        <div class="inner-table-top-flex-right gap-2 me-2">
+                            <!-- provided flex to all child using class > * {}  -->
+                            <div>
+                                <button onclick="switchBlack()" class="all-label">All</button>
+                            </div>
+                            <div class="gap-2 patient-type-flex">
+                                <div id="green-dot"></div>
+                                <span class="table-top-flex-text">Patient</span>
+                            </div>
+                            <div class="gap-2 patient-type-flex">
+                                <div id="orange-dot"></div>
+                                <span class="table-top-flex-text">Family/Friend</span>
+                            </div>
+                            <div class="gap-2 patient-type-flex">
+                                <div id="magenta-dot"></div>
+                                <span class="table-top-flex-text">Business</span>
+                            </div>
+                            <div class="gap-2 patient-type-flex">
+                                <div id="blue-dot"></div>
+                                <span class="table-top-flex-text">Concierge</span>
+                            </div>
+                            <div class="gap-2 patient-type-flex">
+                                <div id="purple-dot"></div>
+                                <span class="table-top-flex-text">VIP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-responsive show-table">
+            <table class="table">
+                <thead>
+                    <tr class="thead-clr">
+                        <th colspan="2">Name</th>
+                        <th></th>
+                        <th>Date of Birth</th>
+                        <th>Region</th>
+                        <th>Physician Name</th>
+                        <th>Date of Service</th>
+                        <th>Address</th>
+                        <th>Notes</th>
+                        <th>Chat With</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-clr">
+                        <th colspan="2">
+                            <span class="text-nowrap">Brown, Ernest</span>
+                        </th>
+                        <td>
+                            <button type="button" class="theme-btn" id="message-btn"></button>
+                            <label for="message-btn">
+                                <img src="./SRS Screen Shorts/envelope.svg" alt="message" class="envelope">
+                            </label>
+                        </td>
+                        <td class="text-nowrap">Oct 13,2022(0)</td>
+                        <td class="text-nowrap">District of Columbia</td>
+                        <td>Dr. Brown</td>
+                        <td></td>
+                        <td>1331, Maryland Ave SW Washington, DC 20024</td>
+                        <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel tenetur rem, eius assumenda
+                            accusamus fugit!</td>
+                        <td>
+                            <button type="button" class="theme-btn" id="patient-btn" onclick="switchBlack()"></button>
+                            <label for="patient-btn" class="patient-label">
+                                <img src="./SRS Screen Shorts/user.png" alt="message" class="patient-logo">
+                                <span>Patient</span>
+                            </label>
+
+                            <button type="button" class="theme-btn" id="patient-btn" onclick="switchBlack()"></button>
+                            <label for="patient-btn" class="patient-label">
+                                <img src="./SRS Screen Shorts/user.png" alt="message" class="patient-logo">
+                                <span>Provider</span>
+                            </label>
+                        </td>
+                        <td class="table-dropdown">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item" type="button">Action</button></li>
+                                    <li><button class="dropdown-item" type="button">Another action</button></li>
+                                    <li><button class="dropdown-item" type="button">Something else here</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="show_cards">
+            <div class="main-card">
+                <div class="patient_card open_cards">
+                    <div class="patient-card-flex-1"> <!-- Use Collaspe from bootstrap -->
+                        <span class="patient_card_name">Patient, Test</span>
+                        <div class="patient_type_card">
+                            Patient
+                            <div class="card_green_dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="patient-card-flex-2">
+                        <div class="patient_card_address">1331 Mayland Avenue, SW Washington, DC 20024</div>
+                        <button class="map_btn">Map Location</button>
+                    </div>
+                </div>
+                <hr class="mt-3">
+                <div class="patient_card extended-1" id="extended-1">
+                    <button class="view_case_btn" onclick="switchBlack()">View Case</button>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="D.O.B"></span>
+                        <span class="extended-label">Date of Birth:</span>
+                        <span class="extended-text">15-01-2003 (21)</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Email"></span>
+                        <span class="extended-label">Email:</span>
+                        <span class="extended-text">kavit.shah@etatvasoft.com</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Number"></span>
+                        <span class="extended-label">Patient:</span>
+                        <span class="extended-text">6351627219</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Note"></span>
+                        <span class="extended-label">Transfer<br>Note:</span>
+                        <span class="extended-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="D.O.S"></span>
+                        <span class="extended-label">Date of Service:</span>
+                        <span class="extended-text">Jan 31,2023 8:30 AM</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Physician"></span>
+                        <span class="extended-label">Physician:</span>
+                        <span class="extended-text">Dr. AGOLA</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Requestor"></span>
+                        <span class="extended-label">Requestor:</span>
+                        <span class="extended-text">Patient Agola Three, BhoomiOne</span>
+                    </div>
+
+                    <div class="extended-flex-btn mt-4">
+                        <div class="btn btn-left">View Notes</div>
+                        <div class="btn btn-right">Doctors Note</div>
+                    </div>
+
+                    <div class="extended-flex-btn">
+                        <div class="btn btn-left">View Uploads</div>
+                        <div class="btn btn-right">Encounter</div>
+                    </div>
+
+                    <div class="extended-flex-btn">
+                        <div class="btn btn-left">Orders</div>
+                        <div class="btn btn-right">Email</div>
+                    </div>
+
+                    <div class="extended-flex-bottom">
+                        <span class="bottom-btn-texts">Chat with:</span>
+                        <div class="btn"><img src="./SRS Screen Shorts/moon-blue.svg" class="bottom-btn-img" alt="">Patient</div>
+                        <div class="btn"><img src="./SRS Screen Shorts/moon-blue.svg" class="bottom-btn-img" alt="">Provider</div>
+                    </div>
+                </div>
+            </div>    
+                <!-- --------------------------------------------------------------------------------------------- -->
+            <div class="main-card">   
+                <div class="patient_card open_cards" onclick="show_innercard_2()">
+                    <div class="patient-card-flex-1"> <!-- Use Collaspe from bootstrap -->
+                        <span class="patient_card_name">Patient, Test</span>
+                        <div class="patient_type_card">
+                            Patient
+                            <div class="card_green_dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="patient-card-flex-2">
+                        <div class="patient_card_address">1331 Mayland Avenue, SW Washington, DC 20024</div>
+                        <button class="map_btn">Map Location</button>
+                    </div>
+                </div>
+                <hr class="mt-3">
+                <div class="patient_card extended-2" id="extended-2">
+                    <button class="view_case_btn" onclick="switchBlack()">View Case</button>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="D.O.B"></span>
+                        <span class="extended-label">Date of Birth:</span>
+                        <span class="extended-text">15-01-2003 (21)</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Email"></span>
+                        <span class="extended-label">Email:</span>
+                        <span class="extended-text">kavit.shah@etatvasoft.com</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Number"></span>
+                        <span class="extended-label">Patient:</span>
+                        <span class="extended-text">6351627219</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Note"></span>
+                        <span class="extended-label">Transfer<br>Note:</span>
+                        <span class="extended-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="D.O.S"></span>
+                        <span class="extended-label">Date of Service:</span>
+                        <span class="extended-text">Jan 31,2023 8:30 AM</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Physician"></span>
+                        <span class="extended-label">Physician:</span>
+                        <span class="extended-text">Dr. AGOLA</span>
+                    </div>
+                    <div class="extended-flex">
+                        <span class="circular_border"><img src="./SRS Screen Shorts/airplane.svg" alt="Requestor"></span>
+                        <span class="extended-label">Requestor:</span>
+                        <span class="extended-text">Patient Agola Three, BhoomiOne</span>
+                    </div>
+
+                    <div class="extended-flex-btn mt-4">
+                        <div class="btn btn-left">View Notes</div>
+                        <div class="btn btn-right">Doctors Note</div>
+                    </div>
+
+                    <div class="extended-flex-btn">
+                        <div class="btn btn-left">View Uploads</div>
+                        <div class="btn btn-right">Encounter</div>
+                    </div>
+
+                    <div class="extended-flex-btn">
+                        <div class="btn btn-left">Orders</div>
+                        <div class="btn btn-right">Email</div>
+                    </div>
+
+                    <div class="extended-flex-bottom">
+                        <span class="bottom-btn-texts">Chat with:</span>
+                        <div class="btn"><img src="./SRS Screen Shorts/moon-blue.svg" class="bottom-btn-img" alt="">Patient</div>
+                        <div class="btn"><img src="./SRS Screen Shorts/moon-blue.svg" class="bottom-btn-img" alt="">Provider</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

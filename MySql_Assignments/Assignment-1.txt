@@ -1,0 +1,206 @@
+
+Assignment - 1 
+
+mysql> create database assignment1;
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| assignment1        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use assignment1
+Database changed
+
+mysql> create table Products (ProductID varchar(100) PRIMARY KEY, ProductName varchar(100) NOT NULL, SupplierID varchar(100) NOT NULL, CategoryID varchar(100) NOT NULL,
+QuantityPerUnit int(100) NOT NULL, UnitPrice float(25) NOT NULL, UnitsInStock int(50) NOT NULL, UnitsOnOrder int(50) NOT NULL, ReorderLevel int(50) NOT NULL, Discontinued BOOLEAN NOT NULL );
+
+mysql> describe Products;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| ProductID       | varchar(100) | NO   | PRI | NULL    |       |
+| ProductName     | varchar(100) | NO   |     | NULL    |       |
+| SupplierID      | varchar(100) | NO   |     | NULL    |       |
+| CategoryID      | varchar(100) | NO   |     | NULL    |       |
+| QuantityPerUnit | int          | NO   |     | NULL    |       |
+| UnitPrice       | double       | NO   |     | NULL    |       |
+| UnitsInStock    | int          | NO   |     | NULL    |       |
+| UnitsOnOrder    | int          | NO   |     | NULL    |       |
+| ReorderLevel    | int          | NO   |     | NULL    |       |
+| Discontinued    | tinyint(1)   | NO   |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+INSERT into Products VALUES('A41','Jack''s New England Clam Chowder','S19','F8','12 - 12 oz cans',9.65,85,0,10,0);
+INSERT into Products VALUES('A42','Singaporean Hokkien Fried Mee','S20','F5','32 - 1 kg pkgs.',14,26,0,0,1);
+INSERT into Products VALUES('A43','Ipoh Coffee','S20','F1','16 - 500 g tins',46,17,10,25,0);
+INSERT into Products VALUES('A44','Gula Malacca','S20','F2','20 - 2 kg bags',19.45,27,0,15,0);
+INSERT into Products VALUES('A45','Rogede sild','S21','F8','1k pkg.',9.5,5,70,15,0);
+INSERT into Products VALUES('A46','Spegesild','S21','F8','4 - 450 g glasses',12,95,0,0,0);
+INSERT into Products VALUES('A47','Zaanse koeken','S22','F3','10 - 4 oz boxes',9.5,36,0,0,0);
+INSERT into Products VALUES('A48','Chocolade','S22','F3','10 pkgs.',12.75,15,70,25,0);
+INSERT into Products VALUES('A49','Maxilaku','S23','F3','24 - 50 g pkgs.',20,10,60,15,0);
+INSERT into Products VALUES('A50','Valkoinen suklaa','S23','F3','12 - 100 g bars',16.25,65,0,30,0);
+
+mysql> select * from Products;
++-----------+---------------------------------+------------+------------+---------------------+-----------+--------------+--------------+--------------+--------------+
+| ProductID | ProductName                     | SupplierID | CategoryID | QuantityPerUnit     | UnitPrice | UnitsInStock | UnitsOnOrder | ReorderLevel | Discontinued |
++-----------+---------------------------------+------------+------------+---------------------+-----------+--------------+--------------+--------------+--------------+
+| A1        | Chai                            | S1         | F1         | 10 boxes x 20 bags  |        18 |           39 |            0 |           10 |            0 |
+| A10       | Mishi Kobe Niku                 | A4         | F6         | 18 - 500 g pkgs.    |        97 |           29 |            0 |            0 |            1 |
+| A2        | Coffee                          | S1         | F1         | 10 boxes x 30 bags  |        25 |           50 |            0 |            5 |            0 |
+| A3        | Chang                           | A1         | F1         | 24 - 12 oz bottles  |        19 |           17 |           40 |           25 |            0 |
+| A4        | Aniseed Syrup                   | A1         | F2         | 12 - 550 ml bottles |        10 |           13 |           70 |           25 |            0 |
+| A41       | Jack's New England Clam Chowder | S19        | F8         | 12 - 12 oz cans     |      9.65 |           85 |            0 |           10 |            0 |
+| A42       | Singaporean Hokkien Fried Mee   | S20        | F5         | 32 - 1 kg pkgs.     |        14 |           26 |            0 |            0 |            1 |
+| A43       | Ipoh Coffee                     | S20        | F1         | 16 - 500 g tins     |        46 |           17 |           10 |           25 |            0 |
+| A44       | Gula Malacca                    | S20        | F2         | 20 - 2 kg bags      |     19.45 |           27 |            0 |           15 |            0 |
+| A45       | Rogede sild                     | S21        | F8         | 1k pkg.             |       9.5 |            5 |           70 |           15 |            0 |
+| A46       | Spegesild                       | S21        | F8         | 4 - 450 g glasses   |        12 |           95 |            0 |            0 |            0 |
+| A47       | Zaanse koeken                   | S22        | F3         | 10 - 4 oz boxes     |       9.5 |           36 |            0 |            0 |            0 |
+| A48       | Chocolade                       | S22        | F3         | 10 pkgs.            |     12.75 |           15 |           70 |           25 |            0 |
+| A49       | Maxilaku                        | S23        | F3         | 24 - 50 g pkgs.     |        20 |           10 |           60 |           15 |            0 |
+| A5        | Chef Anton's Cajun Seasoning    | A2         | F2         | 48 - 6 oz jars      |        22 |           53 |            0 |            0 |            0 |
+| A50       | Valkoinen suklaa                | S23        | F3         | 12 - 100 g bars     |     16.25 |           65 |            0 |           30 |            0 |
+| A6        | Chef Anton's Gumbo Mix          | A2         | F2         | 36 boxes            |     21.35 |            0 |            0 |            0 |            1 |
+| A7        | Grandma's Boysenberry Spread    | A3         | F2         | 12 - 8 oz jars      |        25 |          120 |            0 |           25 |            0 |
+| A8        | Uncle Bob's Organic Dried Pears | A3         | F7         | 12 - 1 lb pkgs.     |        30 |           15 |            0 |           10 |            0 |
+| A9        | Northwoods Cranberry Sauce      | A3         | F2         | 12 - 12 oz jars     |        40 |            6 |            0 |            0 |            0 |
++-----------+---------------------------------+------------+------------+---------------------+-----------+--------------+--------------+--------------+--------------+
+20 rows in set (0.00 sec)
+
+--> 1st Query
+
+mysql> select ProductID,ProductName,UnitPrice from Products where UnitPrice<20;
++-----------+---------------------------------+-----------+
+| ProductID | ProductName                     | UnitPrice |
++-----------+---------------------------------+-----------+
+| A1        | Chai                            |        18 |
+| A3        | Chang                           |        19 |
+| A4        | Aniseed Syrup                   |        10 |
+| A41       | Jack's New England Clam Chowder |      9.65 |
+| A42       | Singaporean Hokkien Fried Mee   |        14 |
+| A44       | Gula Malacca                    |     19.45 |
+| A45       | Rogede sild                     |       9.5 |
+| A46       | Spegesild                       |        12 |
+| A47       | Zaanse koeken                   |       9.5 |
+| A48       | Chocolade                       |     12.75 |
+| A50       | Valkoinen suklaa                |     16.25 |
++-----------+---------------------------------+-----------+
+11 rows in set (0.00 sec)
+
+
+--> 2nd Query
+
+mysql> select ProductID,ProductName,UnitPrice from Products where UnitPrice>=15 and UnitPrice<=25;
++-----------+------------------------------+-----------+
+| ProductID | ProductName                  | UnitPrice |
++-----------+------------------------------+-----------+
+| A1        | Chai                         |        18 |
+| A2        | Coffee                       |        25 |
+| A3        | Chang                        |        19 |
+| A44       | Gula Malacca                 |     19.45 |
+| A49       | Maxilaku                     |        20 |
+| A5        | Chef Anton's Cajun Seasoning |        22 |
+| A50       | Valkoinen suklaa             |     16.25 |
+| A6        | Chef Anton's Gumbo Mix       |     21.35 |
+| A7        | Grandma's Boysenberry Spread |        25 |
++-----------+------------------------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select ProductID,ProductName,UnitPrice from Products where UnitPrice>15 and UnitPrice<25;
++-----------+------------------------------+-----------+
+| ProductID | ProductName                  | UnitPrice |
++-----------+------------------------------+-----------+
+| A1        | Chai                         |        18 |
+| A3        | Chang                        |        19 |
+| A44       | Gula Malacca                 |     19.45 |
+| A49       | Maxilaku                     |        20 |
+| A5        | Chef Anton's Cajun Seasoning |        22 |
+| A50       | Valkoinen suklaa             |     16.25 |
+| A6        | Chef Anton's Gumbo Mix       |     21.35 |
++-----------+------------------------------+-----------+
+7 rows in set (0.00 sec)
+
+--> 3rd Query
+
+mysql> select ProductID,ProductName,UnitPrice from Products where UnitPrice > (select AVG(UnitPrice) from Products);
++-----------+---------------------------------+-----------+
+| ProductID | ProductName                     | UnitPrice |
++-----------+---------------------------------+-----------+
+| A10       | Mishi Kobe Niku                 |        97 |
+| A2        | Coffee                          |        25 |
+| A43       | Ipoh Coffee                     |        46 |
+| A7        | Grandma's Boysenberry Spread    |        25 |
+| A8        | Uncle Bob's Organic Dried Pears |        30 |
+| A9        | Northwoods Cranberry Sauce      |        40 |
++-----------+---------------------------------+-----------+
+6 rows in set (0.00 sec)
+
+
+mysql> select AVG(UnitPrice) from Products;
++----------------+
+| AVG(UnitPrice) |
++----------------+
+|        23.8225 |
++----------------+
+1 row in set (0.00 sec)
+
+--> 4th Query
+
+mysql> select ProductName,UnitPrice from Products order by UnitPrice DESC LIMIT 10;
++---------------------------------+-----------+
+| ProductName                     | UnitPrice |
++---------------------------------+-----------+
+| Mishi Kobe Niku                 |        97 |
+| Ipoh Coffee                     |        46 |
+| Northwoods Cranberry Sauce      |        40 |
+| Uncle Bob's Organic Dried Pears |        30 |
+| Coffee                          |        25 |
+| Grandma's Boysenberry Spread    |        25 |
+| Chef Anton's Cajun Seasoning    |        22 |
+| Chef Anton's Gumbo Mix          |     21.35 |
+| Maxilaku                        |        20 |
+| Gula Malacca                    |     19.45 |
++---------------------------------+-----------+
+10 rows in set (0.00 sec)
+
+--> 5th Query
+
+mysql> select Discontinued as "Discontinued 0-Flase 1-True",count(*) from Products group by Discontinued;
++-----------------------------+----------+
+| Discontinued 0-Flase 1-True | count(*) |
++-----------------------------+----------+
+|                           0 |       17 |
+|                           1 |        3 |
++-----------------------------+----------+
+2 rows in set (0.00 sec)
+
+--> 6th Query
+
+mysql> select ProductName, UnitsOnOrder,UnitsInStock from Products where UnitsOnOrder>UnitsInStock;
++---------------+--------------+--------------+
+| ProductName   | UnitsOnOrder | UnitsInStock |
++---------------+--------------+--------------+
+| Chang         |           40 |           17 |
+| Aniseed Syrup |           70 |           13 |
+| Rogede sild   |           70 |            5 |
+| Chocolade     |           70 |           15 |
+| Maxilaku      |           60 |           10 |
++---------------+--------------+--------------+
+
+
+
+
+
+
+
+

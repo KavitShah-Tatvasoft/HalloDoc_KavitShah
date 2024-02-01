@@ -1,0 +1,432 @@
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_assignment4_northwind |
++---------------------------------+
+| category                        |
+| custcustdemographics            |
+| customer                        |
+| customerdemographics            |
+| employee                        |
+| employeeterritory               |
+| orderdetail                     |
+| product                         |
+| region                          |
+| salesorder                      |
+| shipper                         |
+| supplier                        |
+| territory                       |
++---------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> desc customercustomerdemo;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| CustomerID     | varchar(5)  | NO   | PRI | NULL    |       |
+| CustomerTypeID | varchar(10) | NO   | PRI | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+
+mysql> desc customerdemographics;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| CustomerTypeID | varchar(10) | NO   | PRI | NULL    |       |
+| CustomerDesc   | mediumtext  | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc customers;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| CustomerID   | varchar(5)  | NO   | PRI | NULL    |       |
+| CompanyName  | varchar(40) | NO   | MUL | NULL    |       |
+| ContactName  | varchar(30) | YES  |     | NULL    |       |
+| ContactTitle | varchar(30) | YES  |     | NULL    |       |
+| Address      | varchar(60) | YES  |     | NULL    |       |
+| City         | varchar(15) | YES  | MUL | NULL    |       |
+| Region       | varchar(15) | YES  | MUL | NULL    |       |
+| PostalCode   | varchar(10) | YES  | MUL | NULL    |       |
+| Country      | varchar(15) | YES  |     | NULL    |       |
+| Phone        | varchar(24) | YES  |     | NULL    |       |
+| Fax          | varchar(24) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+mysql> desc customerdemographics;
++----------------+------+------+-----+---------+----------------+
+| Field          | Type | Null | Key | Default | Extra          |
++----------------+------+------+-----+---------+----------------+
+| customerTypeId | int  | NO   | PRI | NULL    | auto_increment |
+| customerDesc   | text | YES  |     | NULL    |                |
++----------------+------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+mysql> desc employees;
++-----------------+-------------+------+-----+---------+----------------+
+| Field           | Type        | Null | Key | Default | Extra          |
++-----------------+-------------+------+-----+---------+----------------+
+| EmployeeID      | int         | NO   | PRI | NULL    | auto_increment |
+| LastName        | varchar(20) | NO   | MUL | NULL    |                |
+| FirstName       | varchar(10) | NO   |     | NULL    |                |
+| Title           | varchar(30) | YES  |     | NULL    |                |
+| TitleOfCourtesy | varchar(25) | YES  |     | NULL    |                |
+| BirthDate       | datetime    | YES  |     | NULL    |                |
+| HireDate        | datetime    | YES  |     | NULL    |                |
+| Address         | varchar(60) | YES  |     | NULL    |                |
+| City            | varchar(15) | YES  |     | NULL    |                |
+| Region          | varchar(15) | YES  |     | NULL    |                |
+| PostalCode      | varchar(10) | YES  | MUL | NULL    |                |
+| Country         | varchar(15) | YES  |     | NULL    |                |
+| HomePhone       | varchar(24) | YES  |     | NULL    |                |
+| Extension       | varchar(4)  | YES  |     | NULL    |                |
+| Notes           | mediumtext  | NO   |     | NULL    |                |
+| ReportsTo       | int         | YES  | MUL | NULL    |                |
+| Salary          | float       | YES  |     | NULL    |                |
++-----------------+-------------+------+-----+---------+----------------+
+17 rows in set (0.00 sec)
+
+mysql> desc  employeeterritories;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| EmployeeID  | int         | NO   | PRI | NULL    |       |
+| TerritoryID | varchar(20) | NO   | PRI | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+
+
+mysql> desc orderdetails;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| OrderID   | int           | NO   | PRI | NULL    |       |
+| ProductID | int           | NO   | PRI | NULL    |       |
+| UnitPrice | decimal(10,4) | NO   |     | 0.0000  |       |
+| Quantity  | smallint      | NO   |     | 1       |       |
+| Discount  | double(8,0)   | NO   |     | 0       |       |
++-----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc orders;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| OrderID        | int           | NO   | PRI | NULL    | auto_increment |
+| CustomerID     | varchar(5)    | YES  | MUL | NULL    |                |
+| EmployeeID     | int           | YES  | MUL | NULL    |                |
+| OrderDate      | datetime      | YES  | MUL | NULL    |                |
+| RequiredDate   | datetime      | YES  |     | NULL    |                |
+| ShippedDate    | datetime      | YES  | MUL | NULL    |                |
+| ShipVia        | int           | YES  | MUL | NULL    |                |
+| Freight        | decimal(10,4) | YES  |     | 0.0000  |                |
+| ShipName       | varchar(40)   | YES  |     | NULL    |                |
+| ShipAddress    | varchar(60)   | YES  |     | NULL    |                |
+| ShipCity       | varchar(15)   | YES  |     | NULL    |                |
+| ShipRegion     | varchar(15)   | YES  |     | NULL    |                |
+| ShipPostalCode | varchar(10)   | YES  | MUL | NULL    |                |
+| ShipCountry    | varchar(15)   | YES  |     | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+14 rows in set (0.00 sec)
+
+mysql> desc products;
++-----------------+---------------+------+-----+---------+----------------+
+| Field           | Type          | Null | Key | Default | Extra          |
++-----------------+---------------+------+-----+---------+----------------+
+| ProductID       | int           | NO   | PRI | NULL    | auto_increment |
+| ProductName     | varchar(40)   | NO   | MUL | NULL    |                |
+| SupplierID      | int           | YES  | MUL | NULL    |                |
+| CategoryID      | int           | YES  | MUL | NULL    |                |
+| QuantityPerUnit | varchar(20)   | YES  |     | NULL    |                |
+| UnitPrice       | decimal(10,4) | YES  |     | 0.0000  |                |
+| UnitsInStock    | smallint      | YES  |     | 0       |                |
+| UnitsOnOrder    | smallint      | YES  |     | 0       |                |
+| ReorderLevel    | smallint      | YES  |     | 0       |                |
+| Discontinued    | bit(1)        | NO   |     | b'0'    |                |
++-----------------+---------------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)
+
+
+
+mysql> desc region;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| RegionID          | int         | NO   | PRI | NULL    |       |
+| RegionDescription | varchar(50) | NO   |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc shippers;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| ShipperID   | int         | NO   | PRI | NULL    | auto_increment |
+| CompanyName | varchar(40) | NO   |     | NULL    |                |
+| Phone       | varchar(24) | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc suppliers;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| SupplierID   | int         | NO   | PRI | NULL    | auto_increment |
+| CompanyName  | varchar(40) | NO   | MUL | NULL    |                |
+| ContactName  | varchar(30) | YES  |     | NULL    |                |
+| ContactTitle | varchar(30) | YES  |     | NULL    |                |
+| Address      | varchar(60) | YES  |     | NULL    |                |
+| City         | varchar(15) | YES  |     | NULL    |                |
+| Region       | varchar(15) | YES  |     | NULL    |                |
+| PostalCode   | varchar(10) | YES  | MUL | NULL    |                |
+| Country      | varchar(15) | YES  |     | NULL    |                |
+| Phone        | varchar(24) | YES  |     | NULL    |                |
+| Fax          | varchar(24) | YES  |     | NULL    |                |
+| HomePage     | mediumtext  | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> desc territories;
++----------------------+-------------+------+-----+---------+-------+
+| Field                | Type        | Null | Key | Default | Extra |
++----------------------+-------------+------+-----+---------+-------+
+| TerritoryID          | varchar(20) | NO   | PRI | NULL    |       |
+| TerritoryDescription | varchar(50) | NO   |     | NULL    |       |
+| RegionID             | int         | NO   | MUL | NULL    |       |
++----------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+1. Create a stored procedure in the Northwind database that will calculate the average
+value of Freight for a specified customer.Then, a business rule will be added that will
+be triggered before every Update and Insert command in the Orders controller,and
+will use the stored procedure to verify that the Freight does not exceed the average
+freight. If it does, a message will be displayed and the command will be cancelled.
+
+DELIMITER // 
+CREATE TRIGGER CHECK_FREIGHT    
+BEFORE INSERT ON orders FOR EACH ROW  
+BEGIN    
+	DECLARE message varchar(20);
+	SET @freight = 0;
+	call avgFreight(new.CustomerID,@freight);
+    IF new.Freight > @freight
+		THEN
+			SET message = 'Freight is very high';
+			SIGNAL SQLSTATE '45000' 
+			SET MESSAGE_TEXT = message;
+	END IF;
+END//
+DELIMITER ;
+
+-----------output--------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> insert into orders values (11085,'ANATR',2,'1997-05-01','1997-05-06','1997-05-02',1,26.029,'Toms Spezialitten','Forsterstr. 57','Mannheim',NULL,68306,'Germany');
+Error Code: 1644. Freight is very high	0.000 sec
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DELIMITER // 
+CREATE TRIGGER UPDATE_FREIGHT    
+BEFORE UPDATE ON orders FOR EACH ROW  
+BEGIN    
+	DECLARE message varchar(20);
+	SET @freight = 0;
+	call avgFreight(old.CustomerID,@freight);
+    IF new.Freight > @freight
+		THEN
+			SET message = 'Freight is very high';
+			SIGNAL SQLSTATE '45000' 
+			SET MESSAGE_TEXT = message;
+	END IF;
+END//
+DELIMITER ;
+
+-------------------------------------------------------------------------------------------------
+mysql> update orders set freight = '29.63' where CustomerID='ANATR';
+ERROR 1644 (45000): Freight is very high
+-------------------------------------------------------------------------------------------------
+
+2. write a SQL query to Create Stored procedure in the Northwind database to retrieve Employee Sales by Country
+
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `employeeSalesByCountry`( IN Country varchar(100))
+	BEGIN
+    	select employees.EmployeeID,employees.FirstName,SUM((orderdetails.UnitPrice*orderdetails.Quantity)-(orderdetails.UnitPrice*orderdetails.Quantity*orderdetails.Discount)) 
+    	from orders inner join orderdetails on orders.OrderID=orderdetails.orderID inner join employees on employees.EmployeeID = orders.EmployeeID where orders.ShipCountry = Country 
+    	group by employees.EmployeeID;
+	END
+
+mysql> call employeeSalesByCountry('USA');
+
++------------+-----------+----------------+
+| EmployeeID | FirstName | Employee_Sales |
++------------+-----------+----------------+
+|          8 | Laura     |     27619.1700 |
+|          5 | Steven    |     16151.1000 |
+|          6 | Michael   |     18711.6900 |
+|          4 | Margaret  |     50657.9400 |
+|          2 | Andrew    |     22780.6000 |
+|          1 | Nancy     |     46382.6000 |
+|          9 | Anne      |     18104.9000 |
+|          3 | Janet     |     34809.2300 |
+|          7 | Robert    |     28349.7500 |
++------------+-----------+----------------+
+9 rows in set (0.00 sec)
+
+
+3. write a SQL query to Create Stored procedure in the Northwind database to retrieve
+Sales by Year
+
+    CREATE DEFINER=`root`@`localhost` PROCEDURE `yearSale`(IN Year varchar(20) )
+    BEGIN
+    select year(o.OrderDate) as Year,SUM((d.UnitPrice*d.Quantity)-(d.UnitPrice*d.Quantity*d.Discount)) as Yearly_Sale
+    from orders o inner join orderdetails d on o.OrderID = d.OrderID where year(o.OrderDate)= Year group by year(o.OrderDate);
+    END
+
+mysql> CALL yearSale('1997');
++------+-------------+
+| Year | Yearly_Sale |
++------+-------------+
+| 1997 | 658388.7500 |
++------+-------------+
+1 row in set (0.00 sec)
+
+4. write a SQL query to Create Stored procedure in the Northwind database to retrieve
+Sales By Category
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `categoryWiseSale`(IN categoryID int)
+BEGIN
+select p.CategoryID as Category_ID,c.CategoryName,SUM((d.UnitPrice*d.Quantity)-(d.UnitPrice*d.Quantity*d.Discount)) as Category_Wise_Sale from orders o inner join orderdetails d on o.OrderID = d.OrderID inner join products p on d.ProductID = p.ProductID
+inner join categories c on c.CategoryID = p.CategoryID  where p.CategoryID = categoryID group by p.CategoryID;   
+END
+
+mysql> CALL categoryWiseSale(4);
++-------------+----------------+--------------------+
+| Category_ID | CategoryName   | Category_Wise_Sale |
++-------------+----------------+--------------------+
+|           4 | Dairy Products |        251330.5000 |
++-------------+----------------+--------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+5. write a SQL query to Create Stored procedure in the Northwind database to retrieve
+Ten Most Expensive Products
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `expensiveProducts`()
+BEGIN
+select c.CategoryID,c.CategoryName,p.ProductID,p.ProductName,p.UnitPrice from products p inner join categories c on p.CategoryID = c.CategoryID order by p.UnitPrice desc limit 10;
+END
+
+mysql> CALL expensiveProducts();
++------------+----------------+-----------+------------------------+-----------+
+| CategoryID | CategoryName   | ProductID | ProductName            | UnitPrice |
++------------+----------------+-----------+------------------------+-----------+
+|          1 | Beverages      |        38 | Cte de Blaye           |  263.5000 |
+|          6 | MeatPoultry    |        29 | Thringer Rostbratwurst |  123.7900 |
+|          6 | MeatPoultry    |         9 | Mishi Kobe Niku        |   97.0000 |
+|          3 | Confections    |        20 | Sir Rodney's Marmalade |   81.0000 |
+|          8 | Seafood        |        18 | Carnarvon Tigers       |   62.5000 |
+|          4 | Dairy Products |        59 | Raclette Courdavault   |   55.0000 |
+|          7 | Produce        |        51 | Manjimup Dried Apples  |   53.0000 |
+|          3 | Confections    |        62 | Tarte au sucre         |   49.3000 |
+|          1 | Beverages      |        43 | Ipoh Coffee            |   46.0000 |
+|          7 | Produce        |        28 | Rssle Sauerkraut       |   45.6000 |
++------------+----------------+-----------+------------------------+-----------+
+10 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+6. write a SQL query to Create Stored procedure in the Northwind database to insert
+Customer Order Details
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `newOrder`(IN OrderID int, IN CustomerID varchar(20), IN EmployeeID int, IN OrderDate datetime, IN RequiredDate datetime, IN ShippedDate datetime,
+ IN ShipVia int, IN Freight decimal(10,4), IN ShipName varchar(40),  IN ShipAddress varchar(60), IN ShipCity varchar(15), IN ShipRegion varchar(15), IN ShipPostalCode varchar(10),
+ IN ShipCountry varchar(15), IN Product_ID int, IN UnitPrice decimal(10,4), IN Quantity smallint, IN Discount double(8,0))
+BEGIN
+	insert into orders values (OrderID,CustomerID,EmployeeID,OrderDate,RequiredDate,ShippedDate,ShipVia,Freight,ShipName, ShipAddress,ShipCity,ShipRegion,ShipPostalCode,ShipCountry);
+	insert into orderdetails values (OrderID,Product_ID,UnitPrice,Quantity,Discount);
+    UPDATE products SET UnitsOnOrder = UnitsOnOrder + Quantity where ProductID = Product_ID;
+END
+
+mysql> CALL newOrder(11082,'BLAUS',2,'1997-05-01','1997-05-06','1997-05-02',1,11.6100,'Toms Spezialitten','Forsterstr. 57','Mannheim',NULL,68306,'Germany',38,263.5000,5,0.15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from orders where OrderId = 11082;
++---------+------------+------------+---------------------+---------------------+---------------------+---------+---------+-------------------+----------------+----------+------------+----------------+-------------+
+| OrderID | CustomerID | EmployeeID | OrderDate           | RequiredDate        | ShippedDate         | ShipVia | Freight | ShipName          | ShipAddress    | ShipCity | ShipRegion | ShipPostalCode | ShipCountry |
++---------+------------+------------+---------------------+---------------------+---------------------+---------+---------+-------------------+----------------+----------+------------+----------------+-------------+
+|   11082 | BLAUS      |          2 | 1997-05-01 00:00:00 | 1997-05-06 00:00:00 | 1997-05-02 00:00:00 |       1 | 11.6100 | Toms Spezialitten | Forsterstr. 57 | Mannheim | NULL       | 68306          | Germany     |
++---------+------------+------------+---------------------+---------------------+---------------------+---------+---------+-------------------+----------------+----------+------------+----------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from products where ProductID = 38;
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+| ProductID | ProductName  | SupplierID | CategoryID | QuantityPerUnit    | UnitPrice | UnitsInStock | UnitsOnOrder | ReorderLevel | Discontinued               |
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+|        38 | Cte de Blaye |         18 |          1 | 12 - 75 cl bottles |  263.5000 |           17 |           10 |           15 | 0x00                       |
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+1 row in set (0.00 sec)
+
+mysql>mysql> select * from orderdetails where OrderId = 11082;
++---------+-----------+-----------+----------+----------+
+| OrderID | ProductID | UnitPrice | Quantity | Discount |
++---------+-----------+-----------+----------+----------+
+|   11082 |        38 |  263.5000 |        5 |        0 |
++---------+-----------+-----------+----------+----------+
+1 row in set (0.00 sec)
+
+
+7. write a SQL query to Create Stored procedure in the Northwind database to update
+Customer Order Details
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateQuantity`(IN Order_ID int, IN Quantity_New int, IN ADDRESS_CHANGE varchar(50), IN Required_Date datetime)
+BEGIN
+	
+	SELECT @units_old := Quantity from orderdetails where OrderID = Order_ID;
+	UPDATE orderdetails SET Quantity = Quantity_New where OrderID = Order_ID;
+	SELECT @product := ProductID from orderdetails where OrderID = Order_ID;
+	UPDATE products SET UnitsOnOrder = UnitsOnOrder -@units_old + Quantity_New where ProductID = @product;
+    
+    SELECT @Ship_Address := ShipAddress from orders where OrderID = Order_ID;
+    SELECT @R_DATE := RequiredDate from orders where OrderID = Order_ID;
+	UPDATE orders SET ShipAddress = CASE WHEN ADDRESS_CHANGE = 'NULL'
+									THEN @Ship_Address
+									ELSE ADDRESS_CHANGE
+									END,
+					 RequiredDate  = CASE WHEN Required_Date = '1000-01-01'
+									THEN @R_DATE
+									ELSE Required_Date
+									END
+									where OrderID = Order_ID; 
+                                
+END
+
+-------------BEFORE------------------------- Customer ordered product with quantity - 3
+mysql> select * from products where ProductID = 38;
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+| ProductID | ProductName  | SupplierID | CategoryID | QuantityPerUnit    | UnitPrice | UnitsInStock | UnitsOnOrder | ReorderLevel | Discontinued               |
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+|        38 | Cte de Blaye |         18 |          1 | 12 - 75 cl bottles |  263.5000 |           17 |            8 |           15 | 0x00                       |
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+
+mysql> select * from orderdetails where OrderId = 11082;
++---------+-----------+-----------+----------+----------+
+| OrderID | ProductID | UnitPrice | Quantity | Discount |
++---------+-----------+-----------+----------+----------+
+|   11082 |        38 |  263.5000 |        3 |        0 |
++---------+-----------+-----------+----------+----------+
+1 row in set (0.00 sec)
+
+-------------AFTER--------------------------- Customer updated the order, quantity - 2 so units on order decreased by 1
+
+mysql> CALL updateQuantity(11082,2);
+
+mysql> select * from products where ProductID = 38;
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+| ProductID | ProductName  | SupplierID | CategoryID | QuantityPerUnit    | UnitPrice | UnitsInStock | UnitsOnOrder | ReorderLevel | Discontinued               |
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+|        38 | Cte de Blaye |         18 |          1 | 12 - 75 cl bottles |  263.5000 |           17 |            7 |           15 | 0x00                       |
++-----------+--------------+------------+------------+--------------------+-----------+--------------+--------------+--------------+----------------------------+
+
+mysql> select * from orderdetails where OrderId = 11082;
++---------+-----------+-----------+----------+----------+
+| OrderID | ProductID | UnitPrice | Quantity | Discount |
++---------+-----------+-----------+----------+----------+
+|   11082 |        38 |  263.5000 |        2 |        0 |
++---------+-----------+-----------+----------+----------+
