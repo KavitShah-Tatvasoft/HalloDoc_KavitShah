@@ -24,7 +24,7 @@ body{
 }
 
 .offcanvas-backdrop , .offcanvas{
-    transition: all 0.8s ease-in-out !important;
+    transition: all 0.5s ease-in-out !important;
 
 }
 
@@ -45,12 +45,17 @@ body{
 }
 
 .offcanvas-body .dropdown-toggle::after{
-    position: relative;
-    top: 6px;
+    position: absolute;
+    top: 13px;
     content: url("../SRS Screen Shorts/chevron-right.svg");
     border: none;
+    left: 0rem;
 }
 
+.offcanvas-body .dropdown{
+    width: 100%;
+    position: relative;
+}
 .sidebar-profile-text{
     padding: 8px 16px;
 }
@@ -681,6 +686,8 @@ background-color: #9966cd!important;
     outline: 0;
     box-shadow: none
 }
+
+
 
 @media screen and (max-width:1024px)
 {
