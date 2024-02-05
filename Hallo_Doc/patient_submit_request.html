@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./css/patient_submit_request.css">
     <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
     <title>Submit Request</title>
 </head>
 
@@ -24,12 +27,12 @@
 
             <div class="nav-right">
                 <div>
-                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <button type="button"  class="theme-btn" id="moon-btn"></button>
                     <label for="moon-btn">
                         <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
                     </label>
 
-                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <button type="button"  class="theme-btn" id="sun-btn"></button>
                     <label for="sun-btn">
                         <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
                             id="sun-id">
@@ -41,24 +44,29 @@
     </div>
 
     <div class="main-body">
-        <div class="outer-flex-column">
-            <div >
-                <strong>I am a...</strong>
+        <div class="outer-flex-column relative-pos">
+            <div class="iamtxt-div">
+                <strong class="iamtxt">I am a...</strong>
             </div>
 
-            <a href="#" class="flex-width">
+            <div class="back-btn-top absolute-pos">
+                <img src="./chevron-left.svg" alt="left">
+                Back
+            </div>
+
+            <a href="#" class="flex-width patient-clr">
                 PATIENT
             </a>
 
-            <a href="#"class="flex-width">
+            <a href="#"class="flex-width family-clr">
                 FAMILY/FRIEND
             </a>
 
-            <a href="#"class="flex-width">
+            <a href="#"class="flex-width concierge-clr">
                CONCIERGE
             </a>
 
-            <a href="#" class="flex-width">
+            <a href="#" class="flex-width business-clr">
                 BUSINESS PARTNER
             </a>
 

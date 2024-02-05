@@ -9,20 +9,144 @@
 
 .flex-width{
     padding:8px ;
-    border-radius: 5px;
-    height: 50px;
-    width: 300px;
-    background-color: red;
+    border-radius: 10px;
+    height: 65px;
+    width: 310px;
 }
 
+.patient-clr{
+    background-color: #e8eaf1;
+    border: 1px solid #4aadef;
+    color: #4aadef;
+}
+
+.family-clr{
+    background-color: #e5f3f8;
+    border: 1px solid #4367d3;
+    color: #4367d3;
+}
+
+.concierge-clr{
+    background-color: #e8f0e8;
+    border: 1px solid #228b22;
+    color: #228b22;
+}
+
+.business-clr{
+    background-color: #f6e6ef;
+    border: 1px solid #d90f81;
+    color: #d90f81;
+}
+
+.back-btn-top {
+    display: flex;
+    top: 6px;
+    right: 255px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+}
+
+.absolute-pos{
+    position: absolute;
+}
+
+.relative-pos{
+    position: relative;
+}
+
+.outer-flex-column a{
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    padding-left: 20px;
+ }
+.iamtxt{
+    font-family: 'Poppins', sans-serif;
+    font-size: 37px;
+    font-weight: 700;
+}
 .outer-flex-column{
-    row-gap: 20px;
+    row-gap: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
- 
+
+@media screen and (max-width:1024px) {
+    .back-btn-top{
+        top: 6px;
+        right: 70px;
+    }
+
+
+}
+
+@media screen and (max-width:480px) {
+    .back-btn-top{
+        top: 6px;
+        right: 20px;
+    }
+
+    .flex-width{
+        display: flex;
+        justify-content: center;
+        padding-left: 7px!important;
+        border-radius: 0px;
+    }
+
+    .iamtxt {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .iamtxt-div{
+        display: flex;
+        align-self: flex-start;
+        margin-left: 121px;
+    }
+
+
+}
+
+@media screen and (max-width:425px){
+    .flex-width{
+        width: 290px;
+        height: 60px;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .iamtxt-div{
+        display: flex;
+        align-self: flex-start;
+        margin-left: 80px;
+    }
+
+    .outer-flex-column a{
+        font-size: 20px;
+    }
+
+    .flex-width{
+        width: 275px;
+        height: 55px;
+    }
+
+    .iamtxt {
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .back-btn-top {
+        top: 0px;
+    }
+}
 
 
 
