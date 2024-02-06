@@ -19,7 +19,58 @@
     gap: 4px;
 }
 
-.patient-info{
+.patient-info{                       /*for top text*/
     font-weight: 500;
     font-size: 20px;
 }
+
+.inc-height{
+    height: 125px;
+  }
+
+  .inc-inp-height{
+    height: 108px!important;
+  }
+
+  textarea { resize: none; }     /*for text area col*/
+
+  
+  .custom-date-input {          /*for setting the calendar icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+
+  .custom-date-input .custom-date-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+
+.form-control:focus{            /*To remove the box shadow on focus*/
+    box-shadow: none;
+    border: 2px soild #01bce9;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
