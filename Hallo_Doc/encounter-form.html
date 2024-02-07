@@ -7,6 +7,11 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./css/encounter-form.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <title>Encounter Form</title>
 </head>
 <body>
@@ -63,11 +68,9 @@
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <div class="form-floating mb-3 inp">
-                        <input type="text" class="form-control input-1" id="floatingInput"
-                            placeholder="First Name" autocomplete="off">
-                        <label for="floatingInput">Change Me!</label>
+                <div class="col-6">                                      <!--Phone Number col-->
+                    <div class="form-floating mb-3 inp phonecolheight">
+                        <input type="tel" class="form-control phoneflags" id="phone" />
                     </div>
                 </div>
 
@@ -116,8 +119,98 @@
                 </div>
 
             </div>
+
+            <div class="row">  <!--row-4-- TEMP,HR,RR-->
+                <div class="col-4">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="Temp" autocomplete="off">
+                        <label for="floatingInput">Temp</label>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="HR" autocomplete="off">
+                        <label for="floatingInput">HR</label>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="RR" autocomplete="off">
+                        <label for="floatingInput">RR</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">  <!--row-5-- BP,O2,Pain-->
+                <div class="col-2">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="Blood Pressure()" autocomplete="off">
+                        <label for="floatingInput">Blood Pressure()</label>
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="Blood Pressure()" autocomplete="off">
+                        <label for="floatingInput">Blood Pressure()</label>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="O2" autocomplete="off">
+                        <label for="floatingInput">O2</label>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-floating mb-3 inp">
+                        <input type="text" class="form-control input-1" id="floatingInput"
+                            placeholder="Pain" autocomplete="off">
+                        <label for="floatingInput">Pain</label>
+                    </div>
+                </div>
+            </div>
+
         </form>
 
     </div>
+
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+              const phoneInput = window.intlTelInput(phoneInputField, {
+                  utilsScript:
+                      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+              });
+
+              $(window).on('scroll', function() {
+            positionItiContainer();
+        });
+
+        $('.iti__selected-flag').click(function () {
+            positionItiContainer();
+        });
+
+        var positionItiContainer = function() {
+            if ($('body.iti-mobile').length) {
+                var phoneElement = document.getElementById('phone');
+                var selectedFlag = document.querySelector('.iti__selected-flag');
+                var phoneRect = phoneElement.getBoundingClientRect();
+                var selectedFlagRect = selectedFlag.getBoundingClientRect();
+
+                $('.iti--container').css('top', selectedFlagRect.bottom + 'px');
+                $('.iti--container').css('left', selectedFlagRect.left + 'px');
+            }
+        };
+      </script>
+
 </body>
 </html>
