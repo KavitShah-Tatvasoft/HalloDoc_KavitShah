@@ -105,6 +105,12 @@
 .iti *{
   width: 100%;
 }
+
+.iti-mobile , .iti--container{
+  width: 37%!important;
+  height: 30%!important;
+}
+
 .form-control:focus{            /*To remove the box shadow on focus*/
     box-shadow: none;
     border: 2px soild #01bce9;

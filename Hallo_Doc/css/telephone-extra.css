@@ -1,0 +1,177 @@
+.plateform-login-form h3 {
+    font-size: 2.5rem;
+    padding: 2rem 1rem;
+}
+
+.plateform-login-form .btn {
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.75rem 0.75rem;
+    background-color: #01bce9;
+    border: 2px solid #01bce9;
+}
+
+.plateform-login-form .btn:hover {
+    background-color: #04a2ca;
+}
+
+.plateform-login-form .form-floating .form-control:focus {
+    border: 1px solid #01bce9;
+    box-shadow: none;
+}
+
+.plateform-login-form .form-floating .form-control {
+    background: transparent;
+}
+
+.plateform-login-form .form-floating>label {
+    transition: opacity .1s ease-in-out, transform .3s ease-in-out;
+}
+
+
+.plateform-login-form .form-floating .form-control:focus~.plateform-login-form .form-floating>label,
+.plateform-login-form .form-floating .form-control:not(:placeholder-shown)~.plateform-login-form .form-floating>label {
+    background: transparent;
+}
+
+.plateform-login-form .plateform-input input:focus {
+    border: 2px solid #01bce9 !important;
+    outline: none;
+}
+
+.plateform-login-form .plateform-input textarea:focus {
+    border: 2px solid #01bce9 !important;
+    outline: none;
+}
+
+.plateform-login-form .plateform-input textarea:focus {
+    border: 2px solid #01bce9 !important;
+    outline: none;
+}
+
+.plateform-input-calender-form .plateform-input-form{
+    padding-bottom: 0.5rem;
+}
+
+.plateform-input-calender-form .plateform-lable-form{
+    padding-left: 5px;
+    padding-top: 5px;
+    font-size: 1rem;
+}
+
+.plateform-input-calender-form-calender:not(:placeholder-shown).plateform-input-calender-form-calender:not(:focus)~.plateform-lable-form {
+    padding-left: 5px;
+    padding-top: 5px;
+    font-size: 1rem;
+}
+
+.plateform-input-calender-form-calender:focus~.plateform-lable-form, .plateform-input-calender-form-calender:not(:placeholder-shown)~.input-labelform {
+    padding-left: 5px;
+    padding-top: 5px;
+    font-size: 1rem;
+}
+
+
+.plateform-input-form-one-word:focus~.plateform-lable-form, .plateform-input-form-one-word:not(:placeholder-shown)~.input-labelform {
+    padding: 0px 12px;
+}
+
+.plateform-input-form-multi-word:focus~.plateform-lable-form, .plateform-input-form-multi-word:not(:placeholder-shown)~.input-labelform {
+    padding: 0px 12px;
+    transform: translate(-18px, -15px) scale(0.77);
+}
+.plateform-input-form-upload{
+    position: relative;
+    height: 52px;
+}
+
+.plateform-input-form-upload-label{
+    background-color: #00adef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    height: 52px;
+    width: 100px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    gap: 6px;
+    border: none;
+}
+
+
+.plateform-input-margin {
+    margin-bottom: 1.5rem;
+}
+
+.login-plateform-form .plateform-input-margin input {
+    padding-right: 3.2rem;
+}
+
+.plateform-input-form {
+    padding: 1rem .75em;
+    line-height: 1.25;
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #212529;
+    border-radius: 5px;
+    border: 1px solid #666666;
+    background: transparent;
+    transition: 0.1s ease;
+    z-index: 11;
+    height: 52px;
+}
+
+.plateform-input-form:focus~.plateform-lable-form,
+.plateform-input-form:not(:placeholder-shown)~.input-labelform {
+    color: #01bce9;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 8px;
+    transform: translate(-3px, -15px) scale(0.77);
+    z-index: 111;
+}
+
+
+.plateform-input-form:not(:placeholder-shown).plateform-input-form:not(:focus)~.plateform-lable-form {
+    color: #666666;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 8px;
+    transform: translate(-3px, -15px) scale(0.77);
+    z-index: 111;
+}
+
+.plateform-input-form-one-word:focus~.plateform-lable-form, .plateform-input-form-one-word:not(:placeholder-shown)~.input-labelform {
+    padding: 0px 12px;
+}
+
+.plateform-input-form-multi-word:focus~.plateform-lable-form, .plateform-input-form-multi-word:not(:placeholder-shown)~.input-labelform {
+    padding: 0px 12px;
+    transform: translate(-18px, -15px) scale(0.77);
+}
+
+.plateform-input-form-upload{
+    position: relative;
+    height: 52px;
+}
+
+.plateform-input-form-upload-label{
+    background-color: #00adef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    height: 52px;
+    width: 100px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    gap: 6px;
+    border: none;
+}

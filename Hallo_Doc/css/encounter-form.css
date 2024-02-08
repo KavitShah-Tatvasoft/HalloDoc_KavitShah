@@ -1,5 +1,38 @@
-.body{
-    background-color: #f9f9f9;
+body{
+    background-color: #f9f9f9!important;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 75px!important;
+  margin-bottom: 50px;
+}
+
+.back-btn-top {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  padding: 9px 12px 9px 8px;
+  color: #01bce9;
+  gap: 4px;
+  width: 84px;
+  position: absolute;
+  top: -57px;
+  right: 0px;
+}
+
+.encounter-text-top{
+  font-family: 'Poppins', sans-serif;
+  position: absolute;
+  top: -57px;
+  left: 0px;
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .container-fluid{
@@ -22,28 +55,36 @@
 
 
 
+.custom-date-input {          /*for setting the calendar icon*/
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+.custom-date-input .custom-date-icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding-right: 10px;
+} 
+
 input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-  }
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
 
-
-  .custom-date-input {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
-
-
-  .custom-date-input .custom-date-icon {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    padding-right: 10px;
-  }
-
-  .inc-height{
+  .inc-height{     /*to increase width of some cols*/ 
     height: 92px;
   }
 
@@ -51,8 +92,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 75px!important;
   }
 
+ /* to set phone col*/   
 
-  .iti, .iti--allow-dropdown{          
+  .iti, .iti--allow-dropdown{         
     width: 100%;
     height: 100%;
   }
@@ -77,5 +119,65 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
   }
 
+  .iti--container{
+    width: 37%!important;
+    height: 30%!important;
+  }
+
+  .form-control:focus{            /*To remove the box shadow on focus*/
+    box-shadow: none;
+    border: 2px soild #01bce9;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+
+.add-shadow{
+  box-shadow: 10px 5px 5px black;
+}
+
+
+.bottom-btns{                     /* Submit and Cancel Buttons*/
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+.bottom-btns-submit{
+  background-color: #01bce9;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-cancel{
+  background-color: white;
+  color: #01bce9;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-finalize{
+  background-color: #9c27b0;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
   
+
+
+@media screen and (max-width:768px) {
+  .container-fluid{
+    width: 90%;
+  }
+}
 
