@@ -2,6 +2,13 @@ body{
     background-color: #f9f9f9!important;
 }
 
+.container-fluid{
+  box-shadow: 0px 0px 10px rgb(128,128,128,0.7)!important;
+}
+.top-br{
+  display: none;
+}
+
 .relative-position{
   position: relative;
 }
@@ -9,6 +16,15 @@ body{
 .extra-margin{
   margin-top: 75px!important;
   margin-bottom: 50px;
+}
+
+label{
+  color: #a3a195;
+  font-size: 15px!important;
+} 
+
+.form-control{
+  color: #a3a195;
 }
 
 .back-btn-top {
@@ -173,11 +189,81 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 7px 10px;
 }
   
+@media screen and (max-width:1170px) {
 
-
-@media screen and (max-width:768px) {
   .container-fluid{
     width: 90%;
   }
 }
+
+@media screen and (max-width:767px) {
+
+  .top-text{
+    font-size: 32px;
+  }
+
+  .encounter-text-top{
+    font-size: 23px ;
+    top: -53px;
+  } 
+
+  .container-fluid{
+    width: 95%;
+  }
+  .phonecolheight {
+    height: 140%;
+}
+
+.add-extra-margin{
+  margin-top: 22px;
+}
+
+.iti--container{
+  width: 55%!important;
+  height: 30%!important;
+}
+
+}
+
+@media screen and (max-width:500px) {
+
+  .top-text{
+    font-size: 29px;
+  }
+
+  .encounter-text-top{
+    font-size: 20px ;
+    top: -50px;
+  } 
+
+  label {
+    font-size: 14px!important;
+}
+
+
+}
+
+
+@media screen and (max-width:440px){
+  .top-br{
+    display: block;
+  }
+
+  .top-text{
+    text-align: center;
+  }
+
+
+}
+
+@media screen and (max-width:425px) {
+  .back-btn-top{
+    transform: scale(0.75);
+  }
+
+  .bottom-btns-submit, .bottom-btns-finalize, .bottom-btns-cancel{
+    transform: scale(0.9);
+  }
+}
+
 
