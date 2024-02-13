@@ -1,0 +1,288 @@
+.relative-pos-class{
+    position: relative;
+}
+
+.main-container-top-text{
+    position: absolute;
+    top: -53px;
+    left: 0px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.flex-create-request{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.main-container{
+    width: 95%;
+    margin-top: 80px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.request-btn{
+    border: 1px solid #01bce9;
+    background-color: white;
+    color: #01bce9;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+}
+
+.thead{
+    background-color: #f0f0f0!important ;
+    padding-bottom: 11px!important;
+}
+
+
+.add-padding{
+    margin-left: 4px;
+    margin-bottom: 4px;
+}
+table{
+    width: 100%;
+    padding: 20px;
+}
+
+table tr{
+    height: 50px;
+}
+
+th{
+    font-weight: 500;
+}
+.doc-btn{
+    border: 1px solid #01bce9;
+    padding: 6px 12px;
+    background-color: white;
+    border-radius: 5px;
+    color: #01bce9;
+    transform: scale(0.9);
+}
+
+.extra-prop-doc-btn{
+    background-color: transparent!important;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.font-500{
+    font-weight: 500;
+}
+.table-btn-contact{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: white;
+    color: #01bce9;
+    padding: 4px 12px;
+}
+
+.table-btn-contact-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.extra-padding-td{
+    padding-left: 15px!important;
+}
+
+.extra-padding-doc{
+    padding-left: 14px!important;
+}
+
+.width-col1{
+    width: 20%;
+}
+
+.width-col2{
+    width: 25%;
+}
+
+.width-col4{
+    width: 35%;
+}
+
+.width-col3{
+    width: 20%;
+}
+
+.plus-img{
+    display: none;
+}
+
+.modal-title-background{
+    background-color: #01bce9;
+    color: white;
+  }
+
+  .btn-close{
+    background: transparent url(../x-white.svg) center/2em auto no-repeat;
+  }
+
+  .modal-header-text{
+    color: #5e5d5d;
+  }
+
+  .me-type-btn{
+    border: 1px solid #01bce9;
+    color: white;
+    background-color: #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-weight: 500;
+  }
+
+  .else-type-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: white;
+    color: #01bce9;
+    font-weight: 500;
+
+  }
+  
+  .request-type-pop-flex{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .continue-cancel-flex{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+  }
+
+
+
+.accordion-body, .accordion-header{
+    background-color: #ebfafd!important;
+}
+
+.accordion-header{
+    border-bottom: 0.5px solid rgb(175, 172, 172);
+    border-top: 0.5px solid rgb(175, 172, 172);
+}
+
+.accordion{
+    --bs-accordion-active-bg: #ebfafd!important;
+    --bs-accordion-btn-bg: #ebfafd!important;
+
+    padding: 0px!important;
+    display: none;
+}
+
+.accordion-button{
+    border-radius: 0px;
+}
+
+.accordion-button:focus{
+    box-shadow: none;
+}
+
+.accordian-case-inner-flex{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .blue-img-circular-border{
+    border: 1px solid #01bce9;
+    border-radius: 50%;
+    align-items: center;
+  }
+
+.mobile-card-case-flex{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.accordion-button::after {
+    display: none;
+  }
+
+
+
+
+@media screen and (max-width:770px) {
+    .width-col2{
+        width: 20%;
+    }
+    
+    .width-col3{
+        width: 25%;
+    }
+}
+
+@media screen and (max-width:756px){
+    .responsive-flex{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .width-col1{
+        width: 25%;
+    }
+    
+    .width-col2{
+        width: 25%;
+    }
+    
+    .width-col4{
+        width: 25%;
+    }
+    
+    .width-col3{
+        width: 25%;
+    }
+    
+
+} 
+
+@media screen and (max-width:580px) {
+    .modal{
+        transform: scale(0.9);
+    }
+}
+
+@media screen and (max-width:615px){
+    .table{
+      display: none;  
+    }
+    .accordion{
+        display: block;
+    }
+    .plus-img{
+        display: block;
+        height: auto;
+        width: 20px;
+        padding: 5px 0px;
+    }
+    .new-req-text{
+        display: none;
+    }
+
+    .main-container-top-text{
+        position: absolute;
+        top: -48px;
+        left: 0px;
+        font-weight: 500;
+        font-size: 22px;
+    }
+}

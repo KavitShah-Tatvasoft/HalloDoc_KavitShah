@@ -51,30 +51,209 @@
 
 
 
-<!-- Modal -->
+<!-- Modal
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body family-pop">
         <img src="./SRS Screen Shorts/exclamation.png" alt="">
         <p>Information</p>
-        <p>When submit a request, you must provide the correct contact information for the patient or the responsibly party. Failure to provide the coreect email and phone number will delay service or be declined.</p>
+        <span style="margin: auto;text-align:center">When submit a request, you must provide the correct contact information for the patient or the responsibly party. Failure to provide the coreect email and phone number will delay service or be declined.</span>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header modal-title-background">
+        <h2 class="modal-title fs-5" id="staticBackdropLabel"> Create New Request</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span>Here, I want to create new request for...</span>
+        <div class="request-type-pop-flex">
+          <button class="me-type-btn" id="me" onclick="changeCss(this)">Me</button>
+          <button class="else-type-btn" id="else" onclick="changeCss(this)">Some One Else</button>
+        </div>
+
+        <div class="continue-cancel-flex">
+          <button type="button" class="me-type-btn">Continue</button>
+          <button type="button" class="else-type-btn" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <span class="mobile-card-case-flex">
+          <img src="./SRS Screen Shorts/clock-blue.svg" alt="">
+          Created Date : Dec 5, 2023
+        </span>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+      <div class="accordion-body">
+
+        <div class="accordian-case-inner-flex">
+          <div>
+            <img src="./SRS Screen Shorts/person.svg" alt="">
+          </div>
+          <span>Provider : -- </span>
+        </div>
+        
+        <div class="accordian-case-inner-flex">
+          <span>
+            <img src="./SRS Screen Shorts/person-add.svg" alt="">
+          </span>
+          <span>Admin : -- </span>
+        </div>
+
+        <div class="accordian-case-inner-flex">
+          <div>
+            <img src="./SRS Screen Shorts/person-add.svg" alt="">
+          </div>
+          <span>Current Status : Cancelled by Admin </span>
+        </div>
+        
+        <div>
+          <button class="doc-btn">(1) Documents</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+
+
+
+
 </body>
 </html>
 
 <script>
-  var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
-  console.log(myModal);
-  myModal.show()
-  </script>
+  // var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
+  // console.log(myModal);
+  // myModal.show()
+
+  function changeCss(element){
+    // console.log(element.id)
+    var x = document.getElementById("me").style;
+    var y = document.getElementById("else").style;
+    
+
+    if(element.id=="me"){
+      x.backgroundColor = "#01bce9";
+      x.color = "white";
+
+      y.color = "#01bce9";
+      y.backgroundColor = "white";
+    }
+
+    else{
+      y.backgroundColor = "#01bce9";
+      y.color = "white";
+
+      x.color = "#01bce9";
+      x.backgroundColor = "white";
+    }
+  }
+</script>
+
 
 <style>
+
+.doc-btn{
+    border: 1px solid #01bce9;
+    padding: 6px 12px;
+    background-color: white;
+    border-radius: 5px;
+    color: #01bce9;
+    transform: scale(0.9);
+    width: 100%;
+}
+
+
+.accordian-case-inner-flex{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .blue-img-circular-border{
+    border: 1px solid #01bce9;
+    border-radius: 50%;
+    align-items: center;
+  }
+
+.mobile-card-case-flex{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.accordion-button::after {
+    display: none;
+  }
+
+
+  .modal-title-background{
+    background-color: #01bce9;
+    color: white;
+  }
+
+  .btn-close{
+    background: transparent url(x-white.svg) center/2em auto no-repeat;
+  }
+
+  .me-type-btn{
+    border: 1px solid #01bce9;
+    color: white;
+    background-color: #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-weight: 500;
+  }
+
+  .else-type-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: white;
+    color: #01bce9;
+    font-weight: 500;
+  }
+  
+  .request-type-pop-flex{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .continue-cancel-flex{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+  }
 
   .family-pop{
     display: flex;

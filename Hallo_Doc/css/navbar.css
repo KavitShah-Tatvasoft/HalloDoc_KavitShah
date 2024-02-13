@@ -1,3 +1,7 @@
+body{
+    background-color: #f9f9f9;
+}
+
 .theme-btn{
     display: none;
 }
@@ -168,4 +172,106 @@ a.nav-link {
 
 .logout-img{
     display: none;
+}
+
+@media screen and (max-width:767px){
+
+    .logout-btn-text{
+        display: none;
+
+    }
+
+    .logout-img{
+        display: block;
+        width: 20px;
+        height: auto;
+    }
+
+    .cm-margin{
+        display: none;
+    }
+
+    .rounded{
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-name{
+        display: none;
+    }
+
+    .hamburger-menu{
+        display: block;
+    }
+
+    .btn-info-img{
+        width: 16px;
+    }
+
+    .btn-info{
+        padding: 3px 6px;
+    }
+
+    #remove-extra-margin{
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width:605px) {
+
+    .offcanvas{
+        --bs-offcanvas-width: 60%;
+    }
+}
+
+@media screen and (max-width:560px) {
+
+    .logout-img{
+        display: block;
+        width: 18px;
+        height: auto;
+    }
+
+    .moon{
+        width: 33px;
+        height: auto;
+    }
+
+    .halloDoc-img {
+        width: 85px;
+    }
+
+    .menu-img {
+        width: 17px;
+        height: auto;
+    }
+
+}
+
+@media screen and (max-width:425px) {
+
+    .offcanvas{
+        --bs-offcanvas-width: 85%;
+    }
+
+    .logout-img{
+        display: block;
+        width: 18px;
+        height: auto;
+    }
+
+    .moon{
+        width: 33px;
+        height: auto;
+    }
+
+    .halloDoc-img {
+        width: 85px;
+    }
+
+    .menu-img {
+        width: 17px;
+        height: auto;
+    }
 }

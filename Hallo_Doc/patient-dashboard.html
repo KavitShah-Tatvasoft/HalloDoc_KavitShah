@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/patient-dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="./js/patient-dashboard.js"></script>
+    <title>Patient Dashboard</title>
+</head>
+<body>
+    <div class="container-fluid shadow p-2 bg-white rounded">
+        <div class="nav nav-flex">
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
+                    </button>
+
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                        aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
+                        <div class="offcanvas-body">
+                            
+                            <div class="sidebar-profile-text">
+                                <span>
+                                    Welcome,
+                                </span>
+                                <span>
+                                    <strong>Kavit Shah</strong>
+                                </span>
+                            </div>
+                            <ul class="nav sidebar-list-flex">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Profile</a>
+                                </li>
+                            </ul>
+                    </div>
+                    </div>
+                </div>
+
+                <span class="ms-2">
+                    <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
+                </span>
+            </div>
+
+            <div class="nav-right">
+                <span class="mx-1 profile-name">
+                    Welcome
+                </span>
+                <span class="mx-1 profile-name">
+                    <strong>Kavit Shah</strong>
+                </span>
+                <div>
+                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                    <!-- <button type="button" class="logout-btn">
+                        <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
+                        <span class="logout-btn-text">Logout</span>
+                    </button> -->
+                </div>
+
+                <div>
+                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <label for="moon-btn">
+                        <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
+                    </label>
+
+                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <label for="sun-btn">
+                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                            id="sun-id">
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+
+        <!--Main Nav Bar -->
+
+        <ul class="nav nav-underline cm-margin ms-3 inner-nav">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+        </ul>
+    </div>
+
+    <!--Main Container-->
+
+    <div class="container-fluid main-container relative-pos-class">
+        <div class="main-container-top-text">
+            Medical History
+        </div>
+        <div class="row">
+            <div class="col flex-create-request">
+               <button class="request-btn"  data-bs-toggle="modal" data-bs-target="#staticBackdrop"><img src="./SRS Screen Shorts/plus-lg.svg" alt="" class="plus-img"><span class="new-req-text">Create New Request</span></button>
+               
+               
+               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header modal-title-background">
+                                <h2 class="modal-title fs-5" id="staticBackdropLabel"> Create New Request</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                 <span class="modal-header-text">Here, I want to create new request for...</span>
+                                 <div class="request-type-pop-flex">
+                                    <button class="me-type-btn" id="me" onclick="changeCss(this)">Me</button>
+                                    <button class="else-type-btn" id="else" onclick="changeCss(this)">Some One Else</button>
+                                 </div>
+                    
+                                 <div class="continue-cancel-flex">
+                                    <button type="button" class="me-type-btn">Continue</button>
+                                    <button type="button" class="else-type-btn" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- <div class="table-responsive-lg"> -->
+                  <!-- Add col if required  -->
+                <table class="table align-middle">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="thead extra-padding-td width-col1">Created Date <img src="./SRS Screen Shorts/arrow-down.svg" class="add-padding" alt="arrow-down"></th>
+                        <th scope="col" class="thead width-col2" >Current Status</th>
+                        <th scope="col" class="thead width-col4"></th>
+                        <th scope="col" class="thead width-col3 extra-padding-doc">Document</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="extra-padding-td">Mark</td>
+                        <td>Otto</td>
+                        <td class="responsive-flex">
+                            <button class="table-btn-contact">
+                                <span class="table-btn-contact-flex"><img src="./SRS Screen Shorts/person.svg" alt="">Admin</span>
+                            </button>
+                            
+                            <button class="table-btn-contact">
+                                <span class="table-btn-contact-flex"><img src="./SRS Screen Shorts/person-add.svg" alt="">Provider</span>
+                            </button>
+                        </td>
+                        <td><button class="doc-btn">(1) Documents</button></td>
+                      </tr>
+                      <tr>
+                        <td class="extra-padding-td">Jacob</td>
+                        <td>Thornton</td>
+                        <td>
+                        </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="extra-padding-td">Larry</td>
+                        <td>the Bird</td>
+                        <td></td>
+                        <td><button class="doc-btn">(1) Documents</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  
+            <!-- </div> -->
+
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"  aria-controls="panelsStayOpen-collapseOne">
+                      <span class="mobile-card-case-flex">
+                        <img src="./SRS Screen Shorts/clock-blue.svg" alt="">
+                        <span class="font-500">Created Date</span> : Dec 5, 2023
+                      </span>
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                      <div class="accordian-case-inner-flex">
+                        <div>
+                          <img src="./SRS Screen Shorts/person.svg" alt="">
+                        </div>
+                        <span class="font-500">Provider : -- </span>
+                      </div>
+                      
+                      <div class="accordian-case-inner-flex">
+                        <span>
+                          <img src="./SRS Screen Shorts/person-add.svg" alt="">
+                        </span>
+                        <span class="font-500">Admin : -- </span>
+                      </div>
+              
+                      <div class="accordian-case-inner-flex">
+                        <div>
+                          <img src="./SRS Screen Shorts/person-add.svg" alt="">
+                        </div>
+                        <span class="font-500">Current Status : Cancelled by Admin </span>
+                      </div>
+                      
+                      <div>
+                        <button class="doc-btn extra-prop-doc-btn">(1) Documents</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                        <span class="mobile-card-case-flex">
+                          <img src="./SRS Screen Shorts/clock-blue.svg" alt="">
+                          <span class="font-500">Created Date:</span> Dec 5, 2023
+                        </span>
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                      <div class="accordion-body">
+                        <div class="accordian-case-inner-flex">
+                          <div>
+                            <img src="./SRS Screen Shorts/person.svg" alt="">
+                          </div>
+                          <span class="font-500">Provider : -- </span>
+                        </div>
+                        
+                        <div class="accordian-case-inner-flex">
+                          <span>
+                            <img src="./SRS Screen Shorts/person-add.svg" alt="">
+                          </span>
+                          <span class="font-500">Admin : -- </span>
+                        </div>
+                
+                        <div class="accordian-case-inner-flex">
+                          <div>
+                            <img src="./SRS Screen Shorts/person-add.svg" alt="">
+                          </div>
+                          <span class="font-500">Current Status : Cancelled by Admin </span>
+                        </div>
+                        
+                        <div>
+                          <button class="doc-btn extra-prop-doc-btn">(1) Documents</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  
+              </div>
+
+
+        </div>
+    </div>
+
+</body>
+</html>

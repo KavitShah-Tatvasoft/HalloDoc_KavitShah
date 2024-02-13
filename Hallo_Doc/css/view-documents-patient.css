@@ -1,0 +1,118 @@
+.relative-pos-class{
+    position: relative;
+}
+
+.main-container-top-text{
+    position: absolute;
+    top: -53px;
+    left: 0px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.main-container{
+    width: 70%;
+    background-color: white;
+    border-radius: 5px;
+    
+}
+
+.extra-padding-main-container{
+    padding: 25px;  
+    margin-top: 80px;
+}
+
+.text{
+    color: rgb(102, 99, 99);
+    font-size: 14px;
+}
+
+.small-text{
+    font-size: 14px!important;
+    font-weight: 500;
+}
+
+.blue-text{
+    color: #01bce9;
+    font-weight: 500;
+    font-size: 20px!important;
+}
+
+.case-id-text{
+   font-size: 15px!important;
+}
+
+.upper-margin{
+    margin-top: 15px;
+}
+
+.file-upload-btn{                /*Upload button customization*/
+    background-color: #01bce9;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  ::-webkit-file-upload-button {
+    display: none;
+    }
+
+.doc-download-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.download-all-btn{
+    border: 1px solid #01bce9;
+    color: #01bce9;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.doc-text{
+    font-weight: 500;
+    font-size: 22px;
+}
+
+input[type="checkbox"]{
+    height: 18px;
+    width: 18px;
+    margin-top: 5px;
+}
+
+.cloud-download-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background-color: white;
+}
+
+.cloud-btn-down{
+    height: auto;
+    width: 22px;
+}
+
+.width-col-1{
+    width: 5%;
+}
+
+.width-col-1{
+    width: 5%;
+}
+
+.width-col-1{
+    width: 5%;
+}
+
+.width-col-1{
+    width: 5%;
+}
+
+.width-col-5{
+    width: 10%;
+}
