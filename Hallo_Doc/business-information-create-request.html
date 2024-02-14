@@ -17,25 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
-    <title>Family/Friend Request</title>
+    <title>Business Request</title>
 
 </head>
 
 <body>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body family-pop">
-          <img src="./SRS Screen Shorts/exclamation.png" alt="" class="set-img">
-          <p class="information">Information</p>
-          <span class="popup-txt">When submit a request, you must provide the correct contact information for the patient or the responsibly party. Failure to provide the coreect email and phone number will delay service or be declined.</span>
-          <button type="button" class="btn btn-secondary ok-btn" data-bs-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="container-fluid shadow p-2 bg-white rounded">
     <div class="nav nav-flex">
@@ -74,7 +60,7 @@
     <div class="row">                                        <!--Row 1-->
 
       <div class="col-12 mb-3">                                <!--Patient Information col-->
-        <span class="patient-text">Family/Friend Information</span>
+        <span class="patient-text">Business Information</span>
       </div>
 
       <div class="col-12 col-md-6">                                      <!--First Name col-->
@@ -111,9 +97,17 @@
       <div class="form-floating mb-3 inp">
           <input type="text" class="form-control input-2" id="floatingInput-2"
               placeholder="Relation With Patient" autocomplete="off">
-          <label for="floatingInput-2">Relation With Patient</label>
+          <label for="floatingInput-2">Business/Property Name   </label>
       </div>
     </div>
+
+    <div class="col-12 col-md-6">                                      <!--Case Number col-->
+        <div class="form-floating mb-3 inp">
+            <input type="text" class="form-control input-2" id="floatingInput-2"
+                placeholder="First Name" autocomplete="off">
+            <label for="floatingInput-2">Case Number (Optional)</label>
+        </div>
+      </div>
         
 
   </div>
@@ -223,24 +217,10 @@
       <div class="form-floating mb-3 inp">
           <input type="text" class="form-control input-2" id="floatingInput-11"
               placeholder="Room #/ Suite(Optional)" autocomplete="off">
-          <label for="floatingInput-11">Room #/ Suite(Optional)</label>
+          <label for="floatingInput-11">Room #/ Suite (Optional)</label>
       </div>
   </div>
 
-  <div class="row">               <!--Row 5-->
-    <div class="col-12 mb-3">                                <!--Patient Contact Information col-->
-        <span class="patient-text">(Optional) Upload Photo or Document</span>
-    </div>
-  
-    <div class="col-12">
-        <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputGroupFile02">
-            <label class="input-group-text file-upload-btn" for="inputGroupFile02"><img src="./SRS Screen Shorts/cloud-arrow-up-white.svg" alt=""><span class="upload-txt">Upload</span></label>
-        </div>
-    </div>
-  
-
-</div>
 
     <div class="bottom-btns mt-3">
         <button type="submit" class="bottom-btns-submit">Submit</button>
@@ -260,13 +240,6 @@ const phoneInputField = document.getElementsByClassName("phone");
                 "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     }
-
-      
-        var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
-        console.log(myModal);
-        myModal.show()
-        console.log("hello");
-
 </script>
  
  
