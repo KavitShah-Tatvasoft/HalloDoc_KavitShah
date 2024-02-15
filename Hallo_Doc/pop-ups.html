@@ -19,7 +19,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title fs-6" id="staticBackdropLabel">Contact Your Provider</h3>
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Contact Your Provider</h3>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -39,13 +39,13 @@
         </div>
       </div>
     </div>
-  </div> -->    <!--Contact Provider-->
+  </div> -->  <!-- Contact Provider -->
 
   <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title fs-6" id="staticBackdropLabel">Request Support</h3>
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Request Support</h3>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -62,35 +62,173 @@
         </div>
       </div>
     </div>
-   </div> -->  <!--Request Support -->
+   </div>  -->
 
-   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <!-- Request DTY Support -->
+ 
+<!--
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
+      <div class="modal-content cancel-pop-scale">
         <div class="modal-header">
-          <h3 class="modal-title fs-6" id="staticBackdropLabel">Request Support</h3>
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Confirm Cancellation</h3>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="font-clr-light">To all unscheduled Physicians: We are short on coverage and needs additional support On Call to respond to Requests.</div><br>
+          <div>
+            <span class="font-clr-light">Patient Name :</span>
+            <span class="cancel-case-blue-text">John Snow</span><br>
+          </div>
 
             <form action="">
-                <textarea name="message" class="form-control" id="" cols="10" rows="5" placeholder="Message"></textarea>
+              <div class="container">
+                <div class="row cancel-pop-up-select-height cancel-pop-margin-top">
+                                  
+                        <select name="Number_Type" id="floatingInput-5" class="form-control form-select cancel-case-pop-text-clr">  
+                          <option value="check" hidden selected >Reason for Cancellation</option>
+                          <option value="Mobile">Reason 1</option>
+                          <option value="Home">Reason 2</option>
+                        </select>
+              
+                </div>
+              </div>
+              <textarea name="message" class="form-control cancel-pop-margin-top" id="" cols="12" rows="5" placeholder="Provide Additional Notes  "></textarea>
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="send-btn">Send</button>
+          <button type="button" class="send-btn">Confirm</button>
           <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
           
         </div>
       </div>
     </div>
-   </div>
-    
+   </div> --> 
+   <!--Cancel Case Pop Up-->
+
+   <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content assign-scale">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Assign Request</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <span class="font-clr-light">To assign this request, search and select another Physician.</span><br>
+          </div>
+
+            <form action="">
+              
+              <div class="col-12 mt-3">                                    
+                <div class="form-floating mb-3 inp"> 
+                    <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2">  
+                      <option value="Mobile" selected>Newyork</option>
+                      <option value="Home">London</option>
+                      <option value="Home">Germany</option>
+                    </select>
+                    <label for="floatingInput-5">Narrow Search by Region</label>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row assign-case-select-height assign-case-margin-top">
+                                  
+                        <select name="Number_Type" id="floatingInput-5" class="form-control form-select assign-case-text-clr">  
+                          <option value="check" hidden selected >Select Physician</option>
+                          <option value="Mobile">Person 1</option>
+                          <option value="Home">Person 2</option>
+                        </select>
+              
+                </div>
+              </div>
+              <textarea name="message" class="form-control assign-case-margin-top" id="" cols="12" rows="5" placeholder="Description"></textarea>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="send-btn">Confirm</button>
+          <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+          
+        </div>
+      </div>
+    </div>
+   </div> -->
+
+   <!-- Assign Case Pop Up -->
+
+   <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cancel-pop-scale">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Confirm Block</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <span class="font-clr-light">Patient Name :</span>
+            <span class="cancel-case-blue-text">John Snow</span><br>
+          </div>
+
+            <form action="">
+              <textarea name="message" class="form-control cancel-pop-margin-top" id="" cols="12" rows="5" placeholder="Reason for Block Request"></textarea>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="send-btn">Confirm</button>
+          <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+          
+        </div>
+      </div>
+    </div>
+   </div>  -->
+
+   <!-- Confirm Block  -->
+   
 </body>
 </html>
 
 <style>
+  /* .cancel-pop-extra-margin-left{
+    margin-left: 15px; 
+  }*/
+  textarea {
+    resize: none;
+}
+
+.cancel-case-pop-text-clr{
+  color: rgb(131, 128, 128);
+}
+
+.assign-case-pop-text-clr{
+  color: rgb(131, 128, 128);
+}
+
+option{
+  color:  rgb(131, 128, 128);
+}
+
+  .cancel-pop-margin-top{
+    margin-top: 15px!important;
+  }
+
+  .assign-case-margin-top{
+    margin-top: 15px!important;
+  }
+
+  .cancel-pop-up-select-height
+  {
+    height: 50px;
+    /* margin-left: 0px;
+    margin-right: 0px; */
+  }
+
+  .assign-case-select-height
+  {
+    height: 50px;
+    /* margin-left: 0px;
+    margin-right: 0px; */
+  }
+
+
 
     input[type="radio"]{
         height: 15px;
@@ -98,8 +236,17 @@
     }
 
     input[type='radio'] {
-        accent-color: blue;
+        accent-color: #19a1c2;
     }
+
+    .btn-close{
+    background: transparent url(../x-white.svg) center/2em auto no-repeat;
+   }
+
+   .cancel-case-blue-text{
+    font-weight: 500;
+    color: #01bce9;
+   }
 
     .send-btn{
         border: 1px solid #01bce9;
@@ -129,6 +276,7 @@
     }
 
     .font-clr-light{
+      font-weight: 500;
         color: rgb(131, 128, 128);
     }
     
@@ -139,6 +287,25 @@
     .modal-header{
         background-color: #01bce9;
         color: white;
+        border-radius: 10px 10px 0pc 0px;
+        font-size: 15px;
+    }
+
+    .modal-content  {
+      border-radius: 10px;
+    }
+
+
+    /* ---------- cancel case */
+
+    @media screen and (max-width:578px) {
+      .cancel-pop-scale{
+        transform: scale(0.95);
+      }
+
+      .assign-scale{
+        transform: scale(0.95);
+      }
     }
     
 </style>

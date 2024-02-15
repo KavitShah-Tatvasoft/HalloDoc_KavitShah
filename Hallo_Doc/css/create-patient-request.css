@@ -89,6 +89,11 @@
     width: auto;
 }
 
+input[type="file"]{
+  height: 49px;
+    padding: 12px;
+}
+
 .iti, .iti--allow-dropdown{          /*Managed the phone col*/
   width: 100%;
   height: 100%;
@@ -167,13 +172,22 @@ display: none;
   padding: 7px 10px;
 }
 
+.bottom-btns-edit{
+  background-color: #01bce9;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 15px;
+}
+
 .map-text-flex{
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   border: 1px solid #01bce9;
   border-radius: 5px;
-  width: 20%;
+  width: 16%;
   height: 78%;
 }
 
@@ -187,6 +201,19 @@ display: none;
   font-size: 15px;
 }
 
+.map-text-flex-patient-profile-only{
+  width: 50%;
+}
+
+@media screen and (max-width:1440px) {
+  .map-text-flex{
+    width: 20%;
+  }
+
+  .map-text-flex-patient-profile-only{
+    width: 70%!important;
+  }
+}
 
 @media screen and (max-width:1024px) {
   .patient-form{
@@ -194,9 +221,34 @@ display: none;
   }
 }
 
+@media screen and (max-width:900px){
+  .patient-form{
+    width: 90%;
+  }
+}
+
 @media screen and (max-width:768px) {
   .phonecolheight {
     height: 140%;
+}
+
+.phonecolheight-patient-profile-only{
+  height: 100%!important;
+}
+
+.map-text-flex{
+  width: 28%;
+}
+
+.map-text-flex{
+  width: 90px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.map-text-flex-patient-profile-only{
+  height: 57px;
+  width: 90px!important;
 }
 
 .add-extra-margin{
