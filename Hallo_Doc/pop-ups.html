@@ -182,11 +182,434 @@
    </div>  -->
 
    <!-- Confirm Block  -->
-   
+
+      <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content assign-scale">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Transfer Request</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <span class="font-clr-light">To assign this request, search and select another Physician.</span><br>
+          </div>
+
+            <form action="">
+              
+              <div class="col-12 mt-3">                                    
+                <div class="form-floating mb-3 inp"> 
+                    <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2">  
+                      <option value="Mobile" selected>Newyork</option>
+                      <option value="Home">London</option>
+                      <option value="Home">Germany</option>
+                    </select>
+                    <label for="floatingInput-5">Narrow Search by Region</label>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row assign-case-select-height assign-case-margin-top">
+                                  
+                        <select name="Number_Type" id="floatingInput-5" class="form-control form-select assign-case-text-clr">  
+                          <option value="check" hidden selected >Select Physician</option>
+                          <option value="Mobile">Person 1</option>
+                          <option value="Home">Person 2</option>
+                        </select>
+              
+                </div>
+              </div>
+              <textarea name="message" class="form-control assign-case-margin-top" id="" cols="12" rows="5" placeholder="Description"></textarea>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="send-btn">Confirm</button>
+          <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+          
+        </div>
+      </div>
+    </div>
+   </div> -->
+
+   <!-- Transfer Case Pop Up -->
+
+   <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content agreement-scale">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">Send Agreement</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="agreement-patient-type-flex">
+              <div class="patient-type"></div>
+              <span class="agreement-text">Patient</span>
+          </div>
+          <span class="agreement-text">To Send Agreement please make sure that you are updating the correct contact information below for the responsible party. </span><br>
+          <div>
+
+            <form action="">
+              <div class="col-12 mt-3">
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-1 agreement-inp" id="floatingInput-2"
+                        placeholder="Phone Number" autocomplete="off">
+                    <label for="floatingInput-2" class="agreement-label">Phone Number</label>
+                </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-floating mb-3 inp">
+                  <input type="email" class="form-control input-1 agreement-inp" id="floatingInput-2"
+                      placeholder="Email" autocomplete="off">
+                  <label for="floatingInput-2" class="agreement-label">Email</label>
+              </div>
+          </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="send-btn">Confirm</button>
+          <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+          
+        </div>
+      </div>
+    </div>
+   </div>  -->
+
+   <!-- Agreement Pop Up -->
+
+   <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cancel-pop-scale">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="staticBackdropLabel">View Shift</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div class="col-12">                                      
+              <div class="form-floating mb-3 inp"> 
+                  <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                    <option value="" selected hidden>Select a Region</option>
+                    <option value="Mobile" >Newyork</option>
+                    <option value="Home">London</option>
+                    <option value="">Germany</option>
+                  </select>
+                  <label for="floatingInput-5" class="view-shift-label">Region</label>
+              </div>
+
+              <div class="col-12">                                      
+                <div class="form-floating mb-3 inp"> 
+                    <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                      <option value="" selected hidden>Select a Physician</option>
+                      <option value="Mobile" >Person 1</option>
+                      <option value="Home">Person 2</option>
+                      <option value="">Person 3</option>
+                    </select>
+                    <label for="floatingInput-5" class="view-shift-label">Physician</label>
+              </div>
+
+              <div class="col-12">
+                <div class="form-floating mb-3 inp custom-date-input">
+                    <input type="date" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                        placeholder="Date Of Birth" autocomplete="off"> 
+                    <label for="floatingInput-4" class="view-shift-label">Date of Birth</label>
+                    <img src="./SRS Screen Shorts/calendar4-week.svg" alt="" class="custom-date-icon">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-floating mb-3 inp custom-clock-input">
+                      <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                          placeholder="Start" autocomplete="off"> 
+                      <label for="floatingInput-4" class="view-shift-label">Start</label>
+                      <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                  </div>
+                </div>
+  
+                <div class="col-6">
+                  <div class="form-floating mb-3 inp custom-clock-input">
+                      <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                          placeholder="End" autocomplete="off"> 
+                      <label for="floatingInput-4" class="view-shift-label">End</label>
+                      <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="send-btn" data-bs-dismiss="modal">Return</button>
+          <button type="button" class="send-btn">Edit</button>
+          <button type="button" class="delete-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+   </div> 
+    -->
+
+    <!-- View Shift -->
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content cancel-pop-scale">
+          <div class="modal-header">
+            <h3 class="modal-title fs-5" id="staticBackdropLabel">Create Shift</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="col-12">                                      
+                <div class="form-floating mb-3 inp"> 
+                    <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                      <option value="" selected hidden>Select a Region</option>
+                      <option value="Mobile" >Newyork</option>
+                      <option value="Home">London</option>
+                      <option value="">Germany</option>
+                    </select>
+                    <label for="floatingInput-5" class="view-shift-label">Region</label>
+                </div>
+  
+                <div class="col-12">                                      
+                  <div class="form-floating mb-3 inp"> 
+                      <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                        <option value="" selected hidden>Select a Physician</option>
+                        <option value="Mobile" >Person 1</option>
+                        <option value="Home">Person 2</option>
+                        <option value="">Person 3</option>
+                      </select>
+                      <label for="floatingInput-5" class="view-shift-label">Physician</label>
+                </div>
+  
+                <div class="col-12">
+                  <div class="form-floating mb-3 inp custom-date-input">
+                      <input type="date" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                          placeholder="Date Of Birth" autocomplete="off"> 
+                      <label for="floatingInput-4" class="view-shift-label">Date of Birth</label>
+                      <img src="./SRS Screen Shorts/calendar4-week.svg" alt="" class="custom-date-icon">
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-floating mb-3 inp custom-clock-input">
+                        <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                            placeholder="Start" autocomplete="off"> 
+                        <label for="floatingInput-4" class="view-shift-label">Start</label>
+                        <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                    </div>
+                  </div>
+    
+                  <div class="col-6">
+                    <div class="form-floating mb-3 inp custom-clock-input">
+                        <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                            placeholder="End" autocomplete="off"> 
+                        <label for="floatingInput-4" class="view-shift-label">End</label>
+                        <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                 Repeat <label class="switch shrink"> <input type="checkbox" checked> <span class="slider round"></span> </label>
+                </div>
+
+                <div class="create-shift-days-main-flex">
+                      <div class="create-shift-days-checkbox-colum-flex">
+                          <div class="create-shift-days-checkbox-flex">
+                            <input type="checkbox"> Every Sunday
+                          </div>
+                          <div class="create-shift-days-checkbox-flex">
+                            <input type="checkbox"> Every Wenesday
+                          </div>
+                          <div class="create-shift-days-checkbox-flex">
+                            <input type="checkbox"> Every Saturday
+                          </div>
+                      </div>
+  
+                  <div class="create-shift-days-checkbox-colum-flex">
+                    <div class="create-shift-days-checkbox-flex">
+                      <input type="checkbox"> Every Monday
+                    </div>
+                    <div class="create-shift-days-checkbox-flex">
+                      <input type="checkbox"> Every Thrusday
+                    </div>
+                  </div>
+  
+                  <div class="create-shift-days-checkbox-colum-flex">
+                    <div class="create-shift-days-checkbox-flex">
+                      <input type="checkbox"> Every Tuesday
+                    </div>
+                    <div class="create-shift-days-checkbox-flex">
+                      <input type="checkbox"> Every Friday
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="send-btn" data-bs-dismiss="modal">Return</button>
+            <button type="button" class="send-btn">Edit</button>
+            <button type="button" class="delete-btn">Delete</button>
+          </div>
+        </div>
+      </div>
+     </div> 
+     
+
+
+
 </body>
 </html>
 
 <style>
+
+
+/* <------------------create-shift----------------------> */
+.create-shift-days-checkbox-colum-flex{
+  display: flex;
+  flex-direction: column;
+}
+
+.create-shift-days-main-flex{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.create-shift-days-checkbox-flex{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 60px; 
+    height: 34px; 
+}
+
+.switch input { 
+    opacity: 0; 
+    width: 0;
+    height: 0; }
+
+.slider { 
+    position: absolute;
+     cursor: pointer; 
+     top: 0; 
+     left: 0; 
+     right: 0; 
+     bottom: 0; 
+     background-color: skyblue!important;
+    -webkit-transition: .4s; transition: .4s; 
+    height: 22px;
+    width: 51px;
+}
+
+.slider:before { 
+    position: absolute; 
+    content: ""; 
+    height: 29px; 
+    width: 29px; 
+    left: -2px; 
+    bottom: -3px; 
+    background-color: white; 
+    -webkit-transition: .4s; 
+    transition: .4s;
+    background: #01bce9;
+ }
+
+input:checked + .slider { background-color: #2196F3; }
+
+input:focus + .slider { box-shadow: 0 0 1px #2196F3; }
+
+input:checked + .slider:before { -webkit-transform: translateX(26px); -ms-transform: translateX(26px); transform: translateX(26px); }
+
+/* Rounded sliders */ .slider.round { border-radius: 34px; }
+
+.slider.round:before { border-radius: 50%; }
+
+.shrink{
+    transform: scale(0.7);
+}
+
+
+/* <----------------------------------------> */
+
+
+
+  .custom-date-input {          /*for setting the calendar icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  
+  .custom-date-input .custom-date-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+
+  .custom-clock-input {          /*for setting the clock icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  
+  .custom-clock-input .custom-clock-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+  
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+
+  .agreement-inp, .view-shift-inp{
+    height: 50px!important;
+    padding: 13px 10px 0px 11px!important;
+  }
+
+  .agreement-label,.view-shift-label{
+    padding: 11px!important;
+  }
   /* .cancel-pop-extra-margin-left{
     margin-left: 15px; 
   }*/
@@ -248,6 +671,13 @@ option{
     color: #01bce9;
    }
 
+   .delete-btn{
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    padding: 6px 16px;
+}
     .send-btn{
         border: 1px solid #01bce9;
         border-radius: 5px;
@@ -273,11 +703,30 @@ option{
 
     .modal-footer{
         border-top: none;
+        padding-right: 0px;
     }
 
     .font-clr-light{
       font-weight: 500;
         color: rgb(131, 128, 128);
+    }
+
+    .agreement-text{
+      color: rgb(131, 128, 128);
+      font-size: 14px;
+    }
+
+    .patient-type{
+      border-radius: 50%;
+      background-color: green;
+      height: 12px;
+      width: 12px;
+    }
+
+    .agreement-patient-type-flex{
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     .form-control:focus{
@@ -304,6 +753,10 @@ option{
       }
 
       .assign-scale{
+        transform: scale(0.95);
+      }
+
+      .agreement-scale{
         transform: scale(0.95);
       }
     }
