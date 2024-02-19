@@ -158,6 +158,19 @@
 </div>
 
 
+<div class="row">
+  <div class="input-group mb-3 mt-3">
+      <input id="selected-file-by-patietent" type="text" class="form-control p-2"
+          placeholder="Select File" disabled>
+      <button class="btn-color-for-upload" type="button" id="upload"> <i
+              class="bi bi-cloud-arrow-up mr-1"></i>
+          <span class="for-remove-upload ">Upload</span></button>
+      <input id="patietent-file-input" multiple class="file-input-hover-effect" type="file"
+          style="position: absolute; right: -8px;top: 0.5rem; opacity: 0;">
+  </div>
+</div>
+
+
 
 
 
@@ -165,6 +178,29 @@
 </html>
 
 <script>
+
+const fileInput = document.getElementById('patietent-file-input');
+        const fileNameField = document.getElementById('selected-file-by-patietent');
+
+        // Listen for the change event on the file input element
+        fileInput.addEventListener('change', (event) => {
+            // Get the selected file(s)
+            const files = event.target.files;
+
+            // If one or more files are selected
+            if (files.length > 0) {
+                // Get the name of the first file
+                const fileName = files[0].name;
+
+                // Update the value of the input field with the file name
+                fileNameField.value = fileName;
+            } else {
+                // If no files are selected, clear the input field
+                fileNameField.value = '';
+            }
+        });
+
+
   // var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
   // console.log(myModal);
   // myModal.show()
@@ -195,6 +231,14 @@
 
 
 <style>
+
+.btn-color-for-upload {
+    color: white;
+    background-color: #01bce9;
+    border: 1px solid #01bce9;
+    width: 100px;
+    height: 40px;
+}
 
 .doc-btn{
     border: 1px solid #01bce9;

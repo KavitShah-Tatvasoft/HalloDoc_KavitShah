@@ -355,7 +355,7 @@
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content create-shift-scale">
+        <div class="modal-content cancel-pop-scale">
           <div class="modal-header">
             <h3 class="modal-title fs-5" id="staticBackdropLabel">Create Shift</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -420,50 +420,39 @@
                 <div class="create-shift-days-main-flex">
                       <div class="create-shift-days-checkbox-colum-flex">
                           <div class="create-shift-days-checkbox-flex">
-                            <input type="checkbox"> <span class="create-shift-day-name">Every Sunday</span>
+                            <input type="checkbox"> Every Sunday
                           </div>
                           <div class="create-shift-days-checkbox-flex">
-                            <input type="checkbox"> <span class="create-shift-day-name">Every Wenesday</span>
+                            <input type="checkbox"> Every Wenesday
                           </div>
                           <div class="create-shift-days-checkbox-flex">
-                            <input type="checkbox"> <span class="create-shift-day-name">Every Saturday</span>
+                            <input type="checkbox"> Every Saturday
                           </div>
                       </div>
   
                   <div class="create-shift-days-checkbox-colum-flex">
                     <div class="create-shift-days-checkbox-flex">
-                      <input type="checkbox"> <span class="create-shift-day-name">Every Monday</span>
+                      <input type="checkbox"> Every Monday
                     </div>
                     <div class="create-shift-days-checkbox-flex">
-                      <input type="checkbox"> <span class="create-shift-day-name">Every Thrusday</span>
+                      <input type="checkbox"> Every Thrusday
                     </div>
                   </div>
   
                   <div class="create-shift-days-checkbox-colum-flex">
                     <div class="create-shift-days-checkbox-flex">
-                      <input type="checkbox"> <span class="create-shift-day-name">Every Tuesday</span>
+                      <input type="checkbox"> Every Tuesday
                     </div>
                     <div class="create-shift-days-checkbox-flex">
-                      <input type="checkbox"> <span class="create-shift-day-name">Every Friday</span>
+                      <input type="checkbox"> Every Friday
                     </div>
                   </div>
-                </div>
-                
-                <div class="col-12 mt-3">                                      
-                  <div class="form-floating mb-3 inp"> 
-                      <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
-                        <option value="" selected>2-times</option>
-                        <option value="Mobile" >3-times</option>
-                        <option value="Home">4-times</option>
-                        <option value="">5-times</option>
-                      </select>
-                      <label for="floatingInput-5" class="view-shift-label">Repeat End</label>
                 </div>
 
               </div>
             </form>
           </div>
-          <div class="modal-footer create-shift-footer">
+          <div class="modal-footer">
             <button type="button" class="send-btn" data-bs-dismiss="modal">Return</button>
             <button type="button" class="send-btn">Edit</button>
             <button type="button" class="delete-btn">Delete</button>
@@ -482,14 +471,6 @@
 
 
 /* <------------------create-shift----------------------> */
-.create-shift-footer{
-  padding-bottom: 0px;
-}
-
-.create-shift-day-name{
-  font-size: 14px;
-}
-
 .create-shift-days-checkbox-colum-flex{
   display: flex;
   flex-direction: column;
@@ -555,15 +536,9 @@ input:checked + .slider:before { -webkit-transform: translateX(26px); -ms-transf
 .slider.round:before { border-radius: 50%; }
 
 .shrink{
-    transform: scale(0.56);
+    transform: scale(0.7);
 }
 
-@media screen and (max-width:435px){
-  .create-shift-scale{
-    transform: scale(0.9);
-  }
-
-}
 
 /* <----------------------------------------> */
 

@@ -1,3 +1,64 @@
+.dotted-hr{
+    border: 1px dashed black;
+    margin-bottom: 20px!important;
+}
+
+.telephone-border-class{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    height: 57px;
+}
+
+.telephone-icon{
+
+    height: auto;
+    width: 20px;
+    padding: auto;
+}
+
+.edit-border{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    height: 57px;
+}
+
+.edit-text{
+    color: #01bce9;
+}
+
+@media screen and (max-width:1024px){
+    .edit-border{
+        width: 57px;
+    }
+}
+
+.location-border{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    height: 57px;
+}
+
+.location-icon{
+    height: auto!important;
+    width: 21px!important;
+}
+
+.remove-padding-left{
+    padding-left: 0px;
+}
+
+
 .body{
     background-color: #f9f9f9;
 }
@@ -35,6 +96,52 @@
     right: 0px;
 }
 
+.top-patient-view-text{
+    position: absolute;
+    top: -50px;
+    left: 0px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.type-color{
+    background-color: #5fbc61;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-reservation-text{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.type-text{
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 12px;
+}
+
+.confirmation-number-text-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.confirmation-number-text{
+    font-size: 12px;
+    color: rgb(136, 133, 133);
+}
+
+.confirmation-number{
+    color: #01bce9;
+    font-size: 19px;
+    font-weight: 600;
+}
+
 .submit-info-txt {
   position: absolute;
   top: -55px;
@@ -56,7 +163,6 @@
   .inc-inp-height{
     height: 108px!important;
   }
-
 
   textarea { resize: none; }     /*for text area col*/
 
@@ -165,9 +271,9 @@ display: none;
 }
 
 .bottom-btns-cancel{
-  background-color: white;
-  color: #01bce9;
-  border: 1px solid #01bce9;
+  background-color: red;
+  color: white;
+  border: 1px solid red;
   border-radius: 3px;
   border-radius: 5px;
   padding: 7px 10px;
@@ -206,14 +312,6 @@ display: none;
   width: 50%;
 }
 
-.common-btn-onboarding{
-  border: 1px solid #01bce9;
-  border-radius: 5px;
-  background-color: #01bce9;
-  color: white;
-  padding: 6px 12px;
-}
-
 @media screen and (max-width:1440px) {
   .map-text-flex{
     width: 20%;
@@ -238,11 +336,13 @@ display: none;
 
 @media screen and (max-width:768px) {
   .phonecolheight {
-    height: 140%;
+    height: 74px;
+    margin-bottom: 0px!important;
 }
 
-.phonecolheight-patient-profile-only{
-  height: 100%!important;
+
+.remove-padding-left{
+    width: 65px;
 }
 
 .map-text-flex{
@@ -255,10 +355,6 @@ display: none;
   margin-bottom: 10px;
 }
 
-.map-text-flex-patient-profile-only{
-  height: 57px;
-  width: 90px!important;
-}
 
 .add-extra-margin{
   margin-top: 22px;
@@ -290,6 +386,12 @@ input[type="tel"]::placeholder{
 }
 
 }
+
+/* @media screen and (max-width:450px) {
+    .remove-padding-left{
+        width: 55px;
+    }
+} */
 
 @media screen and (max-width:425px) {
   .patient-form{
