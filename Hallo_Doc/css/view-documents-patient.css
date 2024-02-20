@@ -2,6 +2,10 @@
     position: relative;
 }
 
+a{
+    text-decoration: none;
+}
+
 .mobile-cards{
     display: none;
 }

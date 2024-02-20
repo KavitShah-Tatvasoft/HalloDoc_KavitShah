@@ -243,7 +243,7 @@ a.nav-link {
     font-weight: 500;
     border: 2px solid #536ab0;
     position: absolute;
-    top: -22px;
+    top: -17px;
     right: 16px;
     background-color: #dae8eb;
     border-radius: 20px;
@@ -272,8 +272,13 @@ a.nav-link {
 }
 
 .circular_border{
-    border: 3px soild  #01bce9;
+    border: 1.5px solid #01bce9;
     border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
  }
 
 .circular_border img{
@@ -282,7 +287,7 @@ a.nav-link {
 
 .extended-1{
     position: relative;
-    display: none;
+    display: block;
     border-bottom: 1px solid black;
 }
 
@@ -686,6 +691,129 @@ background-color: #9966cd!important;
     outline: 0;
     box-shadow: none
 }
+
+/* ---------------------- */
+
+.accordion-button:not(.collapsed) {
+    color: black !important;
+    background-color: #dae8eb;
+    box-shadow: none;
+  }
+
+  .accordion-button {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0rem;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    background-color: #dae8eb;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: none;
+  }
+
+  .accordion-button:focus {
+    z-index: 3;
+    border-color: #dae8eb;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  .accordion-body {
+    padding: 0px;
+  }
+
+  .view_case_btn {
+    z-index: 10;
+  }
+
+  .extended-1 {
+    background-color: #dae8eb;
+  }
+
+  .no-margin-hr {
+    margin: 0px!important;
+  }
+
+  .patient-type-color-icon {
+    background-color: #60be5e;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin-left: 10px;
+  }
+
+  .admin-dash-patient-type-flex {
+    position: relative;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+  }
+
+  .patient-type-card-main-flex-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .patient_card_name {
+    display: flex;
+    align-items: center;
+  }
+
+  .add-patient-type-margin {
+    margin-top: 13px;
+  }
+
+  .card-head {
+    padding: 18px;
+  }
+
+  .patient-address-map-btn-flex-admin {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .patient-address-map-btn-flex-admin button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  .patient_card_address_admin {
+    flex-basis: 60%;
+    font-size: 16px;
+  }
+
+  .map_btn_admin_accordian {
+    border: 2px solid #01bce9;
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #01bce9;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 425px) {
+    .patient_card_address_admin {
+      font-size: 15px;
+    }
+
+    button.map_btn_admin_accordian {
+      font-size: 12px;
+    }
+  }
+
+  /* -------------------------------------------------- */
 
 
 

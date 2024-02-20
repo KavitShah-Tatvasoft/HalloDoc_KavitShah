@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/patient-dashboard.css">
+    <link rel="stylesheet" href="./css/FamilyFriend-request.css">
+    <script src="./js/patient-dashboard.js"></script>
     <title>Document</title>
 </head>
 
@@ -353,7 +356,7 @@
 
     <!-- View Shift -->
 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content create-shift-scale">
           <div class="modal-header">
@@ -470,8 +473,97 @@
           </div>
         </div>
       </div>
-     </div> 
+     </div>  -->
+
+     <!-- Create Shift -->
+
+     <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header modal-title-background">
+                  <h2 class="modal-title fs-5" id="staticBackdropLabel"> Select Type Of Care</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                   <div class="request-type-pop-flex">
+                      <button class="me-type-btn" id="me" onclick="changeCss(this)">House Call</button>
+                      <button class="else-type-btn" id="else" onclick="changeCss(this)">Consult</button>
+                   </div>
+      
+                   <div class="continue-cancel-flex">
+                      <button type="button" class="me-type-btn">Save</button>
+                      <button type="button" class="else-type-btn" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> -->
+
+  <!-- Encounter Type of care --- add css and js of patient dashboard -->
      
+  <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header modal-title-background">
+                <h2 class="modal-title fs-5" id="staticBackdropLabel">Encounter Form</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                 <span class="modal-header-text">Encounter Form is finalized sucesfully!</span>
+                 <div class="encounter-finalize-download-flex">
+                  <button class="encounter-finalize-download">Download</button>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Encounter Form Finalize -->
+
+<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content cancel-pop-scale">
+      <div class="modal-header">
+        <h3 class="modal-title fs-5" id="staticBackdropLabel">Request to Administrator</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="modal-header-text">Need to send message to edit</span>
+          <form action="">
+            <textarea name="message" class="form-control cancel-pop-margin-top" id="" cols="12" rows="5" placeholder="Message"></textarea>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="send-btn">Send</button>
+        <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+        
+      </div>
+    </div>
+  </div>
+ </div> -->
+
+ <!-- Provider My Profile Request to Admin -->
+
+ <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body family-pop">
+        <img src="./SRS Screen Shorts/exclamation.png" alt="" class="set-img">
+        <p class="information">Confirmation for clear case</p>
+        <span class="popup-txt">Are you sure you want to clear this request? Once cleared this request then you are not able to see this request.</span>
+        <div class="modal-footer mt-3">
+          <button type="button" class="send-btn">Clear</button>
+          <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Clear Case Pop Up Information --- add css of family friend -->
+
+
+
 
 
 
@@ -480,6 +572,22 @@
 
 <style>
 
+  /* <------------------finalize encounter form----------------------> */
+
+    .encounter-finalize-download{
+      border: 1px solid #01bce9;
+      border-radius: 5px;
+      background-color: #01bce9;
+      color: white;
+      padding: 6px 12px;
+    }
+
+    .encounter-finalize-download-flex{
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
 /* <------------------create-shift----------------------> */
 .create-shift-footer{

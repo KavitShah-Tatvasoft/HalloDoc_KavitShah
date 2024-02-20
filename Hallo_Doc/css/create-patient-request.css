@@ -241,6 +241,10 @@ display: none;
     height: 140%;
 }
 
+.business-req-only, .concierge-req-only, .only-family-friend-margin-top{
+  margin-top: 24px;
+}
+
 .phonecolheight-patient-profile-only{
   height: 100%!important;
 }

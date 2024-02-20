@@ -427,10 +427,10 @@
             </table>
         </div>
 
-        <div class="show_cards">
+        <!-- <div class="show_cards">
             <div class="main-card">
                 <div class="patient_card open_cards">
-                    <div class="patient-card-flex-1"> <!-- Use Collaspe from bootstrap -->
+                    <div class="patient-card-flex-1"> 
                         <span class="patient_card_name">Patient, Test</span>
                         <div class="patient_type_card">
                             Patient
@@ -504,10 +504,10 @@
                     </div>
                 </div>
             </div>    
-                <!-- --------------------------------------------------------------------------------------------- -->
-            <div class="main-card">   
+                
+            <!-- <div class="main-card">   
                 <div class="patient_card open_cards" onclick="show_innercard_2()">
-                    <div class="patient-card-flex-1"> <!-- Use Collaspe from bootstrap -->
+                    <div class="patient-card-flex-1"> 
                         <span class="patient_card_name">Patient, Test</span>
                         <div class="patient_type_card">
                             Patient
@@ -580,8 +580,146 @@
                         <div class="btn"><img src="./SRS Screen Shorts/moon-blue.svg" class="bottom-btn-img" alt="">Provider</div>
                     </div>
                 </div>
+            </div> 
+        </div> -->
+
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne"
+                  aria-expanded="true"
+                  aria-controls="panelsStayOpen-collapseOne"
+                >
+      
+                  <div class="card-head">
+                    <div class="patient-type-card-main-flex-item">
+                      <div class="patient_card_name">
+                        <div class="add-patient-type-margin">Patient, Test</div>
+                      </div>
+      
+                      <div class="admin-dash-patient-type-flex">
+                        <span class="patient-type-text">Patient</span>
+                        <div class="patient-type-color-icon"></div>
+                      </div>
+                    </div>
+      
+                    <div class="patient-address-map-btn-flex-admin">
+                      <div class="patient_card_address_admin">
+                        1331 Mayland Avenue, SW Washington, DC 20024
+                      </div>
+      
+                      <a href="" class="map_btn_admin_accordian">Map Location</a>
+                    </div>
+                  </div>
+                </button>
+              </h2>
+              <div
+                id="panelsStayOpen-collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingOne"
+              >
+                <div class="accordion-body">
+                  <hr class="no-margin-hr" />
+                  <div class="patient_card extended-1" id="extended-1">
+                    <button class="view_case_btn" onclick="switchBlack()">
+                      View Case
+                    </button>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="D.O.B"
+                      /></span>
+                      <span class="extended-label">Date of Birth:</span>
+                      <span class="extended-text">15-01-2003 (21)</span>
+                    </div>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="Email"
+                      /></span>
+                      <span class="extended-label">Email:</span>
+                      <span class="extended-text">kavit.shah@etatvasoft.com</span>
+                    </div>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="Number"
+                      /></span>
+                      <span class="extended-label">Patient:</span>
+                      <span class="extended-text">6351627219</span>
+                    </div>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="Note"
+                      /></span>
+                      <span class="extended-label">Transfer<br />Note:</span>
+                      <span class="extended-text"
+                        >Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit.</span
+                      >
+                    </div>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="D.O.S"
+                      /></span>
+                      <span class="extended-label">Date of Service:</span>
+                      <span class="extended-text">Jan 31,2023 8:30 AM</span>
+                    </div>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="Physician"
+                      /></span>
+                      <span class="extended-label">Physician:</span>
+                      <span class="extended-text">Dr. AGOLA</span>
+                    </div>
+                    <div class="extended-flex">
+                      <span class="circular_border"
+                        ><img src="./SRS Screen Shorts/airplane.svg" alt="Requestor"
+                      /></span>
+                      <span class="extended-label">Requestor:</span>
+                      <span class="extended-text"
+                        >Patient Agola Three, BhoomiOne</span
+                      >
+                    </div>
+      
+                    <div class="extended-flex-btn mt-4">
+                      <div class="btn btn-left">View Notes</div>
+                      <div class="btn btn-right">Doctors Note</div>
+                    </div>
+      
+                    <div class="extended-flex-btn">
+                      <div class="btn btn-left">View Uploads</div>
+                      <div class="btn btn-right">Encounter</div>
+                    </div>
+      
+                    <div class="extended-flex-btn">
+                      <div class="btn btn-left">Orders</div>
+                      <div class="btn btn-right">Email</div>
+                    </div>
+      
+                    <div class="extended-flex-bottom">
+                      <span class="bottom-btn-texts">Chat with:</span>
+                      <div class="btn">
+                        <img
+                          src="./SRS Screen Shorts/moon-blue.svg"
+                          class="bottom-btn-img"
+                          alt=""
+                        />Patient
+                      </div>
+                      <div class="btn">
+                        <img
+                          src="./SRS Screen Shorts/moon-blue.svg"
+                          class="bottom-btn-img"
+                          alt=""
+                        />Provider
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
 
     </div>
 

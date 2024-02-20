@@ -219,6 +219,11 @@ textarea{
         display: none;
     }
 
+    input[type="checkbox"]{
+      height: 15px;
+      width: 15px;
+    }
+
 @media screen and (max-width:1057px) {
     .col-1-width{
         padding-left: 10px;

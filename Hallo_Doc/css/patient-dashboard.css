@@ -1,3 +1,9 @@
+#link-for-someone-else{
+    display: none;
+}
+a{
+    text-decoration: none;
+}
 .relative-pos-class{
     position: relative;
 }

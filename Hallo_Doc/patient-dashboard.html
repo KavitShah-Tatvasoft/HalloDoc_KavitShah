@@ -37,10 +37,10 @@
                             </div>
                             <ul class="nav sidebar-list-flex">
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                                    <a class="nav-link" aria-current="page" href="patient-dashboard.html">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Profile</a>
+                                    <a class="nav-link" href="patient-profile.html">Profile</a>
                                 </li>
                             </ul>
                     </div>
@@ -60,7 +60,9 @@
                     <strong>Kavit Shah</strong>
                 </span>
                 <div>
-                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                  <a href="patient-login.html">
+                    <div class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </div>
+                  </a>  
                     <!-- <button type="button" class="logout-btn">
                         <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
                         <span class="logout-btn-text">Logout</span>
@@ -88,10 +90,10 @@
 
         <ul class="nav nav-underline cm-margin ms-3 inner-nav">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                <a class="nav-link" aria-current="page" href="patient-dashboard.html">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="patient-profile.html">Profile</a>
             </li>
         </ul>
     </div>
@@ -121,8 +123,15 @@
                                     <button class="else-type-btn" id="else" onclick="changeCss(this)">Some One Else</button>
                                  </div>
                     
-                                 <div class="continue-cancel-flex">
-                                    <button type="button" class="me-type-btn">Continue</button>
+                                 
+
+                                 <div class="continue-cancel-flex"  id="link-for-me">
+                                  <a href="submit-information-me.html"><div type="button" class="me-type-btn">Continue</div></a>
+                                  <button type="button" class="else-type-btn" data-bs-dismiss="modal">Cancel</button>
+                                 </div>
+
+                                 <div class="continue-cancel-flex" id="link-for-someone-else">
+                                    <a href="submit-information-someonelse.html"><div type="button" class="me-type-btn">Continue</div></a>
                                     <button type="button" class="else-type-btn" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
@@ -159,7 +168,7 @@
                                 <span class="table-btn-contact-flex"><img src="./SRS Screen Shorts/person-add.svg" alt="">Provider</span>
                             </button>
                         </td>
-                        <td><button class="doc-btn">(1) Documents</button></td>
+                        <td><a href="view-documents-patient.html"><span class="doc-btn">(1) Documents</span></a></td>
                       </tr>
                       <tr>
                         <td class="extra-padding-td">Jacob</td>
@@ -172,7 +181,9 @@
                         <td class="extra-padding-td">Larry</td>
                         <td>the Bird</td>
                         <td></td>
-                        <td><button class="doc-btn">(1) Documents</button></td>
+                        <td>
+                          <a href="view-documents-patient.html"><span class="doc-btn">(1) Documents</span></a>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

@@ -4,6 +4,10 @@
     min-height: 100vh;
 }
 
+a{
+    text-decoration: none;
+}
+
 .background-img{
     display: none;
 }

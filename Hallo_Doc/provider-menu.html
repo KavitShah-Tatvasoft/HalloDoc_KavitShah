@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/provider-menu.css">
+    <script src="./js/admin-dashboard.js"></script>
+    <title>Provider Menu</title>
+</head>
+
+<body>
+    <!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
+    <div class="container-fluid shadow p-2 bg-white rounded">
+        <div class="nav nav-flex">
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
+                    </button>
+
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                        aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
+                        <div class="offcanvas-body">
+                            
+                            <div class="sidebar-profile-text">
+                                <span>
+                                    Welcome,
+                                </span>
+                                <span>
+                                    <strong>Admin admin2</strong>
+                                </span>
+                            </div>
+                            <ul class="nav sidebar-list-flex">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Provider Location</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">My Profile</a>
+                                </li>
+                              
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Dropdown
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Partners</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Access</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Records</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                        
+                    </div>
+                    </div>
+                </div>
+
+                <span class="ms-2">
+                    <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
+                </span>
+            </div>
+
+            <div class="nav-right">
+                <span class="mx-1 profile-name">
+                    Welcome
+                </span>
+                <span class="mx-1 profile-name">
+                    <strong>Admin admin2</strong>
+                </span>
+                <div>
+                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                    <!-- <button type="button" class="logout-btn">
+                        <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
+                        <span class="logout-btn-text">Logout</span>
+                    </button> -->
+                </div>
+
+                <div>
+                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <label for="moon-btn">
+                        <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
+                    </label>
+
+                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <label for="sun-btn">
+                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                            id="sun-id">
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
+        <ul class="nav nav-underline cm-margin ms-3 inner-nav">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Provider Location</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">My Profile</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Provider</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Partners</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Access</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ---------------------------------------------------------------INNER NAV BAR OVER------------------------------------------------------ -->
+
+    <!-- ---------------------------------------------------------------NAV BAR OVER---------------------------------------------------------------------------- -->
+    <div class="container-fluid main-container relative-pos-class">
+        <div class="main-container-top-text">
+            Provider Information
+        </div>
+
+        <div class="row">
+            <div class="col-12 flex-create-account-search">
+
+                <div class="select-parent">
+                    <select name="physician" id="" class="form-select select-physician">
+                        <option value="">Physician 1</option>
+                        <option value="">Physician 2</option>
+                        <option value="">Physician 3</option>
+                        <option value="">Physician 4</option>
+                    </select>
+
+                    <img src="./SRS Screen Shorts/search.svg" class="select-search-img" alt="">
+                </div>
+
+               <button class="account-btn"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <span class="new-req-text">Create Provider Account</span>
+                </button>
+            </div>
+        </div>
+
+        <table class="table align-middle mt-2">
+            <thead class="table-active  align-middle">
+              <tr>
+                <th scope="col" class="thead width-col1 extra-padding-td text-center">Stop Notification</th>
+                <th scope="col" class="thead width-col2">Provider Name<img src="./SRS Screen Shorts/arrow-up.svg" class="add-padding" alt="arrow-down"></th>
+                <th scope="col" class="thead width-col3" >Role</th>
+                <th scope="col" class="thead width-col4">On Call Status</th>
+                <th scope="col" class="thead width-col5">Status</th>
+                <th scope="col" class="thead width-col6 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="extra-padding-td stop-checkbox-flex"><input type="checkbox" class="stop-checkbox" name="" id=""></td>
+                <td>Derek Shah</td>
+                <td>Main Admin</td>
+                <td>Available</td>
+                <td>Active</td>
+                <td class="contact-flex">
+                    <button class="contact-btn">
+                        <span>Contact</span>
+                    </button>
+                    
+                    <button class="contact-btn">
+                        <span>Edit</span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row accordion-top">
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button accordian-btn-flex" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        <div class="extra-padding-td stop-checkbox-flex"><input type="checkbox" class="stop-checkbox" name="" id=""> <span class="accordion-row-name">Derek Shah</span></div>
+                        <div class="oncall-status-col">
+                            <span class="oncall-status-text">On Call Status : </span><strong class="status-text">Available</strong>
+                        </div>
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body accordion-rows-flex">
+                      <div class="accordion-body-row-flex">
+                        <div class="img-border">
+                            <img src="./SRS Screen Shorts/person.svg" class="accordion-row-img" alt="">
+                        </div>
+                        <span class="role-text-accordion">Role:</span>
+                        <span class="role-accordion">Master Admin</span>
+                      </div>
+
+                      <div class="accordion-body-row-flex">
+                        <div class="img-border">
+                            <img src="./SRS Screen Shorts/tick.svg" class="accordion-row-img" alt="">
+                        </div>
+                        <span class="role-text-accordion">Status:</span>
+                        <span class="role-accordion">Available</span>
+                      </div>
+
+                      <div class="accordion-bottom-btn-flex">
+                        <button class="accordion-bottom-btn">Contact</button>
+                        <button class="accordion-bottom-btn">Edit</button>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+
+    </div>
+
+
+
+         
+
+</body>
+</html>

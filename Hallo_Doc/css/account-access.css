@@ -1,0 +1,104 @@
+.main-container{
+    width: 95%;
+    margin-top: 80px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.relative-pos-class{
+    position: relative;
+}
+
+.main-container-top-text{
+    position: absolute;
+    top: -53px;
+    left: 0px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.access-btn, .actions-access-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: white;
+    color: #01bce9;
+    padding: 6px 12px;
+}
+
+.access-btn-flex{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-right: 25px;
+}
+
+.actions-flex-access{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.container-fluid{
+    padding: 0px;
+}
+
+.extra-padding-td{
+    padding-left: 20px!important;
+}
+
+.width-col1{
+    width: 45%;
+}
+
+.width-col2{
+    width: 40%;
+}
+
+.width-col3{
+    width: 15%;
+}
+
+.accordion-div{
+    display: none;
+}
+
+.accordion-div-rows-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+}
+
+ .role-text-accordion, .role-accordion{
+    font-weight: 400;
+    color: black;
+}
+
+.shrink{
+    transform: scale(0.92);
+}
+
+.plus-img-create-access{
+    display: none;
+}
+
+@media screen and (max-width:550px) {
+    .table{
+        display: none;
+    }
+
+    .accordion-div{
+        display: block;
+    }
+
+    .plus-img-create-access{
+        display: block;
+    }
+
+    .new-req-text{
+        display: none;
+    }
+}
