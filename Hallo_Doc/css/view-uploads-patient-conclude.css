@@ -1,0 +1,310 @@
+.relative-pos-class{
+    position: relative;
+}
+
+a{
+    text-decoration: none;
+}
+
+.mobile-cards{
+    display: none;
+}
+
+.main-container-top-text{
+    position: absolute;
+    top: -53px;
+    left: 0px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 11px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+  }
+
+.main-container{
+    width: 70%;
+    background-color: white;
+    border-radius: 5px;
+    clear: both;
+    box-shadow: -2px -2px 9px 0px #cdc5c5f7;
+    border-radius: 5px;
+    
+}
+
+.extra-padding-main-container{
+    padding: 25px;  
+    margin-top: 80px;
+}
+
+.text{
+    color: rgb(102, 99, 99);
+    font-size: 16px;
+}
+
+.small-text{
+    font-size: 15px!important;
+    font-weight: 500;
+}
+
+.blue-text{
+    color: #01bce9;
+    font-weight: 600;
+    font-size: 23px!important;
+}
+
+.case-id-text{
+   font-size: 16px!important;
+}
+
+th{
+    font-weight: 600;
+}
+
+.upper-margin{
+    margin-top: 15px;
+}
+
+.file-upload-btn{                /*Upload button customization*/
+    background-color: #01bce9;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  ::-webkit-file-upload-button {
+    display: none;
+    }
+
+.doc-download-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.up-arrow-img{
+    padding-bottom: 5px;
+    padding-left: 5px;
+    
+}
+
+.download-all-btn{
+    border: 1px solid #01bce9;
+    color: #01bce9;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.doc-text{
+    font-weight: 500;
+    font-size: 22px;
+    
+}
+
+input[type="checkbox"]{
+    height: 18px;
+    width: 18px;
+    margin-top: 5px;
+}
+
+input[type="file"]{
+    height: 50px;
+    padding: 12px;
+    background-color: #fafafa;
+}
+
+.upload-image-file{
+    height: auto;
+    width: 20px;
+}
+
+.download-all-image{
+    display: none;
+}
+
+.cloud-download-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background-color: white;
+}
+
+.cloud-btn-down {
+    height: auto;
+    width: 20px;
+    padding-bottom: 3px;
+}
+
+.width-col-1{
+    width: 10%;
+}
+
+.width-col-2{
+    width: 50%;
+}
+
+.width-col-3{
+    width: 20%;
+}
+
+.width-col-4{
+    width: 20%;
+}
+
+.download-delete-btns-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.pdf-img{
+    height: auto;
+    width: 25px;
+}
+
+.pdf-name-flex{
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 11px!important; 
+}
+
+.single-mobile-card{
+    padding: 15px;
+    padding-left: 18px;
+}
+
+.mobile-checkbox-name-flex{
+    display: flex;
+    gap: 10px;
+}
+
+.common-margin-top{
+    margin-top: 10px;
+}
+
+.doc-download-delete-mail-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.accordion-div-flex{
+    margin-top: 5px;
+    display: flex;
+    gap: 10px;
+}
+
+@media screen and (max-width:834px) {
+    .main-container{
+        width: 90%;
+    }
+
+    .width-col-2{
+        width: 35%;
+    }
+    
+    .width-col-3{
+        width: 35%;
+    }
+
+}
+
+@media screen and (max-width:648px) {
+    .table{
+        display: none;
+    }
+
+    .mobile-cards{
+        display: block;
+    }
+
+    .upload-txt{
+        display: none;
+    }
+
+    .upload-image-file{
+        width: 23px;
+        margin-left: 10px;
+        margin-right: 10px; 
+    }
+
+    .extra-padding-main-container{
+        padding: 15px;
+    }
+
+    .pdf-name-flex{
+        padding-bottom: 5px!important;
+    }
+
+    .download-all-image{
+        display: block;
+        height: auto;
+        width: 20px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    
+    }
+
+    .download-all-text{
+        display: none;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .main-container-top-text {
+        position: absolute;
+        top: -48px;
+        left: 0px;
+        font-weight: 500;
+        font-size: 22px;
+    }
+
+    .back-btn-top{
+        transform: scale(0.85);
+        top: -53px;
+    }
+
+    .small-text{
+        font-size: 14px!important;
+    }
+
+    .blue-text {
+        font-size: 22px!important;
+    }
+
+    .case-id-text {
+        font-size: 15px!important;
+    }
+
+    .text {
+        font-size: 15px;
+    }
+
+    .doc-text {
+        font-size: 21px;
+    }
+
+    .download-all-image {
+        width: 18px;
+    }
+}

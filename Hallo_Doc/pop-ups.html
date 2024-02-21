@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="./css/patient-dashboard.css">
     <link rel="stylesheet" href="./css/FamilyFriend-request.css">
     <script src="./js/patient-dashboard.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
     <title>Document</title>
 </head>
 
 <body>
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
     Launch static backdrop modal
   </button>
   
@@ -236,7 +239,7 @@
 
    <!-- Transfer Case Pop Up -->
 
-   <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <!-- <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content agreement-scale">
         <div class="modal-header">
@@ -562,8 +565,69 @@
 
 <!-- Clear Case Pop Up Information --- add css of family friend -->
 
+<div class="modal fade" id="send-link" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content agreement-scale">
+      <div class="modal-header">
+        <h3 class="modal-title fs-5" id="staticBackdropLabel">Send mail to patient for submitting request</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+
+          <form action="">
+            <div class="col-12 mt-3">
+              <div class="form-floating mb-3 inp">
+                  <input type="text" class="form-control input-1 agreement-inp" id="floatingInput-2"
+                      placeholder="First Name" autocomplete="off">
+                  <label for="floatingInput-2" class="agreement-label">First Name</label>
+              </div>
+            </div>
+            
+              <div class="col-12 mt-3">
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-1 agreement-inp" id="floatingInput-2"
+                        placeholder="Last Name" autocomplete="off">
+                    <label for="floatingInput-2" class="agreement-label">Last Name</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">                                      <!--Phone Number col-->
+                <div class="form-floating mb-3 inp phonecolheight">
+                    <input type="tel" class="form-control phoneflags" id="phone" />
+                </div>
+            </div>  
+
+          <div class="col-12">
+            <div class="form-floating mb-3 inp">
+                <input type="email" class="form-control input-1 agreement-inp" id="floatingInput-2"
+                    placeholder="Email" autocomplete="off">
+                <label for="floatingInput-2" class="agreement-label">Email</label>
+            </div>
+          </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="send-btn">Send</button>
+        <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+        
+      </div>
+    </div>
+  </div>
+ </div> 
+</div>
 
 
+ <script>
+  const phoneInputField = document.getElementsByClassName("phone");
+for (let i = 0; i < phoneInputField.length; ++i) {
+    const phoneInput = window.intlTelInput(phoneInputField[i], {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+}
+
+</script>
 
 
 
@@ -571,6 +635,10 @@
 </html>
 
 <style>
+
+  /*send lnk*/
+
+  
 
   /* <------------------finalize encounter form----------------------> */
 

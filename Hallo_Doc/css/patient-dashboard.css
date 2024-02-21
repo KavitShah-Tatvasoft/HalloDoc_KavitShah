@@ -16,6 +16,12 @@ a{
     font-size: 25px;
 }
 
+.accordian-case-outer-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
 .flex-create-request{
     display: flex;
     justify-content: flex-end;
@@ -42,6 +48,16 @@ a{
 .thead{
     background-color: #f0f0f0!important ;
     padding-bottom: 11px!important;
+}
+
+.img-icon-border{
+    height: 22px;
+    width: 22px;
+    border: 1px solid #01bce9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -75,6 +91,8 @@ th{
     width: 100%;
     margin-top: 20px;
     margin-bottom: 30px;
+    display: flex;  /*Added during linking*/
+    justify-content: center;
 }
 
 .font-500{
@@ -204,6 +222,9 @@ th{
     gap: 5px;
     align-items: center;
   }
+
+
+
 
   .blue-img-circular-border{
     border: 1px solid #01bce9;

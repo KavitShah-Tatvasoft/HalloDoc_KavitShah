@@ -34,6 +34,12 @@
     padding-right: 25px;
 }
 
+.access-btn-add-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .actions-flex-access{
     display: flex;
     justify-content: center;

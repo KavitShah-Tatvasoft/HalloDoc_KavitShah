@@ -65,8 +65,14 @@
     border: 1px solid #01bce9;
     border-radius: 5px;
     color: #01bce9;
-    background-color: white;
+    background-color: transparent;
     padding: 6px 12px;
+}
+
+.edit-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .stop-checkbox-flex{

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/patient-explore-record.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <title>Patient History</title>
+</head>
+
+<body>
+    <!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
+    <div class="container-fluid shadow p-2 bg-white rounded">
+        <div class="nav nav-flex">
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
+                    </button>
+
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                        aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
+                        <div class="offcanvas-body">
+                            
+                            <div class="sidebar-profile-text">
+                                <span>
+                                    Welcome,
+                                </span>
+                                <span>
+                                    <strong>Admin admin2</strong>
+                                </span>
+                            </div>
+                            <ul class="nav sidebar-list-flex">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Provider Location</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">My Profile</a>
+                                </li>
+                              
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Dropdown
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Partners</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Access</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Records</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                        
+                    </div>
+                    </div>
+                </div>
+
+                <span class="ms-2">
+                    <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
+                </span>
+            </div>
+
+            <div class="nav-right">
+                <span class="mx-1 profile-name">
+                    Welcome
+                </span>
+                <span class="mx-1 profile-name">
+                    <strong>Admin admin2</strong>
+                </span>
+                <div>
+                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                    <!-- <button type="button" class="logout-btn">
+                        <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
+                        <span class="logout-btn-text">Logout</span>
+                    </button> -->
+                </div>
+
+                <div>
+                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <label for="moon-btn">
+                        <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
+                    </label>
+
+                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <label for="sun-btn">
+                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                            id="sun-id">
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
+        <ul class="nav nav-underline cm-margin ms-3 inner-nav">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Provider Location</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">My Profile</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Provider</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Partners</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Access</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ---------------------------------------------------------------INNER NAV BAR OVER------------------------------------------------------ -->
+
+    <!-- ---------------------------------------------------------------NAV BAR OVER---------------------------------------------------------------------------- -->
+
+    <div class="container-fluid patient-form shadow bg-white rounded relative-position extra-margin">
+
+        <div class="submit-info-txt">
+          Patient Record
+        </div>
+
+        <div class="back-btn-top " role="button" onclick="history.go(-1)">
+            <img src="./chevron-left.svg" alt="">
+            Back
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle mt-4">
+                <thead class="table-active  align-middle">
+                  <tr>
+                    <th scope="col" class="thead width-col-1 extra-padding-td">Client/Member</th>
+                    <th scope="col" class="thead width-col-2">
+                        <div class="table-row1-flex">
+                            <span>Created Date</span><img src="./SRS Screen Shorts/arrow-up.svg" class="arrow-up-icon">
+                        </div>
+                    </th>
+                    <th scope="col" class="thead width-col-3">Confirmation</th>
+                    <th scope="col" class="thead width-col-4" >Provider Name</th>
+                    <th scope="col" class="thead width-col-5">Conclude Date</th>
+                    <th scope="col" class="thead width-col-6">Status</th>
+                    <th scope="col" class="thead width-col-7">Final Report</th>
+                    <th scope="col" class="thead width-col-8 text-center">Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td class="extra-padding-td">John, Test</td>
+                    <td>Jun 24,2021</td>
+                    <td>MD12345678ASIHEH</td>
+                    <td>Dr.Parthesh </td>
+                    <td>Jun 30,2021</td>
+                    <td>Accepted</td>
+                    <td><a href="#" role="button" class="view-final-report-btn">View</a></td>
+                    <td class="text-center">
+                        <div class="patient-records-document-action-button">
+                            <button type="button"
+                                class="btn row-btn-action dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><button class="dropdown-item" type="button">View Case</button></li>
+                                <li><button class="dropdown-item" type="button">(0) Documents</button></li>
+                            </ul>
+                        </div>
+                    </td>
+                  </tr> 
+                </tbody>
+              </table>
+
+              <div class="accordion mt-4 ms-3 me-3 mb-3" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      <div class="accordion-button-flex">
+                        <span class="accordion-row-name">John Snow</span>
+                      <small class="acount-type-btn-text">MX250350TIRTX3050</small>
+                      </div>
+    
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                      <div class="accordion-rows-main-flex">
+    
+                        <div class="accordion-row-inner-flex">
+                            <div class="image-blue-border">
+                                <img src="./SRS Screen Shorts/calendar4-week-blue.svg" class="calendar-icon-resize" alt="">
+                            </div>
+                            <div>
+                                <span class="email-label">Created Date: </span>
+                                <span class="email-text">Mar 15, 2019</span>
+                            </div>
+                        </div>
+
+                        <div class="accordion-row-inner-flex">
+                            <div class="image-blue-border">
+                                <img src="./SRS Screen Shorts/person-add.svg" alt="">
+                            </div>
+                            <div>
+                                <span class="email-label">Provider: </span>
+                                <span class="email-text">Dr. Parekh</span>
+                            </div>
+                        </div>
+
+                        <div class="accordion-row-inner-flex">
+                            <div class="image-blue-border">
+                                <img src="./SRS Screen Shorts/calendar4-week-blue.svg"  class="calendar-icon-resize" alt="">
+                            </div>
+                            <div>
+                                <span class="email-label">Concluded Date:</span>
+                                <span class="email-text">June 15, 2019</span>
+                            </div>
+                        </div>
+    
+                        <div class="accordion-row-inner-flex">
+                            <div class="image-blue-border">
+                                <img src="./SRS Screen Shorts/tick.svg" class="tick-icon-resize" alt="">
+                            </div>
+                            <div>
+                                <span class="email-label">Status: </span>
+                                <span class="email-text">Concluded</span>
+                            </div>
+                        </div>
+    
+                        <div class="view-case-doc-btn-flex">
+                            <a href="" role="button" class="view-case-doc-btn mt-4">View Case</a>
+                            <a href="" role="button" class="view-case-doc-btn">(2) Documents</a>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+    
+              </div>
+
+              
+        </div>
+
+    </div>
+
+</body>
+</html>

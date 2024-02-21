@@ -23,6 +23,18 @@
     align-items: center;
 }
 
+.signature-img{
+  height: auto;
+  width: 100px;
+}
+
+.signatur-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 
 .view-reservation-text{
     font-weight: 600;

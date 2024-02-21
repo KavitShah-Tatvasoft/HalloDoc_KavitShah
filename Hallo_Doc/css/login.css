@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+a{
+    text-decoration: none;
+}
+
 body{
     position: relative;
     z-index: 2;
@@ -160,6 +164,9 @@ body{
     border: none;
     background-color: #01bce9;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .reset-btn{
@@ -169,6 +176,9 @@ body{
     border: none;
     background-color: #01bce9;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .forget-pass{

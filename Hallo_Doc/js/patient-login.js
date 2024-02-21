@@ -74,6 +74,32 @@ function hidePass()
 
 }
 
+function showPassword()
+{
+    var x = document.getElementById("open-eye-id-1").style;
+    var y = document.getElementById("close-eye-id-1").style;
+
+    var z = document.getElementById("floatingPassword-1");
+    z.type = "text";
+
+    x.display="none";
+    y.display="block";
+
+}
+
+function hidePassword()
+{
+    var x = document.getElementById("open-eye-id-1").style;
+    var y = document.getElementById("close-eye-id-1").style;
+
+    var z = document.getElementById("floatingPassword-1");
+    z.type = "password";
+
+    y.display="none";
+    x.display="block";
+
+}
+
 
 
 

@@ -1,0 +1,361 @@
+.iti, .iti--allow-dropdown{          /*Managed the phone col*/
+  width: 100%;
+  height: 100%;
+}
+
+.iti__selected-flag, .phoneflags{
+  height: 80%;
+}
+
+.iti__flag-container{
+  height: 80%;
+}
+
+.iti__country-list {
+  z-index: 300!important;
+}
+
+.iti *{
+  width: 100%;
+}
+
+.iti-mobile , .iti--container{
+  width: 37%!important;
+  height: 30%!important;
+}
+
+.send-link-pop-up-only{
+  height: 74px;
+  width: 200%;
+}
+
+@media screen and (max-width:767px) {
+  .send-link-pop-up-only{
+    width: 100%;
+  }
+}
+
+
+
+  /* <------------------finalize encounter form----------------------> */
+
+    .encounter-finalize-download{
+      border: 1px solid #01bce9;
+      border-radius: 5px;
+      background-color: #01bce9;
+      color: white;
+      padding: 6px 12px;
+    }
+
+    .encounter-finalize-download-flex{
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+/* <------------------create-shift----------------------> */
+.create-shift-footer{
+  padding-bottom: 0px;
+}
+
+.create-shift-day-name{
+  font-size: 14px;
+}
+
+.create-shift-days-checkbox-colum-flex{
+  display: flex;
+  flex-direction: column;
+}
+
+.create-shift-days-main-flex{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.create-shift-days-checkbox-flex{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 60px; 
+    height: 34px; 
+}
+
+.switch input { 
+    opacity: 0; 
+    width: 0;
+    height: 0; }
+
+.slider { 
+    position: absolute;
+     cursor: pointer; 
+     top: 0; 
+     left: 0; 
+     right: 0; 
+     bottom: 0; 
+     background-color: skyblue!important;
+    -webkit-transition: .4s; transition: .4s; 
+    height: 22px;
+    width: 51px;
+}
+
+.slider:before { 
+    position: absolute; 
+    content: ""; 
+    height: 29px; 
+    width: 29px; 
+    left: -2px; 
+    bottom: -3px; 
+    background-color: white; 
+    -webkit-transition: .4s; 
+    transition: .4s;
+    background: #01bce9;
+ }
+
+input:checked + .slider { background-color: #2196F3; }
+
+input:focus + .slider { box-shadow: 0 0 1px #2196F3; }
+
+input:checked + .slider:before { -webkit-transform: translateX(26px); -ms-transform: translateX(26px); transform: translateX(26px); }
+
+/* Rounded sliders */ .slider.round { border-radius: 34px; }
+
+.slider.round:before { border-radius: 50%; }
+
+.shrink{
+    transform: scale(0.56);
+}
+
+@media screen and (max-width:435px){
+  .create-shift-scale{
+    transform: scale(0.9);
+  }
+
+}
+
+/* <----------------------------------------> */
+
+
+
+  .custom-date-input {          /*for setting the calendar icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  
+  .custom-date-input .custom-date-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+
+  .custom-clock-input {          /*for setting the clock icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  
+  .custom-clock-input .custom-clock-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+  
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+
+  .agreement-inp, .view-shift-inp{
+    height: 50px!important;
+    padding: 13px 10px 0px 11px!important;
+  }
+
+  .agreement-label,.view-shift-label{
+    padding: 11px!important;
+  }
+  /* .cancel-pop-extra-margin-left{
+    margin-left: 15px; 
+  }*/
+  textarea {
+    resize: none;
+}
+
+.cancel-case-pop-text-clr{
+  color: rgb(131, 128, 128);
+}
+
+.assign-case-pop-text-clr{
+  color: rgb(131, 128, 128);
+}
+
+option{
+  color:  rgb(131, 128, 128);
+}
+
+  .cancel-pop-margin-top{
+    margin-top: 15px!important;
+  }
+
+  .assign-case-margin-top{
+    margin-top: 15px!important;
+  }
+
+  .cancel-pop-up-select-height
+  {
+    height: 50px;
+    /* margin-left: 0px;
+    margin-right: 0px; */
+  }
+
+  .assign-case-select-height
+  {
+    height: 50px;
+    /* margin-left: 0px;
+    margin-right: 0px; */
+  }
+
+
+
+    input[type="radio"]{
+        height: 15px;
+        width: 15px;
+    }
+
+    input[type='radio'] {
+        accent-color: #19a1c2;
+    }
+
+    .btn-close{
+    background: transparent url(../x-white.svg) center/2em auto no-repeat;
+   }
+
+   .cancel-case-blue-text{
+    font-weight: 500;
+    color: #01bce9;
+   }
+
+   .delete-btn{
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    padding: 6px 16px;
+}
+    .send-btn{
+        border: 1px solid #01bce9;
+        border-radius: 5px;
+        background-color: #01bce9;
+        color: white;
+        padding: 6px 16px;
+    }
+
+    .cancel-btn{
+        border: 1px solid #01bce9;
+        border-radius: 5px;
+        background-color: white;
+        color: #01bce9;
+        padding: 6px 12px;
+    }
+
+    .radio-flex{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .modal-footer{
+        border-top: none;
+        padding-right: 0px;
+    }
+
+    .font-clr-light{
+      font-weight: 500;
+        color: rgb(131, 128, 128);
+    }
+
+    .agreement-text{
+      color: rgb(131, 128, 128);
+      font-size: 14px;
+    }
+
+    .patient-type{
+      border-radius: 50%;
+      background-color: green;
+      height: 12px;
+      width: 12px;
+    }
+
+    .agreement-patient-type-flex{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .form-control:focus{
+        box-shadow: none;
+    }
+
+    .modal-header{
+        background-color: #01bce9;
+        color: white;
+        border-radius: 10px 10px 0pc 0px;
+        font-size: 15px;
+    }
+
+    .modal-content  {
+      border-radius: 10px;
+    }
+
+
+    /* ---------- cancel case */
+
+    @media screen and (max-width:578px) {
+      .cancel-pop-scale{
+        transform: scale(0.95);
+      }
+
+      .assign-scale{
+        transform: scale(0.95);
+      }
+
+      .agreement-scale{
+        transform: scale(0.95);
+      }
+    }
+    

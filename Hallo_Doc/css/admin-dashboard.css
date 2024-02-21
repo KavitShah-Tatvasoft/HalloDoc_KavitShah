@@ -1,3 +1,12 @@
+.offcanvas-backdrop  {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000 !important ;
+    opacity: 0.3 !important;
+}
+ 
  /* <!-- ---------------------------------------------------------------NAV BAR------------------------------------------------------ -->// */
 body{
     background-color: #FAFAFA;
@@ -5,6 +14,11 @@ body{
 
  .theme-btn{
     display: none;
+}
+
+
+a{
+    text-decoration: none   ;
 }
 
 .menu-btn{
@@ -135,6 +149,16 @@ body{
     padding: 0px 7px 0px 7px;
 }
 
+.logout-btn-admin{
+    margin-left: 10px;
+    margin-bottom: 2px;
+    background-color: white;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    height: 34px;
+    padding: 2px 7px 0px 7px;
+}
+
 .logout-btn-text{
     color: #01bce9;
     font-size: 13px;
@@ -176,6 +200,26 @@ a.nav-link {
 }
 
 /* ---------------------------------------------------------Main Body--------------------------------------------- */
+
+.dashboard-dropdown-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    padding: 6px 12px;
+}
+
+.patient-records-document-action-button .dropdown-toggle::after{
+    content: none;
+}
+
+.accordion{
+    display: none;
+}
+
 
 .show_cards{
     display: none;
@@ -896,6 +940,11 @@ background-color: #9966cd!important;
         display: none;
     }
 
+    .accordion{
+        display: block;
+    }
+    
+
     .show_cards{
         display: block;
     }
@@ -991,6 +1040,16 @@ background-color: #9966cd!important;
 @media screen and (max-width:768px){
     .absolutivity{
         left: 92px;   
+    }
+
+    .logout-btn-admin{
+        margin-left: 10px;
+        margin-bottom: 2px;
+        background-color: white;
+        border: 1px solid #01bce9;
+        border-radius: 3px;
+        height: 34px;
+        padding: 6px 7px 0px 7px;
     }
 }
 
