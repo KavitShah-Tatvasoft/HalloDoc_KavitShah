@@ -459,28 +459,96 @@ a.nav-link {
     color: white!important;
 }
 
+#card1:hover{
+    background-color: #203f9a!important;
+    color: white;
+}
+
+#card1:hover #new{
+    filter: invert(100%) sepia(0%) saturate(7483%) hue-rotate(86deg) brightness(97%) contrast(105%);
+}
+
 .pending-active{
     background-color: #00adef!important;
     color: white!important;
+}
+
+#card2:hover{
+    background-color: #00adef!important;
+    color: white;
+}
+
+#card2:hover #pending{
+    filter: invert(31%) sepia(0%) saturate(7618%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
 .active-active{
     background-color: #228c20!important;
     color: white!important;
 }
+
+#card3:hover{
+    background-color: #228c20!important;
+    color: white;
+}
+
+#card3:hover #active{
+    filter: invert(31%) sepia(0%) saturate(7618%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+
 .conclude-active{
     background-color: #da0f82!important;
     color: white!important;
 }
+
+#card4:hover{
+    background-color: #da0f82!important;
+    color: white;
+}
+
+#card4:hover #conclude{
+    filter:  invert(92%) sepia(84%) saturate(0%) hue-rotate(250deg) brightness(109%) contrast(101%);
+}
+
+
 
 .to-close-active{
     background-color: #0370d7!important;
     color: white!important;
 }
 
+#card5:hover{
+    background-color: #0370d7!important;
+    color: white;
+}
+
+#card5:hover #to-close{
+    filter:  invert(100%) sepia(100%) saturate(1%) hue-rotate(287deg) brightness(110%) contrast(101%);
+}
+
 .unpaid-active{
 background-color: #9966cd!important;
     color: white!important;
+}
+
+#card6:hover{
+    background-color:  #9966cd!important;
+    color: white;
+}
+
+#card6:hover #unpaid{
+    filter:  invert(100%) sepia(100%) saturate(0%) hue-rotate(36deg) brightness(152%) contrast(114%);
+}
+
+.unpaid-icon{
+    width: 26px!important;
+    height: 26px!important;
+}
+
+.new-icon-resize{
+    width: 23px!important;
+    height: 23px!important;
 }
 
 .new{
@@ -553,7 +621,7 @@ background-color: #9966cd!important;
 }
 
 .btns-text{
-    margin-left: 10px;
+    margin-left: 5px;
     color: white;
     font-weight: 600;
 }
@@ -734,6 +802,12 @@ background-color: #9966cd!important;
     background-color: var(--bs-body-bg);
     outline: 0;
     box-shadow: none
+}
+
+.btn-info-img{
+    height: 18px;
+    width: 18px;
+    margin-bottom: 5px!important;
 }
 
 /* ---------------------- */

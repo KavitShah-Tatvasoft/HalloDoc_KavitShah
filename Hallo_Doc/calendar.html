@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+
+
+  <title>
+    Custom buttons and a footerToolbar - Demos | FullCalendar
+  </title>
+
+
+<link href='/docs/dist/demo-to-codepen.css' rel='stylesheet' />
+
+
+  <style>
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    #calendar {
+      max-width: 1100px;
+      margin: 40px auto;
+    }
+
+  </style>
+
+
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+
+
+<script src='/docs/dist/demo-to-codepen.js'></script>
+
+
+  <script>
+
+let calendar = new FullCalendar.Calendar(calendarEl, {
+  views: {
+    customMonth: {
+      type: 'dayGridMonth',
+      dayHeaderContent: function(arg) {
+        let header = document.createElement('div');
+        header.textContent = 'My Custom Header';
+        return header;
+      },
+      dayCellContent: function(arg) {
+        let table = document.createElement('table');
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+
+        let headerRow = document.createElement('tr');
+        let headerCell1 = document.createElement('th');
+        headerCell1.textContent = 'Column 1';
+        let headerCell2 = document.createElement('th');
+        headerCell2.textContent = 'Column 2';
+        headerRow.appendChild(headerCell1);
+        headerRow.appendChild(headerCell2);
+        thead.appendChild(headerRow);
+
+        let dataRow1 = document.createElement('tr');
+        let dataCell11 = document.createElement('td');
+        dataCell11.textContent = 'Row 1, Cell 1';
+        let dataCell12 = document.createElement('td');
+        dataCell12.textContent = 'Row 1, Cell 2';
+        dataRow1.appendChild(dataCell11);
+        dataRow1.appendChild(dataCell12);
+
+        let dataRow2 = document.createElement('tr');
+        let dataCell21 = document.createElement('td');
+        dataCell21.textContent = 'Row 2, Cell 1';
+        let dataCell22 = document.createElement('td');
+        dataCell22.textContent = 'Row 2, Cell 2';
+        dataRow2.appendChild(dataCell21);
+        dataRow2.appendChild(dataCell22);
+
+        tbody.appendChild(dataRow1);
+        tbody.appendChild(dataRow2);
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        return { domNodes: [table] };
+      }
+    }
+  },
+  initialView: 'customMonth'
+});
+
+</script>
+
+</head>
+<body>
+  <div class='demo-topbar'>
+  <button data-codepen class='codepen-button'>Edit in CodePen</button>
+
+  
+
+  
+    Custom buttons and a footerToolbar
+  
+</div>
+
+  <div id='calendar'></div>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="calendar"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let calendarEl = document.getElementById("calendar");
+
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+          views: {
+            customMonth: {
+              type: 'dayGridMonth',
+
+              dayCellContent: function(arg) {
+                let table = document.createElement('table');
+                let thead = document.createElement('thead');
+                let tbody = document.createElement('tbody');
+
+                let headerRow = document.createElement('tr');
+                let headerCell1 = document.createElement('th');
+                headerCell1.textContent = 'Column 1';
+                let headerCell2 = document.createElement('th');
+                headerCell2.textContent = 'Column 2';
+                headerRow.appendChild(headerCell1);
+                headerRow.appendChild(headerCell2);
+                thead.appendChild(headerRow);
+
+                let dataRow1 = document.createElement('tr');
+                let dataCell11 = document.createElement('td');
+                dataCell11.textContent = 'Row 1, Cell 1';
+                let dataCell12 = document.createElement('td');
+                dataCell12.textContent = 'Row 1, Cell 2';
+                dataRow1.appendChild(dataCell11);
+                dataRow1.appendChild(dataCell12);
+
+                let dataRow2 = document.createElement('tr');
+                let dataCell21 = document.createElement('td');
+                dataCell21.textContent = 'Row 2, Cell 1';
+                let dataCell22 = document.createElement('td');
+                dataCell22.textContent = 'Row 2, Cell 2';
+                dataRow2.appendChild(dataCell21);
+                dataRow2.appendChild(dataCell22);
+
+                tbody.appendChild(dataRow1);
+                tbody.appendChild(dataRow2);
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+
+                return { domNodes: [table] };
+              }
+            }
+          },
+          initialView: 'customMonth'
+        });
+
+        calendar.render();
+      });
+    </script>
+  </body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .fc-daygrid-day-number {
+        width: 3em;
+        display: inline-block;
+        text-align: right;
+      }
+      .fc-daygrid-day-content {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="calendar"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let calendarEl = document.getElementById("calendar");
+
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+          views: {
+            customMonth: {
+              type: 'dayGridMonth',
+              dayHeaderContent: function(arg) {
+                let header = document.createElement('div');
+                header.textContent = 'My Custom Header';
+                return header;
+              },
+              dayCellContent: function(arg) {
+                let table = document.createElement('table');
+                let thead = document.createElement('thead');
+                let tbody = document.createElement('tbody');
+
+                let headerRow = document.createElement('tr');
+                let headerCell1 = document.createElement('th');
+                headerCell1.textContent = 'Column 1';
+                let headerCell2 = document.createElement('th');
+                headerCell2.textContent = 'Column 2';
+                headerRow.appendChild(headerCell1);
+                headerRow.appendChild(headerCell2);
+                thead.appendChild(headerRow);
+
+                let dataRow1 = document.createElement('tr');
+                let dataCell11 = document.createElement('td');
+                dataCell11.textContent = 'Row 1, Cell 1';
+                let dataCell12 = document.createElement('td');
+                dataCell12.textContent = 'Row 1, Cell 2';
+                dataRow1.appendChild(dataCell11);
+                dataRow1.appendChild(dataCell12);
+
+                let dataRow2 = document.createElement('tr');
+                let dataCell21 = document.createElement('td');
+                dataCell21.textContent = 'Row 2, Cell 1';
+                let dataCell22 = document.createElement('td');
+                dataCell22.textContent = 'Row 2, Cell 2';
+                dataRow2.appendChild(dataCell21);
+                dataRow2.appendChild(dataCell22);
+
+                tbody.appendChild(dataRow1);
+                tbody.appendChild(dataRow2);
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+
+                let dateLabel = document.createElement('div');
+                dateLabel.textContent = arg.date.date;
+                dateLabel.className = 'fc-daygrid-day-number';
+
+                let container = document.createElement('div');
+                container.appendChild(dateLabel);
+                container.appendChild(table);
+
+                return { domNodes: [container] };
+              }
+            }
+          },
+          initialView: 'customMonth'
+        });
+
+        calendar.render();
+      });
+    </script>
+  </body>
+</html> -->
