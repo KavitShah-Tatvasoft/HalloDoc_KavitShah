@@ -33,25 +33,25 @@
     border: 1px solid #01bce9;
 }
 
-.modal-content{
+.modal-content-clear-case{
   border-radius: 10px;
 } 
 
 
 @media screen and (max-width:1024px) {
-  .modal-content{
+  .modal-content-clear-case{
     transform: scale(0.85);
   }
 }
 
 @media screen and (max-width:768px) {
-  .modal-content{
+  .modal-content-clear-case{
     transform: scale(0.8);
   }
 }
 
 @media screen and (max-width:425px) {
-  .modal-content{
+  .modal-content-clear-case{
     transform: scale(0.7);
   }
 }

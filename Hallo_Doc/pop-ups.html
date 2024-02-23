@@ -10,7 +10,7 @@
     <script src="./js/patient-dashboard.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-
+    <link rel="stylesheet" href="./css/pop-ups.css">
     <title>Document</title>
 </head>
 
@@ -565,7 +565,7 @@
 
 <!-- Clear Case Pop Up Information --- add css of family friend -->
 
-<div class="modal fade" id="send-link" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="send-link" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content agreement-scale">
       <div class="modal-header">
@@ -592,7 +592,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">                                      <!--Phone Number col-->
+              <div class="col-12 col-md-6">                                     
                 <div class="form-floating mb-3 inp phonecolheight">
                     <input type="tel" class="form-control phoneflags" id="phone" />
                 </div>
@@ -615,7 +615,34 @@
     </div>
   </div>
  </div> 
+</div> -->
+
+<!-- Send Link -->
+
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content agreement-scale">
+      <div class="modal-body modal-body-accept-case">
+        <div>
+          <form action="">
+            <h3 class="text-center mb-3">Accept Case</h3>
+
+            <ul  style="list-style-type:none;" class="text-center ul-padding-remove">
+              <li class="mb-1"> • Are you sure you want to Accept this request?</li>
+              <li>• Once you accept this request then you are not able to Decline this request.</li>
+            </ul>
+          </form>
+      </div>
+      <div class="modal-footer accpet-case-btn-flex grow-accpet-case-btn">
+        <button type="button" class="send-btn ">Accept</button>
+        <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+ </div> 
 </div>
+
+<!-- accept case  -->
 
 
  <script>

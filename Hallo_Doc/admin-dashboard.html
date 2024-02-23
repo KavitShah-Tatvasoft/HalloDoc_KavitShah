@@ -8,6 +8,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./css/admin-dashboard.css">
+    <link rel="stylesheet" href="./css/FamilyFriend-request.css">
     <link rel="stylesheet" href="./css/pop-ups.css">
     <script src="./js/admin-dashboard.js"></script>
 
@@ -45,7 +46,7 @@
                                     <a class="nav-link" aria-current="page" href="admin-dashboard.html">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Provider Location</a>
+                                    <a class="nav-link" href="provider-location.html">Provider Location</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="admin-my-profile.html">My Profile</a>
@@ -84,9 +85,11 @@
                                         aria-expanded="false">Records</a>
                                     <ul class="dropdown-menu">
                                         <div class="disc-align">
-                                            <li><a class="dropdown-item" href="#">Provider</a></li>
-                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                            <li><a class="dropdown-item" href="search-record.html">Search Records</a></li>
+                                            <li><a class="dropdown-item" href="email-log.html">Email Logs</a></li>
+                                            <li><a class="dropdown-item" href="sms-log.html">SMS Logs</a></li>
+                                            <li><a class="dropdown-item" href="patient-history.html">Patient History</a></li>
+                                            <li><a class="dropdown-item" href="block-history.html">Blocked History</a></li>
                                         </div>
                                     </ul>
                                 </li>
@@ -119,9 +122,9 @@
 
                 <div>
                     <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
-                    <label for="moon-btn">
+                    <label for="moon-btn" class="moon-label">
                         <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
-                    </label>
+                    </label>    
 
                     <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
                     <label for="sun-btn">
@@ -139,7 +142,7 @@
                 <a class="nav-link" aria-current="page" href="admin-dashboard.html">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Provider Location</a>
+                <a class="nav-link" href="provider-location.html">Provider Location</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="admin-my-profile.html">My Profile</a>
@@ -168,9 +171,11 @@
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                     aria-expanded="false">Records</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Provider</a></li>
-                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                    <li><a class="dropdown-item" href="search-record.html">Search Records</a></li>
+                    <li><a class="dropdown-item" href="email-log.html">Email Logs</a></li>
+                    <li><a class="dropdown-item" href="sms-log.html">SMS Logs</a></li>
+                    <li><a class="dropdown-item" href="patient-history.html">Patient History</a></li>
+                    <li><a class="dropdown-item" href="block-history.html">Blocked History</a></li>
                 </ul>
             </li>
         </ul>
@@ -284,10 +289,10 @@
                         <span id="type-text">(New)</span>
                     </div>
                     <div>
-                        <a href="#" class="btn btn-info mx-1" role="button" data-bs-toggle="modal" data-bs-target="#send-link">
+                        <a class="btn btn-info mx-1" role="button" data-bs-toggle="modal" data-bs-target="#send-link">
                             <img src="./SRS Screen Shorts/send.svg" class="btn-info-img"> <span class="btns-text">Send Link</span>
                         </a>
-                        <a href="#" class="btn btn-info mx-1" role="button" >
+                        <a href="admin-create-request.html" class="btn btn-info mx-1" role="button" >
                             <img src="./SRS Screen Shorts/pencil-square.svg" class="btn-info-img"> <span class="btns-text">Create Request</span>
                         </a>
                         <a href="#" class="btn btn-info mx-1" role="button" onclick="switchBlack()">
@@ -436,16 +441,102 @@
                                     Dropdown
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><button class="dropdown-item"
-                                            type="button">Action</button></li>
-                                    <li><button class="dropdown-item" type="button">Another
-                                            action</button></li>
-                                    <li><button class="dropdown-item" type="button">Something
-                                            else here</button></li>
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item ">
+                                            <img src="./SRS Screen Shorts/journal-check-grey.svg" class="dropdown-icons" alt=""> 
+                                            <a class="action-dropdown-text" role="button" data-bs-toggle="modal" data-bs-target="#assign-case">Assign Case</a> 
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/x-circle-grey.svg" class="dropdown-icons" alt=""> 
+                                            <a class=" action-dropdown-text" type="button" data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel Case</a> 
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item ">
+                                            <img src="./SRS Screen Shorts/x-circle-grey.svg" class="dropdown-icons" alt=""> 
+                                            <a class="action-dropdown-text" data-bs-toggle="modal" data-bs-target="#clear-case" type="button">Clear Case</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/view-case.png" class="dropdown-icons" alt=""> 
+                                            <a href="view-case.html" class=" action-dropdown-text" type="button">View Case</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/x-circle-grey.svg" class="dropdown-icons" alt="">
+                                            <a class="action-dropdown-text" role="button" href="close-case.html">Close Case</a>
+                                         </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/journal-text.svg" class="dropdown-icons" alt=""> 
+                                            <a href="view-notes.html" class="action-dropdown-text"  type="button">View Notes</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/ban-grey.svg" class="dropdown-icons" alt=""> 
+                                            <a class="action-dropdown-text" data-bs-toggle="modal" data-bs-target="#block-case" role="button">Block Patient</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/view-upload.png" class="dropdown-icons" alt=""> 
+                                            <a href="view-uploads-patient-conclude.html" class="action-dropdown-text " type="button">View Uploads</a> 
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/journal-check-grey.svg" class="dropdown-icons" alt=""> 
+                                             <a class="action-dropdown-text" data-bs-toggle="modal" data-bs-target="#transfer-case" type="button">Transfer</a> 
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/document.png" class="dropdown-icons" alt=""> 
+                                            <a class="action-dropdown-text" data-bs-toggle="modal" data-bs-target="#send-agreement" type="button">Send Agreement</a>
+                                        </div>
+                                    </li>
+                                    
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/order-delivery.png" class="dropdown-icons" alt=""> 
+                                            <a href="send-order.html" class="action-dropdown-text" type="button">Orders</a> 
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/document.png" class="dropdown-icons" alt=""> 
+                                            <a class="action-dropdown-text" type="button" href="view-notes.html">Doctor Notes</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="action-dropdown-flex dropdown-item">
+                                            <img src="./SRS Screen Shorts/document.png" class="dropdown-icons" alt=""> 
+                                            <a class="action-dropdown-text" type="button" href="encounter-form.html">Encounter</a>
+                                        </div>
+                                    </li>
+                                   
                                 </ul>
                             </div>
                         </td>
                     </tr>
+
 
                 </tbody>
             </table>
@@ -493,9 +584,9 @@
                 <div class="accordion-body">
                   <hr class="no-margin-hr" />
                   <div class="patient_card extended-1" id="extended-1">
-                    <button class="view_case_btn" onclick="switchBlack()">
+                    <a href="view-case.html" class="view_case_btn" role="button">
                       View Case
-                    </button>
+                    </a>
                     <div class="extended-flex">
                       <span class="circular_border"
                         ><img src="./SRS Screen Shorts/calendar4-week-blue.svg" alt="D.O.B"
@@ -550,21 +641,65 @@
                         >Patient Agola Three, BhoomiOne</span
                       >
                     </div>
-      
-                    <div class="extended-flex-btn mt-4">
-                      <div class="btn btn-left">View Notes</div>
-                      <div class="btn btn-right">Doctors Note</div>
+
+                    <div class="row p-3 text-center">
+
+                        <div class="col-6 mb-3 accordion-btns">
+                            <a class="accordion-btn-admin purple-background-btn" role="button" data-bs-toggle="modal" data-bs-target="#assign-case">Assign Case</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a class="accordion-btn-admin purple-background-btn" role="button" href="close-case.html" >Close Case</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a class="accordion-btn-admin orange-background-btn" role="button" data-bs-toggle="modal" data-bs-target="#send-agreement">Send Agreement</a>
+                        </div>
+
+                        <div class="col-6 mb-3 accordion-btns">
+                            <a  class="accordion-btn-admin red-background-btn" role="button" data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel Case</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a class="accordion-btn-admin red-background-btn" data-bs-toggle="modal" data-bs-target="#block-case" role="button">Block Case</a>
+                        </div>
+
+                        <div class="col-6 mb-3 accordion-btns">
+                            <a href="view-notes.html" class="accordion-btn-admin green-background-btn" role="button">View Notes</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a href="view-uploads-patient-conclude.html" class="accordion-btn-admin green-background-btn" role="button">View Uploads</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a href="send-order.html" class="accordion-btn-admin orange-background-btn" role="button">Orders</a>
+                        </div>
+
+                        <div class="col-6 accordion-btns">
+                            <a class="accordion-btn-admin blue-background-btn" data-bs-toggle="modal" data-bs-target="#transfer-case" role="button">Transfer</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a class="accordion-btn-admin green-background-btn" href="encounter-form.html" role="button">Encounter</a>
+                        </div>
+
+                        <div class="col-6 mb-3 accordion-btns">
+                            <a class="accordion-btn-admin dark-green-background-btn" href="view-notes.html" role="button">Doctors Note</a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a class="accordion-btn-admin orange-background-btn" data-bs-toggle="modal" data-bs-target="#clear-case" role="button">Clear Case</a>
+                        </div>
+
+                        <div class="col-6 mb-3 accordion-btns">
+                            <a class="accordion-btn-admin green-background-btn" role="button">Email</a>
+                        </div>
+
+                      
+                      
                     </div>
       
-                    <div class="extended-flex-btn">
-                      <div class="btn btn-left">View Uploads</div>
-                      <div class="btn btn-right">Encounter</div>
-                    </div>
-      
-                    <div class="extended-flex-btn">
-                      <div class="btn btn-left">Orders</div>
-                      <div class="btn btn-right">Email</div>
-                    </div>
       
                     <div class="extended-flex-bottom">
                       <span class="bottom-btn-texts">Chat with:</span>
@@ -594,7 +729,7 @@
 
     <!-- --------------All Pop Ups--------------- -->
 
-    <div class="modal fade" id="staticBackdrop-sendagreement" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="send-agreement" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content agreement-scale">
             <div class="modal-header">
@@ -718,6 +853,190 @@
       </div>
     <!-- send link -->
 
+    <div class="modal fade" id="cancel-case" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content cancel-pop-scale">
+            <div class="modal-header">
+              <h3 class="modal-title fs-5" id="staticBackdropLabel">Confirm Cancellation</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <span class="font-clr-light">Patient Name :</span>
+                <span class="cancel-case-blue-text">John Snow</span><br>
+              </div>
+    
+                <form action="">
+                  <div class="container">
+                    <div class="row cancel-pop-up-select-height cancel-pop-margin-top">
+                                      
+                            <select name="Number_Type" id="floatingInput-5" class="form-control form-select cancel-case-pop-text-clr">  
+                              <option value="check" hidden selected >Reason for Cancellation</option>
+                              <option value="Mobile">Reason 1</option>
+                              <option value="Home">Reason 2</option>
+                            </select>
+                  
+                    </div>
+                  </div>
+                  <textarea name="message" class="form-control cancel-pop-margin-top" id="" cols="12" rows="5" placeholder="Provide Additional Notes  "></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="send-btn">Confirm</button>
+              <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+              
+            </div>
+          </div>
+        </div>
+       </div>
+
+        <!-- cancel-case -->
+
+    <div class="modal fade" id="assign-case" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content assign-scale">
+            <div class="modal-header">
+              <h3 class="modal-title fs-5" id="staticBackdropLabel">Assign Request</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <span class="font-clr-light">To assign this request, search and select another Physician.</span><br>
+              </div>
+    
+                <form action="">
+                  
+                  <div class="col-12 mt-3">                                    
+                    <div class="form-floating mb-3 inp"> 
+                        <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2">  
+                          <option value="Mobile" selected>Newyork</option>
+                          <option value="Home">London</option>
+                          <option value="Home">Germany</option>
+                        </select>
+                        <label for="floatingInput-5">Narrow Search by Region</label>
+                    </div>
+                  </div>
+    
+                  <div class="container">
+                    <div class="row assign-case-select-height assign-case-margin-top">
+                                      
+                            <select name="Number_Type" id="floatingInput-5" class="form-control form-select assign-case-text-clr">  
+                              <option value="check" hidden selected >Select Physician</option>
+                              <option value="Mobile">Person 1</option>
+                              <option value="Home">Person 2</option>
+                            </select>
+                  
+                    </div>
+                  </div>
+                  <textarea name="message" class="form-control assign-case-margin-top" id="" cols="12" rows="5" placeholder="Description"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="send-btn">Confirm</button>
+              <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+              
+            </div>
+          </div>
+        </div>
+       </div>
+
+       <!-- assign-case -->
+
+    <div class="modal fade" id="block-case" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content cancel-pop-scale">
+            <div class="modal-header">
+              <h3 class="modal-title fs-5" id="staticBackdropLabel">Confirm Block</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <span class="font-clr-light">Patient Name :</span>
+                <span class="cancel-case-blue-text">John Snow</span><br>
+              </div>
+    
+                <form action="">
+                  <textarea name="message" class="form-control cancel-pop-margin-top" id="" cols="12" rows="5" placeholder="Reason for Block Request"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="send-btn">Confirm</button>
+              <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+              
+            </div>
+          </div>
+        </div>
+       </div>
+
+        <!-- block-case -->
+
+    <div class="modal fade" id="transfer-case" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content assign-scale">
+                <div class="modal-header">
+                  <h3 class="modal-title fs-5" id="staticBackdropLabel">Transfer Request</h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div>
+                    <span class="font-clr-light">To assign this request, search and select another Physician.</span><br>
+                  </div>
+        
+                    <form action="">
+                      
+                      <div class="col-12 mt-3">                                    
+                        <div class="form-floating mb-3 inp"> 
+                            <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2">  
+                              <option value="Mobile" selected>Newyork</option>
+                              <option value="Home">London</option>
+                              <option value="Home">Germany</option>
+                            </select>
+                            <label for="floatingInput-5">Narrow Search by Region</label>
+                        </div>
+                      </div>
+        
+                      <div class="container">
+                        <div class="row assign-case-select-height assign-case-margin-top">
+                                          
+                                <select name="Number_Type" id="floatingInput-5" class="form-control form-select assign-case-text-clr">  
+                                  <option value="check" hidden selected >Select Physician</option>
+                                  <option value="Mobile">Person 1</option>
+                                  <option value="Home">Person 2</option>
+                                </select>
+                      
+                        </div>
+                      </div>
+                      <textarea name="message" class="form-control assign-case-margin-top" id="" cols="12" rows="5" placeholder="Description"></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="send-btn">Confirm</button>
+                  <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                  
+                </div>
+              </div>
+            </div>
+           </div>
+
+        <!-- transfer-case -->
+
+    <div class="modal fade" id="clear-case" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content modal-content-clear-case">
+                <div class="modal-body family-pop">
+                  <img src="./SRS Screen Shorts/exclamation.png" alt="" class="set-img">
+                  <p class="information">Confirmation for clear case</p>
+                  <span class="popup-txt">Are you sure you want to clear this request? Once cleared this request then you are not able to see this request.</span>
+                  <div class="modal-footer mt-3">
+                    <button type="button" class="send-btn">Clear</button>
+                    <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+         <!-- clear-case -->
     <script>
         const phoneInputField = document.querySelector("#phone");
               const phoneInput = window.intlTelInput(phoneInputField, {

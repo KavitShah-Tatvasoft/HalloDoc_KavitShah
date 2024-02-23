@@ -1,3 +1,26 @@
+/* .logout-btn-admin:hover .logout-btn-text{
+    color: white;
+    background-color: #01bce9;
+}
+
+.logout-btn-admin:hover{
+    color: white;
+    background-color: #01bce9;
+}
+
+.logout-btn-admin:hover .logout-img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+} */
+
+/* #moon-id:hover{
+    background-color: #01bce9;
+}
+
+.moon-label:hover #moon-id{
+    background-color: #01bce9;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+} */
+
 .offcanvas-backdrop  {
     position: fixed;
     top: 0;
@@ -18,8 +41,10 @@ body{
 
 
 a{
-    text-decoration: none   ;
+    text-decoration: none;
 }
+
+
 
 .menu-btn{
     background-color: white;
@@ -200,6 +225,47 @@ a.nav-link {
 }
 
 /* ---------------------------------------------------------Main Body--------------------------------------------- */
+.dropdown-item.active {
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    background-color: #bdbebe !important;
+    color: black;
+}
+
+.dropdown-item:hover {
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    color: black;
+    background-color: #ebebeb !important;
+}
+.patient-label{
+    margin-bottom: 8px;
+}
+
+.action-dropdown-text{
+    font-size: 15px;
+    color: #808080;
+}
+
+.dropdown-icons{
+    height: 20px;
+    width: 20px;
+    filter: invert(52%) sepia(0%) saturate(89%) hue-rotate(184deg) brightness(97%) contrast(81%);
+}
+
+.action-dropdown-flex .dropdown-item{
+    padding: 0px;
+}
+
+.action-dropdown-flex{
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
 
 .dashboard-dropdown-btn{
     display: flex;
@@ -210,6 +276,10 @@ a.nav-link {
     background-color: transparent;
     color: white;
     padding: 6px 12px;
+}
+
+.dashboard-dropdown-btn:hover{
+    border: 1px solid white;
 }
 
 .patient-records-document-action-button .dropdown-toggle::after{
@@ -372,6 +442,41 @@ a.nav-link {
     background-color: green!important;
     color: white!important;
     border: 1px soild black;
+}
+
+.accordion-btn-admin{
+    padding: 6px 12px;
+    border-radius: 25px;
+    color: white;
+}
+
+.orange-background-btn{
+    background-color: #ee9125;
+}
+ 
+.purple-background-btn{
+    background-color: #943db8;
+}
+
+.red-background-btn{
+    background-color: #e42929;
+}
+
+.green-background-btn{
+    background-color: #0a9016;
+}
+
+.blue-background-btn{
+    background-color: #00bce7;
+}
+
+.dark-green-background-btn{
+    background-color: #145545;
+}
+
+.accordion-btn-admin{
+    display: inline-block;
+    width: 95%;
 }
 
 .bottom-btn-img{
@@ -695,7 +800,7 @@ background-color: #9966cd!important;
 .thead-clr th{
     background-color: #f0f0f0;
     color: black;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .tr-clr th, .tr-clr td{
@@ -715,6 +820,7 @@ background-color: #9966cd!important;
     height: 20px;
     width: 24px;
     margin: 3px;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
 }
 
 

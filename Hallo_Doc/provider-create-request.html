@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/provider-create-request.css">
+    <script src="./js/admin-dashboard.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <title>Provider Create Request</title>
+</head>
+
+<body>
+    <!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
+    <div class="container-fluid shadow p-2 bg-white rounded">
+        <div class="nav nav-flex">
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
+                    </button>
+
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                        aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
+                        <div class="offcanvas-body">
+                            
+                            <div class="sidebar-profile-text">
+                                <span>
+                                    Welcome,
+                                </span>
+                                <span>
+                                    <strong>Admin admin2</strong>
+                                </span>
+                            </div>
+                            <ul class="nav sidebar-list-flex">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Provider Location</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">My Profile</a>
+                                </li>
+                              
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Dropdown
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Partners</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Access</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Records</a>
+                                    <ul class="dropdown-menu">
+                                        <div class="disc-align">
+                                            <li><a class="dropdown-item" href="#">Provider</a></li>
+                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                        </div>
+                                    </ul>
+                                </li>
+                        
+                    </div>
+                    </div>
+                </div>
+
+                <span class="ms-2">
+                    <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
+                </span>
+            </div>
+
+            <div class="nav-right">
+                <span class="mx-1 profile-name">
+                    Welcome
+                </span>
+                <span class="mx-1 profile-name">
+                    <strong>Admin admin2</strong>
+                </span>
+                <div>
+                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                    <!-- <button type="button" class="logout-btn">
+                        <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
+                        <span class="logout-btn-text">Logout</span>
+                    </button> -->
+                </div>
+
+                <div>
+                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <label for="moon-btn">
+                        <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
+                    </label>
+
+                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <label for="sun-btn">
+                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                            id="sun-id">
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
+        <ul class="nav nav-underline cm-margin ms-3 inner-nav">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Provider Location</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">My Profile</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Provider</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Partners</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Access</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Provider</a></li>
+                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ---------------------------------------------------------------INNER NAV BAR OVER------------------------------------------------------ -->
+
+    <!-- ---------------------------------------------------------------NAV BAR OVER---------------------------------------------------------------------------- -->
+    <div class="container-fluid patient-form shadow p-3 bg-white rounded relative-position extra-margin">
+
+        <div class="back-btn-top " role="button" onclick="history.go(-1)">
+            <img src="./chevron-left.svg" alt="" class="back-icon-top">
+            Back
+        </div>
+
+        <div class="submit-info-txt">
+            Submit Information
+        </div>
+
+        <div class="row">                                        <!--Row 1-->
+            
+            <div class="col-12 mb-3">                                <!--Patient Information col-->
+                <span class="patient-text">Patient</span>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--First Name col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-2" id="floatingInput-2"
+                        placeholder="First Name" autocomplete="off">
+                    <label for="floatingInput-2">First Name</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                        <!--Last Name col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-1" id="floatingInput-3"
+                        placeholder="Last Name" autocomplete="off">
+                    <label for="floatingInput-3">Last Name</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--Phone Number col-->
+                <div class="form-floating mb-3 inp phonecolheight">
+                    <input type="tel" class="form-control phoneflags" id="phone" />
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 add-extra-margin">                                      <!--Email col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="email" class="form-control input-2" id="floatingInput-5"
+                        placeholder="Email" autocomplete="off">
+                    <label for="floatingInput-5">Email</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-floating mb-3 inp custom-date-input">        <!--Date Picker col-->
+                    <input type="date" class="form-control input-1" id="floatingInput-4"
+                        placeholder="Date Of Birth" autocomplete="off"> 
+                    <label for="floatingInput-4">Date of Birth</label>
+                    <img src="./SRS Screen Shorts/calendar4-week.svg" alt="" class="custom-date-icon">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">               <!--Row 3-->
+
+            <div class="col-12 mb-3">                                <!--Patient Location col-->
+                <span class="patient-text">Location</span>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--Street col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-2" id="floatingInput-7"
+                        placeholder="Street" autocomplete="off">
+                    <label for="floatingInput-7">Street</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--City col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-2" id="floatingInput-8"
+                        placeholder="City" autocomplete="off">
+                    <label for="floatingInput-8">City</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--State col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-2" id="floatingInput-9"
+                        placeholder="State" autocomplete="off">
+                    <label for="floatingInput-9">State</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--Zip Code col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-2" id="floatingInput-10"
+                        placeholder="Zip Code" autocomplete="off">
+                    <label for="floatingInput-10">Zip Code</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--Room #/ Suite(Optional) col-->
+                <div class="form-floating mb-3 inp">
+                    <input type="text" class="form-control input-2" id="floatingInput-11"
+                        placeholder="Room #/ Suite(Optional)" autocomplete="off">
+                    <label for="floatingInput-11">Room #/ Suite(Optional)</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">                                      <!--Room #/ Suite(Optional) col-->
+                <div class="request-admin-btn-flex">
+                    <div class="map-text-flex">
+                        <span class="verify-text">Verify</span>
+                    </div>
+    
+    
+                    <div class="map-text-flex">
+                        <img src="./SRS Screen Shorts/geo-alt-fill.svg" alt="" class="map-icon">
+                        <span class="map-text">Map</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">                                <!--Patient Information col-->
+                <span class="patient-text">Notes</span>
+            </div>
+
+            <div class="col-12 inc-height">                      <!--System Information col-->
+                <div class="form-floating mb-4 ">
+                    <textarea name="" class="form-control input-1 inc-inp-height" id="floatingInput-1" placeholder="Enter Brief Details Of Symptoms(Optional)" ></textarea>
+                    <label for="floatingInput-1" class="username-clr">Provider Notes <span class="optional-toggle">(Optional)</span></label>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="bottom-btns mt-3">
+            <button type="submit" class="bottom-btns-submit">Save</button>
+            <button type="reset" class="bottom-btns-cancel">Cancel</button>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+              const phoneInput = window.intlTelInput(phoneInputField, {
+                  utilsScript:
+                      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+              });
+      </script>
+
+
+</body>
+</html>
