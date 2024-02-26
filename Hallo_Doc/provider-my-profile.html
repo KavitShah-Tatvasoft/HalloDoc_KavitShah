@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/navbar.css">
+        <link rel="stylesheet" href="./css/pop-ups.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -186,11 +187,11 @@
         </div>
 
         <div class="request-top-btn">
-            <button class="request-admin-btn">Request To Admin</button>
+            <a class="request-admin-btn" role="button" data-bs-toggle="modal" data-bs-target="#request-admin">Request To Admin</a>
         </div>
 
         <div class="row">
-            <div class="col-12 mb-3 mt-3">                                <!--Patient Information col-->
+            <div class="col-12 mb-3 mt-2">                                <!--Patient Information col-->
                 <span class="patient-text">Account Information</span>
             </div>
 
@@ -361,17 +362,54 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" title="Select Photo" id="inputGroupFile02">
-                    <label class="input-group-text file-upload-btn" for="inputGroupFile02"><img src="./SRS Screen Shorts/cloud-arrow-up-white.svg"  class="upload-image-file" alt=""><span class="upload-txt">Upload</span></label>
+
+
+            <div class="col-12 col-md-6 mb-3">
+                <div class="input-group ">
+                        <input id="selected-file-by-patietent" type="text" class="form-control p-2 custom-upload"
+                        placeholder="Select Photo" disabled>
+                    <button class="btn-color-for-upload" type="button" id="upload">
+                        <img src="./SRS Screen Shorts/cloud-arrow-up-white.svg" class="up-cloud-upload" alt="">
+                        <span class="for-remove-upload ">Upload</span></button>
+                    <input id="patietent-file-input" multiple class="file-input-hover-effect" type="file"
+                        style="position: absolute; right: -8px;top: 0.5rem; opacity: 0;width: 100%;">
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" title="Select Photo" id="inputGroupFile02">
-                    <label class="input-group-text file-upload-btn" for="inputGroupFile02"><img src="./SRS Screen Shorts/cloud-arrow-up-white.svg"  class="upload-image-file" alt=""><span class="upload-txt">Upload</span></label>
+            <!-- <div class="col-10 col-md-4 mb-3">
+                <div class="input-group ">
+                    
+                    <input id="selected-file-by-patietent-1" type="text" class="form-control p-2 custom-upload"
+                        placeholder="Select Signature" disabled>
+                    <button class="btn-color-for-upload" type="button" id="upload">
+                        <img src="./SRS Screen Shorts/cloud-arrow-up-white.svg" class="up-cloud-upload" alt="">
+                        <span class="for-remove-upload ">Upload</span></button>
+                    <input id="patietent-file-input-1" multiple class="file-input-hover-effect" type="file"
+                        style="position: absolute; right: -8px;top: 0.5rem; opacity: 0;width: 95%;">
+                </div>
+            </div>
+
+            <div class="col-2">
+                <a href="#" role="button" class="create-btn-provider-profile"><img src="./SRS Screen Shorts/pencil-white.svg" alt=""><span>Create</span></a>
+            </div> -->
+
+            <div class="col-12 col-md-6 mb-3">
+                <div class="upload-create-flex">
+
+                    <div class="input-group upload-class">
+                        <input id="selected-file-by-patietent-1" type="text" class="form-control p-2 custom-upload"
+                            placeholder="Select Signature" disabled>
+                        <button class="btn-color-for-upload" type="button" id="upload">
+                            <img src="./SRS Screen Shorts/cloud-arrow-up-white.svg" class="up-cloud-upload" alt="">
+                            <span class="for-remove-upload ">Upload</span></button>
+                        <input id="patietent-file-input-1" multiple class="file-input-hover-effect" type="file"
+                            style="position: absolute; right: -8px;top: 0.5rem; opacity: 0;width: 95%;">
+                    </div>
+
+                    <div class="create-class">
+                        <a href="#" role="button" class="create-btn-provider-profile"><img src="./SRS Screen Shorts/pencil-white.svg" alt=""><span class="create-text">Create</span></a>
+                    </div>
+
                 </div>
             </div>
 
@@ -394,7 +432,7 @@
                         <span class="doc-type-text">Provider Agreement</span>
                     </td>
                     <td>
-                        <button class="view-doc-btn"><span class="view-txt">View</span><img src="./SRS Screen Shorts/cloud-arrow-up-white.svg" class="view-img" alt=""></button>
+                        <button class="view-doc-btn"><span class="view-txt">View</span><img src="./SRS Screen Shorts/password-eye-white.svg" class="view-img" alt=""></button>
                     </td>
                 </tr>
                 <tr>
@@ -402,11 +440,12 @@
                         <span class="doc-type-text">HIPAA Complaince</span>
                     </td>
                     <td>
-                        <button class="view-doc-btn"><span class="view-txt">View</span><img src="./SRS Screen Shorts/cloud-arrow-up-white.svg" class="view-img" alt=""></button>
+                        <button class="view-doc-btn"><span class="view-txt">View</span><img src="./SRS Screen Shorts/password-eye-white.svg" class="view-img" alt=""></button>
                     </td>
                 </tr>
             </table>
         </div>
+
 
 
 
@@ -422,7 +461,76 @@
                 "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     }
+
+
+    const fileInput = document.getElementById('patietent-file-input');
+        const fileNameField = document.getElementById('selected-file-by-patietent');
+
+        // Listen for the change event on the file input element
+        fileInput.addEventListener('change', (event) => {
+            // Get the selected file(s)
+            const files = event.target.files;
+
+            // If one or more files are selected
+            if (files.length > 0) {
+                // Get the name of the first file
+                const fileName = files[0].name;
+
+                // Update the value of the input field with the file name
+                fileNameField.value = fileName;
+            } else {
+                // If no files are selected, clear the input field
+                fileNameField.value = '';
+            }
+        });
+
+        const fileInput_1 = document.getElementById('patietent-file-input-1');
+        const fileNameField_1 = document.getElementById('selected-file-by-patietent-1');
+
+        // Listen for the change event on the file input element
+        fileInput_1.addEventListener('change', (event) => {
+            // Get the selected file(s)
+            const files = event.target.files;
+
+            // If one or more files are selected
+            if (files.length > 0) {
+                // Get the name of the first file
+                const fileName = files[0].name;
+
+                // Update the value of the input field with the file name
+                fileNameField_1.value = fileName;
+            } else {
+                // If no files are selected, clear the input field
+                fileNameField_1.value = '';
+            }
+        });
+
       </script>
+
+
+      <!-- pop-ups -->
+
+      <div class="modal fade" id="request-admin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content cancel-pop-scale">
+            <div class="modal-header">
+              <h3 class="modal-title fs-5" id="staticBackdropLabel">Request to Administrator</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span class="modal-header-text">Need to send message to edit</span>
+                <form action="">
+                  <textarea name="message" class="form-control cancel-pop-margin-top" id="" cols="12" rows="5" placeholder="Message"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="send-btn">Send</button>
+              <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+              
+            </div>
+          </div>
+        </div>
+       </div>
 
 
 </body>

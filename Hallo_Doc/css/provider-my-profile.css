@@ -1,3 +1,67 @@
+a{
+  text-decoration: none;
+
+}
+
+.back-btn-top:hover, .request-admin-btn:hover, .reset-pass-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.btn-color-for-upload:hover, .create-class:hover .create-btn-provider-profile, .view-doc-btn:hover{
+  background-color: #1991b3;
+}
+
+.create-btn-provider-profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: 1px solid #01bce9;
+  border-radius: 8px;
+  background-color: #01bce9;
+  color: white;
+  height: 50px;
+}
+
+.upload-class{
+width: 75%;
+}
+
+.create-class{
+  width: 25%;
+}
+
+.upload-create-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.custom-upload{
+  height: 50px!important;
+}
+
+.btn-color-for-upload {
+  color: white;
+  background-color: #01bce9;
+  border: 1px solid #01bce9;
+  width: 100px;
+  height: 50px;
+  border-radius: 0px 8px 8px 0px!important;
+}
+
+.up-cloud-upload{
+  height: 20px;
+  width: 20px;
+}
+
 .back-btn-top {
     display: flex;
     font-family: 'Poppins', sans-serif;
@@ -59,7 +123,7 @@
     color: #01bce9;
     border-radius: 5px;
     padding: 6px 12px;
-    margin-top: 8px;
+    margin-top: 14px;
   }
 
   .request-top-btn{
@@ -188,7 +252,8 @@ td {
     }
   }
 
-  @media screen and (max-width:768px) {
+
+  @media screen and (max-width:767px) {
     .phonecolheight {
       height: 140%;
     }
@@ -196,6 +261,15 @@ td {
     .medical-marging-top{
         margin-top: 24px;
     }
+
+    .upload-class{
+      width: 85%;
+      }
+      
+      .create-class{
+        width: 15%;
+      }
+
   }
 
   @media screen and (max-width:700px){
@@ -208,12 +282,31 @@ td {
     }
   }
 
+  @media screen and (max-width:557px) {
+    
+    .upload-class{
+      width: 100%;
+      }
+      
+      .create-class{
+        width: 20%;
+      }
+  }
+
   @media screen and (max-width:500px){
     .view-img{
         display: block;
     }
     .view-txt{
         display: none;
+    }
+
+    .for-remove-upload, .create-text{
+      display: none;
+    }
+
+    .btn-color-for-upload{
+      width: 58px;
     }
 
     .col-width-1{

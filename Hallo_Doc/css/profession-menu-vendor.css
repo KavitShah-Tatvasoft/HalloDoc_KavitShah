@@ -167,6 +167,15 @@ td{
     gap: 10px;
  }
 
+ .add-business-btn:hover, .contact-btn:hover{
+    background-color: #01bce9;
+    color: white;
+ }
+
+ .add-business-btn:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(350%) contrast(101%);
+ }
+
  .extra-padding-td{
     padding-left: 15px!important;
 }

@@ -73,6 +73,22 @@ td{
     right: 0px;
 }
 
+.export-all-data-btn:hover, .search-btn:hover{
+    background-color: #1991b3;
+
+}
+
+.clear-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.edit-btn:hover{
+    background-color: rgb(202, 63, 63);
+    border: 1px solid rgb(202, 63, 63);
+    color: white;
+}
+
 .search-record-select-top{
     height: 57px;
 }

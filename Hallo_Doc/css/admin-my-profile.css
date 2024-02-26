@@ -1,3 +1,21 @@
+.back-btn-top:hover {
+  background-color: #01bce9;
+  color: white;
+}
+
+.reset-pass-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.edit-btn:hover{
+  background-color: #1991b3;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
 .back-btn-top {
     display: flex;
     font-family: 'Poppins', sans-serif;

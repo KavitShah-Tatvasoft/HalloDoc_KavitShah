@@ -13,6 +13,14 @@
     right: 0px;
 }
 
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
 .top-patient-view-text{
     position: absolute;
     top: -45px;
@@ -52,6 +60,12 @@
     color: #01bce9;
     padding: 6px 12px;
     margin-top: 20px;
+}
+
+.reset-pass-btn:hover{
+  border: 1px solid rgb(241, 55, 55);
+  background-color: rgb(241, 55, 55);
+  color: white;
 }
 
 .phonecolheight{
@@ -111,6 +125,10 @@
     border-radius: 5px;
     border: 1px solid #01bce9;
     margin-top: 20px;
+}
+
+.edit-btn:hover{
+  background-color: #1991b3;
 }
 
 .extra-margin-right-edit{

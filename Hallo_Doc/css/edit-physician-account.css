@@ -1,3 +1,76 @@
+.upload-class{
+  width: 75%;
+  }
+
+  .create-class{
+    width: 25%;
+  }
+  
+
+  .custom-upload{
+    height: 50px!important;
+  }
+
+  .up-cloud-upload{
+    height: 20px;
+    width: 20px;
+  }
+
+  .btn-color-for-upload {
+    color: white;
+    background-color: #01bce9;
+    border: 1px solid #01bce9;
+    width: 100px;
+    height: 50px;
+    border-radius: 0px 8px 8px 0px!important;
+  }
+
+  .upload-create-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .btn-color-for-upload:hover, .create-class:hover .create-btn-provider-profile{
+    background-color: #1991b3;
+  }
+
+    
+  .create-btn-provider-profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border: 1px solid #01bce9;
+    border-radius: 8px;
+    background-color: #01bce9;
+    color: white;
+    height: 50px;
+  }
+  
+
+  /* -->>> */
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.edit-btn:hover, .common-btn-onboarding:hover{
+  background-color: #1991b3;
+}
+
+.reset-pass-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
 .back-btn-top {
     display: flex;
     font-family: 'Poppins', sans-serif;
@@ -144,6 +217,12 @@
     margin-top: 20px;
 }
 
+.delete-btn:hover{
+  background-color: rgb(202, 63, 63);
+  border: 1px solid rgb(202, 63, 63);
+  color: white;
+}
+
 .delete-btn{
     background-color:red;
     color: white;
@@ -254,6 +333,21 @@ textarea{
 
 }
 
+@media screen and (max-width:500px) {
+  .for-remove-upload, .create-text{
+    display: none;
+  }
+
+  .btn-color-for-upload{
+    width: 58px;
+  }
+
+  .for-remove-upload, .create-text{
+    display: none;
+  }
+
+}
+
 @media screen and (max-width:587px) {
     .col-1-width{
         padding-left: 10px;
@@ -282,6 +376,11 @@ textarea{
 
 }
   @media screen and (max-width:768px) {
+
+    .create-class{
+      width: 15%;
+    }
+
     .phonecolheight {
       height: 140%;
     }
@@ -302,6 +401,12 @@ textarea{
   @media screen and (max-width:900px){
     .patient-form{
       width: 90%;
+    }
+  }
+
+  @media screen and (max-width:557px) {
+    .create-class{
+      width: 20%;
     }
   }
 

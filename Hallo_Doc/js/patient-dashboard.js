@@ -1,5 +1,5 @@
 function changeCss(element){
-    // console.log(element.id)
+    console.log(element.id)
     var x = document.getElementById("me").style;
     var y = document.getElementById("else").style;
     var x_btn = document.getElementById("link-for-me").style;

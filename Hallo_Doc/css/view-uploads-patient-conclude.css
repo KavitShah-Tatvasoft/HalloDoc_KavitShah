@@ -2,6 +2,15 @@
     position: relative;
 }
 
+.back-btn-top:hover{
+    background-color: #01bce9;
+    color: white;
+  }
+  
+  .back-btn-top:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+  }
+
 a{
     text-decoration: none;
 }
@@ -17,6 +26,30 @@ a{
     font-weight: 500;
     font-size: 25px;
 }
+
+.download-all-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.download-all-btn:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.cloud-download-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+
+.cloud-download-btn:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.form-control:focus{
+    box-shadow: none;
+}
+
 
 .back-btn-top {
     display: flex;

@@ -232,6 +232,16 @@ a.nav-link {
     color: black;
 }
 
+.select-dropdown-admin{
+    width: 170px!important;
+    /* padding-left: 30px!important; */
+}
+
+
+.form-select:focus{
+    box-shadow: none!important;
+  }
+
 .dropdown-item:hover {
     color: var(--bs-dropdown-link-active-color);
     text-decoration: none;
@@ -365,6 +375,11 @@ a.nav-link {
     font-size: 12px;
     color: #536ab0
     
+}
+
+.view_case_btn:hover{
+    background-color: #536ab0;
+    color: white;
 }
 
 .patient-card-flex-2 button:not(:disabled) {
@@ -545,7 +560,7 @@ a.nav-link {
 .search-img{
     position: absolute;
     top: 11px;
-    left: 12px;
+    left: 18px;
 }
 
 .down-arrow{
@@ -917,6 +932,10 @@ background-color: #9966cd!important;
 }
 
 /* ---------------------- */
+.map_btn_admin_accordian:hover{
+    background-color: #01bce9;
+    color: white;
+  }
 
 .accordion-button:not(.collapsed) {
     color: black !important;

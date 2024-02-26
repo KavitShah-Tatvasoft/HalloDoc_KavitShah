@@ -25,6 +25,17 @@
     padding: 6px 12px;
 }
 
+.actions-access-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.del:hover{
+    border: 1px solid rgb(202, 63, 63)!important;
+    background-color:rgb(202, 63, 63)!important;
+    color: white;
+}
+
 .access-btn-flex{
     display: flex;
     justify-content: flex-end;
@@ -38,6 +49,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.access-btn-add-flex:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.access-btn-add-flex:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
 }
 
 .actions-flex-access{
