@@ -1,3 +1,12 @@
+.request-btn:hover, .doc-btn:hover, .table-btn-contact-flex:hover, .table-btn-contact:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.table-btn-contact:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
 #link-for-someone-else{
     display: none;
 }

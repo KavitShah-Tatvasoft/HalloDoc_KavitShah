@@ -74,14 +74,14 @@
                 </div>
 
                 <div>
-                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="moon-btn"></button>
                     <label for="moon-btn">
                         <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
                     </label>
 
-                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)"  class="theme-btn" id="sun-btn"></button>
                     <label for="sun-btn">
-                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                        <img src="./SRS Screen Shorts/sun-blue.svg" alt="sun" class="sun"
                             id="sun-id">
                     </label>
                 </div>
@@ -255,6 +255,53 @@
     </div>
 
 
+    <footer>
+        <div class="footer-flex">
+            <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <style>
+
+        body{
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .footer-flex{
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            height: 50px;
+            padding-right: 10px;
+        }
+
+        .footer-flex a{
+            text-decoration: none!important;
+            color: white;
+        }
+
+        body::after {
+        content: '';
+        display: block;
+        height: 50px;
+        }
+
+        footer{
+ 
+            position: absolute;
+            bottom: 0px;
+            background-color: rgb(41, 39, 39);
+            height: 50px;
+            width: 100vw;
+        }
+
+        .footer-container{
+            margin-bottom: 100px;
+        }
+    </style>
 
     <script>
         const phoneInputField = document.querySelector("#phone");
@@ -263,6 +310,8 @@
                       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
               });
       </script>
+
+    <script src="./js/darktheme.js"></script>
 
 </body>
 </html>

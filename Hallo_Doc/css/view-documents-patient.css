@@ -18,6 +18,33 @@ a{
     font-size: 25px;
 }
 
+.back-btn-top:hover{
+    background-color: #01bce9;
+    color: white;
+  }
+  
+  .back-btn-top:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+  }
+
+.download-all-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.download-all-btn:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.cloud-download-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.cloud-download-btn:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
 .back-btn-top {
     display: flex;
     font-family: 'Poppins', sans-serif;
@@ -40,12 +67,13 @@ a{
     clear: both;
     box-shadow: -2px -2px 9px 0px #cdc5c5f7;
     border-radius: 5px;
+    margin-top: 80px;
     
 }
 
 .extra-padding-main-container{
     padding: 25px;  
-    margin-top: 80px;
+
 }
 
 .text{

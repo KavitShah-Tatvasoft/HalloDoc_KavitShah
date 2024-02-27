@@ -73,12 +73,11 @@ a{
     clear: both;
     box-shadow: -2px -2px 9px 0px #cdc5c5f7;
     border-radius: 5px;
-    
+    margin-top: 80px;
 }
 
 .extra-padding-main-container{
     padding: 25px;  
-    margin-top: 80px;
 }
 
 .text{

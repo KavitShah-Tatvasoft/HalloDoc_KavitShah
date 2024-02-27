@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./css/FamilyFriend-request.css">
     <link rel="stylesheet" href="./css/pop-ups.css">
     <script src="./js/admin-dashboard.js"></script>
+    <link rel="stylesheet" href="./css/footer.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
@@ -121,14 +122,14 @@
                 </div>
 
                 <div>
-                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="moon-btn"></button>
                     <label for="moon-btn" class="moon-label">
                         <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
                     </label>    
 
-                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="sun-btn"></button>
                     <label for="sun-btn">
-                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                        <img src="./SRS Screen Shorts/sun-blue.svg" alt="sun" class="sun"
                             id="sun-id">
                     </label>
                 </div>
@@ -187,7 +188,7 @@
 
     <!-- ---------------------------------------------------------------MAIN BODY START---------------------------------------------------------------------------- -->
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid  footer-container mt-5">
         <div class="row">
             <div class="col-lg-2 col-md-4 col-4 mb-2">
 
@@ -1047,6 +1048,12 @@
             </div>
           </div>
 
+          <footer>
+            <div class="footer-flex">
+                <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+            </div>
+        </footer>
+
          <!-- clear-case -->
     <script>
         const phoneInputField = document.querySelector("#phone");
@@ -1055,6 +1062,8 @@
                       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
               });
       </script>
+
+<script src="./js/darktheme.js"></script>
 
 
 </body>

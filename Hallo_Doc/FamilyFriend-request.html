@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -37,7 +38,7 @@
     </div>
   </div>
 
-  <div class="container-fluid shadow p-2 bg-white rounded">
+  <div class="container-fluid footer-container shadow p-2 bg-white rounded">
     <div class="nav nav-flex">
         <div class="nav-left">
             <span class="ms-2">
@@ -47,14 +48,14 @@
 
         <div class="nav-right">
             <div>
-                <button type="button"  class="theme-btn" id="moon-btn"></button>
+                <button type="button"  class="theme-btn" id="moon-btn" onclick="changeThemeDarkBright(this)"></button>
                 <label for="moon-btn">
                     <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
                 </label>
 
-                <button type="button"  class="theme-btn" id="sun-btn"></button>
+                <button type="button"  class="theme-btn" id="sun-btn" onclick="changeThemeDarkBright(this)"></button>
                 <label for="sun-btn">
-                    <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                    <img src="./SRS Screen Shorts/sun-blue.svg" alt="sun" class="sun"
                         id="sun-id">
                 </label>
          </div>
@@ -252,6 +253,12 @@
 
 </div>
 
+<footer>
+    <div class="footer-flex">
+        <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+    </div>
+</footer>
+
  
 <script>
 const phoneInputField = document.getElementsByClassName("phone");
@@ -270,6 +277,7 @@ const phoneInputField = document.getElementsByClassName("phone");
 
 </script>
  
+<script src="./js/darktheme.js"></script>
  
 </body>
 

@@ -1,3 +1,23 @@
+.back-btn-top:hover, .bottom-btns-cancel:hover, .map-text-flex-patient-profile-only:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.map-text-flex-patient-profile-only:hover span{
+  color: white;
+}
+
+.back-btn-top:hover img, .map-text-flex-patient-profile-only:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.bottom-btns-submit:hover, .bottom-btns-edit:hover{
+  background-color: #1991b3;
+
+}
+
+
+
 .body{
     background-color: #f9f9f9;
 }

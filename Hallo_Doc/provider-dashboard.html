@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="./css/provider-dashboard.css">
     <link rel="stylesheet" href="./css/FamilyFriend-request.css">
     <link rel="stylesheet" href="./css/pop-ups.css">
-    <script src="./js/admin-dashboard.js"></script>
-    <link rel="stylesheet" href="./css/patient-dashboard.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <!-- <script type="text/javascript" src="./js/provider-dashboard.js"></script> -->
+    <!-- <link rel="stylesheet" href="./css/patient-dashboard.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <title>Admin Dashboard</title>
+    <title>Provider Dashboard </title>
 </head>
 
 <body>
@@ -78,14 +79,14 @@
                 </div>
 
                 <div>
-                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="moon-btn"></button>
                     <label for="moon-btn" class="moon-label">
                         <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
                     </label>    
 
-                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="sun-btn"></button>
                     <label for="sun-btn">
-                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                        <img src="./SRS Screen Shorts/sun-blue.svg" alt="sun" class="sun"
                             id="sun-id">
                     </label>
                 </div>
@@ -117,7 +118,7 @@
 
     <!-- ---------------------------------------------------------------MAIN BODY START---------------------------------------------------------------------------- -->
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5 footer-containerF">
         <div class="row">
             <div class="col-lg-2 col-md-4 col-4 mb-2">
 
@@ -216,8 +217,8 @@
                                 <img src="./SRS Screen Shorts/search.svg" alt="" class="search-img">
                             </div>
 
-                            <div class="dropdown-center relativity ms-2 search-2">
-                              <select class="btn btn-secondary form-select select-dropdown-admin" type="button">
+                            <div class="relativity ms-2 search-2">
+                              <select class="form-select select-dropdown-admin" type="button">
                                   <option value=""><a class="dropdown-item" href="#">All Regions</a></option>
                                   <option><a class="dropdown-item" href="#">Newyork</a></option>
                                   <option><a class="dropdown-item" href="#">Maryland</a></option>
@@ -300,7 +301,7 @@
                         </td>
                         <td class="text-nowrap">1331, Maryland Ave SW Washington, DC 20024</td>
                         <td>
-                            <div role="button" class="house-call-status" data-bs-toggle="modal" data-bs-target="#house-call">
+                            <div role="button" class="house-call-status" data-bs-toggle="modal" data-bs-target="#house-call" id="housecall-consult-text">
                                 House Call
                             </div>
                         </td>
@@ -951,8 +952,8 @@
                     </div>
                     <div class="modal-body">
                          <div class="request-type-pop-flex">
-                            <button class="me-type-btn" id="me" onclick="changeCss(this)">House Call</button>
-                            <button class="else-type-btn" id="else" onclick="changeCss(this)">Consult</button>
+                            <button class="me-type-btn" id="Housecall" onclick="changeCss(this)">House Call</button>
+                            <button class="else-type-btn" id="Consult" onclick="changeCss(this)">Consult</button>
                          </div>
             
                          <div class="continue-cancel-flex">
@@ -964,16 +965,73 @@
             </div>
         </div>
 
+        <footer>
+          <div class="footer-flex">
+              <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+          </div>
+      </footer>
+
         <!-- house-call-status -->
 
-    <script src="./js/patient-dashboard.js"></script>
     <script>
         const phoneInputField = document.querySelector("#phone");
               const phoneInput = window.intlTelInput(phoneInputField, {
                   utilsScript:
                       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
               });
+
+
+              function changeCss(element){
+                console.log(element.id)
+                var x = document.getElementById("Housecall");
+                var y = document.getElementById("Consult");
+                var z = document.getElementById("housecall-consult-text");
+            
+                if(element.id=="Housecall"){
+                  x.style.backgroundColor = "#01bce9";
+                  x.style.color = "white";
+            
+                  y.style.color = "#01bce9";
+                  y.style.backgroundColor = "white";
+
+                  z.innerHTML=element.id;
+            
+                }
+            
+                else{
+                  y.style.backgroundColor = "#01bce9";
+                  y.style.color = "white";
+            
+                  x.style.color = "#01bce9";
+                  x.style.backgroundColor = "white";
+
+                  z.innerHTML=element.id;
+            
+                }
+              }
+
+              const  changeStatus = (element) => {
+                const states = document.getElementsByClassName("row-cards")
+                const current_state = element.classList[1]
+                for(let i=0;i<states.length;++i){
+                    if(states[i].classList.length == 3){
+                        states[i].classList.remove(`${states[i].classList[1]}-active`)
+                        document.getElementById(`${states[i].classList[1]}-active`).classList.add('hidden')
+                        document.getElementById(`${states[i].classList[1]}`).classList.remove('hidden')
+                        document.getElementById(`${states[i].classList[1]}-img`).classList.add('hidden')
+                    }
+                    else if(states[i].classList[1] == current_state){
+                        states[i].classList.add(`${states[i].classList[1]}-active`)
+                        document.getElementById(`${states[i].classList[1]}-active`).classList.remove('hidden')
+                        document.getElementById(`${states[i].classList[1]}`).classList.add('hidden')
+                        document.getElementById(`${states[i].classList[1]}-img`).classList.remove('hidden')
+                    }
+                }
+            }
+
       </script>
+
+      <script src="./js/darktheme.js"></script>
 
 
 </body>

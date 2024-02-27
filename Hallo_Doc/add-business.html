@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/navbar.css">
+        <link rel="stylesheet" href="./css/footer.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -18,165 +19,163 @@
     </head>
 <body>
 
-     <!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
-     <div class="container-fluid shadow p-2 bg-white rounded">
-        <div class="nav nav-flex">
-            <div class="nav-left">
-                <div class="hamburger-menu">
-                    <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-                        aria-controls="offcanvasExample">
-                        <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
-                    </button>
-
-                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-                        aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
-                        <div class="offcanvas-body">
+        <!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
+        <div class="container-fluid shadow p-2 bg-white rounded">
+            <div class="nav nav-flex">
+                <div class="nav-left">
+                    <div class="hamburger-menu">
+                        <button type="button" class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                            aria-controls="offcanvasExample">
+                            <img src="./SRS Screen Shorts/list.svg" alt="menu" class="menu-img">
+                        </button>
+    
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                            aria-labelledby="offcanvasExampleLabel" data-transition="push" aria-modal="true" role="dialog">
+                            <div class="offcanvas-body">
+                                
+                                <div class="sidebar-profile-text">
+                                    <span>
+                                        Welcome,
+                                    </span>
+                                    <span>
+                                        <strong>Admin admin2</strong>
+                                    </span>
+                                </div>
+                                <ul class="nav sidebar-list-flex">
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page" href="admin-dashboard.html">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="provider-location.html">Provider Location</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-my-profile.html">My Profile</a>
+                                    </li>
+                                  
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Provider
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <div class="disc-align">
+                                                <li><a class="dropdown-item" href="provider-menu.html">Provider</a></li>
+                                                <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                                <!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
+                                            </div>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="profession-menu-vendor.html" class="nav-link">Partners</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                            aria-expanded="false">Access</a>
+                                        <ul class="dropdown-menu">
+                                            <div class="disc-align">
+                                                <li><a class="dropdown-item" href="account-access.html">Account Access</a></li>
+                                                <li><a class="dropdown-item" href="user-access.html">User Access</a></li>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                            aria-expanded="false">Records</a>
+                                        <ul class="dropdown-menu">
+                                            <div class="disc-align">
+                                                <li><a class="dropdown-item" href="search-record.html">Search Records</a></li>
+                                                <li><a class="dropdown-item" href="email-log.html">Email Logs</a></li>
+                                                <li><a class="dropdown-item" href="sms-log.html">SMS Logs</a></li>
+                                                <li><a class="dropdown-item" href="patient-history.html">Patient History</a></li>
+                                                <li><a class="dropdown-item" href="block-history.html">Block History</a></li>
+                                            </div>
+                                        </ul>
+                                    </li>
                             
-                            <div class="sidebar-profile-text">
-                                <span>
-                                    Welcome,
-                                </span>
-                                <span>
-                                    <strong>Admin admin2</strong>
-                                </span>
-                            </div>
-                            <ul class="nav sidebar-list-flex">
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="#">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Provider Location</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">My Profile</a>
-                                </li>
-                              
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Dropdown
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <div class="disc-align">
-                                            <li><a class="dropdown-item" href="#">Provider</a></li>
-                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                                        </div>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link">Partners</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                        aria-expanded="false">Access</a>
-                                    <ul class="dropdown-menu">
-                                        <div class="disc-align">
-                                            <li><a class="dropdown-item" href="#">Provider</a></li>
-                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                                        </div>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                        aria-expanded="false">Records</a>
-                                    <ul class="dropdown-menu">
-                                        <div class="disc-align">
-                                            <li><a class="dropdown-item" href="#">Provider</a></li>
-                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                                            <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                                        </div>
-                                    </ul>
-                                </li>
-                        
+                        </div>
+                        </div>
                     </div>
+    
+                    <span class="ms-2">
+                        <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
+                    </span>
+                </div>
+    
+                <div class="nav-right">
+                    <span class="mx-1 profile-name">
+                        Welcome
+                    </span>
+                    <span class="mx-1 profile-name">
+                        <strong>Admin admin2</strong>
+                    </span>
+                    <div>
+                        <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
                     </div>
+    
+                    <div>
+                        <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="moon-btn"></button>
+                        <label for="moon-btn">
+                            <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
+                        </label>
+    
+                        <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="sun-btn"></button>
+                        <label for="sun-btn">
+                            <img src="./SRS Screen Shorts/sun-blue.svg" alt="sun" class="sun"
+                                id="sun-id">
+                        </label>
+                    </div>
+    
                 </div>
-
-                <span class="ms-2">
-                    <img src="./SRS Screen Shorts/logo-halloDoc.png" alt="HelloDoc Logo" class="halloDoc-img">
-                </span>
             </div>
-
-            <div class="nav-right">
-                <span class="mx-1 profile-name">
-                    Welcome
-                </span>
-                <span class="mx-1 profile-name">
-                    <strong>Admin admin2</strong>
-                </span>
-                <div>
-                    <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
-                    <!-- <button type="button" class="logout-btn">
-                        <img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" />
-                        <span class="logout-btn-text">Logout</span>
-                    </button> -->
-                </div>
-
-                <div>
-                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
-                    <label for="moon-btn">
-                        <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
-                    </label>
-
-                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
-                    <label for="sun-btn">
-                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
-                            id="sun-id">
-                    </label>
-                </div>
-
-            </div>
+            <hr>
+            <!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
+            <ul class="nav nav-underline cm-margin ms-3 inner-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="admin-dashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="provider-location.html">Provider Location</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-my-profile.html">My Profile</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">Provider</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="provider-menu.html">Provider</a></li>
+                        <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="profession-menu-vendor.html" class="nav-link">Partners</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">Access</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="account-access.html">Account Access</a></li>
+                        <li><a class="dropdown-item" href="user-access.html">User Access</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">Records</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="search-record.html">Search Records</a></li>
+                        <li><a class="dropdown-item" href="email-log.html">Email Logs</a></li>
+                        <li><a class="dropdown-item" href="sms-log.html">SMS Logs</a></li>
+                        <li><a class="dropdown-item" href="patient-history.html">Patient History</a></li>
+                        <li><a class="dropdown-item" href="block-history.html">Block History</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <hr>
-        <!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
-        <ul class="nav nav-underline cm-margin ms-3 inner-nav">
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Provider Location</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">My Profile</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                    aria-expanded="false">Provider</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Provider</a></li>
-                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Partners</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                    aria-expanded="false">Access</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Provider</a></li>
-                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                    aria-expanded="false">Records</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Provider</a></li>
-                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                    <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <!-- ---------------------------------------------------------------INNER NAV BAR OVER------------------------------------------------------ -->
-
-    <!-- ---------------------------------------------------------------NAV BAR OVER---------------------------------------------------------------------------- -->
+    
+        <!-- ---------------------------------------------------------------INNER NAV BAR OVER------------------------------------------------------ -->
+    
+        <!-- ---------------------------------------------------------------NAV BAR OVER---------------------------------------------------------------------------- -->
 
     <div class="container-fluid patient-form shadow bg-white rounded relative-position extra-margin">
 
@@ -284,6 +283,12 @@
 
     </div>
 
+    <footer>
+        <div class="footer-flex">
+            <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
     <script>
         const phoneInputField = document.querySelector("#phone");
               const phoneInput = window.intlTelInput(phoneInputField, {
@@ -291,6 +296,8 @@
                       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
               });
       </script>
+
+      <script src="./js/darktheme.js"></script>
 
 
 </body>

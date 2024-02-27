@@ -73,14 +73,14 @@
                 </div>
 
                 <div>
-                    <button type="button" onclick="switchBlack()" class="theme-btn" id="moon-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="moon-btn"></button>
                     <label for="moon-btn">
                         <img src="./SRS Screen Shorts/moon-blue.svg" alt="moon" class="moon" id="moon-id">
                     </label>
 
-                    <button type="button" onclick="switchWhite()" class="theme-btn" id="sun-btn"></button>
+                    <button type="button" onclick="changeThemeDarkBright(this)" class="theme-btn" id="sun-btn"></button>
                     <label for="sun-btn">
-                        <img src="./SRS Screen Shorts/Mediamodifier-Design-Template.png" alt="sun" class="sun"
+                        <img src="./SRS Screen Shorts/sun-blue.svg" alt="sun" class="sun"
                             id="sun-id">
                     </label>
                 </div>
@@ -102,8 +102,8 @@
     </div>
 
     <!--Main Container-->
-
-    <div class="container-fluid main-container relative-pos-class extra-padding-main-container">
+    <!-- extra-padding-main-container -->
+    <div class="container-fluid footer-container main-container relative-pos-class ">
         <div class="main-container-top-text">
             Documents
         </div>
@@ -115,7 +115,7 @@
         </div>
         
 
-        <div class="row">
+        <div class="row extra-padding-main-container">
             <div class="col-12 small-text text">
                 Patient Name
             </div>
@@ -168,10 +168,38 @@
             </div>
         </div>
 
+        <div class="row mobile-cards">
+            <hr class="mt-3">
+            <div class="col-12 single-mobile-card">
+               <div class="mobile-checkbox-name-flex">
+                <input type="checkbox" class="justone" name="row1">
+                <span class="pdf-name-flex"><img src="./SRS Screen Shorts/pdf.png" class="pdf-img" alt=""><span>dummy.pdf</span></span>
+               </div>
+               <div class="name-col common-margin-top">Testing test</div>
+               <div class="date-col common-margin-top">Jan 1, 2023</div>
+               <button class="cloud-download-btn common-margin-top"><img src="./SRS Screen Shorts/cloud-arrow-down.svg" class="cloud-btn-down" alt=""></button>
+            </div>
+        </div>
 
+        <div class="row mobile-cards">
+            <hr class="mt-3">
+            <div class="col-12 single-mobile-card">
+               <div class="mobile-checkbox-name-flex">
+                <input type="checkbox" class="justone" name="row1">
+                <span class="pdf-name-flex"><img src="./SRS Screen Shorts/pdf.png" class="pdf-img" alt=""><span>dummy.pdf</span></span>
+               </div>
+               <div class="name-col common-margin-top">Testing test</div>
+               <div class="date-col common-margin-top">Jan 1, 2023</div>
+               <button class="cloud-download-btn common-margin-top"><img src="./SRS Screen Shorts/cloud-arrow-down.svg" class="cloud-btn-down" alt=""></button>
+            </div>
+        </div>
+
+
+
+<!-- 
     </div>
 
-    <div class="container-fluid main-container">
+    <div class="container-fluid main-container"> -->
         <div class="row">
             <!-- <div class="col-12"> -->
                 <table class="table align-middle">
@@ -206,11 +234,84 @@
                         <td>Jan 1, 2030</td>
                         <td><button class="cloud-download-btn"><img src="./SRS Screen Shorts/cloud-arrow-down.svg" class="cloud-btn-down" alt=""></button></td>
                       </tr>
+
+                      <tr>
+                        <th class="px-3" scope="row"><input type="checkbox" class="justone" name="row3"></th>
+                        <td class="pdf-name-flex"><img src="./SRS Screen Shorts/pdf.png" class="pdf-img" alt=""><span>dummy.pdf</span></td>
+                        <td>Testing testing</td>
+                        <td>Jan 1, 2030</td>
+                        <td><button class="cloud-download-btn"><img src="./SRS Screen Shorts/cloud-arrow-down.svg" class="cloud-btn-down" alt=""></button></td>
+                      </tr>
+
+                      <tr>
+                        <th class="px-3" scope="row"><input type="checkbox" class="justone" name="row3"></th>
+                        <td class="pdf-name-flex"><img src="./SRS Screen Shorts/pdf.png" class="pdf-img" alt=""><span>dummy.pdf</span></td>
+                        <td>Testing testing</td>
+                        <td>Jan 1, 2030</td>
+                        <td><button class="cloud-download-btn"><img src="./SRS Screen Shorts/cloud-arrow-down.svg" class="cloud-btn-down" alt=""></button></td>
+                      </tr>
+
+                      <tr>
+                        <th class="px-3" scope="row"><input type="checkbox" class="justone" name="row3"></th>
+                        <td class="pdf-name-flex"><img src="./SRS Screen Shorts/pdf.png" class="pdf-img" alt=""><span>dummy.pdf</span></td>
+                        <td>Testing testing</td>
+                        <td>Jan 1, 2030</td>
+                        <td><button class="cloud-download-btn"><img src="./SRS Screen Shorts/cloud-arrow-down.svg" class="cloud-btn-down" alt=""></button></td>
+                      </tr>
                     </tbody>
                   </table>
             <!-- </div> -->
         </div>
     </div>
+
+
+    <footer>
+        <div class="footer-flex">
+            <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <style>
+
+        body{
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .footer-flex{
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            height: 50px;
+            padding-right: 10px;
+        }
+
+        .footer-flex a{
+            text-decoration: none!important;
+            color: white;
+        }
+
+        body::after {
+        content: '';
+        display: block;
+        height: 50px; /* Set same as footer's height */
+        }
+
+        footer{
+            /* margin-top: 20px; */
+            position: absolute;
+            bottom: 0px;
+            background-color: rgb(41, 39, 39);
+            height: 50px;
+            width: 100vw;
+        }
+
+        .footer-container{
+            margin-bottom: 100px;
+        }
+    </style>
 
     <script>
         $('.selectall').click(function() {
@@ -231,5 +332,7 @@
         }
         });
     </script>
+
+    <script src="./js/darktheme.js"></script>
 </body>
 </html>

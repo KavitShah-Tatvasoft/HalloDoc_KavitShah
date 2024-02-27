@@ -30,10 +30,10 @@ a{
 
 .sun{
     display: none;
-    border: 0.5px solid white;
+    border: 0.5px solid #01bce9;
     border-radius: 5px;
     margin: 7px;
-    padding: 1px;
+    padding: 5px;
     width: 43px;
     height: auto;
 }
@@ -82,6 +82,10 @@ footer a{
     cursor: pointer;
     text-decoration: none;
     color: #656462;
+}
+
+footer a:hover{
+    color: black;
 }
 
 
