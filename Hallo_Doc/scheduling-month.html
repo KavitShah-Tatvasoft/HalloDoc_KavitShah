@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/pop-ups.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="./css/scheduling-day.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <!-- <link href="../helpers/v2/main.css?v=2024.1.5886" type="text/css" rel="stylesheet"/> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="./css/footer.css">
+    <title>Scheduling Month</title>
+  </head>
+
+  <body>
+    <div
+      class="container-fluid patient-form p-3 rounded relative-position extra-margin"
+    >
+      <div class="back-btn-top" role="button" onclick="history.go(-1)">
+        <img src="./chevron-left.svg" alt="" />
+        Back
+      </div>
+
+      <div class="submit-info-txt">Scheduling</div>
+
+      <div class="all-region-btns-flex">
+        <select
+          class="form-select select-scheduling"
+          aria-label="Default select example"
+        >
+          <option>All Regions</option>
+          <option value="1">Newyork</option>
+          <option value="2">Maryland</option>
+          <option value="3">Virginia</option>
+        </select>
+
+        <div class="btns-flex">
+          <a role="button" class="three-btns">Provider On Call</a>
+          <a role="button" class="three-btns">Shift for Review</a>
+          <a role="button" class="three-btns">Add New Shifts</a>
+        </div>
+      </div>
+
+      <div class="show-date mt-4">
+        <span>Monday, 4 December, 2023</span>
+      </div>
+
+      <div class="type-shift">
+        <div class="pending-shift"></div>
+        <span class="pending-shift-text">Pending Shift</span>
+        <div class="approved-shift"></div>
+        <span class="approved-shift-text">Approved Shift</span>
+      </div>
+
+      <div class="date-change-type-flex">
+        <div class="date-change-flex">
+          <a
+            href="javascript:dp.startDate = dp.startDate.addMonths(-1); dp.update();"
+          >
+            <img src="./SRS Screen Shorts/back.png" class="arrow-img" />
+          </a>
+
+          <!-- <a href="#" id="change"> -->
+          <!-- <img src="./SRS Screen Shorts/calendar4-week-blue.svg" class="calendar-img" alt=""> -->
+          <!-- </a> -->
+
+          <a href="#" id="change">
+            <img
+              src="./SRS Screen Shorts/calendar4-week-blue.svg"
+              class="calendar-img"
+              alt=""/>
+            </a>
+
+          <a
+            href="javascript:dp.startDate = dp.startDate.addMonths(1); dp.update();"
+          >
+            <img src="./SRS Screen Shorts/next.png" class="arrow-img" />
+          </a>
+        </div>
+
+        <div class="days-week-month-flex">
+          <a href="scheduling-day.html" role="button" class="calendar-type-btn">Day</a>
+          <a href="scheduling-week.html" role="button" class="calendar-type-btn ">Week</a>
+          <a href="scheduling-month.html" role="button" class="calendar-type-btn calendar-active">Month</a>
+        </div>
+      </div>
+
+      <!-- <h1><span id="start"></span> Change</h1> -->
+
+      <span id="start" class="hide"></span>
+
+      <!--            
+           <div class="tools">
+            <span id="start" class="hide"></span>
+           </div>   -->
+
+      <div class="main">
+        <div id="dp"></div>
+      </div>
+
+
+      <script src="./js/daypilot-all.min.js"></script>
+
+      <script>
+
+        const picker = new DayPilot.DatePicker({
+        target: 'start',
+        pattern: 'yyyy-MM-dd',
+        resetTarget: true,
+        onTimeRangeSelected: args => {
+            dp.update({
+                startDate: args.start
+                });
+            }
+        });
+
+        const dp = new DayPilot.Month("dp", {
+          locale: "en-us",
+          viewType: "Month",
+          showWeekend: true,
+          timeRangeSelectedHandling: "Disabled",
+          eventDeleteHandling: "Disabled",
+          eventMoveHandling: "Disabled",
+          eventResizeHandling: "Disabled",
+          eventClickHandling: "Enabled",
+            onEventClicked: () => {
+                var myModal = new bootstrap.Modal(document.getElementById('accept'), {});
+                myModal.show()
+            },
+          eventHoverHandling: "Disabled",
+        });
+        dp.events.list = [];
+        dp.init();
+
+
+        const app = {
+    elements: {
+        previous: document.getElementById("previous"),
+        next: document.getElementById("next"),
+        start: document.querySelector("#start"),
+        change: document.querySelector("#change")
+    },
+    loadData() {
+
+        
+
+        
+        const events = [];
+        let start = DayPilot.Date.today().firstDayOfMonth();
+        for (let i = 0; i < 15; i++) {
+            const add = Math.floor(Math.random() * 2);
+            // const add = 1;
+            start = start.addDays(add);
+            if (start.getDayOfWeek() === 6) {
+                start = start.addDays(2);
+            }
+            if (start.getDayOfWeek() === 0) {
+                start = start.addDays(1);
+            }
+
+            events.push({
+                start: start,
+                end: start.addDays(1),
+                id: DayPilot.guid(),
+                barColor: app.barColor(i),
+                text: "Event " + (i + 1)
+            });
+        }
+        dp.update({events});
+        },
+        barColor(i) {
+            const colors = ["#3c78d8", "#6aa84f", "#f1c232", "#cc0000"];
+            return colors[i % 4];
+        },
+        init() {
+            this.addEventHandlers();
+            this.loadData();
+        },
+        addEventHandlers() {
+            // this.elements.previous.addEventListener("click", () => {
+            //     // ev.preventDefault();
+            //     dp.update({
+            //         startDate: dp.startDate.addMonths(-1)
+            //     });
+            // });
+            // this.elements.next.addEventListener("click", (ev) => {
+            //     ev.preventDefault();
+            //     dp.update({
+            //         startDate: dp.startDate.addMonths(1)
+            //     });
+            // });
+
+            this.elements.change.addEventListener("click", (ev) => {
+                        ev.preventDefault();
+                        picker.show();
+                    });
+        }
+    };
+    app.init();
+
+      </script>
+
+
+
+
+
+
+    </div>
+
+    <div class="modal fade" id="accept" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content cancel-pop-scale">
+          <div class="modal-header">
+            <h3 class="modal-title fs-5" id="staticBackdropLabel">View Shift</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="col-12">                                      
+                <div class="form-floating mb-3 inp"> 
+                    <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                      <option value="" selected hidden>Select a Region</option>
+                      <option value="Mobile" >Newyork</option>
+                      <option value="Home">London</option>
+                      <option value="">Germany</option>
+                    </select>
+                    <label for="floatingInput-5" class="view-shift-label">Region</label>
+                </div>
+  
+                <div class="col-12">                                      
+                  <div class="form-floating mb-3 inp"> 
+                      <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                        <option value="" selected hidden>Select a Physician</option>
+                        <option value="Mobile" >Person 1</option>
+                        <option value="Home">Person 2</option>
+                        <option value="">Person 3</option>
+                      </select>
+                      <label for="floatingInput-5" class="view-shift-label">Physician</label>
+                </div>
+  
+                <div class="col-12">
+                  <div class="form-floating mb-3 inp custom-date-input">
+                      <input type="date" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                          placeholder="Date Of Birth" autocomplete="off"> 
+                      <label for="floatingInput-4" class="view-shift-label">Date of Birth</label>
+                      <img src="./SRS Screen Shorts/calendar4-week.svg" alt="" class="custom-date-icon">
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-floating mb-3 inp custom-clock-input">
+                        <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                            placeholder="Start" autocomplete="off"> 
+                        <label for="floatingInput-4" class="view-shift-label">Start</label>
+                        <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                    </div>
+                  </div>
+    
+                  <div class="col-6">
+                    <div class="form-floating mb-3 inp custom-clock-input">
+                        <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                            placeholder="End" autocomplete="off"> 
+                        <label for="floatingInput-4" class="view-shift-label">End</label>
+                        <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                    </div>
+                  </div>
+                </div>
+  
+  
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="send-btn" data-bs-dismiss="modal">Return</button>
+            <button type="button" class="send-btn">Edit</button>
+            <button type="button" class="delete-btn">Delete</button>
+          </div>
+        </div>
+      </div>
+     </div> 
+
+    <footer>
+      <div class="footer-flex">
+          <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+      </div>
+  </footer>
+  </body>
+</html>

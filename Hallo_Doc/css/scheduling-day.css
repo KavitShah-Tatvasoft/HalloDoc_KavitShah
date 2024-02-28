@@ -1,0 +1,223 @@
+body{
+  box-sizing: border-box;
+}
+
+.patient-form{
+    width: 95%;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 16px;
+}
+
+.submit-info-txt {
+  position: absolute;
+  top: -55px;
+  left: 15px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.three-btns{
+    background-color: #01bce9;
+    border: 1px solid #01bce9;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+}
+
+.btns-flex{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.select-scheduling{
+    width: 20%;
+}
+
+.all-region-btns-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.show-date{
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.type-shift{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.pending-shift{
+    background-color: #feaef5;
+    border: 1px solid #c29bb6!important;
+    border-radius: 8px;
+    height: 25px;
+    width: 40px;
+}
+
+.approved-shift{
+    background-color: #a7cda4;
+    border: 1px solid #457647!important;
+    border-radius: 8px;
+    height: 25px;
+    width: 40px;
+}
+
+.arrow-img{
+    height: 30px;
+    width: 30px;
+}
+
+.calendar-img{
+    height: 20px;
+    width: 20px;
+}
+
+.date-change-flex{
+    display:flex ;
+    align-items: center;
+    gap: 15px;
+
+}
+  
+.calendar-type-btn {
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: #01bce9;
+    background-color: white;
+}
+
+.calendar-active{
+    background-color: #01bce9!important;
+    color: white!important;
+}
+
+.date-change-type-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.hide{
+opacity: 0;
+}
+
+.scheduler_default_timeheadercol_inner{
+  background-color: #6d6e70;
+  color: white;
+}
+
+.month_default_header_inner{
+  background-color: #6d6e70!important;
+  color: white!important;
+  height: 32px!important;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.month_default_cell_header{
+  background-color: #ffadf7;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  clear: both!important;
+  /* top: 100px!important; */
+
+}
+
+.month_default_event_inner{
+  z-index: 10;
+}
+
+.month_default_shadow_inner{
+  box-sizing: border-box;
+  box-shadow: none !important;
+    background-color: transparent!important;
+    border: 0px solid transparent!important;
+    opacity: 0!important;
+    height: 100%!important;
+    display: none;
+}
+
+.month_default_shadow{
+  box-shadow: none;
+}
+
+@media screen and (max-width:768px) {
+  
+  .add-extra-margin{
+    margin-top: 22px;
+  }
+  
+  .patient-text{
+    font-size: 18px;
+  }
+  
+  .back-btn-top{
+    font-size: 14px;
+  }
+  
+  .back-btn-top img{
+    height: auto;
+    width: 15px;
+  }
+  
+  }
+  
+  @media screen and (max-width:425px) {
+    .patient-form{
+      width: 95%;
+    }
+    .patient-text{
+      font-size: 15px;
+    }
+  
+    .back-btn-top{
+      height: 39px;
+      width: 71px;  
+      padding-right: 8px;
+      padding-left: 5px;
+    }
+  
+
+  }

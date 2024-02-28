@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/footer.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/scheduling-day.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <!-- <link href="../helpers/v2/main.css?v=2024.1.5886" type="text/css" rel="stylesheet"/> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <title>Scheduling Week</title>
+  </head>
+
+  <body>
+    <div
+      class="container-fluid patient-form p-3 rounded relative-position extra-margin"
+    >
+      <div class="back-btn-top" role="button" onclick="history.go(-1)">
+        <img src="./chevron-left.svg" alt="" />
+        Back
+      </div>
+
+      <div class="submit-info-txt">Scheduling</div>
+
+      <div class="all-region-btns-flex">
+        <select
+          class="form-select select-scheduling"
+          aria-label="Default select example"
+        >
+          <option>All Regions</option>
+          <option value="1">Newyork</option>
+          <option value="2">Maryland</option>
+          <option value="3">Virginia</option>
+        </select>
+
+        <div class="btns-flex">
+          <a role="button" class="three-btns">Provider On Call</a>
+          <a role="button" class="three-btns">Shift for Review</a>
+          <a role="button" class="three-btns">Add New Shifts</a>
+        </div>
+      </div>
+
+      <div class="show-date mt-4">
+        <span>Monday, 4 December, 2023</span>
+      </div>
+
+      <div class="type-shift">
+        <div class="pending-shift"></div>
+        <span class="pending-shift-text">Pending Shift</span>
+        <div class="approved-shift"></div>
+        <span class="approved-shift-text">Approved Shift</span>
+      </div>
+
+      <div class="date-change-type-flex">
+        <div class="date-change-flex">
+          <a
+            href="javascript:dp.startDate = dp.startDate.addDays(-7); dp.update();"
+          >
+            <img src="./SRS Screen Shorts/back.png" class="arrow-img" />
+          </a>
+
+          <!-- <a href="#" id="change"> -->
+          <!-- <img src="./SRS Screen Shorts/calendar4-week-blue.svg" class="calendar-img" alt=""> -->
+          <!-- </a> -->
+
+          <a href="#" id="change">
+            <img
+              src="./SRS Screen Shorts/calendar4-week-blue.svg"
+              class="calendar-img"
+              alt=""/>
+            </a>
+
+          <a
+            href="javascript:dp.startDate = dp.startDate.addDays(7); dp.update();"
+          >
+            <img src="./SRS Screen Shorts/next.png" class="arrow-img" />
+          </a>
+        </div>
+
+        <div class="days-week-month-flex">
+            <a href="scheduling-day.html" role="button" class="calendar-type-btn">Day</a>
+            <a href="scheduling-week.html" role="button" class="calendar-type-btn  calendar-active ">Week</a>
+            <a href="scheduling-month.html" role="button" class="calendar-type-btn">Month</a>
+        </div>
+      </div>
+
+      <!-- <h1><span id="start"></span> Change</h1> -->
+
+      <span id="start" class="hide"></span>
+
+      <!--            
+           <div class="tools">
+            <span id="start" class="hide"></span>
+           </div>   -->
+
+      <div class="main">
+        <div id="dp"></div>
+      </div>
+
+      <script src="./js/daypilot-all.min.js"></script>
+
+      <script type="text/javascript">
+
+            function getDayOfWeek(date) {
+            const dayOfWeek = new Date(date).getDay();    
+            return isNaN(dayOfWeek) ? null : 
+                ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
+            }
+
+            // function convertDateFormat(str) {
+            // const [day, month, year] = str.slice(0, 15).split(" ");
+            // return `${year}-${(month.length === 3 ? month.slice(0, 3) : month.slice(0, 2))}-${day.slice(0, 2)}`;
+            // }
+
+            const picker = new DayPilot.DatePicker({
+            target: 'start',
+            pattern: 'yyyy-MM-dd',
+            resetTarget: true,
+            onTimeRangeSelected: args => {
+
+            // let isoDate = args.start;
+            //   let date = new Date(isoDate);
+            //   let dateString = date.toISOString().split('T')[0];
+            // //   console.log(getDayOfWeek( dateString ))
+
+
+            //    console.log(args.start)
+                let finalDates = null;
+               if(getDayOfWeek(args.start)=="Sunday")
+                {
+
+                }
+
+                else if(getDayOfWeek(args.start)=="Monday")
+                {
+                    let date = new Date(args.start.value);
+                    date.setDate(date.getDate() - 1);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const formattedDate = date.toLocaleDateString('en-CA', options);
+                    let finalDate = formattedDate + 'T00:00:00';
+                    // console.log(finalDate)
+                    finalDates = finalDate;
+                }
+
+                else if(getDayOfWeek(args.start)=="Tuesday")
+                {
+                    let date = new Date(args.start.value);
+                    date.setDate(date.getDate() - 2);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const formattedDate = date.toLocaleDateString('en-CA', options);
+                    let finalDate = formattedDate + 'T00:00:00';
+                    // console.log(finalDate)
+                    // args.start.value = finalDate;
+                    finalDates = finalDate;
+                }
+
+                else if(getDayOfWeek(args.start)=="Wednesday")
+                {
+                    let date = new Date(args.start.value);
+                    date.setDate(date.getDate() - 3);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const formattedDate = date.toLocaleDateString('en-CA', options);
+                    let finalDate = formattedDate + 'T00:00:00';
+                    // console.log(finalDate)
+                    // args.start.value = finalDate;
+                    finalDates = finalDate;
+                }
+
+                else if(getDayOfWeek(args.start)=="Thursday")
+                {
+                    let date = new Date(args.start.value);
+                    date.setDate(date.getDate() - 4);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const formattedDate = date.toLocaleDateString('en-CA', options);
+                    let finalDate = formattedDate + 'T00:00:00';
+                    // console.log(finalDate)
+                    // args.start.value = finalDate;
+                    finalDates = finalDate;
+                }
+
+                else if(getDayOfWeek(args.start)=="Friday")
+                {
+                    let date = new Date(args.start.value);
+                    date.setDate(date.getDate() - 5);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const formattedDate = date.toLocaleDateString('en-CA', options);
+                    let finalDate = formattedDate + 'T00:00:00';
+                    // console.log(finalDate)
+                    // args.start.value = finalDate;
+                    finalDates = finalDate;
+                }
+
+                else if(getDayOfWeek(args.start)=="Saturday")
+                {
+                    let date = new Date(args.start.value);
+                    date.setDate(date.getDate() - 6);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const formattedDate = date.toLocaleDateString('en-CA', options);
+                    let finalDate = formattedDate + 'T00:00:00';
+                    // console.log(finalDate)
+                    // args.start.value = finalDate;
+                    finalDates = finalDate;
+                }
+
+  
+                // console.log(args.start.value)
+              dp.update({
+                  startDate: finalDates
+              });
+
+          }
+
+      });
+
+    
+        const dp = new DayPilot.Scheduler("dp", {
+          cellWidthSpec: "Auto",
+          timeHeaders: [{ groupBy: "Day", format: "dddd dd" }],
+          scale: "Day",
+          days: 7,
+          startDate: DayPilot.Date.today().firstDayOfWeek(),
+          timeRangeSelectedHandling: "Disabled",
+          eventMoveHandling: "Disabled",
+          eventResizeHandling: "Update",
+          onEventResized: (args) => {
+            args.control.message("Event resized: " + args.e.text());
+          },
+          eventDeleteHandling: "Update",
+          onEventDeleted: (args) => {
+            args.control.message("Event deleted: " + args.e.text());
+          },
+          eventClickHandling: "Disabled",
+          eventHoverHandling: "Bubble",
+          bubble: new DayPilot.Bubble({
+            onLoad: (args) => {
+              // if the event object doesn't specify "bubbleHtml" property
+              // this onLoad handler will be called to provide the bubble HTML
+              args.html = "Event details";
+            },
+          }),
+          treeEnabled: true,
+        });
+        dp.resources = [
+          { name: "Resource 1", id: "R1" },
+          { name: "Resource 2", id: "R2" },
+          { name: "Resource 3", id: "R3" },
+          { name: "Resource 4", id: "R4" },
+          { name: "Resource 5", id: "R5" },
+          { name: "Resource 6", id: "R6" },
+          { name: "Resource 7", id: "R7" },
+          { name: "Resource 8", id: "R8" },
+          { name: "Resource 9", id: "R9" },
+        ];
+        dp.events.list = [];
+        dp.init();
+
+        const app = {
+          elements: {
+            previous: document.getElementById("previous"),
+            next: document.getElementById("next"),
+            start: document.querySelector("#start"),
+            change: document.querySelector("#change"),
+          },
+          loadData() {
+            const events = [];
+            let start = DayPilot.Date.today().firstDayOfMonth();
+            for (let i = 0; i < 15; i++) {
+              const add = Math.floor(Math.random() * 2);
+              // const add = 1;
+              start = start.addDays(add);
+              if (start.getDayOfWeek() === 6) {
+                start = start.addDays(2);
+              }
+              if (start.getDayOfWeek() === 0) {
+                start = start.addDays(1);
+              }
+
+              events.push({
+                start: start,
+                end: start.addDays(1),
+                id: DayPilot.guid(),
+                barColor: app.barColor(i),
+                text: "Event " + (i + 1),
+              });
+            }
+            dp.update({ events });
+          },
+          barColor(i) {
+            const colors = ["#3c78d8", "#6aa84f", "#f1c232", "#cc0000"];
+            return colors[i % 4];
+          },
+          init() {
+            this.addEventHandlers();
+            this.loadData();
+          },
+          addEventHandlers() {
+            // this.elements.previous.addEventListener("click", () => {
+            //     // ev.preventDefault();
+            //     dp.update({
+            //         startDate: dp.startDate.addMonths(-1)
+            //     });
+            // });
+            // this.elements.next.addEventListener("click", (ev) => {
+            //     ev.preventDefault();
+            //     dp.update({
+            //         startDate: dp.startDate.addMonths(1)
+            //     });
+            // });
+
+            this.elements.change.addEventListener("click", (ev) => {
+              ev.preventDefault();
+              picker.show();
+            });
+          },
+        };
+        app.init();
+
+        document.querySelector(".scheduler_default_corner_inner").nextElementSibling.style.display="none";
+      </script>
+    </div>
+
+    <footer>
+        <div class="footer-flex">
+            <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+  </body>
+</html>
