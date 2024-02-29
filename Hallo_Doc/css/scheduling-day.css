@@ -1,3 +1,8 @@
+.navigator_default_main{
+  position: relative !important;
+  top: -90px !important;
+}
+
 body{
   box-sizing: border-box;
 }
@@ -182,6 +187,36 @@ opacity: 0;
 .month_default_shadow{
   box-shadow: none;
 }
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.calendar-type-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.three-btns:hover{
+  background-color: #0399be;
+}
+
+.month_default_loading ~ div{
+  display: none !important;
+}
+.scheduler_default_corner_inner ~ div{
+  display: none !important;
+}
+
+.form-select:focus{
+  box-shadow: none;
+}
+
 
 @media screen and (max-width:768px) {
   

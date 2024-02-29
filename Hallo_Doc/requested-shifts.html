@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/requested-shifts.css">
+    <script src="./js/admin-dashboard.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Profession Menu</title>
+</head>
+<body>
+
+    <div class="container-fluid footer-container patient-form shadow bg-white rounded relative-position extra-margin">
+
+        <div class="submit-info-txt">
+           Requested Shifts
+        </div>
+
+        <div class="back-btn-top " role="button" onclick="history.go(-1)">
+            <img src="./chevron-left.svg" alt="">
+            Back
+        </div>
+
+        <div class="row m-2">
+            <div class="col-12 flex-create-account-search">
+
+                <div class="main-shifts-btns-flex mt-3 mb-3">
+    
+                    <div class="select-parent">
+                        <select name="physician" id="" class="form-select select-physician">
+                            <option value="">All Regions</option>
+                            <option value="">Newyork</option>
+                            <option value="">Maryland</option>
+                            <option value="">Virginia</option>
+                        </select>
+    
+                        <img src="./SRS Screen Shorts/search.svg" class="select-search-img" alt="">
+                    </div>
+
+                    <div class="shifts-btns-flex">
+                        <a href="scheduling-month.html" role="button" class="current-month-btn">View Current Month Shift</a>
+                        <a href="#" role="button" class="approved-shift-btn">Approved Selected</a>
+                        <a href="#" role="button" class="delete-shift-btn">Delete Selected</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-div">
+                <div class="mobile-cards">
+                    <hr>
+                    <div class="checkbox-name-flex">
+                        <input type="checkbox" class="input-checkbox">
+                        <span class="doc-name">Dr. Shah</span>
+                    </div>
+
+                    <div class="date-time-region-flex">
+                        <span class="card-div-flex-text">Dec 09, 2023</span>
+                        <span class="card-div-flex-text">8.15 PM - 9.15 PM</span>
+                        <span class="card-div-flex-text">Newyork</span>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle mt-2">
+                <thead class="table-active align-middle">
+                  <tr class="align-middle">
+                    <th scope="col" class="thead width-col1 extra-padding-td"><input type="checkbox" name="" id="" class="input-checkbox selectall"></th>
+                    <th scope="col" class="thead width-col2">
+                        <div class="staff-arrow-flex">
+                            <span class="staff-text">Staff</span>
+                            <img src="./SRS Screen Shorts/arrow-up.svg" alt="">
+                        </div>
+                    </th>
+                    <th scope="col" class="thead width-col3" >Day</th>
+                    <th scope="col" class="thead width-col4">Time</th>
+                    <th scope="col" class="thead width-col5">Region</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="thead width-col1 extra-padding-td"><input type="checkbox" name="" id="" class="input-checkbox justone"></td>
+                    <td>Dr Shah</td>
+                    <td>Dec 09, 2023</td>
+                    <td>8.15 PM - 9.15 PM</td>
+                    <td>Newyork</td>
+                  </tr>
+                </tbody>
+              </table>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-flex">
+            <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        $('.selectall').click(function() {
+        if ($(this).is(':checked')) {
+            $('input:checkbox').prop('checked', true);
+        } else {
+            $('input:checkbox').prop('checked', false);
+        }
+        });
+
+        $("input[type='checkbox'].justone").change(function(){
+        var a = $("input[type='checkbox'].justone");
+        if(a.length == a.filter(":checked").length){
+            $('.selectall').prop('checked', true);
+        }
+        else {
+            $('.selectall').prop('checked', false);
+        }
+        });
+    </script>
+
+    <script src="./js/darktheme.js"></script>
+</body>
+</html>

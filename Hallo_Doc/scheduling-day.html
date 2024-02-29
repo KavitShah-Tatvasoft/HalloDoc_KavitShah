@@ -12,7 +12,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/navbar.css">
-        <!-- <link href="../helpers/v2/main.css?v=2024.1.5886" type="text/css" rel="stylesheet"/> -->
+        <link rel="stylesheet" href="./css/pop-ups.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -41,9 +41,9 @@
               </select>
 
               <div class="btns-flex">
-                <a role="button" class="three-btns">Provider On Call</a>
-                <a role="button" class="three-btns">Shift for Review</a>
-                <a role="button" class="three-btns">Add New Shifts</a>
+                <a role="button" href="MDs-on-call.html" class="three-btns">Provider On Call</a>
+                <a role="button" href="requested-shifts.html" class="three-btns">Shift for Review</a>
+                <a role="button" class="three-btns" data-bs-toggle="modal" data-bs-target="#create-shift">Add New Shifts</a>
               </div>
            </div>
 
@@ -102,7 +102,130 @@
           <div class="footer-flex">
               <a href="#">Terms of Condition</a><span>|</span><a href="#">Privacy Policy</a>
           </div>
-      </footer>
+        </footer>
+
+        <!-- pop-ups -->
+
+        <div class="modal fade" id="create-shift" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content create-shift-scale">
+              <div class="modal-header">
+                <h3 class="modal-title fs-5" id="staticBackdropLabel">Create Shift</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <div class="col-12">                                      
+                    <div class="form-floating mb-3 inp"> 
+                        <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                          <option value="" selected hidden>Select a Region</option>
+                          <option value="Mobile" >Newyork</option>
+                          <option value="Home">London</option>
+                          <option value="">Germany</option>
+                        </select>
+                        <label for="floatingInput-5" class="view-shift-label">Region</label>
+                    </div>
+      
+                    <div class="col-12">                                      
+                      <div class="form-floating mb-3 inp"> 
+                          <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                            <option value="" selected hidden>Select a Physician</option>
+                            <option value="Mobile" >Person 1</option>
+                            <option value="Home">Person 2</option>
+                            <option value="">Person 3</option>
+                          </select>
+                          <label for="floatingInput-5" class="view-shift-label">Physician</label>
+                    </div>
+      
+                    <div class="col-12">
+                      <div class="form-floating mb-3 inp custom-date-input">
+                          <input type="date" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                              placeholder="Date Of Birth" autocomplete="off"> 
+                          <label for="floatingInput-4" class="view-shift-label">Date of Birth</label>
+                          <img src="./SRS Screen Shorts/calendar4-week.svg" alt="" class="custom-date-icon">
+                      </div>
+                    </div>
+      
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-floating mb-3 inp custom-clock-input">
+                            <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                                placeholder="Start" autocomplete="off"> 
+                            <label for="floatingInput-4" class="view-shift-label">Start</label>
+                            <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                        </div>
+                      </div>
+        
+                      <div class="col-6">
+                        <div class="form-floating mb-3 inp custom-clock-input">
+                            <input type="time" class="form-control input-1 view-shift-inp" id="floatingInput-4"
+                                placeholder="End" autocomplete="off"> 
+                            <label for="floatingInput-4" class="view-shift-label">End</label>
+                            <img src="./SRS Screen Shorts/clock.svg" alt="" class="custom-clock-icon">
+                        </div>
+                      </div>
+                    </div>
+    
+                    <div class="col-12">
+                     Repeat <label class="switch shrink"> <input type="checkbox" checked> <span class="slider round"></span> </label>
+                    </div>
+    
+                    <div class="create-shift-days-main-flex">
+                          <div class="create-shift-days-checkbox-colum-flex">
+                              <div class="create-shift-days-checkbox-flex">
+                                <input type="checkbox"> <span class="create-shift-day-name">Every Sunday</span>
+                              </div>
+                              <div class="create-shift-days-checkbox-flex">
+                                <input type="checkbox"> <span class="create-shift-day-name">Every Wenesday</span>
+                              </div>
+                              <div class="create-shift-days-checkbox-flex">
+                                <input type="checkbox"> <span class="create-shift-day-name">Every Saturday</span>
+                              </div>
+                          </div>
+      
+                      <div class="create-shift-days-checkbox-colum-flex">
+                        <div class="create-shift-days-checkbox-flex">
+                          <input type="checkbox"> <span class="create-shift-day-name">Every Monday</span>
+                        </div>
+                        <div class="create-shift-days-checkbox-flex">
+                          <input type="checkbox"> <span class="create-shift-day-name">Every Thrusday</span>
+                        </div>
+                      </div>
+      
+                      <div class="create-shift-days-checkbox-colum-flex">
+                        <div class="create-shift-days-checkbox-flex">
+                          <input type="checkbox"> <span class="create-shift-day-name">Every Tuesday</span>
+                        </div>
+                        <div class="create-shift-days-checkbox-flex">
+                          <input type="checkbox"> <span class="create-shift-day-name">Every Friday</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-12 mt-3">                                      
+                      <div class="form-floating mb-3 inp"> 
+                          <select name="Number_Type" id="floatingInput-5" class="form-control form-select input-2 view-shift-inp">  
+                            <option value="" selected>2-times</option>
+                            <option value="Mobile" >3-times</option>
+                            <option value="Home">4-times</option>
+                            <option value="">5-times</option>
+                          </select>
+                          <label for="floatingInput-5" class="view-shift-label">Repeat End</label>
+                    </div>
+    
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer create-shift-footer">
+                <button type="button" class="send-btn" data-bs-dismiss="modal">Return</button>
+                <button type="button" class="send-btn">Edit</button>
+                <button type="button" class="delete-btn">Delete</button>
+              </div>
+            </div>
+          </div>
+         </div>
+
+
 
         <script src="./js/daypilot-all.min.js"></script>
 

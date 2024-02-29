@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="this" disabled />
+<!-- <button type="button" class="new" id="enableBtn">New</button> -->
+    <button id="enableBtn">Edit</button>
+    <button id="disableBtn">Save</button>
+
+    <script>
+      $(document).ready(function () {
+    //     console.log("out");
+    //     $(".new").click(function(){
+    //         console.log("new");
+    //     });
+        $("#disableBtn").click(function () {
+          $("#this").attr("disabled", true);
+          console.log("first");
+        });
+
+        $("#enableBtn").click(function () {
+          $("#this").attr("disabled", false);
+          console.log("second");
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,3 +1,65 @@
+.cancel-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d32f2f;
+  border-radius: 5px;
+  height: 57px;
+  background-color: #d32f2f;
+  width: 57px;
+  color: white;
+}
+
+.cancel-text:hover{
+  background-color: #9c2323;
+}
+
+
+.edit-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  height: 57px;
+  background-color: white;
+  width: 57px;
+}
+
+.save-text, .reset-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  height: 57px;
+  background-color: #01bce9;
+  width: 57px;
+  color: white;
+}
+
+.save-cancel-details-btn{
+  display: flex;
+  justify-content: flex-start;
+  align-items:flex-start;
+  gap: 15px;
+}
+
+.save-text:hover, .reset-text:hover{
+  background-color: #0399be;
+}
+
+
+
+#save-cancel-details-btn-id{
+  display: none;
+}
+
+.edit-text:hover{
+  color: white;
+  background-color: #01bce9;
+}
+
 .back-btn-top:hover{
   background-color: #01bce9;
   color: white;

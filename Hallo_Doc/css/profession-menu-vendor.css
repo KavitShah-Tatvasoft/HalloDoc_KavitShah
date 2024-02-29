@@ -271,4 +271,11 @@ td{
       font-size: 15px;
     }
 
+    .back-btn-top{
+        transform: scale(0.75);
+      }
+
   }  
+
+
+  

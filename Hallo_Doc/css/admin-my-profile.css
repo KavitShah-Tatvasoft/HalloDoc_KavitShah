@@ -1,3 +1,16 @@
+.save-reset-btns-flex, .reset-pass-cancel-flex{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+#save-reset-btns-id, #reset-pass-cancel-id{
+  display: none;
+}
+
 .back-btn-top:hover {
   background-color: #01bce9;
   color: white;
@@ -149,6 +162,21 @@
     border: 1px solid #01bce9;
     margin-top: 20px;
 }
+
+
+.cancel-btn{
+  background-color: #d32f2f;
+  color: white;
+  padding: 6px 18px;
+  border-radius: 5px;
+  border: 1px solid #d32f2f;
+  margin-top: 20px;
+}
+
+.cancel-btn:hover{
+  background-color: #9c2323;
+}
+
   
 
   @media screen and (max-width:768px) {
