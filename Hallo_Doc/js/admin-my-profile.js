@@ -82,3 +82,45 @@ function cancelChange(){
         x[i].disabled=true;
     }
 }
+
+function editAdminDetails2(){
+    var x = document.getElementsByClassName("admin-details-row-2");
+    var y = document.getElementById("edit-btn-id-1");
+    var z = document.getElementById("save-reset-btns-id-1");
+
+
+    y.style.display="none";
+    z.style.display="flex";
+
+    for(var i=0; i<x.length;i++){
+        x[i].disabled=false;
+    }
+}
+
+function saveAdminDetails2(){
+    var x = document.getElementsByClassName("admin-details-row-2");
+    var y = document.getElementById("edit-btn-id-1");
+    var z = document.getElementById("save-reset-btns-id-1");
+
+
+    z.style.display="none";
+    y.style.display="flex";
+
+    for(var i=0; i<x.length;i++){
+        x[i].disabled=true;
+    }
+}   
+
+function cancelAdminDetails2(){
+    var x = document.getElementsByClassName("admin-details-row-2");
+    var y = document.getElementById("edit-btn-id-1");
+    var z = document.getElementById("save-reset-btns-id-1");
+
+
+    z.style.display="none";
+    y.style.display="flex";
+
+    for(var i=0; i<x.length;i++){
+        x[i].disabled=true;
+    }
+}  

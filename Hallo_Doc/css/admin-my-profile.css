@@ -5,9 +5,13 @@
   gap: 10px;
 }
 
+.margin-top-remove{
+  margin-top: 0px !important;
+  margin-bottom: 20px;
+}
 
 
-#save-reset-btns-id, #reset-pass-cancel-id{
+#save-reset-btns-id, #reset-pass-cancel-id, #save-reset-btns-id-1{
   display: none;
 }
 

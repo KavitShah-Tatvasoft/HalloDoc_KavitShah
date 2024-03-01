@@ -2,6 +2,10 @@
     width: 60%;
 }
 
+#save-btn-close-case, #cancel-btn-close-case{
+  display: none;
+}
+
 .back-btn-top:hover{
   background-color: #01bce9;
   color: white;
@@ -26,6 +30,10 @@
 
 .bottom-btns-edit:hover{
   background-color: #1991b3;
+}
+
+.bottom-btns-cancel:hover{
+  background-color:#b32828;
 }
 
 .bottom-btns-close:hover{
@@ -282,6 +290,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 3px;
   border-radius: 5px;
   padding: 7px 10px;
+}
+
+.bottom-btns-cancel{
+  background-color: #d32f2f;;
+  color: white;
+  border: 1px solid #d32f2f;;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 15px;
 }
 
 .bottom-btns-edit{

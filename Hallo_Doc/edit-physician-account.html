@@ -12,6 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/navbar.css">
         <link rel="stylesheet" href="./css/footer.css">
+        <script src="./js/edit-physician-account.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -197,15 +198,15 @@
 
             <div class="col-12 col-md-6">                                     
                 <div class="form-floating mb-3 inp">
-                    <input type="text" class="form-control input-2" id="floatingInput-5"
-                        placeholder="User Name" autocomplete="off">
+                    <input type="text" class="form-control input-2 provider-details-1" disabled 
+                        placeholder="User Name" autocomplete="off" >
                     <label for="floatingInput-5">User Name</label>
                 </div>
             </div>
 
             <div class="col-12 col-md-6">                                     
                 <div class="form-floating mb-3 inp">
-                    <input type="text" class="form-control input-2" id="floatingInput-5"
+                    <input type="text" class="form-control input-2 provider-details-2" disabled 
                         placeholder="Password" autocomplete="off">
                     <label for="floatingInput-5">Password</label>
                 </div>
@@ -213,7 +214,7 @@
 
             <div class="col-12 col-md-6">                                     
                 <div class="form-floating mb-3 inp"> 
-                    <select name="Refill" id="floatingInput-5" class="form-control form-select input-2">  
+                    <select name="Refill" id="floatingInput-5" class="form-control form-select input-2 provider-details-1" disabled >  
                       <option value="Home">Not Active</option>
                       <option value="Home">Active</option>
                       <option value="Home">3 Time</option>
@@ -224,7 +225,7 @@
 
             <div class="col-12 col-md-6">                                     
                 <div class="form-floating mb-3 inp"> 
-                    <select name="Refill" id="floatingInput-5" class="form-control form-select input-2">  
+                    <select name="Refill" id="floatingInput-5" class="form-control form-select input-2 provider-details-1" disabled >  
                       <option value="Home">Master Admin</option>
                       <option value="Home">Admin</option>
                       <option value="Home">Provider</option>
@@ -233,13 +234,16 @@
                 </div>
             </div>
 
-            <div class="common-row-bottom-btn">
-                <button class="edit-btn extra-margin-right-edit">Edit</button>
-                <button class="reset-pass-btn">Reset Password</button>
+            <div class="common-row-bottom-btn" >
+                <button type="button" id="save-btn-1" onclick="saveChange1()" class="edit-btn extra-margin-right-edit">Save</button>
+                <button type="button" id="save-btn-2" onclick="saveChange2()" class="edit-btn extra-margin-right-edit">Save</button>
+                <button type="reset" id="cancel-btn-12" onclick="cancelChange1()" class="cancel-btn extra-margin-right-edit">Cancel</button>
+                <button class="edit-btn extra-margin-right-edit" onclick="editDetails1()" id="edit-btn-1">Edit</button>
+                <button class="reset-pass-btn" id="password-btn-12">Reset Password</button>
             </div>
 
             
-        </div>
+        </div>  
 
         <div class="row">
             <div class="col-12 mb-3 mt-3">                                <!--Patient Information col-->

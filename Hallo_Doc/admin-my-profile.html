@@ -322,7 +322,7 @@
 
                 <div class="col-12 col-md-6">                                     
                     <div class="form-floating mb-3 inp">
-                        <input type="text" class="form-control input-2" id="floatingInput-2"
+                        <input type="text" class="form-control input-2 admin-details-row-2" disabled
                             placeholder="Address 1" autocomplete="off">
                         <label for="floatingInput-2">Address 1</label>
                     </div>
@@ -330,7 +330,7 @@
 
                 <div class="col-12 col-md-6">                             
                     <div class="form-floating mb-3 inp">
-                        <input type="text" class="form-control input-1" id="floatingInput-3"
+                        <input type="text" class="form-control input-1 admin-details-row-2" disabled
                             placeholder="Address 2" autocomplete="off">
                         <label for="floatingInput-3">Address 2</label>
                     </div>
@@ -338,7 +338,7 @@
 
                 <div class="col-12 col-md-6">                             
                     <div class="form-floating mb-3 inp">
-                        <input type="text" class="form-control input-1" id="floatingInput-3"
+                        <input type="text" class="form-control input-1 admin-details-row-2" disabled
                             placeholder="City" autocomplete="off">
                         <label for="floatingInput-3">City</label>
                     </div>
@@ -346,7 +346,7 @@
 
                 <div class="col-12 col-md-6">                                     
                     <div class="form-floating mb-3 inp"> 
-                        <select name="Refill" id="floatingInput-5" class="form-control form-select input-2">
+                        <select name="Refill" id="floatingInput-5" class="form-control form-select input-2 admin-details-row-2" disabled>
                             <option value="Home">District Of Columbia</option>  
                         <option value="Home">New York</option>
                         <option value="Home">Virginia</option>
@@ -358,7 +358,7 @@
 
                 <div class="col-12 col-md-6">                             
                     <div class="form-floating mb-3 inp">
-                        <input type="text" class="form-control input-1" id="floatingInput-3"
+                        <input type="text" class="form-control input-1 admin-details-row-2"  disabled
                             placeholder="Zip" autocomplete="off">
                         <label for="floatingInput-3">Zip</label>
                     </div>
@@ -366,13 +366,19 @@
 
                 <div class="col-12 col-md-6">                                      <!--Phone Number col-->
                     <div class="form-floating mb-3 phonecolheight phonecolheight-1">
-                        <input type="tel" class="form-control phoneflags phone" />
+                        <input type="tel" class="form-control phoneflags phone admin-details-row-2" disabled/>
                     </div>
                 </div>
 
                 <div class="common-row-bottom-btn mb-4">
-                    <button class="edit-btn">Edit</button>
+                    <button class="edit-btn" type="button" id="edit-btn-id-1" onclick="editAdminDetails2()">Edit</button>
                 </div>
+
+                <div class="save-reset-btns-flex" id="save-reset-btns-id-1"> 
+                    <button type="button" class="edit-btn margin-top-remove"  onclick="saveAdminDetails2()">Save</button>
+                    <button type="reset" onclick="cancelAdminDetails2()" class="cancel-btn margin-top-remove" >Cancel</button>
+                </div>
+
             </div>
 
          </form>

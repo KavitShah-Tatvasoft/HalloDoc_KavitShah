@@ -1,3 +1,9 @@
+#save-btn-1, #save-btn-2, #cancel-btn-12{
+  display: none;
+}
+
+
+
 .upload-class{
   width: 75%;
   }
@@ -217,18 +223,18 @@
     margin-top: 20px;
 }
 
-.delete-btn:hover{
-  background-color: rgb(202, 63, 63);
-  border: 1px solid rgb(202, 63, 63);
+.delete-btn:hover, .cancel-btn:hover{
+  background-color: #a52929;
+  border: 1px solid #a52929;
   color: white;
 }
 
-.delete-btn{
-    background-color:red;
+.delete-btn, .cancel-btn{
+    background-color:#d32f2f;;
     color: white;
     padding: 6px 18px;
     border-radius: 5px;
-    border: 1px solid red;
+    border: 1px solid #d32f2f;;
     margin-top: 20px;
 }
 
