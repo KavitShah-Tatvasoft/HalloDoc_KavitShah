@@ -261,6 +261,13 @@ td{
     }
   }
 
+  @media screen and (max-width:550px) {
+    .submit-info-txt{
+        font-size: 22px;
+        top: -50px;
+    }
+  }
+
 @media screen and (max-width:460px) {
     .bottom-accordion-row-btn{
         transform: scale(0.9);

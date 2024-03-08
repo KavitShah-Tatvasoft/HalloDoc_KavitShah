@@ -61,7 +61,7 @@
                                         <ul class="dropdown-menu">
                                             <div class="disc-align">
                                                 <li><a class="dropdown-item" href="provider-menu.html">Provider</a></li>
-                                                <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                                <li><a class="dropdown-item" href="scheduling-day.html">Scheduling</a></li>
                                                 <!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
                                             </div>
                                         </ul>
@@ -110,7 +110,9 @@
                         <strong>Admin admin2</strong>
                     </span>
                     <div>
-                        <button class="logout-btn"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </button>
+                        <a href="login.html">
+                            <div class="logout-btn-admin"><img src="./SRS Screen Shorts/box-arrow-right.svg" class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span> </div>
+                        </a>
                     </div>
     
                     <div>
@@ -145,7 +147,7 @@
                         aria-expanded="false">Provider</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="provider-menu.html">Provider</a></li>
-                        <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                        <li><a class="dropdown-item" href="scheduling-day.html">Scheduling</a></li>
                         <!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
                     </ul>
                 </li>
@@ -234,12 +236,12 @@
                 </div>
 
                 <div class="common-row-bottom-btn">
-                    <button type="button" onclick="resetPassword()" class="reset-pass-btn" id="reset-btn-bottom">Reset Password</button>
+                    <button type="button" onclick="resetPassword()" class="reset-pass-btn shirnk-btns" id="reset-btn-bottom">Reset Password</button>
                 </div>
 
                 <div class="reset-pass-cancel-flex" id="reset-pass-cancel-id">
-                    <button type="button" onclick="changePassword()" class="edit-btn">Change Password </button>
-                    <button type="reset" onclick="cancelChange()" class="cancel-btn">Cancel</button>
+                    <button type="button" onclick="changePassword()" class="edit-btn shirnk-btns">Change Password </button>
+                    <button type="reset" onclick="cancelChange()" class="cancel-btn shirnk-btns">Cancel</button>
                 </div>
             </div>
 
@@ -304,12 +306,12 @@
                 </div>
 
                 <div class="common-row-bottom-btn">
-                    <button type="button" class="edit-btn" id="edit-btn-id" onclick="editAdminDetails1()">Edit</button>
+                    <button type="button" class="edit-btn shirnk-btns" id="edit-btn-id" onclick="editAdminDetails1()">Edit</button>
                 </div>
 
                 <div class="save-reset-btns-flex" id="save-reset-btns-id"> 
-                    <button type="button" class="edit-btn"  onclick="saveAdminDetails1()">Save</button>
-                    <button type="reset" onclick="cancelAdminDetails1()" class="cancel-btn" >Cancel</button>
+                    <button type="button" class="edit-btn shirnk-btns"  onclick="saveAdminDetails1()">Save</button>
+                    <button type="reset" onclick="cancelAdminDetails1()" class="cancel-btn shirnk-btns" >Cancel</button>
                 </div>
 
             </div>
@@ -371,12 +373,12 @@
                 </div>
 
                 <div class="common-row-bottom-btn mb-4">
-                    <button class="edit-btn" type="button" id="edit-btn-id-1" onclick="editAdminDetails2()">Edit</button>
+                    <button class="edit-btn shirnk-btns" type="button" id="edit-btn-id-1" onclick="editAdminDetails2()">Edit</button>
                 </div>
 
                 <div class="save-reset-btns-flex" id="save-reset-btns-id-1"> 
-                    <button type="button" class="edit-btn margin-top-remove"  onclick="saveAdminDetails2()">Save</button>
-                    <button type="reset" onclick="cancelAdminDetails2()" class="cancel-btn margin-top-remove" >Cancel</button>
+                    <button type="button" class="edit-btn margin-top-remove shirnk-btns"  onclick="saveAdminDetails2()">Save</button>
+                    <button type="reset" onclick="cancelAdminDetails2()" class="cancel-btn margin-top-remove shirnk-btns" >Cancel</button>
                 </div>
 
             </div>

@@ -267,6 +267,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 14px!important;
 }
 
+.back-btn-top{
+  transform: scale(0.88);
+}
+
+.bottom-btns{
+  gap: 2px;
+}
+
 
 }
 
@@ -284,12 +292,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media screen and (max-width:425px) {
-  .back-btn-top{
-    transform: scale(0.75);
-  }
-
   .bottom-btns-submit, .bottom-btns-finalize, .bottom-btns-cancel{
     transform: scale(0.9);
+  }
+}
+
+@media screen and (max-width:400px) {
+  .top-text{
+    font-size: 27px;
   }
 }
 

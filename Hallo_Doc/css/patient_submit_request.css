@@ -135,6 +135,13 @@ footer a:hover{
 
 }
 
+@media screen and (max-width:550px){
+    .back-btn-top{
+        transform: scale(0.89);
+        top: -52px;
+    }
+}
+
 @media screen and (max-width:480px) {
     .back-btn-top{
         top: 6px;

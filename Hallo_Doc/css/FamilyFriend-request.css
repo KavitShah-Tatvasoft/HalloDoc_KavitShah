@@ -1,3 +1,6 @@
+.inc-width-family{
+  width: 102%;
+}
 .family-pop{
     display: flex;
     flex-direction: column;
@@ -48,12 +51,24 @@
   .modal-content-clear-case{
     transform: scale(0.8);
   }
+
+  .inc-width-family{
+    width: 103%;
+  }
+
+
 }
 
 @media screen and (max-width:425px) {
   .modal-content-clear-case{
     transform: scale(0.7);
   }
+
+  .inc-width-family{
+    width: 106% ;
+  }
+
+
 }
 
 

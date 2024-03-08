@@ -493,6 +493,25 @@ input[type="tel"]::placeholder{
     }
 } */
 
+@media screen and (max-width:550px){
+  .top-patient-view-text{
+    transform: scale(0.89) translateX(-15px);
+  }
+
+  .back-btn-top{
+    transform: scale(0.89);
+    top: -54px;
+  }
+
+  .shrink-btns{
+    transform: scale(0.89);
+  }
+
+  .bottom-btns{
+    gap: 2px;
+  }
+}
+
 @media screen and (max-width:425px) {
   .patient-form{
     width: 95%;

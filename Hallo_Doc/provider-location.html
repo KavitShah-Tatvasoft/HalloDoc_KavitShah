@@ -58,7 +58,7 @@
                                     <ul class="dropdown-menu">
                                         <div class="disc-align">
                                             <li><a class="dropdown-item" href="provider-menu.html">Provider</a></li>
-                                            <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                            <li><a class="dropdown-item" href="scheduling-day.html">Scheduling</a></li>
                                             <!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
                                         </div>
                                     </ul>
@@ -144,7 +144,7 @@
                     aria-expanded="false">Provider</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="provider-menu.html">Provider</a></li>
-                    <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                    <li><a class="dropdown-item" href="scheduling-day.html">Scheduling</a></li>
                     <!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
                 </ul>
             </li>
@@ -216,11 +216,17 @@
             }
 
             .gmap_canvas {
-                padding: 15px;
+                padding: 25px 15px;
                 overflow: hidden;
                 background: none !important;
                 height: 100%;
                 width: 100%;
+            }
+
+            @media screen and (max-width:500px) {
+                .gmap_canvas {
+                padding: 15px 5px;
+            }
             }
         </style>
 

@@ -278,7 +278,20 @@ th{
         font-weight: 500;
         font-size: 22px;
     }
+
+    .shrink-btns{
+        transform: scale(0.89);
+    }
+
+    .accordion-bottom-btn{
+        transform: scale(0.89);
+    }
+
+    .accordion-bottom-btn-flex{
+        gap: 4px;
+    }
 }
+
 
 @media screen and (max-width:490px){
     .flex-create-account-search{
@@ -294,11 +307,7 @@ th{
         margin-bottom: 20px;
     }
 
+
     
 }
 
-@media screen and (max-width:425px){
-    .accordion-bottom-btn{
-        transform: scale(0.89);
-    }
-}

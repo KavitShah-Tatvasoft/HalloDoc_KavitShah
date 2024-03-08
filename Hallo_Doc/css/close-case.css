@@ -1,3 +1,12 @@
+.logout-btn-admin{
+  margin-left: 10px;
+  margin-bottom: 2px;
+  background-color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  height: 34px;
+  padding: 2px 7px 0px 7px;
+}
 .patient-form{
     width: 60%;
 }
@@ -42,6 +51,23 @@
   color: white;
 }
 
+.top-patient-view-text{
+  position: absolute;
+  top: -50px;
+  left: 0px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.view-reservation-text{
+  font-weight: 600;
+  font-size: 25px;
+}
+
+
 @media screen and (max-width:1024px) {
     .patient-form{
       width: 80%;
@@ -83,22 +109,6 @@
     position: absolute;
     top: -57px;
     right: 0px;
-}
-
-.top-patient-view-text{
-    position: absolute;
-    top: -45px;
-    left: 0px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.view-reservation-text{
-    font-weight: 600;
-    font-size: 20px;
 }
 
 .form-control:focus{
@@ -340,6 +350,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .remove-padding-left{
   width: 65px;
 }
+
+  .logout-btn-admin{
+      margin-left: 10px;
+      margin-bottom: 2px;
+      background-color: white;
+      border: 1px solid #01bce9;
+      border-radius: 3px;
+      height: 34px;
+      padding: 6px 7px 0px 7px;
+  }
 }
 
 @media screen and (max-width:648px) {
@@ -370,6 +390,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   align-items: flex-start;
 }
 
+}
+
+@media screen and (max-width:550px) {
+  .view-reservation-text{
+    font-size: 22px;
+  }
+
+  .back-btn-top{
+    transform: scale(0.89);
+    top: -52px;
+  }
+
+  .top-patient-view-text{
+    top: -45px;
+  }
+
+  .shrink-btns{
+    transform: scale(0.89);
+  }
+
+  .create-invoice-btn{
+    transform: translateX(-15px) scale(0.89) !important;
+
+  }
+
+  .bottom-btns{
+    gap: 4px;
+  }
 }
 
 

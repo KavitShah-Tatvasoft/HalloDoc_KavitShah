@@ -1,3 +1,4 @@
+
 .body{
     background-color: #f9f9f9;
 }
@@ -201,7 +202,7 @@ td{
 
  @media screen and (max-width:705px){
     .select-parent{
-        width: 96%;
+        width: 95%;
     }
   }
 
@@ -214,9 +215,24 @@ td{
     
     }
 
-    @media screen and (max-width:425px) {
+    @media screen and (max-width:550px) {
+        .submit-info-txt{
+            font-size: 22px;
+            top: -50px;
+        }
+
+        .shrink-btns{
+            transform: scale(0.89);
+        }
+    }
+
+    @media screen and (max-width:426px) {
         .patient-text{
           font-size: 15px;
+        }
+
+        .select-parent{
+            width: 92%;
         }
     }
 

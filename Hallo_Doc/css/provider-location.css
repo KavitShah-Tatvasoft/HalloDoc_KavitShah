@@ -53,6 +53,21 @@
     }
   }
 
+  @media screen and (max-width:550px) {
+    .view-reservation-text{
+      font-size: 22px;
+    }
+
+    .submit-info-txt{
+      top: -50px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
+      top: -54px;
+    }
+  }
+
   @media screen and (max-width:425px) {
     .patient-form{
       width: 95%;

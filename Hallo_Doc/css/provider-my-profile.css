@@ -79,7 +79,7 @@ width: 75%;
 
 .top-patient-view-text{
     position: absolute;
-    top: -45px;
+    top: -57px;
     left: 0px;
     display: flex;
     gap: 10px;
@@ -90,7 +90,7 @@ width: 75%;
 
 .view-reservation-text{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 27px;
 }
 
 .patient-form{
@@ -290,6 +290,24 @@ td {
       
       .create-class{
         width: 20%;
+      }
+
+      .view-reservation-text{
+        font-size: 22px;
+        top: -50px;
+      }
+
+      .top-patient-view-text{
+        top: -50px;
+      }
+
+      .back-btn-top{
+        transform: scale(0.89);
+        top: -54px;
+      }
+
+      .shrink-btns{
+        transform: scale(0.89);
       }
   }
 

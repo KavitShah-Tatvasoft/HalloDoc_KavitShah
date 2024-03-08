@@ -325,6 +325,20 @@ input[type="tel"]::placeholder{
     .map-text-flex{
         transform: scale(0.89);
     }
+
+    .submit-info-txt{
+      font-size: 22px;
+      top: -50px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
+      top: -54px;
+    }
+
+    .shrink-btns{
+      transform: scale(0.89);
+    }
 }
 
 @media screen and (max-width:425px) {

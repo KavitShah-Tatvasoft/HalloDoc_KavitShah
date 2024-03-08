@@ -261,7 +261,23 @@ td{
         }
     }
 
+    @media screen and (max-width:550px){
+        .submit-info-txt{
+            font-size: 22px;
+            top: -50px;
+        }
+    }
+
     @media screen and (max-width:425px) {
+
+        .shrink-btns{
+            transform: scale(0.95);
+        }
+
+        .row-1-clear-search-btn-flex{
+            gap: 5px;
+        }
+
         .patient-text{
           font-size: 15px;
         }

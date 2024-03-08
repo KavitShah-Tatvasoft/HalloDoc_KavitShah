@@ -315,17 +315,36 @@ input[type="tel"]::placeholder{
 
 }
 
+@media screen and (max-width:550px) {
+  .back-btn-top{
+    transform: scale(0.89);
+  }
+
+  .shrink-btns{
+    transform: scale(0.89);
+  }
+
+  .bottom-btns{
+    gap: 8px;
+  }
+
+  .submit-info-txt{
+    font-size: 22px;
+    top: -50px;
+  }
+}
+
 @media screen and (max-width:425px) {
   .patient-form{
     width: 95%;
   }
-  .patient-text{
+  /* .patient-text{
     font-size: 15px;
-  }
+  } */
 
   .back-btn-top{
-    height: 39px;
-    width: 71px;  
+    /* height: 39px;
+    width: 71px;   */
     padding-right: 8px;
     padding-left: 5px;
   }

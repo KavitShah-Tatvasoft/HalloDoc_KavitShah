@@ -1,3 +1,12 @@
+.logout-btn-admin{
+    margin-left: 10px;
+    margin-bottom: 2px;
+    background-color: white;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    height: 34px;
+    padding: 2px 7px 0px 7px;
+}
 .clear-btn:hover, .unblock-btn:hover{
     background-color: #01bce9;
     color: white;
@@ -297,5 +306,30 @@ a{
 
         .patient-text{
           font-size: 18px;
+        }
+
+        .logout-btn-admin{
+            margin-left: 10px;
+            margin-bottom: 2px;
+            background-color: white;
+            border: 1px solid #01bce9;
+            border-radius: 3px;
+            height: 34px;
+            padding: 6px 7px 0px 7px;
+        }
+    }
+
+    @media screen and (max-width:550px) {
+        .submit-info-txt{
+            font-size: 22px;
+            top: -50px;
+        }
+
+        .shrink-btns{
+            transform: scale(0.92);
+        }
+
+        .row-1-clear-search-btn-flex{
+            gap: 5px;
         }
     }

@@ -1,3 +1,13 @@
+.logout-btn-admin{
+  margin-left: 10px;
+  margin-bottom: 2px;
+  background-color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  height: 34px;
+  padding: 2px 7px 0px 7px;
+}
+
 .save-reset-btns-flex, .reset-pass-cancel-flex{
   display: flex;
   justify-content: flex-end;
@@ -50,7 +60,7 @@
 
 .top-patient-view-text{
     position: absolute;
-    top: -45px;
+    top: -50px;
     left: 0px;
     display: flex;
     gap: 10px;
@@ -60,8 +70,8 @@
 
 
 .view-reservation-text{
-    font-weight: 600;
-    font-size: 20px;
+  font-weight: 600;
+  font-size: 25px;
 }
 
 .patient-form{
@@ -191,6 +201,17 @@
     .checkbox-flex{
         margin-top: 25px;
     }
+
+    .logout-btn-admin{
+      margin-left: 10px;
+      margin-bottom: 2px;
+      background-color: white;
+      border: 1px solid #01bce9;
+      border-radius: 3px;
+      height: 34px;
+      padding: 6px 7px 0px 7px;
+  }
+
   }
 
 
@@ -204,6 +225,25 @@
   @media screen and (max-width:900px){
     .patient-form{
       width: 90%;
+    }
+  }
+
+  @media screen and (max-width:550px) {
+    .view-reservation-text{
+      font-size: 22px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
+      top: -52px;
+    }
+
+    .top-patient-view-text{
+      top: -45px;
+    }
+
+    .shirnk-btns{
+      transform: scale(0.9);
     }
   }
 

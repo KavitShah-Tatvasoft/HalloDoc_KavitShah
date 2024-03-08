@@ -42,7 +42,7 @@
 
 .view-reservation-text{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .form-control:focus{
@@ -83,6 +83,16 @@ textarea{
   @media screen and (max-width:900px){
     .patient-form{
       width: 90%;
+    }
+  }
+
+  @media screen and (max-width:550px) {
+    .view-reservation-text{
+      font-size: 22px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
     }
   }
 

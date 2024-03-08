@@ -1,3 +1,12 @@
+.logout-btn-admin{
+    margin-left: 10px;
+    margin-bottom: 2px;
+    background-color: white;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    height: 34px;
+    padding: 2px 7px 0px 7px;
+}
 .upload-conclude-care:hover{
     background-color: #01bce9;
     color: white;
@@ -288,6 +297,18 @@ input[type="file"]{
     gap: 10px;
 }
 
+@media screen and (max-width:768px){
+    .logout-btn-admin{
+        margin-left: 10px;
+        margin-bottom: 2px;
+        background-color: white;
+        border: 1px solid #01bce9;
+        border-radius: 3px;
+        height: 34px;
+        padding: 6px 7px 0px 7px;
+    }
+}
+
 @media screen and (max-width:834px) {
     .main-container{
         width: 90%;
@@ -341,6 +362,18 @@ input[type="file"]{
 
     .download-all-text{
         display: none;
+    }
+}
+
+@media screen and (max-width:550px){
+    .main-container-top-text{
+        font-size: 22px;
+        top: -50px;
+    }
+
+    .back-btn-top{
+        transform: scale(0.89);
+        top: -54px;
     }
 }
 

@@ -5,6 +5,16 @@
     border-radius: 5px;
 }
 
+.logout-btn-admin{
+    margin-left: 10px;
+    margin-bottom: 2px;
+    background-color: white;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    height: 34px;
+    padding: 2px 7px 0px 7px;
+}
+
 .relative-pos-class{
     position: relative;
 }
@@ -111,6 +121,18 @@
     display: none;
 }
 
+@media screen and (max-width:768px){
+    .logout-btn-admin{
+        margin-left: 10px;
+        margin-bottom: 2px;
+        background-color: white;
+        border: 1px solid #01bce9;
+        border-radius: 3px;
+        height: 34px;
+        padding: 6px 7px 0px 7px;
+    }
+}
+
 @media screen and (max-width:550px) {
     .table{
         display: none;
@@ -126,5 +148,9 @@
 
     .new-req-text{
         display: none;
+    }
+
+    .main-container-top-text{
+        font-size: 22px;
     }
 }

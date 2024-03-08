@@ -305,6 +305,18 @@ a{
         top: -48px;
     }
 
+    .back-btn-top{
+        transform: scale(0.88);
+        top: -54px;
+    }
+
+    .shrink-btns{
+        transform: scale(0.89);
+    }
+
+    .row-1-clear-search-btn-flex{
+        gap: 4px;
+    }
 }
 
 @media screen and (max-width:425px) {
@@ -312,9 +324,7 @@ a{
         font-size: 15px;
     }
 
-    .bottom-accordion-row-btn{
-        transform: scale(0.9);
-    }
+
 }
 
 .back-btn-top {
@@ -332,8 +342,3 @@ a{
     right: 0px;
     }
     
-@media screen and (max-width:425px) {
-.back-btn-top{
-    transform: scale(0.75);
-}
-}

@@ -348,6 +348,16 @@ a{
         .create-class{
           width: 20%;
         }
+      
+      .top-patient-view-text{
+        font-size: 22px;
+        top: -50px;
+      }
+
+      .back-btn-top{
+        transform: scale(0.89);
+        top: -54px;
+      }
     }
   
     @media screen and (max-width:500px){

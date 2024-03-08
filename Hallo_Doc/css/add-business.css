@@ -1,3 +1,13 @@
+.logout-btn-admin{
+  margin-left: 10px;
+  margin-bottom: 2px;
+  background-color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  height: 34px;
+  padding: 2px 7px 0px 7px;
+}
+
 .back-btn-top {
     display: flex;
     font-family: 'Poppins', sans-serif;
@@ -23,7 +33,7 @@
 }
 .top-patient-view-text{
     position: absolute;
-    top: -45px;
+    top: -50px;
     left: 0px;
     display: flex;
     gap: 10px;
@@ -34,7 +44,7 @@
 
 .view-reservation-text{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .patient-form{
@@ -143,6 +153,16 @@
     .margin-top-mobile-email{
         margin-top: 24px;
     }
+
+    .logout-btn-admin{
+        margin-left: 10px;
+        margin-bottom: 2px;
+        background-color: white;
+        border: 1px solid #01bce9;
+        border-radius: 3px;
+        height: 34px;
+        padding: 6px 7px 0px 7px;
+      }
   }
 
 
@@ -162,5 +182,28 @@
   @media screen and (max-width:425px) {
     .patient-form{
       width: 95%;
+    }
+  }
+
+  @media screen and (max-width:550px) {
+    .view-reservation-text{
+      font-size: 22px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
+      top: -52px;
+    }
+
+    .top-patient-view-text{
+      top: -45px;
+    }
+
+    .shrink-btns{
+      transform: scale(0.89);
+    }
+
+    .extra-margin-right-edit{
+      margin-right: 0px !important;
     }
   }

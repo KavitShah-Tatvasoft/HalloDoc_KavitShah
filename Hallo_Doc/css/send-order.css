@@ -65,7 +65,7 @@
 
 .top-patient-view-text{
     position: absolute;
-    top: -45px;
+    top: -53px;
     left: 0px;
     display: flex;
     gap: 10px;
@@ -75,7 +75,7 @@
 
 .view-reservation-text{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 27px;
 }
 
 .form-control:focus{
@@ -118,4 +118,27 @@ textarea{
     border-radius: 3px;
     border-radius: 5px;
     padding: 7px 10px;
+  }
+
+  @media screen and (max-width:550px) {
+    .view-reservation-text{
+      font-size: 22px;
+    }
+
+    .shrink-btns{
+      transform: scale(0.89);
+    }
+
+    .top-patient-view-text  {
+      top: -47px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
+      top: -54px;
+    }
+
+    .bottom-btns{
+      gap: 5px;
+    }
   }

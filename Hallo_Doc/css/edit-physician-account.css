@@ -92,16 +92,6 @@
     right: 0px;
 }
 
-.top-patient-view-text{
-    position: absolute;
-    top: -45px;
-    left: 0px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
 .signature-img{
   height: auto;
   width: 100px;
@@ -114,12 +104,21 @@
 }
 
 
-
-.view-reservation-text{
-    font-weight: 600;
-    font-size: 20px;
+.top-patient-view-text{
+  position: absolute;
+  top: -50px;
+  left: 0px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
+
+.view-reservation-text{
+  font-weight: 600;
+  font-size: 25px;
+}
 .patient-form{
     width: 60%;
 }
@@ -352,6 +351,33 @@ textarea{
     display: none;
   }
 
+}
+
+@media screen and (max-width:550px) {
+  .view-reservation-text{
+    font-size: 22px;
+  }
+
+  .back-btn-top{
+    transform: scale(0.89);
+    top: -52px;
+  }
+
+  .top-patient-view-text{
+    top: -45px;
+  }
+
+  .shrink-btns{
+    transform: scale(0.91);
+  }
+
+  .common-row-bottom-btn{
+    gap: 0px;
+  }
+
+  .extra-margin-right-edit{
+    margin-right: 5px;
+  }
 }
 
 @media screen and (max-width:587px) {

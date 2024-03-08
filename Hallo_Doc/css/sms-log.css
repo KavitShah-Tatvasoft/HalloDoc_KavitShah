@@ -68,7 +68,7 @@ td{
     position: absolute;
     top: -55px;
     left: 2px;
-    font-size: 25px;
+    font-size: 27px;
     font-weight: 600;
   }
 
@@ -258,7 +258,7 @@ a{
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:550px) {
 
     .patient-text{
       font-size: 18px;
@@ -266,6 +266,8 @@ a{
 
     .submit-info-txt{
         font-size: 22px;
+        top: -53px;
+
     }
     
     }
@@ -295,11 +297,11 @@ a{
     .accordion-btn-inner-flex{
         gap: 0px;
     }
-
+/* 
     .submit-info-txt{
         top: -48px;
         font-size: 20px;
-    }
+    } */
     
     .export-all-data-btn{
         top: -48px;
@@ -332,8 +334,16 @@ a{
     right: 0px;
     }
     
-@media screen and (max-width:425px) {
+@media screen and (max-width:550px) {
 .back-btn-top{
-    transform: scale(0.75);
+    transform: scale(0.89);
+}
+
+.shrink-btns{
+    transform: scale(0.92);
+}
+
+.row-1-clear-search-btn-flex{
+    gap: 5px;
 }
 }
