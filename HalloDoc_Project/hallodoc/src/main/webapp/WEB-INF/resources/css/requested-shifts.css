@@ -1,0 +1,275 @@
+.body{
+    background-color: #f9f9f9;
+}
+
+.patient-form{
+    width: 95%;
+    background-color: white;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.submit-info-txt {
+  position: absolute;
+  top: -55px;
+  left: 2px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.form-control:focus, .form-select:focus{
+    box-shadow: none;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+.main-search-btns-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+ }
+
+ .select-parent{
+    position: relative;
+    width: 250px;
+ }
+
+ .select-physician{
+    width: 100%;
+    padding-left: 35px;
+ }
+
+ .select-search-img{
+    position: absolute;
+    top: 12px;
+    left: 11px;
+ }
+
+ .flex-create-account-search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px 5px 10px !important;
+}
+
+a{
+    text-decoration: none;
+}
+
+.main-shifts-btns-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.shifts-btns-flex{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.current-month-btn{
+    border: 1px solid #1b5e20;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: #1b5e20;
+    color: white;
+}
+
+.approved-shift-btn{
+    border: 1px solid #2e7d32;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: #2e7d32;
+    color: white;
+}
+
+.delete-shift-btn{
+    border: 1px solid #d32f2f;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: #d32f2f;
+    color: white;
+}
+
+th{
+    font-weight: 500;
+    font-size: 15px;
+}
+
+td{
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+.extra-padding-td{
+    padding-left: 15px!important;
+}
+
+.staff-arrow-flex{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-checkbox{
+    vertical-align: middle;
+    height: 20px;
+    width: 18px;
+    padding-top: 5px!important;
+}
+
+.width-col1
+{
+    width: 5%;
+}
+
+.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.card-div{
+    display: none;
+}
+
+.mobile-cards{
+    background-color: #ebfafd;
+}
+
+.checkbox-name-flex{
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.date-time-region-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px 20px;
+}
+
+.doc-name{
+    font-size: 17px;
+}
+
+.card-div-flex-text{
+    font-size: 16px;
+}
+
+.back-btn-top:hover{
+    background-color: #01bce9;
+    color: white;
+  }
+  
+  .back-btn-top:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+  }
+
+  .back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+  }
+
+  .current-month-btn:hover{
+    background-color: #25862c;
+  }
+
+  .approved-shift-btn:hover{
+    background-color: #1e6923;
+  }
+
+  .delete-shift-btn:hover{
+    background-color: #af2929;
+  }
+  
+@media screen and (max-width:880px) {
+    .main-shifts-btns-flex{
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .select-parent{
+        width: 100%;
+    }
+
+    .shifts-btns-flex{
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width:600px) {
+    .shifts-btns-flex{
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .current-month-btn{
+        width: 100%;
+    }
+
+    .shifts-btns-flex a{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .table{
+        display: none;
+    }
+
+    .card-div{
+        display: block;
+    }
+
+    .input-checkbox{
+        height: 18px;
+        width: 15px;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .back-btn-top{
+        transform: scale(0.85);
+      }
+
+      .submit-info-txt{
+        font-size: 20px;
+        top: -48px;
+      }
+}
+

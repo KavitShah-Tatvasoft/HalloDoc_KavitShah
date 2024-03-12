@@ -1,0 +1,424 @@
+.logout-btn-admin{
+  margin-left: 10px;
+  margin-bottom: 2px;
+  background-color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  height: 34px;
+  padding: 2px 7px 0px 7px;
+}
+.patient-form{
+    width: 60%;
+}
+
+#save-btn-close-case, #cancel-btn-close-case{
+  display: none;
+}
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.create-invoice-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.cloud-download-btn:hover{
+ background-color: #01bce9;
+}
+
+.cloud-download-btn:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.bottom-btns-edit:hover{
+  background-color: #1991b3;
+}
+
+.bottom-btns-cancel:hover{
+  background-color:#b32828;
+}
+
+.bottom-btns-close:hover{
+  background-color: rgb(202, 63, 63);
+  border: 1px solid rgb(202, 63, 63);
+  color: white;
+}
+
+.top-patient-view-text{
+  position: absolute;
+  top: -50px;
+  left: 0px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.view-reservation-text{
+  font-weight: 600;
+  font-size: 25px;
+}
+
+
+@media screen and (max-width:1024px) {
+    .patient-form{
+      width: 80%;
+    }
+  }
+  
+
+  @media screen and (max-width:900px){
+    .patient-form{
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width:425px) {
+    .patient-form{
+      width: 95%;
+    }
+  }
+
+  .relative-position{
+    position: relative;
+  }
+  
+  .extra-margin{
+    margin-top: 80px;
+    margin-bottom: 50px;
+  }
+
+  .back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+}
+
+.form-control:focus{
+    box-shadow: none;
+}
+
+textarea{
+    resize: none;
+}
+
+.text{
+    color: rgb(102, 99, 99);
+    font-size: 16px;
+}
+
+.small-text{
+    font-size: 15px!important;
+    font-weight: 500;
+}
+
+.blue-text{
+    color: #01bce9;
+    font-weight: 600;
+    font-size: 23px!important;
+}
+
+.case-id-text{
+   font-size: 16px!important;
+}
+
+.create-invoice-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    color: #01bce9;
+    background-color: white;
+    padding: 6px 12px;
+}
+
+.patient-name-invoice-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.document-text{
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.up-arrow-img{
+  padding-bottom: 5px;
+  padding-left: 5px;
+  
+}
+
+.pdf-name-flex{
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 13px!important;
+  padding-left: 25px!important;
+}
+
+.pdf-img{
+  height: auto;
+  width: 25px;
+}
+
+.cloud-download-btn{
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  padding: 3px 6px;
+  background-color: white;
+}
+
+.cloud-btn-down {
+  height: auto;
+  width: 20px;
+  padding-bottom: 3px;
+}
+
+.width-col-1{
+  width: 50%;
+}
+
+.width-col-2{
+  width: 35%;
+}
+.width-col-3{
+  width: 15%;
+}
+
+.custom-date-input {          /*for setting the calendar icon*/
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+.custom-date-input .custom-date-icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding-right: 10px;
+} 
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+.phonecolheight{
+  height: 100%;
+}
+
+.remove-padding-left{
+  padding-left: 0px;
+}
+
+.telephone-border-class{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  height: 57px;
+}
+
+.telephone-icon{
+
+  height: auto;
+  width: 20px;
+  padding: auto;
+}
+
+.iti, .iti--allow-dropdown{          /*Managed the phone col*/
+  width: 100%;
+  height: 100%;
+}
+
+.iti__selected-flag, .phoneflags{
+  height: 80%;
+}
+
+.phonecolheight{
+  height: 100%;
+}
+
+.iti__flag-container{
+  height: 80%;
+}
+
+.iti__country-list {
+  z-index: 300!important;
+}
+
+.iti *{
+  width: 100%;
+}
+
+.iti-mobile , .iti--container{
+  width: 37%!important;
+  height: 30%!important;
+}
+
+.bottom-btns{                  
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.bottom-btns-close{
+  background-color: white;
+  color: #01bce9;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-cancel{
+  background-color: #d32f2f;;
+  color: white;
+  border: 1px solid #d32f2f;;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 15px;
+}
+
+.bottom-btns-edit{
+  background-color: #01bce9;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 15px;
+}
+
+.mobile-cards{
+  display: none;
+}
+
+.single-mobile-card{
+  padding: 15px;
+  padding-left: 18px;
+}
+
+.mobile-checkbox-name-flex{
+  display: flex;
+  gap: 10px;
+}
+
+.common-margin-top{
+    margin-top: 10px;
+}
+
+.padding-top-extra{
+  padding-top: 15px!important;
+}
+@media screen and (max-width:768px) {
+  .phonecolheight {
+    height: 74px;
+    margin-bottom: 0px!important;
+}
+
+.remove-padding-left{
+  width: 65px;
+}
+
+  .logout-btn-admin{
+      margin-left: 10px;
+      margin-bottom: 2px;
+      background-color: white;
+      border: 1px solid #01bce9;
+      border-radius: 3px;
+      height: 34px;
+      padding: 6px 7px 0px 7px;
+  }
+}
+
+@media screen and (max-width:648px) {
+  .pdf-name-flex{
+    padding-bottom: 5px!important;
+}
+}
+
+@media screen and (max-width:650px) {
+  .table{
+    display: none;
+  }
+
+  .mobile-cards{
+    display: block;
+  }
+  
+  
+.pdf-name-flex{
+
+  padding-bottom: 0px!important;
+  padding-left: 0px!important;
+}
+
+.patient-name-invoice-flex{
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+}
+
+@media screen and (max-width:550px) {
+  .view-reservation-text{
+    font-size: 22px;
+  }
+
+  .back-btn-top{
+    transform: scale(0.89);
+    top: -52px;
+  }
+
+  .top-patient-view-text{
+    top: -45px;
+  }
+
+  .shrink-btns{
+    transform: scale(0.89);
+  }
+
+  .create-invoice-btn{
+    transform: translateX(-15px) scale(0.89) !important;
+
+  }
+
+  .bottom-btns{
+    gap: 4px;
+  }
+}
+
+
+

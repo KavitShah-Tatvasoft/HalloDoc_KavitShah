@@ -1,0 +1,237 @@
+.space { margin: 10px 0px 10px 0px; }
+.header { background: #003267; background: linear-gradient(to right, #011329 0%,#00639e 44%,#011329 100%); padding:20px 10px; color: white; box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75); }
+.header a { color: white; }
+.header h1 a { text-decoration: none; }
+.header h1 { padding: 0px; margin: 0px; }
+.main { padding: 10px; margin-top: 10px; }
+.generated { color: #999; }
+.generated a { color: #999; }
+.body{
+    background-color: #f9f9f9;
+}
+
+.patient-form{
+    width: 95%;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 16px;
+}
+
+.submit-info-txt {
+  position: absolute;
+  top: -55px;
+  left: 15px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.three-btns{
+    background-color: #01bce9;
+    border: 1px solid #01bce9;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+}
+
+.btns-flex{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.select-scheduling{
+    width: 200px;
+}
+
+.all-region-btns-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.show-date{
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.type-shift{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.pending-shift{
+    background-color: #feaef5;
+    border: 1px solid #c29bb6!important;
+    border-radius: 8px;
+    height: 25px;
+    width: 40px;
+}
+
+.approved-shift{
+    background-color: #a7cda4;
+    border: 1px solid #457647!important;
+    border-radius: 8px;
+    height: 25px;
+    width: 40px;
+}
+
+.arrow-img{
+    height: 30px;
+    width: 30px;
+}
+
+.calendar-img{
+    height: 20px;
+    width: 20px;
+}
+
+.img-name-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.img-top-md{
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.date-change-flex{
+    display:flex ;
+    align-items: center;
+    gap: 15px;
+
+}
+  
+.calendar-type-btn {
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: #01bce9;
+    background-color: white;
+}
+
+.calendar-active{
+    background-color: #01bce9!important;
+    color: white!important;
+}
+
+.date-change-type-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.form-select:focus{
+    box-shadow: none;
+}
+
+.three-btns:hover{
+    background-color: #0399be;
+  }
+
+  .back-btn-top:hover{
+    background-color: #01bce9;
+    color: white;
+  }
+  
+  .back-btn-top:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+  }
+
+
+@media screen and (max-width:768px) {
+  
+  .add-extra-margin{
+    margin-top: 22px;
+  }
+  
+  .patient-text{
+    font-size: 18px;
+  }
+  
+  .back-btn-top{
+    font-size: 14px;
+  }
+  
+  .back-btn-top img{
+    height: auto;
+    width: 15px;
+  }
+  
+  }
+
+  @media screen and (max-width:568px) {
+    .all-region-btns-flex{
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .btns-flex{
+        width: 100%;
+        justify-content: center;
+    }
+
+    .select-scheduling{
+        width: 100%;
+    }
+
+    
+    .submit-info-txt{
+        font-size: 22px;
+    }
+  }
+  
+  @media screen and (max-width:425px) {
+    .patient-form{
+      width: 95%;
+    }
+    .patient-text{
+      font-size: 15px;
+    }
+  
+    .back-btn-top{
+      height: 39px;
+      width: 71px;  
+      padding-right: 8px;
+      padding-left: 5px;
+    }
+
+    .col-xs{
+        width: 100%;
+    }
+
+  
+
+  }

@@ -1,0 +1,351 @@
+a{
+  text-decoration: none;
+
+}
+
+.back-btn-top:hover, .request-admin-btn:hover, .reset-pass-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.btn-color-for-upload:hover, .create-class:hover .create-btn-provider-profile, .view-doc-btn:hover{
+  background-color: #1991b3;
+}
+
+.create-btn-provider-profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: 1px solid #01bce9;
+  border-radius: 8px;
+  background-color: #01bce9;
+  color: white;
+  height: 50px;
+}
+
+.upload-class{
+width: 75%;
+}
+
+.create-class{
+  width: 25%;
+}
+
+.upload-create-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.custom-upload{
+  height: 50px!important;
+}
+
+.btn-color-for-upload {
+  color: white;
+  background-color: #01bce9;
+  border: 1px solid #01bce9;
+  width: 100px;
+  height: 50px;
+  border-radius: 0px 8px 8px 0px!important;
+}
+
+.up-cloud-upload{
+  height: 20px;
+  width: 20px;
+}
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+}
+
+.top-patient-view-text{
+    position: absolute;
+    top: -57px;
+    left: 0px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.view-reservation-text{
+    font-weight: 600;
+    font-size: 27px;
+}
+
+.patient-form{
+    width: 60%;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.relative-position{
+    position: relative;
+  }
+  
+  .extra-margin{
+    margin-top: 80px;
+    margin-bottom: 50px;
+  }
+
+  .form-control:focus{            /*To remove the box shadow on focus*/
+      box-shadow: none;
+      border: 2px soild #01bce9;
+  }
+
+  .request-admin-btn{
+    border: 1px solid #01bce9;
+    background-color: white;
+    color: #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    margin-top: 14px;
+  }
+
+  .request-top-btn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .common-row-bottom-btn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.reset-pass-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: white;
+    color: #01bce9;
+    padding: 6px 12px;
+    margin-top: 20px;
+}
+
+.phonecolheight{
+    height: 100%;
+  }
+
+  .iti, .iti--allow-dropdown{          /*Managed the phone col*/
+    width: 100%;
+    height: 100%;
+  }
+  
+  .iti__selected-flag, .phoneflags{
+    height: 80%;
+  }
+  
+  
+  .iti__flag-container{
+    height: 80%;
+  }
+  
+  .iti__country-list {
+    z-index: 300!important;
+  }
+  
+  .iti *{
+    width: 100%;
+  }
+  
+  .iti-mobile , .iti--container{
+    width: 37%!important;
+    height: 30%!important;
+  }
+
+  .checkbox-flex{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-left: 5px;
+  }
+
+.single-checkbox-flex{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 14px;
+}
+
+.signature-img{
+    height: auto;
+    width: 100px;
+}
+
+.signatur-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hr-width{
+    border: 1.5px solid black;
+  }
+
+  .view-doc-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: #01bce9;
+    color: white;
+    padding: 6px 12px;
+  }
+
+.col-width-1{
+    width: 25%;
+}
+
+.col-width-2{
+    width: 75%;
+}
+
+.view-img{
+    display: none;
+}
+
+td {
+    width:160px;
+    padding-bottom:10px;
+    padding-left: 15px;
+} 
+
+/* ------------------ */
+
+
+
+/* --------------------- */
+
+  @media screen and (max-width:1024px) {
+    .patient-form{
+      width: 80%;
+    }
+  }
+  
+
+  @media screen and (max-width:900px){
+    .patient-form{
+      width: 90%;
+    }
+  }
+
+
+  @media screen and (max-width:767px) {
+    .phonecolheight {
+      height: 140%;
+    }
+
+    .medical-marging-top{
+        margin-top: 24px;
+    }
+
+    .upload-class{
+      width: 85%;
+      }
+      
+      .create-class{
+        width: 15%;
+      }
+
+  }
+
+  @media screen and (max-width:700px){
+    .col-width-1{
+        width: 35%;
+    }
+    
+    .col-width-2{
+        width: 65%;
+    }
+  }
+
+  @media screen and (max-width:557px) {
+    
+    .upload-class{
+      width: 100%;
+      }
+      
+      .create-class{
+        width: 20%;
+      }
+
+      .view-reservation-text{
+        font-size: 22px;
+        top: -50px;
+      }
+
+      .top-patient-view-text{
+        top: -50px;
+      }
+
+      .back-btn-top{
+        transform: scale(0.89);
+        top: -54px;
+      }
+
+      .shrink-btns{
+        transform: scale(0.89);
+      }
+  }
+
+  @media screen and (max-width:500px){
+    .view-img{
+        display: block;
+    }
+    .view-txt{
+        display: none;
+    }
+
+    .for-remove-upload, .create-text{
+      display: none;
+    }
+
+    .btn-color-for-upload{
+      width: 58px;
+    }
+
+    .col-width-1{
+        width: 48%;
+    }
+    
+    .col-width-2{
+        width: 52%;
+    }
+
+    /* .border-bottom-mobile{
+        border-bottom: 1px solid black;
+        margin-left: 10px;
+        margin-right: 10px;
+    } */
+  }
+
+
+  @media screen and (max-width:425px) {
+    .patient-form{
+      width: 95%;
+    }
+
+  }

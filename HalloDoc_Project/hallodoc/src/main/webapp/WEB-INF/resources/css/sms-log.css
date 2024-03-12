@@ -1,0 +1,349 @@
+.body{
+    background-color: #f9f9f9;
+}
+
+.patient-form{
+    width: 95%;
+    background-color: white;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.form-control:focus, .form-select:focus{
+    box-shadow: none;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+.extra-padding-td{
+    padding-left: 15px!important;
+}
+
+th{
+    font-weight: 500;
+    font-size: 15px;
+    color: rgb(109, 103, 103);
+}
+
+td{
+    font-size: 14px;
+}
+
+.back-btn-top:hover, .clear-btn:hover{
+    background-color: #01bce9;
+    color: white;
+  }
+  
+  .back-btn-top:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+  }
+
+.search-btn:hover{
+    background-color: #1991b3;
+
+}
+
+.container-fluid{
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+.submit-info-txt {
+    position: absolute;
+    top: -55px;
+    left: 2px;
+    font-size: 27px;
+    font-weight: 600;
+  }
+
+  .custom-date-input {          /*for setting the calendar icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+
+  .custom-date-input .custom-date-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+.calendar-resize-search{
+    width: 15px;
+    height: 15px;
+}
+
+.tick-icon-resize-search{
+    width: 18px;
+    height: 18px; 
+}
+
+.accordion{
+    display: none;
+    padding: 15px;
+}
+
+.accordion-button-flex{
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-direction: column  ;
+}
+
+.accordion-row-name{
+    color: black;
+    font-weight: 500;
+}
+
+.acount-type-btn-text{
+    color: black;
+}
+
+.accordion-rows-main-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.accordion-row-inner-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+
+.email-label{
+    font-weight: 500;
+    color: rgb(102, 99, 99);
+}
+
+.email-text{
+    font-weight: 500;
+    color: rgb(43, 41, 41);
+}
+
+.image-blue-border{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 50%;
+    background-color: transparent;
+    height: 25px;
+    width: 25px;
+}
+
+.accordion-btn-inner-flex{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.bottom-accordion-row-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #01bce9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.accordion-button::after{
+    content: none;
+}
+
+.accordion-button:focus, .accordion-button{
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 rgb(117, 116, 116);
+}
+
+.accordion-button:not(.collapsed), .accordion-button,.accordion-body{
+    background-color: #e2ebf9;
+}
+
+.row-1-clear-search-btn-flex{
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.clear-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    background-color: white;
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: #01bce9;
+}
+
+.search-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    background-color: #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: white;
+}
+
+.accordion-body{
+    border-bottom: 1px solid rgb(117, 116, 116) ;
+}
+
+.accordion-button:not(.collapsed){
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 #948c8c;
+}
+
+.search-record-select-top{
+    height: 57px;
+}
+
+.close-arrow-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+
+
+@media screen and (max-width:1200px){
+    .btn-col{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:550px) {
+
+    .patient-text{
+      font-size: 18px;
+    }
+
+    .submit-info-txt{
+        font-size: 22px;
+        top: -53px;
+
+    }
+    
+    }
+
+@media screen and (max-width:750px) {
+    .table{
+        display: none;
+    }
+
+    .accordion{
+        display: block;
+    }
+    .select-all{
+        display: block;
+    }
+
+    .export-text{
+        display: none;
+    }
+}
+
+@media screen and (max-width:560px) {
+    .bottom-accordion-row-btn{
+        transform: scale(0.89);
+    }
+
+    .accordion-btn-inner-flex{
+        gap: 0px;
+    }
+/* 
+    .submit-info-txt{
+        top: -48px;
+        font-size: 20px;
+    } */
+    
+    .export-all-data-btn{
+        top: -48px;
+    }
+
+}
+
+@media screen and (max-width:425px) {
+    .patient-text{
+        font-size: 15px;
+    }
+
+    .bottom-accordion-row-btn{
+        transform: scale(0.9);
+    }
+}
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+    }
+    
+@media screen and (max-width:550px) {
+.back-btn-top{
+    transform: scale(0.89);
+}
+
+.shrink-btns{
+    transform: scale(0.92);
+}
+
+.row-1-clear-search-btn-flex{
+    gap: 5px;
+}
+}

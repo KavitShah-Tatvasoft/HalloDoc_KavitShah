@@ -1,0 +1,306 @@
+.container-fluid-1{
+  width: 100%!important;
+}
+
+body{
+    background-color: #f9f9f9!important;
+}
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.bottom-btns-submit:hover{
+  background-color: #1991b3;
+}
+
+
+.bottom-btns-finalize:hover{
+  background-color: #a244b3;
+}
+
+.bottom-btns-cancel:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.container-fluid{
+  box-shadow: 0px 0px 10px rgb(128,128,128,0.7)!important;
+}
+.top-br{
+  display: none;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 75px!important;
+  margin-bottom: 50px;
+}
+
+label{
+  color: #a3a195;
+  font-size: 15px!important;
+} 
+
+.form-control{
+  color: #a3a195;
+}
+
+.back-btn-top {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  padding: 9px 12px 9px 8px;
+  color: #01bce9;
+  gap: 4px;
+  width: 84px;
+  position: absolute;
+  top: -57px;
+  right: 0px;
+}
+
+.encounter-text-top{
+  font-family: 'Poppins', sans-serif;
+  position: absolute;
+  top: -57px;
+  left: 0px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.container-fluid{
+    width: 80%;
+    background-color: white;
+}
+
+.top-text{
+    display: flex;
+    justify-content: center;
+    font-size: 35px;
+    color: #01bce9;
+    font-weight: 700;
+}
+
+.row1-flex{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.custom-date-input {          /*for setting the calendar icon*/
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+.custom-date-input .custom-date-icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding-right: 10px;
+} 
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+  .inc-height{     /*to increase width of some cols*/ 
+    height: 92px;
+  }
+
+  .inc-inp-height{
+    height: 75px!important;
+  }
+
+ /* to set phone col*/   
+
+  .iti, .iti--allow-dropdown{         
+    width: 100%;
+    height: 100%;
+  }
+  
+  .iti__selected-flag, .phoneflags{
+    height: 80%;
+  }
+  
+  .phonecolheight{
+    height: 100%;
+  }
+  
+  .iti__flag-container{
+    height: 80%;
+  }
+  
+  .iti__country-list {
+    z-index: 300!important;
+  }
+  
+  .iti *{
+    width: 100%;
+  }
+
+  .iti--container{
+    width: 37%!important;
+    height: 30%!important;
+  }
+
+  .form-control:focus{            /*To remove the box shadow on focus*/
+    box-shadow: none;
+    border: 2px soild #01bce9;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+
+.add-shadow{
+  box-shadow: 10px 5px 5px black;
+}
+
+
+.bottom-btns{                     /* Submit and Cancel Buttons*/
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+.bottom-btns-submit{
+  background-color: #01bce9;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-cancel{
+  background-color: white;
+  color: #01bce9;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-finalize{
+  background-color: #9c27b0;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+  
+@media screen and (max-width:1170px) {
+
+  .container-fluid{
+    width: 90%;
+  }
+}
+
+@media screen and (max-width:767px) {
+
+  .top-text{
+    font-size: 32px;
+  }
+
+  .encounter-text-top{
+    font-size: 23px ;
+    top: -53px;
+  } 
+
+  .container-fluid{
+    width: 95%;
+  }
+  .phonecolheight {
+    height: 140%;
+}
+
+.add-extra-margin{
+  margin-top: 22px;
+}
+
+.iti--container{
+  width: 55%!important;
+  height: 30%!important;
+}
+
+}
+
+@media screen and (max-width:500px) {
+
+  .top-text{
+    font-size: 29px;
+  }
+
+  .encounter-text-top{
+    font-size: 20px ;
+    top: -50px;
+  } 
+
+  label {
+    font-size: 14px!important;
+}
+
+.back-btn-top{
+  transform: scale(0.88);
+}
+
+.bottom-btns{
+  gap: 2px;
+}
+
+
+}
+
+
+@media screen and (max-width:440px){
+  .top-br{
+    display: block;
+  }
+
+  .top-text{
+    text-align: center;
+  }
+
+
+}
+
+@media screen and (max-width:425px) {
+  .bottom-btns-submit, .bottom-btns-finalize, .bottom-btns-cancel{
+    transform: scale(0.9);
+  }
+}
+
+@media screen and (max-width:400px) {
+  .top-text{
+    font-size: 27px;
+  }
+}
+
+

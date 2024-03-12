@@ -1,0 +1,247 @@
+
+.body{
+    background-color: #f9f9f9;
+}
+
+.patient-form{
+    width: 95%;
+    background-color: white;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.submit-info-txt {
+    position: absolute;
+    top: -55px;
+    left: 2px;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  
+
+.form-control:focus, .form-select:focus{
+    box-shadow: none;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+.extra-padding-td{
+    padding-left: 15px!important;
+}
+
+.table-row1-flex{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+
+.edit-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    color: #01bce9;
+    background-color: transparent;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    transform: scale(0.9);
+}       
+
+.edit-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.accordion{
+    display: none;
+}
+
+th{
+    font-weight: 500;
+    font-size: 15px;
+    text-wrap: nowrap;
+    color: rgb(109, 103, 103);
+}
+
+td{
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+.select-parent{
+    position: relative;
+    width: 250px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 15px;
+ }
+
+ .container-fluid{
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+ .select-physician{
+    width: 100%;
+    padding-left: 35px;
+ }
+
+ .select-search-img{
+    position: absolute;
+    top: 12px;
+    left: 25px;
+ }
+
+ .accordion-rows-main-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.accordion-row-inner-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+
+.email-label{
+    font-weight: 500;
+    color: rgb(102, 99, 99);
+}
+
+.email-text{
+    font-weight: 500;
+    color: rgb(43, 41, 41);
+}
+
+.bottom-accordion-row-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #01bce9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.accordion-button::after{
+    content: none;
+}
+
+.accordion-row-name{
+    color: black;
+    font-size: 500;
+}
+
+.tick-size{
+    height: 20px;
+    width: 20px;
+}
+
+.accordion-button-flex{
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    flex-direction: column  ;
+}
+
+.acount-type-btn-text{
+    color: black;
+}
+
+.accordion-button:focus, .accordion-button{
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 rgb(117, 116, 116);
+}
+
+.accordion-button:not(.collapsed), .accordion-button,.accordion-body{
+    background-color: #e2ebf9;
+}
+
+.accordion-body{
+    border-bottom: 1px solid rgb(117, 116, 116) ;
+}
+
+.accordion-btn-inner-flex{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-blue-border{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 50%;
+    background-color: transparent;
+    height: 25px;
+    width: 25px;
+}
+
+
+ @media screen and (max-width:705px){
+    .select-parent{
+        width: 95%;
+    }
+  }
+
+
+@media screen and (max-width:768px) {
+
+    .patient-text{
+      font-size: 18px;
+    }
+    
+    }
+
+    @media screen and (max-width:550px) {
+        .submit-info-txt{
+            font-size: 22px;
+            top: -50px;
+        }
+
+        .shrink-btns{
+            transform: scale(0.89);
+        }
+    }
+
+    @media screen and (max-width:426px) {
+        .patient-text{
+          font-size: 15px;
+        }
+
+        .select-parent{
+            width: 92%;
+        }
+    }
+
+@media screen and (max-width:650px) {
+    .table{
+        display: none;
+    }
+
+    .accordion{
+        display: block;
+    }
+}

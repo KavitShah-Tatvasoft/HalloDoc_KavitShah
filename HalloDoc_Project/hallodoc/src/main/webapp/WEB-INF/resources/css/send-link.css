@@ -1,0 +1,158 @@
+* {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+
+
+
+
+
+.modal-header {
+    color: white;
+    /* background-color: blue; */
+    background-color: #01bce9;
+    border: none;
+
+
+    /* height: 30px; */
+}
+
+
+#exampleModalLabel {
+    color: white;
+    background-color: #01bce9;
+    font-size: 17px !important;
+}
+
+.btn-close img {
+    background-color: red !important;
+}
+
+
+#Pop_assign_info_upper {
+    font-size: 13px !important;
+    color: gray !important;
+} 
+
+
+/* --------------------------------patient buton namely ------------------------------- */
+
+.send_agreement_ptn_namely{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+
+.send_agreement_ptn_namely_logo{
+    background-color: green;
+    border: 1px solid green;
+    border-radius: 25px;
+    width: 12px;
+    height: 12px;
+    margin-right: 12px;
+}
+
+.send_agreement_ptn_name{
+    color: gray;
+    font-size: 15px;
+}
+
+
+/* --------------------------input type  ----------------------------------- */
+
+
+.form-control:focus {
+    /* box-shadow: none !important; */
+    border: 2px solid #cecece !important;
+   
+}
+input[type="text"]{
+    height: 10px !important;
+}
+
+.form-floating>label {
+    position: absolute;
+    top: -3px !important;
+    left: 15px !important;
+    font-size: 15px !important;
+    color: #969696;
+    z-index: 2;
+    height: 100%;
+    padding: auto  10px!important;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: var(--bs-border-width) solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+}
+
+/* //////////////////////////////////          butoon    ///////////////////////// */
+
+#pop_buttons_container {
+    float: right;
+}
+
+#pop_submit {
+    border: none;
+    background-color: #01bce9;
+    color: white;
+    border: 0px solid;
+    border-radius: 5px;
+    padding: 9px 25px;
+    font-size: 15px;
+}
+
+#pop_cancle {
+    color: #01bce9;
+    border: 1px solid #01bce9;
+    background-color: white !important;
+    /* border: none;     */
+    font-size: 15px;
+    margin: 10px 10px 0px 0px;
+    padding: 9px 22px;
+    border-radius: 5px;
+
+}
+
+
+/* -------------------------- telephone-------------------------------- */
+
+
+#phone_cont {
+    /* background-color: red; */
+}
+
+#phone_cont input[type="tel"] {
+    background-color: yellow;
+    /* width: 100%; */
+    font-size: 16px;
+}
+
+#phone_cont input::placeholder {
+    /* color: #9c27b0; */
+    /* font-size: 16px !important; */
+}
+
+.iti-mobile .iti__country-list {
+    max-height: 300px;
+    width: 300px;
+    overflow-x: hidden;
+    margin-top: 303px;
+    margin-left: 56px;
+}
+
+.iti__flag-container {
+    z-index: 5;
+}
+
+.iti {
+    width: 100%;
+}

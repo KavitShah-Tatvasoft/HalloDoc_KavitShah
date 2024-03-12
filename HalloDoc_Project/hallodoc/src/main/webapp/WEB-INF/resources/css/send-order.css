@@ -1,0 +1,144 @@
+.patient-form{
+    width: 60%;
+}
+
+.bottom-btns-submit:hover{
+  background-color:#1991b3;
+}
+
+.bottom-btns-cancel:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+@media screen and (max-width:1024px) {
+    .patient-form{
+      width: 80%;
+    }
+  }
+  
+
+  @media screen and (max-width:900px){
+    .patient-form{
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width:425px) {
+    .patient-form{
+      width: 95%;
+    }
+  }
+
+  .relative-position{
+    position: relative;
+  }
+  
+  .extra-margin{
+    margin-top: 80px;
+    margin-bottom: 50px;
+  }
+
+  .back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+}
+
+.top-patient-view-text{
+    position: absolute;
+    top: -53px;
+    left: 0px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-reservation-text{
+    font-weight: 600;
+    font-size: 27px;
+}
+
+.form-control:focus{
+    box-shadow: none;
+}
+
+textarea{
+    resize: none;
+}
+
+.form-floating>.form-select {
+    padding-top: 0.625rem!important;
+
+}
+
+.form-floating>.form-select-btn {
+    padding-top: 1.625rem!important;
+}
+
+.bottom-btns{                     /* Submit and Cancel Buttons*/
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  
+  .bottom-btns-submit{
+    background-color: #01bce9;
+    color: white;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    border-radius: 5px;
+    padding: 7px 10px;
+  }
+  
+  .bottom-btns-cancel{
+    background-color: white;
+    color: #01bce9;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    border-radius: 5px;
+    padding: 7px 10px;
+  }
+
+  @media screen and (max-width:550px) {
+    .view-reservation-text{
+      font-size: 22px;
+    }
+
+    .shrink-btns{
+      transform: scale(0.89);
+    }
+
+    .top-patient-view-text  {
+      top: -47px;
+    }
+
+    .back-btn-top{
+      transform: scale(0.89);
+      top: -54px;
+    }
+
+    .bottom-btns{
+      gap: 5px;
+    }
+  }

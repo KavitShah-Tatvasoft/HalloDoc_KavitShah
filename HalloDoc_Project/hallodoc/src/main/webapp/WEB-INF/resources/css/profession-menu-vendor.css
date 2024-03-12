@@ -1,0 +1,288 @@
+.body{
+    background-color: #f9f9f9;
+}
+
+.patient-form{
+    width: 95%;
+    background-color: white;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.submit-info-txt {
+  position: absolute;
+  top: -55px;
+  left: 2px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.form-control:focus{
+    box-shadow: none;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+.flex-create-account-search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 24px!important;
+    padding-right: 24px!important;
+    margin-top: 20px;
+}
+
+.accordion-row-inner-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+
+.accordion-button::after{
+    content: none;
+}
+
+.accordion-rows-main-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+}
+
+.bottom-accordion-row-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #01bce9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.accordion-button:focus, .accordion-button{
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 rgb(117, 116, 116);
+}
+
+.accordion-button:not(.collapsed), .accordion-button,.accordion-body{
+    background-color: #e2ebf9;
+}
+
+.accordion-body{
+    border-bottom: 1px solid rgb(117, 116, 116) ;
+}
+
+.accordion-btn-inner-flex{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-blue-border{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 50%;
+    background-color: transparent;
+    height: 25px;
+    width: 25px;
+}
+
+th{
+    font-weight: 500;
+    font-size: 15px;
+}
+
+td{
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+.select-parent{
+    position: relative;
+    width: 250px;
+ }
+
+ .select-physician{
+    width: 100%;
+    padding-left: 35px;
+ }
+
+ .select-search-img{
+    position: absolute;
+    top: 12px;
+    left: 11px;
+ }
+
+ .search-vendors{
+    padding-left: 35px;
+ }
+
+ .input-parent{
+    position: relative;
+ }
+
+ .form-select:focus{
+    box-shadow: none;
+ }
+
+ .accordion{
+    display: none;
+}
+
+ .main-search-btns-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+ }
+
+ .add-business-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: white;
+    color: #01bce9;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+ }
+
+ .add-business-btn:hover, .contact-btn:hover{
+    background-color: #01bce9;
+    color: white;
+ }
+
+ .add-business-btn:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(350%) contrast(101%);
+ }
+
+ .extra-padding-td{
+    padding-left: 15px!important;
+}
+
+.contact-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.contact-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    color: #01bce9;
+    background-color: transparent;
+    padding: 6px 12px;
+}
+
+.edit-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-fluid{
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+.accordion-row-name{
+    color: black;
+    font-size: 500;
+}
+
+.email-label{
+    font-weight: 500;
+    color: rgb(102, 99, 99);
+}
+
+.email-text{
+    font-weight: 500;
+    color: rgb(43, 41, 41);
+}
+
+@media screen and (max-width:720px) {
+    .table{
+        display: none;
+    }
+
+    .accordion{
+        display: block;
+    }
+}
+
+  @media screen and (max-width:768px) {
+
+  .patient-text{
+    font-size: 18px;
+  }
+  
+  }
+
+  @media screen and (max-width:705px){
+    .flex-create-account-search{
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-end
+    }
+
+    .add-business-text{
+        display: none;
+    }
+
+    .main-search-btns-flex{
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .input-parent, .select-parent{
+        width: 100%;
+    }
+  }
+
+  @media screen and (max-width:550px) {
+    .submit-info-txt{
+        font-size: 22px;
+        top: -50px;
+    }
+  }
+
+@media screen and (max-width:460px) {
+    .bottom-accordion-row-btn{
+        transform: scale(0.9);
+    }
+}
+  @media screen and (max-width:425px) {
+    .patient-text{
+      font-size: 15px;
+    }
+
+    .back-btn-top{
+        transform: scale(0.75);
+      }
+
+  }  
+
+
+  

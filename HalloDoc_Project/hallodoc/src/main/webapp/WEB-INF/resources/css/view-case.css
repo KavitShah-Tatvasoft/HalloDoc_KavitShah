@@ -1,0 +1,537 @@
+.cancel-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d32f2f;
+  border-radius: 5px;
+  height: 57px;
+  background-color: #d32f2f;
+  width: 57px;
+  color: white;
+}
+
+.cancel-text:hover{
+  background-color: #9c2323;
+}
+
+
+.edit-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  height: 57px;
+  background-color: white;
+  width: 57px;
+}
+
+.save-text, .reset-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  height: 57px;
+  background-color: #01bce9;
+  width: 57px;
+  color: white;
+}
+
+.save-cancel-details-btn{
+  display: flex;
+  justify-content: flex-start;
+  align-items:flex-start;
+  gap: 15px;
+}
+
+.save-text:hover, .reset-text:hover{
+  background-color: #0399be;
+}
+
+
+
+#save-cancel-details-btn-id{
+  display: none;
+}
+
+.edit-text:hover{
+  color: white;
+  background-color: #01bce9;
+}
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.edit-border:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.edit-border:hover span{
+  color: white;
+}
+
+.location-border:hover{
+  background-color: #01bce9;
+}
+
+.location-border:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.bottom-btns-submit:hover{
+  background-color: #1991b3;
+}
+
+.bottom-btns-cancel:hover{
+  background-color: rgb(202, 63, 63);
+  border: 1px solid rgb(202, 63, 63);
+  color: white;
+}
+
+
+
+.dotted-hr{
+    border: 1px dashed black;
+    margin-bottom: 20px!important;
+}
+
+.telephone-border-class{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    height: 57px;
+}
+
+.telephone-icon{
+
+    height: auto;
+    width: 20px;
+    padding: auto;
+}
+
+.edit-border{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    height: 57px;
+}
+
+.edit-text{
+    color: #01bce9;
+}
+
+@media screen and (max-width:1024px){
+    .edit-border{
+        width: 57px;
+    }
+}
+
+.location-border{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    height: 57px;
+}
+
+.location-icon{
+    height: auto!important;
+    width: 21px!important;
+}
+
+.remove-padding-left{
+    padding-left: 0px;
+}
+
+
+.body{
+    background-color: #f9f9f9;
+}
+
+.patient-form{
+    width: 60%;
+    background-color: white;
+}
+
+.relative-position{
+  position: relative;
+}
+
+.extra-margin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+/* label{
+  color: #a3a195;
+} */
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+}
+
+.top-patient-view-text{
+    position: absolute;
+    top: -50px;
+    left: 0px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.type-color{
+    background-color: #5fbc61;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-reservation-text{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.type-text{
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 12px;
+}
+
+.confirmation-number-text-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.confirmation-number-text{
+    font-size: 12px;
+    color: rgb(136, 133, 133);
+}
+
+.confirmation-number{
+    color: #01bce9;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.submit-info-txt {
+  position: absolute;
+  top: -55px;
+  left: 2px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.inc-height{
+    height: 125px;
+  }
+
+  .inc-inp-height{
+    height: 108px!important;
+  }
+
+  textarea { resize: none; }     /*for text area col*/
+
+  
+  .custom-date-input {          /*for setting the calendar icon*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+
+  .custom-date-input .custom-date-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right: 10px;
+  } 
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+input[type="file"]{
+  height: 49px;
+    padding: 12px;
+}
+
+.iti, .iti--allow-dropdown{          /*Managed the phone col*/
+  width: 100%;
+  height: 100%;
+}
+
+.iti__selected-flag, .phoneflags{
+  height: 80%;
+}
+
+.phonecolheight{
+  height: 100%;
+}
+
+.iti__flag-container{
+  height: 80%;
+}
+
+.iti__country-list {
+  z-index: 300!important;
+}
+
+.iti *{
+  width: 100%;
+}
+
+.iti-mobile , .iti--container{
+  width: 37%!important;
+  height: 30%!important;
+}
+
+.form-control:focus{            /*To remove the box shadow on focus*/
+    box-shadow: none;
+    border: 2px soild #01bce9;
+}
+
+.form-floating>.form-control:focus~label{
+    color: #01bce9;
+}
+
+
+.file-upload-btn{                /*Upload button customization*/
+  background-color: #01bce9;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+::-webkit-file-upload-button {
+display: none;
+}
+
+.bottom-btns{                     /* Submit and Cancel Buttons*/
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+.bottom-btns-submit{
+  background-color: #01bce9;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-cancel{
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.bottom-btns-edit{
+  background-color: #01bce9;
+  color: white;
+  border: 1px solid #01bce9;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 7px 15px;
+}
+
+.map-text-flex{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid #01bce9;
+  border-radius: 5px;
+  width: 16%;
+  height: 78%;
+}
+
+.map-icon{
+  height: auto;
+  width: 18px;
+}
+
+.map-text{
+  color: #01bce9;
+  font-size: 15px;
+}
+
+.map-text-flex-patient-profile-only{
+  width: 50%;
+}
+
+@media screen and (max-width:1440px) {
+  .map-text-flex{
+    width: 20%;
+  }
+
+  .map-text-flex-patient-profile-only{
+    width: 70%!important;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .patient-form{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width:900px){
+  .patient-form{
+    width: 90%;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .phonecolheight {
+    height: 74px;
+    margin-bottom: 0px!important;
+}
+
+
+.remove-padding-left{
+    width: 65px;
+}
+
+.map-text-flex{
+  width: 28%;
+}
+
+.map-text-flex{
+  width: 90px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+
+.add-extra-margin{
+  margin-top: 22px;
+}
+
+.patient-text{
+  font-size: 18px;
+}
+
+label{
+  font-size: 14px;
+}
+
+.optional-toggle{
+  display: none;
+}
+
+input[type="tel"]::placeholder{
+  font-size: 14px;
+}
+
+.back-btn-top{
+  font-size: 14px;
+}
+
+.back-btn-top img{
+  height: auto;
+  width: 15px;
+}
+
+}
+
+/* @media screen and (max-width:450px) {
+    .remove-padding-left{
+        width: 55px;
+    }
+} */
+
+@media screen and (max-width:550px){
+  .top-patient-view-text{
+    transform: scale(0.89) translateX(-15px);
+  }
+
+  .back-btn-top{
+    transform: scale(0.89);
+    top: -54px;
+  }
+
+  .shrink-btns{
+    transform: scale(0.89);
+  }
+
+  .bottom-btns{
+    gap: 2px;
+  }
+}
+
+@media screen and (max-width:425px) {
+  .patient-form{
+    width: 95%;
+  }
+  .patient-text{
+    font-size: 15px;
+  }
+
+  .back-btn-top{
+    height: 39px;
+    width: 71px;  
+    padding-right: 8px;
+    padding-left: 5px;
+  }
+
+  .upload-txt{
+    display: none;
+  }
+}
+
+
+
+

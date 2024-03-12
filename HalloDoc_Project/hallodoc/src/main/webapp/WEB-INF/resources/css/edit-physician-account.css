@@ -1,0 +1,487 @@
+#save-btn-1, #save-btn-2, #cancel-btn-12{
+  display: none;
+}
+
+
+
+.upload-class{
+  width: 75%;
+  }
+
+  .create-class{
+    width: 25%;
+  }
+  
+
+  .custom-upload{
+    height: 50px!important;
+  }
+
+  .up-cloud-upload{
+    height: 20px;
+    width: 20px;
+  }
+
+  .btn-color-for-upload {
+    color: white;
+    background-color: #01bce9;
+    border: 1px solid #01bce9;
+    width: 100px;
+    height: 50px;
+    border-radius: 0px 8px 8px 0px!important;
+  }
+
+  .upload-create-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .btn-color-for-upload:hover, .create-class:hover .create-btn-provider-profile{
+    background-color: #1991b3;
+  }
+
+    
+  .create-btn-provider-profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border: 1px solid #01bce9;
+    border-radius: 8px;
+    background-color: #01bce9;
+    color: white;
+    height: 50px;
+  }
+  
+
+  /* -->>> */
+
+.back-btn-top:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top:hover img{
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.edit-btn:hover, .common-btn-onboarding:hover{
+  background-color: #1991b3;
+}
+
+.reset-pass-btn:hover{
+  background-color: #01bce9;
+  color: white;
+}
+
+.back-btn-top {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    padding: 9px 12px 9px 8px;
+    color: #01bce9;
+    gap: 4px;
+    width: 84px;
+    position: absolute;
+    top: -57px;
+    right: 0px;
+}
+
+.signature-img{
+  height: auto;
+  width: 100px;
+}
+
+.signatur-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.top-patient-view-text{
+  position: absolute;
+  top: -50px;
+  left: 0px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.view-reservation-text{
+  font-weight: 600;
+  font-size: 25px;
+}
+.patient-form{
+    width: 60%;
+}
+
+.patient-text{                       /*for top text*/
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.common-row-bottom-btn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.reset-pass-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: white;
+    color: #01bce9;
+    padding: 6px 12px;
+    margin-top: 20px;
+}
+
+.phonecolheight{
+    height: 100%;
+  }
+
+  .iti, .iti--allow-dropdown{          /*Managed the phone col*/
+    width: 100%;
+    height: 100%;
+  }
+  
+  .iti__selected-flag, .phoneflags{
+    height: 80%;
+  }
+  
+  .phonecolheight{
+    height: 140%;
+  }
+
+  .phonecolheight-1{
+    height: 100%;
+  }
+  
+  .iti__flag-container{
+    height: 80%;
+  }
+  
+  .iti__country-list {
+    z-index: 300!important;
+  }
+  
+  .iti *{
+    width: 100%;
+  }
+  
+  .iti-mobile , .iti--container{
+    width: 37%!important;
+    height: 30%!important;
+  }
+  
+  .relative-position{
+    position: relative;
+  }
+  
+  .extra-margin{
+    margin-top: 80px;
+    margin-bottom: 50px;
+  }
+
+  .form-control:focus{            /*To remove the box shadow on focus*/
+      box-shadow: none;
+      border: 2px soild #01bce9;
+  }
+  
+  .form-floating>.form-control:focus~label{
+      color: #01bce9;
+  }
+
+  .checkbox-flex{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+.single-checkbox-flex{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 14px;
+}
+
+.edit-btn{
+    background-color: #01bce9;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 5px;
+    border: 1px solid #01bce9;
+    margin-top: 20px;
+}
+
+.delete-btn:hover, .cancel-btn:hover{
+  background-color: #a52929;
+  border: 1px solid #a52929;
+  color: white;
+}
+
+.delete-btn, .cancel-btn{
+    background-color:#d32f2f;;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 5px;
+    border: 1px solid #d32f2f;;
+    margin-top: 20px;
+}
+
+.extra-margin-right-edit{
+    margin-right: 16px;
+}
+
+.file-upload-btn{                /*Upload button customization*/
+    background-color: #01bce9;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  ::-webkit-file-upload-button {
+    display: none;
+    }
+
+    .upload-image-file{
+        height: auto;
+        width: 20px;
+    }
+
+textarea{
+    resize: none;
+}
+  
+.inc-height{
+    height: 200px;
+  }
+
+  .inc-inp-height{
+    height: 175px!important;
+  }
+
+  .hr-width{
+    border: 1.5px solid black;
+  }
+
+  .common-btn-onboarding{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: #01bce9;
+    color: white;
+    padding: 6px 12px;
+  }
+
+    .col-1-width{
+        padding-left: 10px;
+        width: 3%;
+        vertical-align: top;
+    }
+
+    .col-2-width{
+        padding-left: 10px;
+        width: 45%;
+    }
+
+    .col-3-width{
+        padding-left: 10px;
+        width: 52%;
+    }
+
+
+    .btns-flex{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+    }
+    td {
+        width:160px;
+        padding-bottom:10px;
+    } 
+
+    .toggle-img-btn{
+        display: none;
+    }
+
+    input[type="checkbox"]{
+      height: 15px;
+      width: 15px;
+    }
+
+@media screen and (max-width:1057px) {
+    .col-1-width{
+        padding-left: 10px;
+        width: 3%;
+    }
+
+    .col-2-width{
+        padding-left: 10px;
+        width: 55%;
+    }
+
+    .col-3-width{
+        padding-left: 10px;
+        width: 30%;
+    }
+
+}
+
+@media screen and (max-width:500px) {
+  .for-remove-upload, .create-text{
+    display: none;
+  }
+
+  .btn-color-for-upload{
+    width: 58px;
+  }
+
+  .for-remove-upload, .create-text{
+    display: none;
+  }
+
+}
+
+@media screen and (max-width:550px) {
+  .view-reservation-text{
+    font-size: 22px;
+  }
+
+  .back-btn-top{
+    transform: scale(0.89);
+    top: -52px;
+  }
+
+  .top-patient-view-text{
+    top: -45px;
+  }
+
+  .shrink-btns{
+    transform: scale(0.91);
+  }
+
+  .common-row-bottom-btn{
+    gap: 0px;
+  }
+
+  .extra-margin-right-edit{
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width:587px) {
+    .col-1-width{
+        padding-left: 10px;
+        width: 3%;
+    }
+
+    .col-2-width{
+        padding-left: 10px;
+        width: 50%;
+    }
+
+    .col-3-width{
+        padding-left: 10px;
+        width: 35%;
+    }
+
+}
+
+@media screen and (max-width:648px) {
+    
+    .upload-image-file{
+        width: 23px;
+        margin-left: 10px;
+        margin-right: 10px; 
+    }
+
+}
+  @media screen and (max-width:768px) {
+
+    .create-class{
+      width: 15%;
+    }
+
+    .phonecolheight {
+      height: 140%;
+    }
+
+    .checkbox-flex{
+        margin-top: 25px;
+    }
+  }
+
+
+@media screen and (max-width:1024px) {
+    .patient-form{
+      width: 80%;
+    }
+  }
+  
+
+  @media screen and (max-width:900px){
+    .patient-form{
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width:557px) {
+    .create-class{
+      width: 20%;
+    }
+  }
+
+  @media screen and (max-width:495px) {
+    .toggle-img-btn{
+        display: block;
+    }
+
+    .toggle-text{
+        display: none;
+    }
+
+    .btns-flex{
+        flex-direction: column;
+    }
+
+    .col-1-width{
+        padding-left: 10px;
+        width: 10%;
+    }
+
+    .col-2-width{
+        padding-left: 10px;
+        width: 50%;
+    }
+
+    .col-3-width{
+        padding-left: 10px;
+        width: 15%;
+    }
+
+    .col-4-width{
+        padding-left: 10px;
+        width: 25%;
+    }
+
+  }
+
+  @media screen and (max-width:425px) {
+    .patient-form{
+      width: 95%;
+    }
+  }
+
+
+

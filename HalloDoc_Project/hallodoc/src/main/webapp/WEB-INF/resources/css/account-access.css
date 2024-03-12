@@ -1,0 +1,156 @@
+.main-container{
+    width: 95%;
+    margin-top: 80px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.logout-btn-admin{
+    margin-left: 10px;
+    margin-bottom: 2px;
+    background-color: white;
+    border: 1px solid #01bce9;
+    border-radius: 3px;
+    height: 34px;
+    padding: 2px 7px 0px 7px;
+}
+
+.relative-pos-class{
+    position: relative;
+}
+
+.main-container-top-text{
+    position: absolute;
+    top: -53px;
+    left: 0px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.access-btn, .actions-access-btn{
+    border: 1px solid #01bce9;
+    border-radius: 5px;
+    background-color: white;
+    color: #01bce9;
+    padding: 6px 12px;
+}
+
+.actions-access-btn:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.del:hover{
+    border: 1px solid rgb(202, 63, 63)!important;
+    background-color:rgb(202, 63, 63)!important;
+    color: white;
+}
+
+.access-btn-flex{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-right: 25px;
+}
+
+.access-btn-add-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.access-btn-add-flex:hover{
+    background-color: #01bce9;
+    color: white;
+}
+
+.access-btn-add-flex:hover img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+}
+
+.actions-flex-access{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.container-fluid{
+    padding: 0px;
+}
+
+.extra-padding-td{
+    padding-left: 20px!important;
+}
+
+.width-col1{
+    width: 45%;
+}
+
+.width-col2{
+    width: 40%;
+}
+
+.width-col3{
+    width: 15%;
+}
+
+.accordion-div{
+    display: none;
+}
+
+.accordion-div-rows-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+}
+
+ .role-text-accordion, .role-accordion{
+    font-weight: 400;
+    color: black;
+}
+
+.shrink{
+    transform: scale(0.92);
+}
+
+.plus-img-create-access{
+    display: none;
+}
+
+@media screen and (max-width:768px){
+    .logout-btn-admin{
+        margin-left: 10px;
+        margin-bottom: 2px;
+        background-color: white;
+        border: 1px solid #01bce9;
+        border-radius: 3px;
+        height: 34px;
+        padding: 6px 7px 0px 7px;
+    }
+}
+
+@media screen and (max-width:550px) {
+    .table{
+        display: none;
+    }
+
+    .accordion-div{
+        display: block;
+    }
+
+    .plus-img-create-access{
+        display: block;
+    }
+
+    .new-req-text{
+        display: none;
+    }
+
+    .main-container-top-text{
+        font-size: 22px;
+    }
+}
