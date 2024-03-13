@@ -20,19 +20,35 @@ import hallodoc.model.AspNetUsers;
 public class AspNetUserDao {
 	
 	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Autowired
 	private HibernateTemplate hibernateTemplate; 
 	
 	
 	public List<AspNetUsers> getUserByUsername(String u_username) {
 		
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-		Session s = factory.openSession();
+//		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+//		Session s = factory.openSession();
+		Session s = this.sessionFactory.openSession();
 		String queryString = "FROM AspNetUsers where user_name=:user_username";
 		Query q = s.createQuery(queryString);
 		q.setParameter("user_username", u_username);
 		List<AspNetUsers> list = q.list();
 		return list;
 	}
+	
+	public List<AspNetUsers> getUserByEmail(String u_email) {
+		
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM AspNetUsers where email=:user_email";
+		Query q = s.createQuery(queryString);
+		q.setParameter("user_email", u_email);
+		List<AspNetUsers> list = q.list();
+		return list;
+	}
+	
+	
 	
 	@Transactional
 	public int createPatient(AspNetUsers user) {

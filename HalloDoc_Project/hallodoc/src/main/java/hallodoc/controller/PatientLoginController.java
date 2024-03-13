@@ -22,6 +22,13 @@ public class PatientLoginController {
 	public String patientHomePage(){
 		return "patient/patient-site";
 	}
+	
+	@RequestMapping("/forgetPasswordPatient")
+	public String forgetPatientPassword() {
+		return "patient/patient-forget-password";
+	}
+	
+	
 
 	@RequestMapping("/createPatient")
 	public String createPatientAccount() {
@@ -60,7 +67,7 @@ public class PatientLoginController {
 			return "/patient/create-patient-account";
 		}
 		if(id == -2) {
-			m.addAttribute("EmailExists","Password don't match");
+			m.addAttribute("PasswordMatch","Password don't match");
 			System.out.println("Password don't match");
 			return "/patient/create-patient-account";
 

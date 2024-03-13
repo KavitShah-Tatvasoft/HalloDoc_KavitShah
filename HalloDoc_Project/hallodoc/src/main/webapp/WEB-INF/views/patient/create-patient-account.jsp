@@ -88,6 +88,7 @@
 						href="#" onclick="hidePassword()"><img
 						src="<c:url value="/resources/images/password-eye-slash.svg" />"
 						alt="hide pass" class="close-eye" id="close-eye-id-1"></a>
+						<div style="color:red;margin-top:8px">${PasswordMatch}</div>
 				</div>
 
 <!-- 				<a href="patient-login.html"> -->

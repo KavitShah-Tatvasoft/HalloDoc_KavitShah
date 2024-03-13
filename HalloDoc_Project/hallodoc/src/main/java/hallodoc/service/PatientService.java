@@ -85,14 +85,15 @@ public class PatientService {
 	
 	public int createPatient(CreatePatientDto user) {
 		
-		String pass1 = user.getPassword();
+		String pass1 = user.getPassword_hash();
 		String pass2 = user.getConfirmPassword();
+		
 		System.out.println(pass1);
 		System.out.println(pass2);
 		String username = user.getEmail();
 		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 		
-		if(pass1!=pass2) {
+		if(!(pass1.equals(pass2))) {
 			return -2;
 		}
 
@@ -104,7 +105,7 @@ public class PatientService {
 			
 			BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
 
-			Hash hash = Password.hash(user.getPassword())
+			Hash hash = Password.hash(user.getPassword_hash())
 	                .with(bcrypt);
 			
 			aspnetuser.setPassword_hash(hash.getResult());
