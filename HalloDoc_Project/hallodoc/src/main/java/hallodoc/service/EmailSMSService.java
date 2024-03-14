@@ -30,7 +30,7 @@ public class EmailSMSService {
 			return -1;
 		}
 		else {
-			mailer.sendMail();
+			mailer.sendMail(email);
 			System.out.println("Mail Sent");
 			return 0;
 			//send email logic 

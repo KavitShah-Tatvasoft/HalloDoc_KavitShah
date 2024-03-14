@@ -77,7 +77,7 @@
         </div>
 
         <p class="mt-3"><a href="<c:url value="/forgetPasswordPatient" />" class="forget-pass">Forget Password?</a></p>
-        <p><a href="<c:url value="/createPatient" />" class="forget-pass">Not Registered? Register Here</a></p>
+
 
         <footer class="bottom-txt-patient">
             <a href="#" class="bottom-txt-1" id="term">Terms of Condition</a>

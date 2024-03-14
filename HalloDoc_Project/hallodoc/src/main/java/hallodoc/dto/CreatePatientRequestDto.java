@@ -1,0 +1,157 @@
+package hallodoc.dto;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class CreatePatientRequestDto {
+
+	private String symptoms;
+	private String firstName;
+	private String lastName;
+	private static String dob;
+	private String email;
+	private String mobileNumber;
+	private String street;
+	private String city;
+	private String state;
+	private String zipcode;
+	private String room;
+	private String document;
+
+	public String getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(String symptoms) {
+		this.symptoms = symptoms;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getDob() {
+		return dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
+	public static Date getFormatedDate() throws ParseException {
+
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = inputFormat.parse(dob);
+
+		return date;
+	}
+
+	@Override
+	public String toString() {
+		return "CreatePatientRequestDto [symptoms=" + symptoms + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", dob=" + dob + ", email=" + email + ", mobileNumber=" + mobileNumber + ", street=" + street
+				+ ", city=" + city + ", state=" + state + ", zipcode=" + zipcode + ", room=" + room + ", document="
+				+ document + "]";
+	}
+
+	public CreatePatientRequestDto(String symptoms, String firstName, String lastName, String dob, String email,
+			String mobileNumber, String street, String city, String state, String zipcode, String room,
+			String document) {
+		super();
+		this.symptoms = symptoms;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dob = dob;
+		this.email = email;
+		this.mobileNumber = mobileNumber;
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zipcode = zipcode;
+		this.room = room;
+		this.document = document;
+	}
+
+	public CreatePatientRequestDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+}

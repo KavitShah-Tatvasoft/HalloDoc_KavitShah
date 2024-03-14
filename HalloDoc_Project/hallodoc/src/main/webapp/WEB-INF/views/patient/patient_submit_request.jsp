@@ -63,19 +63,19 @@
                 </div>
             </a>
 
-            <a href="create-patient-request.html" class="flex-width patient-clr">
+            <a href="<c:url value="/createNewPatientRequest" />" class="flex-width patient-clr">
                 PATIENT
             </a>
 
-            <a href="FamilyFriend-request.html"class="flex-width family-clr">
+            <a href="<c:url value="/createNewFamilyFriendRequest" />"class="flex-width family-clr">
                 FAMILY/FRIEND
             </a>
 
-            <a href="concierge-information-create-request.html"class="flex-width concierge-clr">
+            <a href="<c:url value="/createNewConciergeRequest" />"class="flex-width concierge-clr">
                CONCIERGE
             </a>
 
-            <a href="business-information-create-request.html" class="flex-width business-clr">
+            <a href="<c:url value="/createNewBusinessRequest" />" class="flex-width business-clr">
                 BUSINESS PARTNER
             </a>
 

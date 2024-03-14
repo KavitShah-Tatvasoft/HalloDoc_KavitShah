@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 50px!important;
   }
 
 
@@ -34,6 +34,8 @@
     padding: 8px 19px;
     margin-top: 35px;
     border: 1px solid #01bce9;
+    border-radius: 5px;
+    color: white;
 }
 
 .modal-content-clear-case{

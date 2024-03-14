@@ -1,3 +1,24 @@
+#passwordRowId{
+	display: none;
+}
+
+.open-eye{
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    width: 21px;
+    height: 22px;
+}
+
+.close-eye{
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    width: 21px;
+    height: 22px;
+    display: none;
+}
+
 .back-btn-top:hover, .bottom-btns-cancel:hover, .map-text-flex-patient-profile-only:hover{
   background-color: #01bce9;
   color: white;
@@ -126,6 +147,10 @@ input[type="file"]{
 
 .phonecolheight{
   height: 100%;
+}
+
+.phonecol-height-1{
+	height:73px!important;
 }
 
 .iti__flag-container{
