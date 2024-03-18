@@ -77,7 +77,7 @@
 					<div class="form-floating mb-3 inp">
 						<input type="text" class="form-control input-2"
 							id="floatingInput-2" placeholder="First Name" name="firstName"
-							autocomplete="off"> <label for="floatingInput-2">First
+							autocomplete="off" required="required"> <label for="floatingInput-2">First
 							Name</label>
 					</div>
 				</div>
@@ -115,19 +115,21 @@
 
 				<div class="col-12 col-md-6">
 					<!--Email col-->
-					<div class="form-floating mb-1 inp">
+					<div class="form-floating inp">
 						<input type="email" name="email" class="form-control input-2"
 							id="emailField" placeholder="Email" autocomplete="off"
 							onblur="validateEmail()"> <label for="emailField">Email</label>
 						<span id="emailErrorField" style="color: red; padding-left: 5px;"></span>
 					</div>
+					
+					<input type="hidden" name="isExsistingPatient" value="false" id="isExsistingPatient" />
 
 				</div>
 
 				<div class="col-12 col-md-6">
 					<!--Phone Number col-->
 					<div
-						class="form-floating mb-1 inp phonecolheight phonecol-height-1">
+						class="form-floating inp phonecolheight phonecol-height-1">
 						<input type="tel" name="mobileNumber"
 							class="form-control phoneflags" id="phone" />
 					</div>
@@ -141,7 +143,8 @@
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
 						<input type="password" class="form-control input-1"
-							id="floatingPassword-pass1" placeholder="Password"> <label
+							id="floatingPassword-pass1"
+							onblur="validatePassword()" placeholder="Password" name="password"> <label
 							for="floatingPassword-pass1">Password</label> <a href="#"
 							onclick="showPass()"><img
 							src="<c:url value="/resources/images/password-eye.svg" />"
@@ -149,20 +152,22 @@
 							href="#" onclick="hidePass()"><img
 							src="<c:url value="/resources/images/password-eye-slash.svg" />"
 							alt="hide pass" class="close-eye" id="close-eye-id"></a>
+							<span id="passError1"></span>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="password" class="form-control input-1"
-							id="floatingPassword-pass2" placeholder="Password"> <label
-							for="floatingPassword-pass2">Password</label> <a href="#"
+						<input type="password" onblur="validateConfirmPassword()" class="form-control input-1"
+							id="floatingPassword-pass2" placeholder="Confirm Password" name="confirmPassword"> <label
+							for="floatingPassword-pass2">Confirm Password</label> <a href="#"
 							onclick="showPass1()"><img
 							src="<c:url value="/resources/images/password-eye.svg" />"
 							alt="view pass" class="open-eye" id="open-eye-id-1"></a> <a
 							href="#" onclick="hidePass1()"><img
 							src="<c:url value="/resources/images/password-eye-slash.svg" />"
 							alt="hide pass" class="close-eye" id="close-eye-id-1"></a>
+							<span id="passError"></span>
 					</div>
 				</div>
 
@@ -199,9 +204,11 @@
 					<!--State col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="state" class="form-control input-2"
-							id="floatingInput-9" placeholder="State" autocomplete="off">
-						<label for="floatingInput-9">State</label>
+							id="state" placeholder="State" onblur="validatePatientState()" autocomplete="off">
+						<label for="state">State</label>
+						<span id="stateErrorField"></span>
 					</div>
+					
 				</div>
 
 				<div class="col-12 col-md-6">
@@ -248,7 +255,7 @@
 			</div>
 
 			<div class="bottom-btns mt-3">
-				<button type="submit" class="bottom-btns-submit shrink-btns">Submit</button>
+				<button type="submit" id="submit-btn-id"  class="bottom-btns-submit shrink-btns">Submit</button>
 				<button type="reset" class="bottom-btns-cancel shrink-btns">Cancel</button>
 			</div>
 		</form>

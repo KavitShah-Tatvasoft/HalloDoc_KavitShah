@@ -2,9 +2,12 @@ package hallodoc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +19,12 @@ public class RequestClient {
 	@Column(name = "request_client_id")
 	private int requestClientId;
 	
-	@Column(name = "request_id")
-	private int requestId;
+//	@Column(name = "request_id")
+//	private int requestId;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "request_id")
+	private Request request;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -32,8 +39,12 @@ public class RequestClient {
 	
 	private String address;
 	
-	@Column(name = "region_id")
-	private int regionId;
+//	@Column(name = "region_id")
+//	private int regionId;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "region_id")
+	private Region region;
 	
 	@Column(name = "noti_mobile")
 	private String notiMobile;
@@ -74,12 +85,12 @@ public class RequestClient {
 		this.requestClientId = requestClientId;
 	}
 
-	public int getRequestId() {
-		return requestId;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
 	public String getFirstName() {
@@ -122,12 +133,12 @@ public class RequestClient {
 		this.address = address;
 	}
 
-	public int getRegionId() {
-		return regionId;
+	public Region getRegion() {
+		return region;
 	}
 
-	public void setRegionId(int regionId) {
-		this.regionId = regionId;
+	public void setRegion(Region region) {
+		this.region = region;
 	}
 
 	public String getNotiMobile() {
@@ -234,19 +245,29 @@ public class RequestClient {
 		this.longitude = longitude;
 	}
 
-	public RequestClient(int requestClientId, int requestId, String firstName, String lastName, String phoneNumber,
-			String location, String address, int regionId, String notiMobile, String notiEmail, String notes,
+	@Override
+	public String toString() {
+		return "RequestClient [requestClientId=" + requestClientId + ", request=" + request + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", location=" + location + ", address="
+				+ address + ", region=" + region + ", notiMobile=" + notiMobile + ", notiEmail=" + notiEmail
+				+ ", notes=" + notes + ", email=" + email + ", strMonth=" + strMonth + ", intYear=" + intYear
+				+ ", intDate=" + intDate + ", street=" + street + ", city=" + city + ", state=" + state + ", zipcode="
+				+ zipcode + ", latitude=" + latitude + ", longitude=" + longitude + "]";
+	}
+
+	public RequestClient(int requestClientId, Request request, String firstName, String lastName, String phoneNumber,
+			String location, String address, Region region, String notiMobile, String notiEmail, String notes,
 			String email, String strMonth, int intYear, int intDate, String street, String city, String state,
 			String zipcode, float latitude, float longitude) {
 		super();
 		this.requestClientId = requestClientId;
-		this.requestId = requestId;
+		this.request = request;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.location = location;
 		this.address = address;
-		this.regionId = regionId;
+		this.region = region;
 		this.notiMobile = notiMobile;
 		this.notiEmail = notiEmail;
 		this.notes = notes;
@@ -266,6 +287,8 @@ public class RequestClient {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 	
 	

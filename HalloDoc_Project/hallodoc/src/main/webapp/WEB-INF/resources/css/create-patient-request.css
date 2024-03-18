@@ -2,6 +2,11 @@
 	display: none;
 }
 
+#passError1, #passError, #stateErrorField{
+	color: red;
+	margin-left: 8px
+}
+
 .open-eye{
     position: absolute;
     top: 18px;

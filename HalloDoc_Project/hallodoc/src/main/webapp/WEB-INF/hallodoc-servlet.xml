@@ -71,7 +71,18 @@
 		<!-- annotated classes -->
 		<property name="annotatedClasses">
 			<list>
+				<value>hallodoc.model.Admin</value>
+				<value>hallodoc.model.AspNetRoles</value>
+				<value>hallodoc.model.AspNetUserRoles</value>
 				<value>hallodoc.model.AspNetUsers</value>
+				<value>hallodoc.model.Physician</value>
+				<value>hallodoc.model.Region</value>
+				<value>hallodoc.model.Request</value>
+				<value>hallodoc.model.RequestType</value>
+				<value>hallodoc.model.RequestClient</value>
+				<value>hallodoc.model.RequestWiseFile</value>
+				<value>hallodoc.model.User</value>
+				<value>hallodoc.model.RequestStatusLog</value>
 			</list>
 		</property>
 	</bean>

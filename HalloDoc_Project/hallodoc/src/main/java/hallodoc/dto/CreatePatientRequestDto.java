@@ -18,103 +18,103 @@ public class CreatePatientRequestDto {
 	private String zipcode;
 	private String room;
 	private String document;
-
+	private String password;
+	private String confirmPassword;
+	private String isExsistingPatient;
+	
+	
+	
+	public String getIsExsistingPatient() {
+		return isExsistingPatient;
+	}
+	public void setIsExsistingPatient(String isExsistingPatient) {
+		this.isExsistingPatient = isExsistingPatient;
+	}
 	public String getSymptoms() {
 		return symptoms;
 	}
-
 	public void setSymptoms(String symptoms) {
 		this.symptoms = symptoms;
 	}
-
 	public String getFirstName() {
 		return firstName;
 	}
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
 	public String getLastName() {
 		return lastName;
 	}
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-	public String getDob() {
+	public static String getDob() {
 		return dob;
 	}
-
-	public void setDob(String dob) {
-		this.dob = dob;
+	public static void setDob(String dob) {
+		CreatePatientRequestDto.dob = dob;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
-
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-
 	public String getStreet() {
 		return street;
 	}
-
 	public void setStreet(String street) {
 		this.street = street;
 	}
-
 	public String getCity() {
 		return city;
 	}
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 	public String getState() {
 		return state;
 	}
-
 	public void setState(String state) {
 		this.state = state;
 	}
-
 	public String getZipcode() {
 		return zipcode;
 	}
-
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
-
 	public String getRoom() {
 		return room;
 	}
-
 	public void setRoom(String room) {
 		this.room = room;
 	}
-
 	public String getDocument() {
 		return document;
 	}
-
 	public void setDocument(String document) {
 		this.document = document;
 	}
-
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	
 	public static Date getFormatedDate() throws ParseException {
 
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,23 +122,22 @@ public class CreatePatientRequestDto {
 
 		return date;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "CreatePatientRequestDto [symptoms=" + symptoms + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", dob=" + dob + ", email=" + email + ", mobileNumber=" + mobileNumber + ", street=" + street
-				+ ", city=" + city + ", state=" + state + ", zipcode=" + zipcode + ", room=" + room + ", document="
-				+ document + "]";
+				+ ", email=" + email + ", mobileNumber=" + mobileNumber + ", street=" + street + ", city=" + city
+				+ ", state=" + state + ", zipcode=" + zipcode + ", room=" + room + ", document=" + document
+				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", isExsistingPatient="
+				+ isExsistingPatient + "]";
 	}
-
-	public CreatePatientRequestDto(String symptoms, String firstName, String lastName, String dob, String email,
-			String mobileNumber, String street, String city, String state, String zipcode, String room,
-			String document) {
+	public CreatePatientRequestDto(String symptoms, String firstName, String lastName, String email,
+			String mobileNumber, String street, String city, String state, String zipcode, String room, String document,
+			String password, String confirmPassword, String isExsistingPatient) {
 		super();
 		this.symptoms = symptoms;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.dob = dob;
 		this.email = email;
 		this.mobileNumber = mobileNumber;
 		this.street = street;
@@ -147,11 +146,15 @@ public class CreatePatientRequestDto {
 		this.zipcode = zipcode;
 		this.room = room;
 		this.document = document;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.isExsistingPatient = isExsistingPatient;
 	}
-
 	public CreatePatientRequestDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 }

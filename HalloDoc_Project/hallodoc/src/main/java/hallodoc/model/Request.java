@@ -4,9 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,11 +22,19 @@ public class Request {
 	@Column(name = "request_id")
 	private int requestId;
 	
-	@Column(name = "request_type_id")
-	private int requestTypeId;
+//	@Column(name = "request_type_id")
+//	private int requestTypeId;
 	
-	@Column(name = "user_id")
-	private String userId;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "request_type_id")
+	private RequestType requestType;
+	
+//	@Column(name = "user_id")
+//	private String userId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -37,8 +49,12 @@ public class Request {
 	
 	private int status;
 	
-	@Column(name = "physician_id")
-	private int physicianId;
+//	@Column(name = "physician_id")
+//	private int physicianId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "physician_id")
+	private Physician physician;
 	
 	@Column(name = "confirmation_number")
 	private int confirmationNumber;
@@ -52,8 +68,12 @@ public class Request {
 	@Column(name = "modified_date")
 	private Date modifieDate;
 	
-	@Column(name = "declined_by")
-	private int declinedBy;
+//	@Column(name = "declined_by")
+//	private int declinedBy;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "declined_by")
+	private AspNetUsers aspUsers;
 	
 	@Column(name = "last_wellness_date")
 	private Date lastWellnessDate;
@@ -84,20 +104,20 @@ public class Request {
 		this.requestId = requestId;
 	}
 
-	public int getRequestTypeId() {
-		return requestTypeId;
+	public RequestType getRequestType() {
+		return requestType;
 	}
 
-	public void setRequestTypeId(int requestTypeId) {
-		this.requestTypeId = requestTypeId;
+	public void setRequestType(RequestType requestType) {
+		this.requestType = requestType;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getFirstName() {
@@ -140,12 +160,12 @@ public class Request {
 		this.status = status;
 	}
 
-	public int getPhysicianId() {
-		return physicianId;
+	public Physician getPhysician() {
+		return physician;
 	}
 
-	public void setPhysicianId(int physicianId) {
-		this.physicianId = physicianId;
+	public void setPhysician(Physician physician) {
+		this.physician = physician;
 	}
 
 	public int getConfirmationNumber() {
@@ -180,12 +200,12 @@ public class Request {
 		this.modifieDate = modifieDate;
 	}
 
-	public int getDeclinedBy() {
-		return declinedBy;
+	public AspNetUsers getAspUsers() {
+		return aspUsers;
 	}
 
-	public void setDeclinedBy(int declinedBy) {
-		this.declinedBy = declinedBy;
+	public void setAspUsers(AspNetUsers aspUsers) {
+		this.aspUsers = aspUsers;
 	}
 
 	public Date getLastWellnessDate() {
@@ -244,26 +264,38 @@ public class Request {
 		this.caseNumber = caseNumber;
 	}
 
-	public Request(int requestId, int requestTypeId, String userId, String firstName, String lastName,
-			String phoneNumber, String email, int status, int physicianId, int confirmationNumber, Date createdDate,
-			boolean isDeleted, Date modifieDate, int declinedBy, Date lastWellnessDate, int callType,
+	@Override
+	public String toString() {
+		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", status=" + status + ", physician=" + physician + ", confirmationNumber=" + confirmationNumber
+				+ ", createdDate=" + createdDate + ", isDeleted=" + isDeleted + ", modifieDate=" + modifieDate
+				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
+				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
+				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
+				+ "]";
+	}
+
+	public Request(int requestId, RequestType requestType, User user, String firstName, String lastName,
+			String phoneNumber, String email, int status, Physician physician, int confirmationNumber, Date createdDate,
+			boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate, int callType,
 			boolean completedByPhysician, Date lastReservationDate, Date acceptedDate, String relationName,
 			String caseNumber) {
 		super();
 		this.requestId = requestId;
-		this.requestTypeId = requestTypeId;
-		this.userId = userId;
+		this.requestType = requestType;
+		this.user = user;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.status = status;
-		this.physicianId = physicianId;
+		this.physician = physician;
 		this.confirmationNumber = confirmationNumber;
 		this.createdDate = createdDate;
 		this.isDeleted = isDeleted;
 		this.modifieDate = modifieDate;
-		this.declinedBy = declinedBy;
+		this.aspUsers = aspUsers;
 		this.lastWellnessDate = lastWellnessDate;
 		this.callType = callType;
 		this.completedByPhysician = completedByPhysician;
@@ -277,6 +309,6 @@ public class Request {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	
 }

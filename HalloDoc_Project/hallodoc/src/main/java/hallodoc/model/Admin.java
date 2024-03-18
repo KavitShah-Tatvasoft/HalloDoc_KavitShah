@@ -2,6 +2,7 @@ package hallodoc.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,20 +15,51 @@ public class Admin {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int admin_id;
-	private int aspnet_userid;
-	private String first_name;
-	private String last_name;
-	private String address_one;
-	private String address_two;
+	@Column(name="admin_id")
+	private int adminId;
+	
+	@Column(name="aspnet_userid")
+	private int aspnetUserId;
+	
+	@Column(name="first_name")
+	private String firsName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	@Column(name="address_one")
+	private String addressOne;
+	
+	@Column(name="address_two")
+	private String addressTwo;
+	
+	@Column(name="city")
 	private String city;
-	private int region_id;
+	
+	@Column(name="region_id")
+	private int regionId;
+	
+	@Column(name="zip")
 	private String zip;
-	private String alt_phone;
-	private int created_by;
-	private Date created_date;
-	private int modified_by;
-	private Date modified_date;
-	private boolean is_deleted;
-	private int role_id;	
+	
+	@Column(name="alt_phone")
+	private String altPhone;
+	
+	@Column(name="created_by")
+	private int createdBy;
+	
+	@Column(name="created_date")
+	private Date createdDate;
+	
+	@Column(name="modified_by")
+	private int modifiedBy;
+	
+	@Column(name="modified_date")
+	private Date modifiedDate;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
+	
+	@Column(name="role_id")
+	private int roleId;	
 }

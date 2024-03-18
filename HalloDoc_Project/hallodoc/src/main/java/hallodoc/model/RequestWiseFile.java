@@ -3,9 +3,12 @@ package hallodoc.model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +19,12 @@ public class RequestWiseFile {
 	@Column(name = "request_wise_file_id")
 	private int requestWiseFileId;
 	
-	@Column(name = "request_id")
-	private int requestId;
+//	@Column(name = "request_id")
+//	private int requestId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "request_id")
+	private Request request;
 	
 	@Column(name = "file_name")
 	private String fileName;
@@ -25,11 +32,19 @@ public class RequestWiseFile {
 	@Column(name = "created_date")
 	private Date createdDate;
 	
-	@Column(name = "physician_id")
-	private int physicianId;
+//	@Column(name = "physician_id")
+//	private int physicianId;
 	
-	@Column(name = "admin_id")
-	private int adminId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "physician_id")
+	private Physician physician;
+	
+//	@Column(name = "admin_id")
+//	private int adminId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "admin_id")
+	private Admin admin;
 	
 	@Column(name = "doc_type")
 	private int docType;
@@ -51,12 +66,12 @@ public class RequestWiseFile {
 		this.requestWiseFileId = requestWiseFileId;
 	}
 
-	public int getRequestId() {
-		return requestId;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
 	public String getFileName() {
@@ -75,20 +90,20 @@ public class RequestWiseFile {
 		this.createdDate = createdDate;
 	}
 
-	public int getPhysicianId() {
-		return physicianId;
+	public Physician getPhysician() {
+		return physician;
 	}
 
-	public void setPhysicianId(int physicianId) {
-		this.physicianId = physicianId;
+	public void setPhysician(Physician physician) {
+		this.physician = physician;
 	}
 
-	public int getAdminId() {
-		return adminId;
+	public Admin getAdmin() {
+		return admin;
 	}
 
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
 	public int getDocType() {
@@ -125,21 +140,22 @@ public class RequestWiseFile {
 
 	@Override
 	public String toString() {
-		return "RequestWiseFile [requestWiseFileId=" + requestWiseFileId + ", requestId=" + requestId + ", fileName="
-				+ fileName + ", createdDate=" + createdDate + ", physicianId=" + physicianId + ", adminId=" + adminId
+		return "RequestWiseFile [requestWiseFileId=" + requestWiseFileId + ", request=" + request + ", fileName="
+				+ fileName + ", createdDate=" + createdDate + ", physician=" + physician + ", admin=" + admin
 				+ ", docType=" + docType + ", isFinalize=" + isFinalize + ", isDeleted=" + isDeleted
 				+ ", isPatientRecords=" + isPatientRecords + "]";
 	}
 
-	public RequestWiseFile(int requestWiseFileId, int requestId, String fileName, Date createdDate, int physicianId,
-			int adminId, int docType, boolean isFinalize, boolean isDeleted, boolean isPatientRecords) {
+	public RequestWiseFile(int requestWiseFileId, Request request, String fileName, Date createdDate,
+			Physician physician, Admin admin, int docType, boolean isFinalize, boolean isDeleted,
+			boolean isPatientRecords) {
 		super();
 		this.requestWiseFileId = requestWiseFileId;
-		this.requestId = requestId;
+		this.request = request;
 		this.fileName = fileName;
 		this.createdDate = createdDate;
-		this.physicianId = physicianId;
-		this.adminId = adminId;
+		this.physician = physician;
+		this.admin = admin;
 		this.docType = docType;
 		this.isFinalize = isFinalize;
 		this.isDeleted = isDeleted;
@@ -150,7 +166,6 @@ public class RequestWiseFile {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 	
 }

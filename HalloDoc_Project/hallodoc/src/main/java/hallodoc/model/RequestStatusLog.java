@@ -4,35 +4,60 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "request_status_log")
 public class RequestStatusLog {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "request_status_log_id")
 	private int request_status_log_id;
 	
-	@Column(name = "request_id")
-	private int requestId;
+//	@Column(name = "request_id")
+//	private int requestId;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "request_id")
+	private Request request;
 	
 	private int status;
 	
-	@Column(name = "physician_id")
-	private int physicianId;
+//	@Column(name = "physician_id")
+//	private int physicianId;
 	
-	@Column(name = "admin_id")
-	private int adminId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "physician_id")
+	private Physician physician;
 	
-	@Column(name = "trans_to_physician_id")
-	private int transToPhysicianId;
+//	@Column(name = "admin_id")
+//	private int adminId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "admin_id")
+	private Admin admin;
+	
+//	@Column(name = "trans_to_physician_id")
+//	private int transToPhysicianId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trans_to_physician_id")
+	private Physician physician1;
 	
 	private String notes;
 	
 	@Column(name = "created_date")
 	private Date createdDate;
 	
-	@Column(name = "created_date")
+	@Column(name = "trans_to_admin")
 	private boolean transToAdmin;
 
 	public int getRequest_status_log_id() {
@@ -43,12 +68,12 @@ public class RequestStatusLog {
 		this.request_status_log_id = request_status_log_id;
 	}
 
-	public int getRequestId() {
-		return requestId;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
 	public int getStatus() {
@@ -59,28 +84,28 @@ public class RequestStatusLog {
 		this.status = status;
 	}
 
-	public int getPhysicianId() {
-		return physicianId;
+	public Physician getPhysician() {
+		return physician;
 	}
 
-	public void setPhysicianId(int physicianId) {
-		this.physicianId = physicianId;
+	public void setPhysician(Physician physician) {
+		this.physician = physician;
 	}
 
-	public int getAdminId() {
-		return adminId;
+	public Admin getAdmin() {
+		return admin;
 	}
 
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
-	public int getTransToPhysicianId() {
-		return transToPhysicianId;
+	public Physician getPhysician1() {
+		return physician1;
 	}
 
-	public void setTransToPhysicianId(int transToPhysicianId) {
-		this.transToPhysicianId = transToPhysicianId;
+	public void setPhysician1(Physician physician1) {
+		this.physician1 = physician1;
 	}
 
 	public String getNotes() {
@@ -109,21 +134,20 @@ public class RequestStatusLog {
 
 	@Override
 	public String toString() {
-		return "RequestStatusLog [request_status_log_id=" + request_status_log_id + ", requestId=" + requestId
-				+ ", status=" + status + ", physicianId=" + physicianId + ", adminId=" + adminId
-				+ ", transToPhysicianId=" + transToPhysicianId + ", notes=" + notes + ", createdDate=" + createdDate
-				+ ", transToAdmin=" + transToAdmin + "]";
+		return "RequestStatusLog [request_status_log_id=" + request_status_log_id + ", request=" + request + ", status="
+				+ status + ", physician=" + physician + ", admin=" + admin + ", physician1=" + physician1 + ", notes="
+				+ notes + ", createdDate=" + createdDate + ", transToAdmin=" + transToAdmin + "]";
 	}
 
-	public RequestStatusLog(int request_status_log_id, int requestId, int status, int physicianId, int adminId,
-			int transToPhysicianId, String notes, Date createdDate, boolean transToAdmin) {
+	public RequestStatusLog(int request_status_log_id, Request request, int status, Physician physician, Admin admin,
+			Physician physician1, String notes, Date createdDate, boolean transToAdmin) {
 		super();
 		this.request_status_log_id = request_status_log_id;
-		this.requestId = requestId;
+		this.request = request;
 		this.status = status;
-		this.physicianId = physicianId;
-		this.adminId = adminId;
-		this.transToPhysicianId = transToPhysicianId;
+		this.physician = physician;
+		this.admin = admin;
+		this.physician1 = physician1;
 		this.notes = notes;
 		this.createdDate = createdDate;
 		this.transToAdmin = transToAdmin;
@@ -132,7 +156,8 @@ public class RequestStatusLog {
 	public RequestStatusLog() {
 		super();
 		// TODO Auto-generated constructor stub
-	}	
+	}
+
 	
 	
 
