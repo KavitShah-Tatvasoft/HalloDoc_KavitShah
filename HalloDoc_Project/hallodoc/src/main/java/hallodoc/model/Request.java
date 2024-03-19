@@ -57,7 +57,7 @@ public class Request {
 	private Physician physician;
 	
 	@Column(name = "confirmation_number")
-	private int confirmationNumber;
+	private String confirmationNumber;
 	
 	@Column(name = "created_date")
 	private Date createdDate;
@@ -168,11 +168,11 @@ public class Request {
 		this.physician = physician;
 	}
 
-	public int getConfirmationNumber() {
+	public String getConfirmationNumber() {
 		return confirmationNumber;
 	}
 
-	public void setConfirmationNumber(int confirmationNumber) {
+	public void setConfirmationNumber(String confirmationNumber) {
 		this.confirmationNumber = confirmationNumber;
 	}
 
@@ -277,7 +277,7 @@ public class Request {
 	}
 
 	public Request(int requestId, RequestType requestType, User user, String firstName, String lastName,
-			String phoneNumber, String email, int status, Physician physician, int confirmationNumber, Date createdDate,
+			String phoneNumber, String email, int status, Physician physician, String confirmationNumber, Date createdDate,
 			boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate, int callType,
 			boolean completedByPhysician, Date lastReservationDate, Date acceptedDate, String relationName,
 			String caseNumber) {

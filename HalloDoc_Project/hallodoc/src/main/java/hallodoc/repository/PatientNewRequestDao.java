@@ -17,7 +17,9 @@ import hallodoc.model.AspNetUsers;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
+import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestType;
+import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 
 @Repository
@@ -46,18 +48,41 @@ public class PatientNewRequestDao {
 		int id = (Integer) this.hibernateTemplate.save(request);
 		return id;
 	}
+	
+	@Transactional
+	public int addNewRequestStatusLog(RequestStatusLog requestStatusLog) {
+		int id = (Integer) this.hibernateTemplate.save(requestStatusLog);
+		return id;
+	}
+	
+	@Transactional
+	public int addNewRequestWiseFile(RequestWiseFile requestWiseFile) {
+		int id = (Integer) this.hibernateTemplate.save(requestWiseFile);
+		return id;
+	}
 
 	public List<Region> getRegionEntry(String region) {
 
 		Session s = this.sessionFactory.openSession();
-		String queryString = "FROM Region where name=:p_region";
+		String queryString = "FROM Region where name=:pRegion";
 		Query q = s.createQuery(queryString);
-		q.setParameter("p_region", region);
+		q.setParameter("pRegion", region);
 		List<Region> list = q.list();
 		s.close();
 		return list;
 
 	}
+	
+	public List<User> getUserByEmail(String userEmail) {
+
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM User where email=:userEmail";
+		Query q = s.createQuery(queryString);
+		q.setParameter("userEmail", userEmail);
+		List<User> list = q.list();
+		return list;
+	}
+
 
 	public AspNetRoles getRoleObject(String role) {
 		Session s = this.sessionFactory.openSession();
@@ -101,6 +126,16 @@ public class PatientNewRequestDao {
 		System.out.println(result.size());
 		s.close();
 		return result.size();
+	}
+	
+	@Transactional
+	public void updateAspNetUser(AspNetUsers aspNetUsers) {
+		this.hibernateTemplate.update(aspNetUsers);
+	}
+	
+	@Transactional
+	public void updateUser(User users) {
+		this.hibernateTemplate.update(users);
 	}
 
 }

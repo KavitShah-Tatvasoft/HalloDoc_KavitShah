@@ -25,8 +25,6 @@ public class AspNetUserDao {
 
 	public List<AspNetUsers> getUserByUsername(String u_username) {
 
-//		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-//		Session s = factory.openSession();
 		Session s = this.sessionFactory.openSession();
 		String queryString = "FROM AspNetUsers where user_name=:user_username";
 		Query q = s.createQuery(queryString);

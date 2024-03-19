@@ -50,7 +50,7 @@
 		</div>
 		<!--         </a> -->
 
-		<form action="addPatientRequest" method="post">
+		<form action="addPatientRequest" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<!--Row 1-->
 
@@ -202,7 +202,7 @@
 
 				<div class="col-12 col-md-6">
 					<!--State col-->
-					<div class="form-floating mb-3 inp">
+					<div class="form-floating inp">
 						<input type="text" name="state" class="form-control input-2"
 							id="state" placeholder="State" onblur="validatePatientState()" autocomplete="off">
 						<label for="state">State</label>

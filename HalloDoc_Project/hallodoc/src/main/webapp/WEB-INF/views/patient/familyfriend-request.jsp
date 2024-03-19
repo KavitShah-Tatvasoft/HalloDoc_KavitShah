@@ -11,6 +11,9 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
@@ -44,6 +47,9 @@
 			<img src="<c:url value="/resources/images/chevron-left.svg" />"
 				alt=""> Back
 		</div>
+		
+		<form action="createNewFamilyRequest" method="post" enctype="multipart/form-data">
+		
 		<!--     </a> -->
 		<div class="row">
 			<!--Row 1-->
@@ -52,11 +58,11 @@
 				<!--Patient Information col-->
 				<span class="patient-text">Family/Friend Information</span>
 			</div>
-
+			
 			<div class="col-12 col-md-6">
 				<!--First Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input name="reqFirstName" type="text" class="form-control input-2"
 						id="floatingInput-2" placeholder="First Name" autocomplete="off">
 					<label for="floatingInput-2">Your First Name</label>
 				</div>
@@ -65,7 +71,7 @@
 			<div class="col-12 col-md-6">
 				<!--Last Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-1"
+					<input name="reqLastName" type="text" class="form-control input-1"
 						id="floatingInput-3" placeholder="Last Name" autocomplete="off">
 					<label for="floatingInput-3">Your Last Name</label>
 				</div>
@@ -74,14 +80,14 @@
 			<div class="col-12 col-md-6">
 				<!--Phone Number col-->
 				<div class="form-floating mb-3 inp phonecolheight">
-					<input type="tel" class="form-control phoneflags phone" />
+					<input name="reqMobileNumber" type="tel" class="form-control phoneflags phone" />
 				</div>
 			</div>
 
 			<div class="col-12 col-md-6 only-family-friend-margin-top">
 				<!--Email col-->
 				<div class="form-floating mb-3 inp">
-					<input type="email" class="form-control input-2"
+					<input name="reqEmail" type="email" class="form-control input-2"
 						id="floatingInput-5" placeholder="Email" autocomplete="off">
 					<label for="floatingInput-5">Your Email</label>
 				</div>
@@ -90,7 +96,7 @@
 			<div class="col-12 col-md-6">
 				<!--Relation with patient col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input name="reqRelation" type="text" class="form-control input-2"
 						id="floatingInput-2" placeholder="Relation With Patient"
 						autocomplete="off"> <label for="floatingInput-2">Relation
 						With Patient</label>
@@ -111,7 +117,7 @@
 			<div class="col-12 inc-height">
 				<!--System Information col-->
 				<div class="form-floating mb-4 ">
-					<textarea name="" class="form-control input-1 inc-inp-height"
+					<textarea name="symptoms" class="form-control input-1 inc-inp-height"
 						id="floatingInput-1"
 						placeholder="Enter Brief Details Of Symptoms(Optional)"></textarea>
 					<label for="floatingInput-1" class="username-clr">Enter
@@ -122,7 +128,7 @@
 			<div class="col-12 col-md-6">
 				<!--First Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input name="ptFirstName" type="text" class="form-control input-2"
 						id="floatingInput-2" placeholder="First Name" autocomplete="off">
 					<label for="floatingInput-2">First Name</label>
 				</div>
@@ -131,7 +137,7 @@
 			<div class="col-12 col-md-6">
 				<!--Last Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-1"
+					<input name="ptLastName" type="text" class="form-control input-1"
 						id="floatingInput-3" placeholder="Last Name" autocomplete="off">
 					<label for="floatingInput-3">Last Name</label>
 				</div>
@@ -140,7 +146,7 @@
 			<div class="col-12 col-md-6">
 				<div class="form-floating mb-3 inp custom-date-input">
 					<!--Date Picker col-->
-					<input type="date" class="form-control input-1"
+					<input name="ptDob" type="date" class="form-control input-1"
 						id="floatingInput-4" placeholder="Date Of Birth"
 						autocomplete="off"> <label for="floatingInput-4">Date
 						of Birth</label> <img src="./SRS Screen Shorts/calendar4-week.svg" alt=""
@@ -161,7 +167,7 @@
 			<div class="col-12 col-md-6">
 				<!--Email col-->
 				<div class="form-floating mb-3 inp">
-					<input type="email" class="form-control input-2"
+					<input name="ptEmail" type="email" class="form-control input-2"
 						id="floatingInput-5" placeholder="Email" autocomplete="off">
 					<label for="floatingInput-5">Email</label>
 				</div>
@@ -170,7 +176,8 @@
 			<div class="col-12 col-md-6">
 				<!--Phone Number col-->
 				<div class="form-floating mb-3 inp phonecolheight">
-					<input type="tel" class="form-control phoneflags phone" />
+					<input name="ptMobileNumber" type="tel" class="form-control phoneflags phone" />
+					
 				</div>
 			</div>
 
@@ -189,7 +196,7 @@
 			<div class="col-12 col-md-6">
 				<!--Street col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input name="ptStreet" type="text" class="form-control input-2"
 						id="floatingInput-7" placeholder="Street" autocomplete="off">
 					<label for="floatingInput-7">Street</label>
 				</div>
@@ -198,7 +205,7 @@
 			<div class="col-12 col-md-6">
 				<!--City col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input name="ptCity" type="text" class="form-control input-2"
 						id="floatingInput-8" placeholder="City" autocomplete="off">
 					<label for="floatingInput-8">City</label>
 				</div>
@@ -206,17 +213,18 @@
 
 			<div class="col-12 col-md-6">
 				<!--State col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
-						id="floatingInput-9" placeholder="State" autocomplete="off">
-					<label for="floatingInput-9">State</label>
+				<div class="form-floating inp">
+					<input name="ptState" type="text" class="form-control input-2"
+						id="state" placeholder="State" autocomplete="off" onblur="validatePatientState()">
+					<label for="state">State</label>
+					<span id="stateErrorField"></span>
 				</div>
 			</div>
 
 			<div class="col-12 col-md-6">
 				<!--Zip Code col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input name="ptZipcode" type="text" class="form-control input-2"
 						id="floatingInput-10" placeholder="Zip Code" autocomplete="off">
 					<label for="floatingInput-10">Zip Code</label>
 				</div>
@@ -225,7 +233,7 @@
 			<div class="col-12 col-md-6">
 				<!--Room #/ Suite(Optional) col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2"
+					<input type="text" class="form-control input-2" name="ptRoom"
 						id="floatingInput-11" placeholder="Room #/ Suite(Optional)"
 						autocomplete="off"> <label for="floatingInput-11">Room
 						#/ Suite(Optional)</label>
@@ -242,7 +250,7 @@
 
 				<div class="col-12">
 					<div class="input-group mb-3 inc-width-family">
-						<input type="file" class="form-control" id="inputGroupFile02">
+						<input name="document" type="file" class="form-control" id="inputGroupFile02">
 						<label class="input-group-text file-upload-btn"
 							for="inputGroupFile02"><img
 							src="<c:url value="/resources/images/cloud-arrow-up-white.svg" />"
@@ -259,7 +267,7 @@
 			</div>
 		</div>
 
-
+ 		</form>
 	</div>
 
 
@@ -305,6 +313,7 @@
 	</script>
 
 	<script src="<c:url value="/resources/js/darktheme.js" />"></script>
+	<script src="<c:url value="/resources/js/family-friend.js" />"></script>
 
 </body>
 </html>

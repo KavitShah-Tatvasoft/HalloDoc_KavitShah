@@ -1,8 +1,12 @@
 package hallodoc.controller;
 
+import java.awt.PageAttributes.MediaType;
 import java.text.ParseException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.User;
+import hallodoc.service.FamilyFriendRequestService;
 import hallodoc.service.PatientRequestsService;
 
 @Controller
@@ -22,6 +28,9 @@ public class PatientRequestsController {
 	@Autowired
 	private PatientRequestsService patientRequestsService;
 	
+	@Autowired
+	private FamilyFriendRequestService familyFriendRequestService;
+	
 
 	@RequestMapping("/createNewPatientRequest")
 	public String createNewPatientRequest() {
@@ -29,28 +38,27 @@ public class PatientRequestsController {
 	}
 	
 	@PostMapping(path = "/addPatientRequest")
-	public String addPatientRequest(@ModelAttribute("createPatientRequest") CreatePatientRequestDto createPatientRequestDto ) throws Exception {
+	public String addPatientRequest(@ModelAttribute("createPatientRequest") CreatePatientRequestDto createPatientRequestDto, HttpSession session ) throws Exception {
 		System.out.println(createPatientRequestDto.toString());
 		String isExistingPatient = createPatientRequestDto.getIsExsistingPatient();
 		System.out.println(isExistingPatient);
 		
 		if(isExistingPatient.equals("true")) {
 			
-			int id = patientRequestsService.addRequestForExsitingPatient(createPatientRequestDto);
+			boolean status = patientRequestsService.addRequestForExsitingPatient(createPatientRequestDto, session);
 			System.out.println("In existing patient");
 			return "true";
 		}else
 		{
 			System.out.println("In new patient");
-			boolean status = patientRequestsService.addRequestForNewPatient(createPatientRequestDto);
+			boolean status = patientRequestsService.addRequestForNewPatient(createPatientRequestDto, session);
 			System.out.println(status);
-			return "";
+			return "true";
 		}
 		
 		
 		
 	}
-	
 	
 	@RequestMapping(value= "/isPatientValidByEmail", method = RequestMethod.POST)
 	@ResponseBody
@@ -72,6 +80,15 @@ public class PatientRequestsController {
 	public String createNewFamilyRequest() {
 		
 		return "/patient/familyfriend-request";
+	}
+	
+
+	@RequestMapping(value = "/createNewFamilyRequest", method = RequestMethod.POST)
+	public String createNewFamilyRequest(@ModelAttribute("createFamilyRequest") CommonRequestDto commonRequestDto, HttpSession session ) throws Exception{
+		System.out.println(commonRequestDto);
+		boolean status = familyFriendRequestService.createNewFamilyFriendRequest(commonRequestDto, session);
+		System.out.println(status);
+		return "";
 	}
 	
 	@RequestMapping("/createNewConciergeRequest")

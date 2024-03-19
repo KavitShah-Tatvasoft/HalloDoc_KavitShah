@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class CreatePatientRequestDto {
 
 	private String symptoms;
@@ -17,19 +19,12 @@ public class CreatePatientRequestDto {
 	private String state;
 	private String zipcode;
 	private String room;
-	private String document;
+	private CommonsMultipartFile document;
 	private String password;
 	private String confirmPassword;
 	private String isExsistingPatient;
 	
 	
-	
-	public String getIsExsistingPatient() {
-		return isExsistingPatient;
-	}
-	public void setIsExsistingPatient(String isExsistingPatient) {
-		this.isExsistingPatient = isExsistingPatient;
-	}
 	public String getSymptoms() {
 		return symptoms;
 	}
@@ -96,10 +91,10 @@ public class CreatePatientRequestDto {
 	public void setRoom(String room) {
 		this.room = room;
 	}
-	public String getDocument() {
+	public CommonsMultipartFile getDocument() {
 		return document;
 	}
-	public void setDocument(String document) {
+	public void setDocument(CommonsMultipartFile document) {
 		this.document = document;
 	}
 	public String getPassword() {
@@ -114,6 +109,12 @@ public class CreatePatientRequestDto {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+	public String getIsExsistingPatient() {
+		return isExsistingPatient;
+	}
+	public void setIsExsistingPatient(String isExsistingPatient) {
+		this.isExsistingPatient = isExsistingPatient;
+	}
 	
 	public static Date getFormatedDate() throws ParseException {
 
@@ -122,6 +123,7 @@ public class CreatePatientRequestDto {
 
 		return date;
 	}
+
 	
 	@Override
 	public String toString() {
@@ -132,8 +134,8 @@ public class CreatePatientRequestDto {
 				+ isExsistingPatient + "]";
 	}
 	public CreatePatientRequestDto(String symptoms, String firstName, String lastName, String email,
-			String mobileNumber, String street, String city, String state, String zipcode, String room, String document,
-			String password, String confirmPassword, String isExsistingPatient) {
+			String mobileNumber, String street, String city, String state, String zipcode, String room,
+			CommonsMultipartFile document, String password, String confirmPassword, String isExsistingPatient) {
 		super();
 		this.symptoms = symptoms;
 		this.firstName = firstName;
@@ -154,6 +156,11 @@ public class CreatePatientRequestDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	
+	
 	
 	
 
