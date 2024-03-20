@@ -61,4 +61,10 @@ public class AspNetUserDao {
 		int id = (Integer) this.hibernateTemplate.save(user);
 		return id;
 	}
+	
+
+	@Transactional
+	public void updateAspNetUser(AspNetUsers aspNetUsers) {
+		this.hibernateTemplate.update(aspNetUsers);
+	}
 }

@@ -83,6 +83,7 @@
 				<value>hallodoc.model.RequestWiseFile</value>
 				<value>hallodoc.model.User</value>
 				<value>hallodoc.model.RequestStatusLog</value>
+				<value>hallodoc.model.EmailToken</value>
 			</list>
 		</property>
 	</bean>

@@ -2,10 +2,14 @@ package hallodoc.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +24,17 @@ public class AspNetUsers {
 	private Date modified_date;
 	private String user_name;
 	private Date created_date;
+	
+	@OneToOne(mappedBy = "aspNetUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -66,10 +81,10 @@ public class AspNetUsers {
 	public String toString() {
 		return "AspNetUsers [id=" + id + ", password_hash=" + password_hash + ", email=" + email + ", phone_number="
 				+ phone_number + ", modified_date=" + modified_date + ", user_name=" + user_name + ", created_date="
-				+ created_date + "]";
+				+ created_date + ", user=" + user + "]";
 	}
 	public AspNetUsers(int id, String password_hash, String email, String phone_number, Date modified_date,
-			String user_name, Date created_date) {
+			String user_name, Date created_date, User user) {
 		super();
 		this.id = id;
 		this.password_hash = password_hash;
@@ -78,11 +93,13 @@ public class AspNetUsers {
 		this.modified_date = modified_date;
 		this.user_name = user_name;
 		this.created_date = created_date;
+		this.user = user;
 	}
 	public AspNetUsers() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	
 }

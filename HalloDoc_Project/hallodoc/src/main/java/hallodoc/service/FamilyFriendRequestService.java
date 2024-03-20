@@ -1,29 +1,38 @@
 package hallodoc.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.password4j.BcryptFunction;
 import com.password4j.Hash;
 import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
+import enumerations.DocType;
 import enumerations.RequestStatus;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.email.EmailService;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
@@ -31,8 +40,17 @@ import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestType;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
+import hallodoc.repository.AspNetRolesDao;
 import hallodoc.repository.AspNetUserDao;
+import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.PatientNewRequestDao;
+import hallodoc.repository.RegionDao;
+import hallodoc.repository.RequestClientDao;
+import hallodoc.repository.RequestDao;
+import hallodoc.repository.RequestStatusLogDao;
+import hallodoc.repository.RequestTypeDao;
+import hallodoc.repository.RequestWiseFileDao;
+import hallodoc.repository.UserDao;
 
 @Service
 public class FamilyFriendRequestService {
@@ -42,7 +60,37 @@ public class FamilyFriendRequestService {
 
 	@Autowired
 	private PatientNewRequestDao patientNewRequestDao;
-	
+
+	@Autowired
+	private AspNetRolesDao aspNetRolesDao;
+
+	@Autowired
+	private RegionDao regionDao;
+
+	@Autowired
+	private RequestClientDao requestClientDao;
+
+	@Autowired
+	private RequestDao requestDao;
+
+	@Autowired
+	private RequestStatusLogDao requestStatusLogDao;
+
+	@Autowired
+	private RequestTypeDao requestTypeDao;
+
+	@Autowired
+	private RequestWiseFileDao requestWiseFileDao;
+
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private EmailTokenDao emailTokenDao;
+
+	@Autowired
+	private EmailService mailer;
+
 	private String getFormattedDate(Date date) {
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy", Locale.ENGLISH);
@@ -58,7 +106,7 @@ public class FamilyFriendRequestService {
 
 		return day + month + year;
 	}
-	
+
 	private String getNewConfirmationNumber(CommonRequestDto commonRequestDto, Region region, Date date) {
 
 		String regAbbrevation = region.getAbbreviation();
@@ -83,14 +131,13 @@ public class FamilyFriendRequestService {
 //		String endString = formatter.format(endDate);
 
 //		String currentNewRequests = String.format("%04d", patientNewRequestDao.getNewRequestsNo(new Date()));
-		String currentNewRequests = String.format("%04d", patientNewRequestDao.getNewRequestsNo(startDate, endDate));
+		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
 		System.out.println(confirmationNumber);
 
 		return confirmationNumber;
 	}
-
 
 	private AspNetUsers createAspNetUsers(CommonRequestDto commonRequestDto, Date date) {
 
@@ -105,8 +152,8 @@ public class FamilyFriendRequestService {
 		return aspNetUsers;
 	}
 
-	private User createUser(CommonRequestDto commonRequestDto, Date currentDate, AspNetUsers aspNetUsers,
-			Region region, int day, int year, String monthName, AspNetRoles role) {
+	private User createUser(CommonRequestDto commonRequestDto, Date currentDate, AspNetUsers aspNetUsers, Region region,
+			int day, int year, String monthName, AspNetRoles role) {
 
 		User userOb = new User();
 
@@ -130,12 +177,12 @@ public class FamilyFriendRequestService {
 		userOb.setDeleted(false);
 		userOb.setRequestWithEmail(false);
 		userOb.setAspNetRoles(role);
-
+		userOb.setRequestWithEmail(true);
 		return userOb;
 	}
-	
-	private Request createRequest(CommonRequestDto commonRequestDto, Date currentDate,
-			RequestType requestType, User user, Region region) {
+
+	private Request createRequest(CommonRequestDto commonRequestDto, Date currentDate, RequestType requestType,
+			User user, Region region) {
 		Request request = new Request();
 
 		// Setters of Request Entity
@@ -154,8 +201,144 @@ public class FamilyFriendRequestService {
 
 		return request;
 	}
-	
-	private boolean createNewUserFamilyFriendRequest(CommonRequestDto commonRequestDto) throws ParseException {
+
+	private RequestClient createRequestClient(CommonRequestDto commonRequestDto, Date currentDate, Request request,
+			Region region, int day, int year, String monthName) {
+		RequestClient requestClient = new RequestClient();
+
+		// Setters of RequestClient
+		requestClient.setRequest(request);
+		requestClient.setFirstName(commonRequestDto.getPtFirstName());
+		requestClient.setLastName(commonRequestDto.getPtLastName());
+		requestClient.setNotiMobile(commonRequestDto.getPtMobileNumber());
+		requestClient.setRegion(region);
+		requestClient.setPhoneNumber(commonRequestDto.getPtMobileNumber());
+		requestClient.setNotiEmail(commonRequestDto.getPtEmail());
+		requestClient.setNotes(commonRequestDto.getSymptoms());
+		requestClient.setEmail(commonRequestDto.getPtEmail());
+		requestClient.setStrMonth(monthName);
+		requestClient.setIntYear(year);
+		requestClient.setIntDate(day);
+		requestClient.setStreet(commonRequestDto.getPtStreet());
+		requestClient.setCity(commonRequestDto.getPtCity());
+		requestClient.setState(commonRequestDto.getPtState());
+		requestClient.setZipcode(commonRequestDto.getPtZipcode());
+
+		return requestClient;
+	}
+
+	private RequestStatusLog creatRequestStatusLog(CommonRequestDto commonRequestDto, Date currentDate,
+			Request request) {
+
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
+		requestStatusLog.setCreatedDate(currentDate);
+
+		return requestStatusLog;
+
+	}
+
+	private RequestWiseFile creatRequestWiseFile(CommonRequestDto commonRequestDto, Date currentDate, Request request,
+			HttpSession session) {
+
+		RequestWiseFile requestWiseFile = new RequestWiseFile();
+
+		// Getting details from file obj
+
+		CommonsMultipartFile file = commonRequestDto.getDocument();
+		String fileName = file.getOriginalFilename();
+		byte[] data = file.getBytes();
+
+		String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources"
+				+ File.separator + "fileuploads" + File.separator + "patient" + File.separator
+				+ file.getOriginalFilename();
+
+		System.out.println(path);
+
+		try {
+			FileOutputStream fos = new FileOutputStream(path);
+			fos.write(data);
+			fos.close();
+			System.out.println("file uploaded");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Uploading Error");
+		}
+
+		requestWiseFile.setRequest(request);
+		requestWiseFile.setFileName(fileName);
+		requestWiseFile.setCreatedDate(currentDate);
+		requestWiseFile.setDocType(DocType.TEST_ONE.getDocId());
+		requestWiseFile.setFinalize(false);
+		requestWiseFile.setDeleted(false);
+
+		return requestWiseFile;
+	}
+
+	private void UpdateAspNetUser(CommonRequestDto commonRequestDto, AspNetUsers aspNetUsers, Region region, int day,
+			int year, String month, Date date) {
+
+		User user = aspNetUsers.getUser();
+
+		aspNetUsers.setModified_date(date);
+		aspNetUsers.setPhone_number(commonRequestDto.getPtMobileNumber());
+
+		user.setFirstName(commonRequestDto.getPtFirstName());
+		user.setLastName(commonRequestDto.getPtLastName());
+		user.setMobile(commonRequestDto.getPtMobileNumber());
+		user.setStreet(commonRequestDto.getPtStreet());
+		user.setCity(commonRequestDto.getPtCity());
+		user.setState(commonRequestDto.getPtState());
+		user.setRegion(region);
+		user.setZipcode(commonRequestDto.getPtZipcode());
+		user.setIntDate(day);
+		user.setIntYear(year);
+		user.setStrMonth(month);
+		user.setModifiedBy(aspNetUsers);
+		user.setModifiedDate(date);
+
+		apsnetuserdao.updateAspNetUser(aspNetUsers);
+	}
+
+	private String sendCreatePasswordMail(CommonRequestDto commonRequestDto, HttpServletRequest httpServletRequest,
+			String isExsist) {
+
+		EmailToken emailToken = new EmailToken();
+
+		UUID newToken = UUID.randomUUID();
+		String createdToken = newToken.toString();
+
+		System.out.println(createdToken);
+
+		emailToken.setToken(createdToken);
+		emailToken.setEmail(commonRequestDto.getPtEmail());
+		emailToken.setResetCompleted(false);
+		emailToken.setSentDate(LocalDateTime.now());
+
+		// persisting the object of EmailToken
+
+		if (isExsist.equals("old")) {
+			List<EmailToken> emailList = emailTokenDao.getDuplicateEmailEntry(commonRequestDto.getPtEmail());
+
+			for (EmailToken email : emailList) {
+				email.setResetCompleted(true);
+			}
+
+			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
+			System.out.println(emailChange);
+		}
+
+		int mailId = emailTokenDao.createNewEmail(emailToken);
+		
+		mailer.sendCreatePasswordMail(commonRequestDto, httpServletRequest, LocalDateTime.now(), emailToken);
+
+		return "success";
+	}
+
+	private boolean createNewUserFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session,
+			HttpServletRequest httpServletRequest) throws ParseException {
 		System.out.println("New");
 
 		// Creating required objects
@@ -172,11 +355,8 @@ public class FamilyFriendRequestService {
 		// Setting object of AspNetUsers
 		aspNetUsers = createAspNetUsers(commonRequestDto, currentDate);
 
-		// persisting object of AspNetUser
-		int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
-
 		// Get Object corresponding to region
-		List<Region> list = patientNewRequestDao.getRegionEntry(commonRequestDto.getPtState());
+		List<Region> list = regionDao.getRegionEntry(commonRequestDto.getPtState());
 		region = list.get(0);
 
 		// Extarcting required fields from date
@@ -189,33 +369,126 @@ public class FamilyFriendRequestService {
 		String monthName = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(commonRequestDto.getFormatedDate());
 
 		// Getting Role
-		AspNetRoles role = patientNewRequestDao.getRoleObject("Patient");
+		AspNetRoles role = aspNetRolesDao.getRoleObject("Patient");
 
 		// Setting the user object
 		user = createUser(commonRequestDto, currentDate, aspNetUsers, region, day, year, monthName, role);
+		aspNetUsers.setUser(user);
 
-		// persisting object of User
-		int userId = patientNewRequestDao.addNewPatientRequest(user);
-		
 		// Getting Request Type Object
-		requestType = patientNewRequestDao.getRequestTypeObject("Family");
+		requestType = requestTypeDao.getRequestTypeObject("Family");
+
+		// Setting the request object
+		request = createRequest(commonRequestDto, currentDate, requestType, user, region);
+
+		// Setting the requestClient object
+		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
+
+		// Setting the requestStatusLogobject
+		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
+
+		if (!(commonRequestDto.getDocument().isEmpty())) {
+
+			// Setting the requestWiseFile
+			requestWiseFile = creatRequestWiseFile(commonRequestDto, currentDate, request, session);
+
+			// Persisting the requestWiseFile
+			int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
+		}
+
+		// persisting object
+
+		int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
+
+//		int userId = userDao.addNewPatientRequest(user); 
+
+		int requestId = requestDao.addNewRequest(request);
+
+		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+
+		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+
+		String isExsist = "new";
+		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest,isExsist);
+		System.out.println(mailSentStatus);
+		return true;
+	}
+
+	private boolean createOldUserFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session,
+			HttpServletRequest httpServletRequest) throws ParseException {
+		System.out.println("Old");
+
+		// Creating required objects
+		AspNetUsers aspNetUsers;
+		User user;
+		Region region;
+		Request request;
+		RequestType requestType;
+		Date currentDate = new Date();
+		RequestClient requestClient;
+		RequestStatusLog requestStatusLog;
+		RequestWiseFile requestWiseFile;
+
+		aspNetUsers = apsnetuserdao.getUserByEmail(commonRequestDto.getPtEmail()).get(0);
+		user = aspNetUsers.getUser();
+		String password = aspNetUsers.getPassword_hash();
+
+		// Get Object corresponding to region
+		List<Region> list = regionDao.getRegionEntry(commonRequestDto.getPtState());
+		region = list.get(0);
+
+		// Extarcting required fields from date
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		String dateString = dateFormat.format(commonRequestDto.getFormatedDate());
+		String[] tokens = dateString.split("-");
+		int day = Integer.parseInt(tokens[0]);
+		int year = Integer.parseInt(tokens[2]);
+		String monthName = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(commonRequestDto.getFormatedDate());
+
+		// updating aspNetUser object
+		UpdateAspNetUser(commonRequestDto, aspNetUsers, region, day, year, monthName, currentDate);
+
+		// Getting Request Type Object
+		requestType = requestTypeDao.getRequestTypeObject("Patient");
 
 		// Setting the request object
 		request = createRequest(commonRequestDto, currentDate, requestType, user, region);
 
 		// persisting object of Request
-		int requestId = patientNewRequestDao.addNewRequest(request);
+		int requestId = requestDao.addNewRequest(request);
+
+		// Setting the requestClient object
+		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
+
+		// persisting object of Request
+		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+
+		// Setting the requestStatusLogobject
+		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
+
+		// Persisting the requestStatusLogobject
+		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+
+		if (!(commonRequestDto.getDocument().isEmpty())) {
+
+			// Setting the requestWiseFile
+			requestWiseFile = creatRequestWiseFile(commonRequestDto, currentDate, request, session);
+
+			// Persisting the requestWiseFile
+			int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
+		}
+
+		if (password==null) {
+			String isExsist = "old";
+			String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest,isExsist);
+		}
 
 		return true;
 	}
 
-	private boolean createOldUserFamilyFriendRequest(CommonRequestDto commonRequestDto) {
-		System.out.println("Old");
-		return true;
-	}
-
-	public boolean createNewFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session)
-			throws Exception {
+	public boolean createNewFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session,
+			HttpServletRequest httpServletRequest) throws Exception {
 
 		String ptPhoneNumber = commonRequestDto.getPtMobileNumber();
 		String reqPhoneNumber = commonRequestDto.getReqMobileNumber();
@@ -251,12 +524,12 @@ public class FamilyFriendRequestService {
 
 			if (list.size() > 0) {
 				// method for old user
-				createOldUserFamilyFriendRequest(commonRequestDto);
+				createOldUserFamilyFriendRequest(commonRequestDto, session, httpServletRequest);
 			}
 
 			else {
 				// method for new user
-				createNewUserFamilyFriendRequest(commonRequestDto);
+				createNewUserFamilyFriendRequest(commonRequestDto, session, httpServletRequest);
 			}
 
 			return true;

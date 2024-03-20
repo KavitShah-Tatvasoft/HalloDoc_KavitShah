@@ -3,6 +3,7 @@ package hallodoc.controller;
 import java.awt.PageAttributes.MediaType;
 import java.text.ParseException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class PatientRequestsController {
 	}
 	
 	@PostMapping(path = "/addPatientRequest")
-	public String addPatientRequest(@ModelAttribute("createPatientRequest") CreatePatientRequestDto createPatientRequestDto, HttpSession session ) throws Exception {
+	public String addPatientRequest(@ModelAttribute("createPatientRequest") CreatePatientRequestDto createPatientRequestDto, HttpSession session, HttpServletRequest httpServletRequest ) throws Exception {
 		System.out.println(createPatientRequestDto.toString());
 		String isExistingPatient = createPatientRequestDto.getIsExsistingPatient();
 		System.out.println(isExistingPatient);
@@ -84,9 +85,9 @@ public class PatientRequestsController {
 	
 
 	@RequestMapping(value = "/createNewFamilyRequest", method = RequestMethod.POST)
-	public String createNewFamilyRequest(@ModelAttribute("createFamilyRequest") CommonRequestDto commonRequestDto, HttpSession session ) throws Exception{
+	public String createNewFamilyRequest(@ModelAttribute("createFamilyRequest") CommonRequestDto commonRequestDto, HttpSession session, HttpServletRequest httpServletRequest ) throws Exception{
 		System.out.println(commonRequestDto);
-		boolean status = familyFriendRequestService.createNewFamilyFriendRequest(commonRequestDto, session);
+		boolean status = familyFriendRequestService.createNewFamilyFriendRequest(commonRequestDto, session, httpServletRequest);
 		System.out.println(status);
 		return "";
 	}

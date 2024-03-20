@@ -25,8 +25,16 @@ import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestType;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
+import hallodoc.repository.AspNetRolesDao;
 import hallodoc.repository.AspNetUserDao;
 import hallodoc.repository.PatientNewRequestDao;
+import hallodoc.repository.RegionDao;
+import hallodoc.repository.RequestClientDao;
+import hallodoc.repository.RequestDao;
+import hallodoc.repository.RequestStatusLogDao;
+import hallodoc.repository.RequestTypeDao;
+import hallodoc.repository.RequestWiseFileDao;
+import hallodoc.repository.UserDao;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,7 +56,32 @@ public class PatientRequestsService {
 
 	@Autowired
 	private PatientNewRequestDao patientNewRequestDao;
+	
+	@Autowired
+	private AspNetRolesDao aspNetRolesDao;
+	
+	@Autowired
+	private RegionDao regionDao;
+	
+	@Autowired
+	private RequestClientDao requestClientDao;
 
+	@Autowired
+	private RequestDao requestDao;
+	
+	@Autowired
+	private RequestStatusLogDao requestStatusLogDao;
+	
+	@Autowired
+	private RequestTypeDao requestTypeDao;
+	
+	@Autowired
+	private RequestWiseFileDao requestWiseFileDao;
+	
+	@Autowired
+	private UserDao userDao;
+
+	
 	public String isPatientAvailable(String email) {
 
 		String isValid = apsnetuserdao.isUserPresent(email);
@@ -60,7 +93,7 @@ public class PatientRequestsService {
 //		String isValid = patientNewRequestDao.getRegionEntry(state);
 		String isValid;
 		String formattedState = state.substring(0, 1).toUpperCase() + state.substring(1);
-		List<Region> list = patientNewRequestDao.getRegionEntry(formattedState);
+		List<Region> list = regionDao.getRegionEntry(formattedState);
 		if (list.size() > 0) {
 			isValid = "success";
 		} else {
@@ -109,7 +142,7 @@ public class PatientRequestsService {
 //		String endString = formatter.format(endDate);
 
 //		String currentNewRequests = String.format("%04d", patientNewRequestDao.getNewRequestsNo(new Date()));
-		String currentNewRequests = String.format("%04d", patientNewRequestDao.getNewRequestsNo(startDate, endDate));
+		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
 		System.out.println(confirmationNumber);
@@ -266,7 +299,7 @@ public class PatientRequestsService {
 		
 		aspNetUsers.setModified_date(new Date());
 		aspNetUsers.setPhone_number(createPatientRequestDto.getMobileNumber());	
-		patientNewRequestDao.updateAspNetUser(aspNetUsers);
+		apsnetuserdao.updateAspNetUser(aspNetUsers);
 	}
 	
 	private void UpdateUser(CreatePatientRequestDto createPatientRequestDto, User user,Region region, int day, int year, String monthName, AspNetUsers aspNetUsers) {
@@ -284,7 +317,7 @@ public class PatientRequestsService {
 		user.setModifiedBy(aspNetUsers);
 		user.setModifiedDate(new Date());
 		
-		patientNewRequestDao.updateUser(user);
+		userDao.updateUser(user);
 	}
 	
 	public boolean addRequestForNewPatient(CreatePatientRequestDto createPatientRequestDto, HttpSession session)
@@ -340,7 +373,7 @@ public class PatientRequestsService {
 			int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
 
 			// Get Object corresponding to region
-			List<Region> list = patientNewRequestDao.getRegionEntry(createPatientRequestDto.getState());
+			List<Region> list = regionDao.getRegionEntry(createPatientRequestDto.getState());
 			region = list.get(0);
 
 			// Extarcting required fields from date
@@ -354,35 +387,35 @@ public class PatientRequestsService {
 					.format(createPatientRequestDto.getFormatedDate());
 
 			// Getting Role
-			AspNetRoles role = patientNewRequestDao.getRoleObject("Patient");
+			AspNetRoles role = aspNetRolesDao.getRoleObject("Patient");
 
 			// Setting the user object
 			user = createUser(createPatientRequestDto, currentDate, aspNetUsers, region, day, year, monthName, role);
 
 			// persisting object of User
-			int userId = patientNewRequestDao.addNewPatientRequest(user);
+			int userId = userDao.addNewPatientRequest(user);
 
 			// Getting Request Type Object
-			requestType = patientNewRequestDao.getRequestTypeObject("Patient");
+			requestType = requestTypeDao.getRequestTypeObject("Patient");
 
 			// Setting the request object
 			request = createRequest(createPatientRequestDto, currentDate, requestType, user, region);
 
 			// persisting object of Request
-			int requestId = patientNewRequestDao.addNewRequest(request);
+			int requestId = requestDao.addNewRequest(request);
 
 			// Setting the requestClient object
 			requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 					monthName);
 
 			// persisting object of Request
-			int requestClientId = patientNewRequestDao.addNewRequestClient(requestClient);
+			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
 			// Setting the requestStatusLogobject
 			requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
 
 			// Persisting the requestStatusLogobject
-			int requestStatusLogId = patientNewRequestDao.addNewRequestStatusLog(requestStatusLog);
+			int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 			if (!(createPatientRequestDto.getDocument().isEmpty())) {
 
@@ -390,7 +423,7 @@ public class PatientRequestsService {
 				requestWiseFile = creatRequestWiseFile(createPatientRequestDto, currentDate, request, session);
 
 				// Persisting the requestWiseFile
-				int requestWiseFileId = patientNewRequestDao.addNewRequestWiseFile(requestWiseFile);
+				int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 			}
 
 			return true;
@@ -437,7 +470,7 @@ public class PatientRequestsService {
 			RequestWiseFile requestWiseFile;
 
 			// Get Object corresponding to region
-			List<Region> list = patientNewRequestDao.getRegionEntry(createPatientRequestDto.getState());
+			List<Region> list = regionDao.getRegionEntry(createPatientRequestDto.getState());
 			region = list.get(0);
 
 			// Extarcting required fields from date
@@ -451,7 +484,7 @@ public class PatientRequestsService {
 					.format(createPatientRequestDto.getFormatedDate());
 
 			aspNetUsers = apsnetuserdao.getUserByEmail(createPatientRequestDto.getEmail()).get(0);
-			user = patientNewRequestDao.getUserByEmail(createPatientRequestDto.getEmail()).get(0);
+			user = userDao.getUserByEmail(createPatientRequestDto.getEmail()).get(0);
 			
 			//updating aspNetUser object
 			UpdateAspNetUser(createPatientRequestDto, aspNetUsers);
@@ -460,26 +493,26 @@ public class PatientRequestsService {
 			UpdateUser(createPatientRequestDto, user, region, day, year, monthName, aspNetUsers);
 			
 			// Getting Request Type Object
-			requestType = patientNewRequestDao.getRequestTypeObject("Patient");
+			requestType = requestTypeDao.getRequestTypeObject("Patient");
 
 			// Setting the request object
 			request = createRequest(createPatientRequestDto, currentDate, requestType, user, region);
 
 			// persisting object of Request
-			int requestId = patientNewRequestDao.addNewRequest(request);
+			int requestId = requestDao.addNewRequest(request);
 
 			// Setting the requestClient object
 			requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 					monthName);
 
 			// persisting object of Request
-			int requestClientId = patientNewRequestDao.addNewRequestClient(requestClient);
+			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
 			// Setting the requestStatusLogobject
 			requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
 
 			// Persisting the requestStatusLogobject
-			int requestStatusLogId = patientNewRequestDao.addNewRequestStatusLog(requestStatusLog);
+			int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 			if (!(createPatientRequestDto.getDocument().isEmpty())) {
 
@@ -487,7 +520,7 @@ public class PatientRequestsService {
 				requestWiseFile = creatRequestWiseFile(createPatientRequestDto, currentDate, request, session);
 
 				// Persisting the requestWiseFile
-				int requestWiseFileId = patientNewRequestDao.addNewRequestWiseFile(requestWiseFile);
+				int requestWiseFileId =requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 			}
 
 			return true;
