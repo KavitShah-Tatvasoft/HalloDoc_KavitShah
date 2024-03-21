@@ -20,6 +20,7 @@ import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.User;
+import hallodoc.service.ConciergeRequestService;
 import hallodoc.service.FamilyFriendRequestService;
 import hallodoc.service.PatientRequestsService;
 
@@ -31,6 +32,9 @@ public class PatientRequestsController {
 	
 	@Autowired
 	private FamilyFriendRequestService familyFriendRequestService;
+	
+	@Autowired
+	private ConciergeRequestService conciergeRequestService;
 	
 
 	@RequestMapping("/createNewPatientRequest")
@@ -77,7 +81,7 @@ public class PatientRequestsController {
 		return isPresent;
 	}
 	
-	@RequestMapping("/createNewFamilyFriendRequest")
+	@RequestMapping(value="/createNewFamilyFriendRequest", method = RequestMethod.GET)
 	public String createNewFamilyRequest() {
 		
 		return "/patient/familyfriend-request";
@@ -98,9 +102,22 @@ public class PatientRequestsController {
 		return "/patient/concierge-request";
 	}
 	
+	@RequestMapping(value="/addNewConciergeRequest", method = RequestMethod.POST)
+	public String addNewConciergeRequest(@ModelAttribute("createConciergeRequest") CommonRequestDto commonRequestDto, HttpSession session, HttpServletRequest httpServletRequest ) throws Exception{
+		System.out.println(commonRequestDto);
+		boolean status = conciergeRequestService.createConciregeRequest(commonRequestDto, session, httpServletRequest);
+		System.out.println(status);
+		return "";
+	}
+	
 	@RequestMapping("/createNewBusinessRequest")
 	public String createNewBusinessRequest() {
-		
-		return "/patient/create-patient-request";
+		return "/patient/business-request";
+	}
+	
+	@RequestMapping(value="/addBusinessRequest", method = RequestMethod.POST)
+	public String addNewBusinessRequest(@ModelAttribute("createConciergeRequest") CommonRequestDto commonRequestDto, HttpSession session, HttpServletRequest httpServletRequest ) throws Exception{
+		System.out.println(commonRequestDto);
+		return "";
 	}
 }

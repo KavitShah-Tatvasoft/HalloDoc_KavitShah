@@ -84,6 +84,11 @@
 				<value>hallodoc.model.User</value>
 				<value>hallodoc.model.RequestStatusLog</value>
 				<value>hallodoc.model.EmailToken</value>
+				<value>hallodoc.model.Business</value>
+				<value>hallodoc.model.Concierge</value>
+				<value>hallodoc.model.RequestBusiness</value>
+				<value>hallodoc.model.RequestConcierge</value>
+				
 			</list>
 		</property>
 	</bean>

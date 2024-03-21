@@ -1,4 +1,4 @@
-package enumerations;
+package hallodoc.enumerations;
 
 public enum DocType {
 	TEST_ONE(1, "TestOne"),

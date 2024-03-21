@@ -12,9 +12,9 @@ import com.password4j.Hash;
 import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
-import enumerations.DocType;
-import enumerations.RequestStatus;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.enumerations.DocType;
+import hallodoc.enumerations.RequestStatus;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUserRoles;
 import hallodoc.model.AspNetUsers;
