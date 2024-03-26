@@ -1,11 +1,8 @@
 package hallodoc.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -19,16 +16,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.email.EmailService;
+import hallodoc.enumerations.AspNetRolesEnum;
+import hallodoc.enumerations.RequestStatus;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.Business;
 import hallodoc.model.Concierge;
 import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
+import hallodoc.model.RequestBusiness;
 import hallodoc.model.RequestClient;
 import hallodoc.model.RequestConcierge;
 import hallodoc.model.RequestStatusLog;
@@ -37,6 +37,7 @@ import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetRolesDao;
 import hallodoc.repository.AspNetUserDao;
+import hallodoc.repository.BusinessDao;
 import hallodoc.repository.ConciergeDao;
 import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.PatientNewRequestDao;
@@ -47,10 +48,9 @@ import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.repository.RequestTypeDao;
 import hallodoc.repository.RequestWiseFileDao;
 import hallodoc.repository.UserDao;
-import hallodoc.enumerations.*;
 
 @Service
-public class ConciergeRequestService {
+public class BusinessRequestService {
 
 	@Autowired
 	private AspNetUserDao apsnetuserdao;
@@ -87,6 +87,9 @@ public class ConciergeRequestService {
 
 	@Autowired
 	private ConciergeDao conciergeDao;
+
+	@Autowired
+	private BusinessDao businessDao;
 
 	@Autowired
 	private EmailService mailer;
@@ -157,10 +160,10 @@ public class ConciergeRequestService {
 		userOb.setLastName(commonRequestDto.getPtLastName());
 		userOb.setEmail(commonRequestDto.getPtEmail());
 		userOb.setMobile(commonRequestDto.getPtMobileNumber());
-		userOb.setStreet(commonRequestDto.getReqStreet());
-		userOb.setState(commonRequestDto.getReqState());
-		userOb.setCity(commonRequestDto.getReqCity());
-		userOb.setZipcode(commonRequestDto.getReqZipcode());
+		userOb.setStreet(commonRequestDto.getPtStreet());
+		userOb.setState(commonRequestDto.getPtState());
+		userOb.setCity(commonRequestDto.getPtCity());
+		userOb.setZipcode(commonRequestDto.getPtZipcode());
 		userOb.setRegion(region);
 		userOb.setStrMonth(monthName);
 		userOb.setIntYear(year);
@@ -184,6 +187,7 @@ public class ConciergeRequestService {
 		request.setLastName(commonRequestDto.getReqLastName());
 		request.setPhoneNumber(commonRequestDto.getReqMobileNumber());
 		request.setEmail(commonRequestDto.getReqEmail());
+		request.setCaseNumber(commonRequestDto.getReqCaseNumber());
 		request.setCreatedDate(currentDate);
 		request.setModifieDate(currentDate);
 		request.setDeleted(false);
@@ -211,10 +215,10 @@ public class ConciergeRequestService {
 		requestClient.setStrMonth(monthName);
 		requestClient.setIntYear(year);
 		requestClient.setIntDate(day);
-		requestClient.setStreet(commonRequestDto.getReqStreet());
-		requestClient.setCity(commonRequestDto.getReqCity());
-		requestClient.setState(commonRequestDto.getReqState());
-		requestClient.setZipcode(commonRequestDto.getReqZipcode());
+		requestClient.setStreet(commonRequestDto.getPtStreet());
+		requestClient.setCity(commonRequestDto.getPtCity());
+		requestClient.setState(commonRequestDto.getPtState());
+		requestClient.setZipcode(commonRequestDto.getPtZipcode());
 
 		return requestClient;
 	}
@@ -230,6 +234,51 @@ public class ConciergeRequestService {
 
 		return requestStatusLog;
 
+	}
+
+	private String updateBusiness(CommonRequestDto commonRequestDto, Business business, LocalDateTime date,
+			Region region) {
+
+		String name = commonRequestDto.getReqFirstName() + " " + commonRequestDto.getReqLastName();
+		business.setName(name);
+		business.setAddressOne(commonRequestDto.getReqStreet());
+		business.setAddressTwo(commonRequestDto.getReqState());
+		business.setCity(commonRequestDto.getReqCity());
+		business.setRegion(region);
+		business.setZipCode(commonRequestDto.getReqZipcode());
+		business.setEmail(commonRequestDto.getReqEmail());
+		business.setPhoneNumber(commonRequestDto.getReqMobileNumber());
+		business.setPropertyName(commonRequestDto.getReqProperty());
+		business.setModifiedDate(date);
+		business.setDelete(false);
+		return "updated";
+	}
+
+	private Business createNewBusiness(CommonRequestDto commonRequestDto, LocalDateTime date, Region region) {
+
+		Business business = new Business();
+		String name = commonRequestDto.getReqFirstName() + " " + commonRequestDto.getReqLastName();
+		business.setName(name);
+		business.setAddressOne(commonRequestDto.getReqStreet());
+		business.setAddressTwo(commonRequestDto.getReqState());
+		business.setCity(commonRequestDto.getReqCity());
+		business.setRegion(region);
+		business.setZipCode(commonRequestDto.getReqZipcode());
+		business.setEmail(commonRequestDto.getReqEmail());
+		business.setPhoneNumber(commonRequestDto.getReqMobileNumber());
+		business.setPropertyName(commonRequestDto.getReqProperty());
+		business.setCreatedDate(date);
+		business.setDelete(false);
+		return business;
+	}
+
+	private RequestBusiness createNewRequestBusiness(Request request, Business business) {
+
+		RequestBusiness requestBusiness = new RequestBusiness();
+		requestBusiness.setRequest(request);
+		requestBusiness.setBusiness(business);
+
+		return requestBusiness;
 	}
 
 	private String sendCreatePasswordMail(CommonRequestDto commonRequestDto, HttpServletRequest httpServletRequest,
@@ -267,42 +316,6 @@ public class ConciergeRequestService {
 		return "success";
 	}
 
-	private String updateConcierge(CommonRequestDto commonRequestDto, Concierge concierge, LocalDateTime date,
-			Region region) {
-
-		concierge.setConciergeName(commonRequestDto.getReqFirstName() + " " + commonRequestDto.getReqLastName());
-		concierge.setStreet(commonRequestDto.getReqStreet());
-		concierge.setCity(commonRequestDto.getReqCity());
-		concierge.setState(commonRequestDto.getReqState());
-		concierge.setZipCode(commonRequestDto.getReqZipcode());
-		concierge.setRegion(region);
-		concierge.setEmail(commonRequestDto.getReqEmail());
-		return "updated";
-	}
-
-	private Concierge createNewConcierge(CommonRequestDto commonRequestDto, LocalDateTime date, Region region) {
-
-		Concierge concierge = new Concierge();
-		concierge.setConciergeName(commonRequestDto.getReqFirstName() + " " + commonRequestDto.getReqLastName());
-		concierge.setStreet(commonRequestDto.getReqStreet());
-		concierge.setCity(commonRequestDto.getReqCity());
-		concierge.setState(commonRequestDto.getReqState());
-		concierge.setZipCode(commonRequestDto.getReqZipcode());
-		concierge.setCreatedDate(date);
-		concierge.setRegion(region);
-		concierge.setEmail(commonRequestDto.getReqEmail());
-		return concierge;
-	}
-
-	private RequestConcierge createNewRequestConcierge(Request request, Concierge concierge) {
-
-		RequestConcierge requestConcierge = new RequestConcierge();
-		requestConcierge.setRequest(request);
-		requestConcierge.setConcierge(concierge);
-
-		return requestConcierge;
-	}
-
 	private void UpdateAspNetUser(CommonRequestDto commonRequestDto, AspNetUsers aspNetUsers, Region region, int day,
 			int year, String month, Date date) {
 
@@ -322,10 +335,10 @@ public class ConciergeRequestService {
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
 	}
 
-	private boolean createOldUserConciergeRequest(CommonRequestDto commonRequestDto, HttpSession session,
+	private boolean createNewUserBusinessRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
 
-		System.out.println("Old Concierge");
+		System.out.println("New Business");
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;
@@ -338,20 +351,109 @@ public class ConciergeRequestService {
 		RequestClient requestClient;
 		RequestStatusLog requestStatusLog;
 		RequestWiseFile requestWiseFile;
-		Concierge conciergeObj;
-		
+		Business businessObj;
 
-		
+		// Setting object of AspNetUsers
+		aspNetUsers = createAspNetUsers(commonRequestDto, currentDate);
+
+		// Get Object corresponding to region
+		List<Region> list = regionDao.getRegionEntry(commonRequestDto.getPtState());
+		region = list.get(0);
+
+		// Getting Role
+		AspNetRoles role = aspNetRolesDao.getRoleObject(AspNetRolesEnum.PATIENT.getAspNetRolesName());
+
+		// Extarcting required fields from date
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		String dateString = dateFormat.format(commonRequestDto.getFormatedDate());
+		String[] tokens = dateString.split("-");
+		int day = Integer.parseInt(tokens[0]);
+		int year = Integer.parseInt(tokens[2]);
+		String monthName = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(commonRequestDto.getFormatedDate());
+
+		// Setting the user object
+		user = createUser(commonRequestDto, currentDate, aspNetUsers, region, day, year, monthName, role);
+		aspNetUsers.setUser(user);
+
+		// Getting Request Type Object
+		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.BUSINESS.getRequestType());
+
+		// Setting the request object
+		request = createRequest(commonRequestDto, currentDate, requestType, user, region);
+
+		// Setting the requestClient object
+		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
+
+		// Setting the requestStatusLogobject
+		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
+
+		String businessEmail = commonRequestDto.getReqEmail();
+		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
+
+		System.out.println("Here1");
+		if (businessList.size() > 0) {
+			businessObj = businessList.get(0);
+
+			String updateBusiness = updateBusiness(commonRequestDto, businessObj, currentLocalDate, region);
+			String updated = businessDao.updateBusiness(businessObj);
+			System.out.println(updated);
+		} else {
+			System.out.println("Here2");
+			businessObj = createNewBusiness(commonRequestDto, currentLocalDate, region);
+			int businessId = businessDao.addBusiness(businessObj);
+		}
+
+		RequestBusiness requestBusiness = createNewRequestBusiness(request, businessObj);
+
+		// persisting object
+
+		int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
+
+//		int userId = userDao.addNewPatientRequest(user);  //dont uncomment 
+
+		int requestId = requestDao.addNewRequest(request);
+
+		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+
+		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+
+		int requestBusinessId = businessDao.addRequestBusiness(requestBusiness);
+
+		String isExsist = "new";
+		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest, isExsist);
+		System.out.println(mailSentStatus);
+
+		return true;
+
+	}
+
+	private boolean createOldUserBusinessRequest(CommonRequestDto commonRequestDto, HttpSession session,
+			HttpServletRequest httpServletRequest) throws ParseException {
+
+		System.out.println("Old Business");
+
+		// Creating required objects
+		AspNetUsers aspNetUsers;
+		User user;
+		Region region;
+		Region businessRegion;
+		Request request;
+		RequestType requestType;
+		Date currentDate = new Date();
+		LocalDateTime currentLocalDate = LocalDateTime.now();
+		RequestClient requestClient;
+		RequestStatusLog requestStatusLog;
+		RequestWiseFile requestWiseFile;
+		Business businessObj;
+
 		aspNetUsers = apsnetuserdao.getUserByEmail(commonRequestDto.getPtEmail()).get(0);
 		user = aspNetUsers.getUser();
 		String password = aspNetUsers.getPassword_hash();
 
-	
-		
 		// Get Object corresponding to region
-		List<Region> list = regionDao.getRegionEntry(commonRequestDto.getReqState());
+		List<Region> list = regionDao.getRegionEntry(commonRequestDto.getPtState());
 		region = list.get(0);
-
 		// Extarcting required fields from date
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -376,21 +478,21 @@ public class ConciergeRequestService {
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
 
-		String conciergeEmail = commonRequestDto.getReqEmail();
-		List<Concierge> conciergeList = conciergeDao.getExistingConciergeByEmail(conciergeEmail);
+		String businessEmail = commonRequestDto.getReqEmail();
+		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
 
-		if (conciergeList.size() > 0) {
-			conciergeObj = conciergeList.get(0);
+		if (businessList.size() > 0) {
+			businessObj = businessList.get(0);
 
-			String updateConcierge = updateConcierge(commonRequestDto, conciergeObj, currentLocalDate, region);
-			String updated = conciergeDao.updateConcierge(conciergeObj);
+			String updateBusiness = updateBusiness(commonRequestDto, businessObj, currentLocalDate, region);
+			String updated = businessDao.updateBusiness(businessObj);
 			System.out.println(updated);
 		} else {
-			conciergeObj = createNewConcierge(commonRequestDto, currentLocalDate, region);
-			int conciergeId = conciergeDao.addConcierge(conciergeObj);
+			businessObj = createNewBusiness(commonRequestDto, currentLocalDate,region);
+			int businessId = businessDao.addBusiness(businessObj);
 		}
 
-		RequestConcierge requestConcierge = createNewRequestConcierge(request, conciergeObj);
+		RequestBusiness requestBusiness = createNewRequestBusiness(request, businessObj);
 
 		// persisting object of Request
 		int requestId = requestDao.addNewRequest(request);
@@ -399,8 +501,8 @@ public class ConciergeRequestService {
 		// Persisting the requestStatusLogobject
 		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
-		int requestConciergeId = conciergeDao.addRequestConcierge(requestConcierge);
-		
+		int requestBusinessId = businessDao.addRequestBusiness(requestBusiness);
+
 		if (password == null) {
 			String isExsist = "old";
 			String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest, isExsist);
@@ -409,105 +511,11 @@ public class ConciergeRequestService {
 
 	}
 
-	private boolean createNewUserConciergeRequest(CommonRequestDto commonRequestDto, HttpSession session,
-			HttpServletRequest httpServletRequest) throws ParseException {
-
-		System.out.println("New Concierge");
-
-		// Creating required objects
-		AspNetUsers aspNetUsers;
-		User user;
-		Region region;
-		Request request;
-		RequestType requestType;
-		Date currentDate = new Date();
-		LocalDateTime currentLocalDate = LocalDateTime.now();
-		RequestClient requestClient;
-		RequestStatusLog requestStatusLog;
-		RequestWiseFile requestWiseFile;
-		Concierge conciergeObj;
-
-		// Setting object of AspNetUsers
-		aspNetUsers = createAspNetUsers(commonRequestDto, currentDate);
-
-		// Get Object corresponding to region
-		List<Region> list = regionDao.getRegionEntry(commonRequestDto.getReqState());
-		region = list.get(0);
-
-		// Getting Role
-		AspNetRoles role = aspNetRolesDao.getRoleObject(AspNetRolesEnum.PATIENT.getAspNetRolesName());
-
-		// Extarcting required fields from date
-
-		
-		
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-		String dateString = dateFormat.format(commonRequestDto.getFormatedDate());
-		String[] tokens = dateString.split("-");
-		int day = Integer.parseInt(tokens[0]);
-		int year = Integer.parseInt(tokens[2]);
-		String monthName = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(commonRequestDto.getFormatedDate());
-
-		// Setting the user object
-		user = createUser(commonRequestDto, currentDate, aspNetUsers, region, day, year, monthName, role);
-		aspNetUsers.setUser(user);
-
-		// Getting Request Type Object
-		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.CONCIERGE.getRequestType());
-
-		// Setting the request object
-		request = createRequest(commonRequestDto, currentDate, requestType, user, region);
-
-		// Setting the requestClient object
-		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
-		String conciergeEmail = commonRequestDto.getReqEmail();
-		List<Concierge> conciergeList = conciergeDao.getExistingConciergeByEmail(conciergeEmail);
-
-		if (conciergeList.size() > 0) {
-			conciergeObj = conciergeList.get(0);
-
-			String updateConcierge = updateConcierge(commonRequestDto, conciergeObj, currentLocalDate, region);
-			String updated = conciergeDao.updateConcierge(conciergeObj);
-			System.out.println(updated);
-		} else {
-			conciergeObj = createNewConcierge(commonRequestDto, currentLocalDate, region);
-			int conciergeId = conciergeDao.addConcierge(conciergeObj);
-		}
-
-		RequestConcierge requestConcierge = createNewRequestConcierge(request, conciergeObj);
-
-		// persisting object
-
-		int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
-
-//		int userId = userDao.addNewPatientRequest(user);  //dont uncomment 
-
-		int requestId = requestDao.addNewRequest(request);
-
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
-
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
-
-		int requestConciergeId = conciergeDao.addRequestConcierge(requestConcierge);
-
-		String isExsist = "new";
-		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest, isExsist);
-		System.out.println(mailSentStatus);
-
-		return true;
-
-	}
-
-	public boolean createConciregeRequest(CommonRequestDto commonRequestDto, HttpSession session,
+	public boolean createBusinessRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws Exception {
 
 		String ptPhoneNumber = commonRequestDto.getPtMobileNumber();
 		String reqPhoneNumber = commonRequestDto.getReqMobileNumber();
-		String ptZipCode = commonRequestDto.getPtZipcode();
 
 		String regex = "^\\d{10}$";
 		Pattern pattern = Pattern.compile(regex);
@@ -529,16 +537,15 @@ public class ConciergeRequestService {
 
 			if (list.size() > 0) {
 				// method for old user
-				createOldUserConciergeRequest(commonRequestDto, session, httpServletRequest);
+				createOldUserBusinessRequest(commonRequestDto, session, httpServletRequest);
 			}
 
 			else {
 				// method for new user
-				createNewUserConciergeRequest(commonRequestDto, session, httpServletRequest);
+				createNewUserBusinessRequest(commonRequestDto, session, httpServletRequest);
 			}
 
 			return true;
 		}
 	}
-
 }

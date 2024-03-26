@@ -56,7 +56,7 @@
 			<h2 class="Login-text-patient mb-4" id="Login-text-id">Reset
 				Your Password</h2>
 
-			<form action="patientSendResetEmail" method="post">
+			<form action="sendResetPasswordRequest" method="post">
 
 				<div class="form-floating mb-3 inp">
 					<input type="text" class="form-control input-1" id="floatingInput"

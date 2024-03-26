@@ -74,6 +74,49 @@ function hidePass()
 
 }
 
+function validatePassword() {
+
+	var pass = document.getElementById("floatingPassword-pass1").value;;
+	var confPass = document.getElementById("floatingPassword-pass2").value;
+	var passError = document.getElementById("passError");
+	var passError1 = document.getElementById("passError1");
+	if (pass == '') {
+		passError1.innerHTML = "Please enter a password";
+		passError.innerHTML = "";
+	}
+	else if (confPass != '') {
+		if (pass == confPass) {
+			passError.innerHTML = "";
+			passError1.innerHTML = "";
+		}
+		else {
+			passError.innerHTML = "Password dosen't match";
+		}
+	}
+	else { passError1.innerHTML = ""; }
+}
+
+function validateConfirmPassword() {
+
+	var pass = document.getElementById("floatingPassword-pass1").value;;
+	var confPass = document.getElementById("floatingPassword-pass2").value;
+	var passError = document.getElementById("passError");
+	if (confPass == '') {
+		passError.innerHTML = "Please enter a confirm password";
+	}
+	else if (pass != '') {
+		if (pass == confPass) { passError.innerHTML = ""; }
+		else {
+			passError.innerHTML = "Password dosen't match";
+		}
+	}
+	else if (pass == '') {
+		passError.innerHTML = "";
+	}
+	else { passError.innerHTML = ""; }
+}
+
+
 
 
 

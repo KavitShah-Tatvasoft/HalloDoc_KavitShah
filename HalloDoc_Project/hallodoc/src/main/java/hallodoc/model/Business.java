@@ -65,6 +65,19 @@ public class Business {
 	@Column(name = "is_deleted ")
 	private boolean isDelete;
 
+	@Column(name="property_name")
+	private String propertyName;
+	
+	
+	
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
+	}
+
 	public int getBusinessId() {
 		return businessId;
 	}
@@ -191,12 +204,13 @@ public class Business {
 				+ addressOne + ", addressTwo=" + addressTwo + ", city=" + city + ", region=" + region + ", zipCode="
 				+ zipCode + ", phoneNumber=" + phoneNumber + ", faxNumber=" + faxNumber + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate
-				+ ", isDelete=" + isDelete + "]";
+				+ ", isDelete=" + isDelete + ", propertyName=" + propertyName + "]";
 	}
 
 	public Business(int businessId, String name, String email, String addressOne, String addressTwo, String city,
 			Region region, String zipCode, String phoneNumber, String faxNumber, int createdBy,
-			LocalDateTime createdDate, int modifiedBy, LocalDateTime modifiedDate, boolean isDelete) {
+			LocalDateTime createdDate, int modifiedBy, LocalDateTime modifiedDate, boolean isDelete,
+			String propertyName) {
 		super();
 		this.businessId = businessId;
 		this.name = name;
@@ -213,12 +227,14 @@ public class Business {
 		this.modifiedBy = modifiedBy;
 		this.modifiedDate = modifiedDate;
 		this.isDelete = isDelete;
+		this.propertyName = propertyName;
 	}
 
 	public Business() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	
 	
 }

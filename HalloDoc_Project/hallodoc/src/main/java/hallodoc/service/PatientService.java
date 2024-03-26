@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import hallodoc.dto.CreatePatientDto;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.User;
 import hallodoc.repository.AspNetUserDao;
 
 import java.util.Date;
@@ -26,10 +27,32 @@ public class PatientService {
 
 	@Autowired
 	AspNetUserDao apsnetuserdao;
+	
+	
+	public String updateAspNetUserPassword(String email, String password) {
+		AspNetUsers aspNetUsers = apsnetuserdao.getUserByEmail(email).get(0);
+		
+		User user = aspNetUsers.getUser();
+		user.setRequestWithEmail(false);
+		
+		BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
 
-	public boolean validatePatient(String u_username, String u_password) {
+		Hash hash = Password.hash(password).with(bcrypt);
+		
+		aspNetUsers.setPassword_hash(hash.getResult());
+		System.out.println(hash.getResult());
+		aspNetUsers.setModified_date(new Date());
+		
+		apsnetuserdao.updateAspNetUser(aspNetUsers);
+	
+		return "Updated Password";
+	}
+	
+	
 
-		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(u_username);
+	public boolean validatePatient(String username, String password) {
+
+		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 
 		if (list.isEmpty()) {
 			System.out.println("False");
@@ -41,7 +64,7 @@ public class PatientService {
 			String passwordHash = user.getPassword_hash();
 			BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
 
-			boolean verified = Password.check(u_password, passwordHash).with(bcrypt);
+			boolean verified = Password.check(password, passwordHash).with(bcrypt);
 
 			if (verified) {
 				return true;
@@ -52,36 +75,6 @@ public class PatientService {
 		}
 	}
 	
-	
-	
-//	public int createPatient(AspNetUsers user) {
-//		String username = user.getEmail();
-//		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
-//		if (list.isEmpty()) {
-//			user.setUser_name(user.getEmail());
-//			
-//			String password = user.getPassword_hash();
-//			
-//			BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
-//
-//			Hash hash = Password.hash(password)
-//	                .with(bcrypt);
-//			
-//			user.setPassword_hash(hash.getResult());
-//			
-//			Date d = new Date();
-//			user.setCreated_date(d);
-//			
-//			int id = apsnetuserdao.createPatient(user);
-//			return id;
-//		}
-//		
-//		else {
-//			return -1;
-//		}
-//
-//	}
-// remove this if dto works
 	
 	public int createPatient(CreatePatientDto user) {
 		

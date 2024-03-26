@@ -16,7 +16,7 @@ public class RequestBusiness {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="request_business_id")
+	@Column(name = "request_business_id")
 	private int requestBusinessId;
 	
 	@OneToOne
@@ -24,8 +24,50 @@ public class RequestBusiness {
 	private Request request;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "concierge_id")
-	private Concierge concierge;
+	@JoinColumn(name = "business_id")
+	private Business business;
 
- 
+	public int getRequestBusinessId() {
+		return requestBusinessId;
+	}
+
+	public void setRequestBusinessId(int requestBusinessId) {
+		this.requestBusinessId = requestBusinessId;
+	}
+
+	public Request getRequest() {
+		return request;
+	}
+
+	public void setRequest(Request request) {
+		this.request = request;
+	}
+
+	public Business getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(Business business) {
+		this.business = business;
+	}
+
+	public RequestBusiness(int requestBusinessId, Request request, Business business) {
+		super();
+		this.requestBusinessId = requestBusinessId;
+		this.request = request;
+		this.business = business;
+	}
+
+	@Override
+	public String toString() {
+		return "RequestBusiness [requestBusinessId=" + requestBusinessId + ", request=" + request + ", business="
+				+ business + "]";
+	}
+
+	public RequestBusiness() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }

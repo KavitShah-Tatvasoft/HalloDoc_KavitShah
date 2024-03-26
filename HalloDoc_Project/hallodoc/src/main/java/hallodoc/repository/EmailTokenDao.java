@@ -52,4 +52,14 @@ public class EmailTokenDao {
 		return "All Email Status Updated";
 	}
 	
+	public List<EmailToken> getTokenObject(String token){
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM EmailToken where token=:token";
+		Query q = s.createQuery(queryString);
+		q.setParameter("token",token);
+		List<EmailToken> list = q.list();
+		s.close();
+		return list;
+	}
+	
 }

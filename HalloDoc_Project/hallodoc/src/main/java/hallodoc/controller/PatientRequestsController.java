@@ -20,6 +20,7 @@ import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.User;
+import hallodoc.service.BusinessRequestService;
 import hallodoc.service.ConciergeRequestService;
 import hallodoc.service.FamilyFriendRequestService;
 import hallodoc.service.PatientRequestsService;
@@ -35,6 +36,9 @@ public class PatientRequestsController {
 	
 	@Autowired
 	private ConciergeRequestService conciergeRequestService;
+	
+	@Autowired
+	private BusinessRequestService businessRequestService;
 	
 
 	@RequestMapping("/createNewPatientRequest")
@@ -118,6 +122,8 @@ public class PatientRequestsController {
 	@RequestMapping(value="/addBusinessRequest", method = RequestMethod.POST)
 	public String addNewBusinessRequest(@ModelAttribute("createConciergeRequest") CommonRequestDto commonRequestDto, HttpSession session, HttpServletRequest httpServletRequest ) throws Exception{
 		System.out.println(commonRequestDto);
+		boolean status = businessRequestService.createBusinessRequest(commonRequestDto, session, httpServletRequest);
+		System.out.println(status);
 		return "";
 	}
 }

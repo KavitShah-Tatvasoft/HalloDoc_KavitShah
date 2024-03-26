@@ -48,17 +48,17 @@
 
             <h2 class="Login-text-patient mb-4" id="Login-text-id">Login To Your Account</h2>
 
-            <form action="patientloginValidator" method="post">
+            <form action="loginValidator" method="post">
 
                 <div class="form-floating mb-3 inp">
                     <input type="text" class="form-control input-1" id="floatingInput"
-                        placeholder="Username" name="u_username">
+                        placeholder="Username" name="username">
                     <label for="floatingInput" class="username-clr">Username</label>
                     <img src="<c:url value="/resources/images/person-circle.svg" />" alt="user-png" class="user-btn-img">
                 </div>
 
                 <div class="form-floating mb-3 inp">
-                    <input type="password" class="form-control input-1" id="floatingPassword" name="u_password" placeholder="Password">
+                    <input type="password" class="form-control input-1" id="floatingPassword" name="password" placeholder="Password">
                     <label for="floatingPassword">Password</label>
                     <a href="#" onclick="showPass()"><img src="<c:url value="/resources/images/password-eye.svg" />" alt="view pass" class="open-eye" id="open-eye-id"></a>
                     <a href="#" onclick="hidePass()"><img src="<c:url value="/resources/images/password-eye-slash.svg" />" alt="hide pass" class="close-eye" id="close-eye-id"></a>

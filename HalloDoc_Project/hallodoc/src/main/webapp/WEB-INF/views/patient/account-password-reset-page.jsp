@@ -18,7 +18,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/patient-login-forgetpassword.css" /> ">
-<title>Sign Up</title>
+<title>Reset Password</title>
 </head>
 <body>
 <body class="relative-position">
@@ -52,8 +52,8 @@
 
 		<div class="relative-position add-margin-top">
 
-			<h2 class="Login-text-patient mb-4" id="Login-text-id">Create
-				Your Account</h2>
+			<h2 class="Login-text-patient mb-4" id="Login-text-id">Reset
+				Your Account Password</h2>
 
 			<form action="${pageContext.request.contextPath}/createPatientValidator" method="post">
 
