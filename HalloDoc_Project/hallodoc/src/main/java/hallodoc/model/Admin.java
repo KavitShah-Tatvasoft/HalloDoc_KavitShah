@@ -22,7 +22,7 @@ public class Admin {
 	private int aspnetUserId;
 	
 	@Column(name="first_name")
-	private String firsName;
+	private String firstName;
 	
 	@Column(name="last_name")
 	private String lastName;

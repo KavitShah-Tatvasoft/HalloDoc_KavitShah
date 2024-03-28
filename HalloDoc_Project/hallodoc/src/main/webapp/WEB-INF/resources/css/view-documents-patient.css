@@ -3,11 +3,11 @@
 }
 
 a{
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .mobile-cards{
-    display: none;
+    display: none !important;
 }
 
 .main-container-top-text{
@@ -61,7 +61,7 @@ a{
   }
 
 .main-container{
-    width: 70%;
+    width: 70% !important;
     background-color: white;
     border-radius: 5px;
     clear: both;
@@ -227,7 +227,7 @@ input[type="file"]{
 
 @media screen and (max-width:834px) {
     .main-container{
-        width: 90%;
+        width: 90% !important;
     }
 }
 
@@ -237,7 +237,7 @@ input[type="file"]{
     }
 
     .mobile-cards{
-        display: block;
+        display: block !important ;
     }
 
     .upload-txt{

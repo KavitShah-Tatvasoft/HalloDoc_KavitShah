@@ -1,7 +1,9 @@
 package hallodoc.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,14 +28,14 @@ public class Request {
 //	@Column(name = "request_type_id")
 //	private int requestTypeId;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "request_type_id")
 	private RequestType requestType;
 	
 //	@Column(name = "user_id")
 //	private String userId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
@@ -52,7 +55,7 @@ public class Request {
 //	@Column(name = "physician_id")
 //	private int physicianId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "physician_id")
 	private Physician physician;
 	
@@ -71,7 +74,7 @@ public class Request {
 //	@Column(name = "declined_by")
 //	private int declinedBy;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "declined_by")
 	private AspNetUsers aspUsers;
 	
@@ -95,6 +98,15 @@ public class Request {
 	
 	@Column(name = "case_number")
 	private String caseNumber;
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
+	private RequestClient requestClient;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
+	private RequestStatusLog requestStatusLogs;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
+	private List<RequestWiseFile> listRequestWiseFiles;
 
 	public int getRequestId() {
 		return requestId;
@@ -264,6 +276,30 @@ public class Request {
 		this.caseNumber = caseNumber;
 	}
 
+	public RequestClient getRequestClient() {
+		return requestClient;
+	}
+
+	public void setRequestClient(RequestClient requestClient) {
+		this.requestClient = requestClient;
+	}
+
+	public RequestStatusLog getRequestStatusLogs() {
+		return requestStatusLogs;
+	}
+
+	public void setRequestStatusLogs(RequestStatusLog requestStatusLogs) {
+		this.requestStatusLogs = requestStatusLogs;
+	}
+
+	public List<RequestWiseFile> getListRequestWiseFiles() {
+		return listRequestWiseFiles;
+	}
+
+	public void setListRequestWiseFiles(List<RequestWiseFile> listRequestWiseFiles) {
+		this.listRequestWiseFiles = listRequestWiseFiles;
+	}
+
 	@Override
 	public String toString() {
 		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
@@ -273,14 +309,16 @@ public class Request {
 				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
 				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
 				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
-				+ "]";
+				+ ", requestClient=" + requestClient + ", requestStatusLogs=" + requestStatusLogs
+				+ ", listRequestWiseFiles=" + listRequestWiseFiles + "]";
 	}
 
 	public Request(int requestId, RequestType requestType, User user, String firstName, String lastName,
-			String phoneNumber, String email, int status, Physician physician, String confirmationNumber, Date createdDate,
-			boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate, int callType,
-			boolean completedByPhysician, Date lastReservationDate, Date acceptedDate, String relationName,
-			String caseNumber) {
+			String phoneNumber, String email, int status, Physician physician, String confirmationNumber,
+			Date createdDate, boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate,
+			int callType, boolean completedByPhysician, Date lastReservationDate, Date acceptedDate,
+			String relationName, String caseNumber, RequestClient requestClient, RequestStatusLog requestStatusLogs,
+			List<RequestWiseFile> listRequestWiseFiles) {
 		super();
 		this.requestId = requestId;
 		this.requestType = requestType;
@@ -303,6 +341,9 @@ public class Request {
 		this.acceptedDate = acceptedDate;
 		this.relationName = relationName;
 		this.caseNumber = caseNumber;
+		this.requestClient = requestClient;
+		this.requestStatusLogs = requestStatusLogs;
+		this.listRequestWiseFiles = listRequestWiseFiles;
 	}
 
 	public Request() {
@@ -310,5 +351,7 @@ public class Request {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	
 	
 }

@@ -57,6 +57,30 @@ public class RequestWiseFile {
 	
 	@Column(name = "is_patient_records")
 	private boolean isPatientRecords;
+	
+	@Column(name="uploader_name")
+	private String uploaderName;
+	
+	@Column(name="file_extension")
+	private String fileExtension;
+	
+	
+
+	public String getUploaderName() {
+		return uploaderName;
+	}
+
+	public void setUploaderName(String uploaderName) {
+		this.uploaderName = uploaderName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
 
 	public int getRequestWiseFileId() {
 		return requestWiseFileId;
@@ -138,17 +162,10 @@ public class RequestWiseFile {
 		this.isPatientRecords = isPatientRecords;
 	}
 
-	@Override
-	public String toString() {
-		return "RequestWiseFile [requestWiseFileId=" + requestWiseFileId + ", request=" + request + ", fileName="
-				+ fileName + ", createdDate=" + createdDate + ", physician=" + physician + ", admin=" + admin
-				+ ", docType=" + docType + ", isFinalize=" + isFinalize + ", isDeleted=" + isDeleted
-				+ ", isPatientRecords=" + isPatientRecords + "]";
-	}
-
+	
 	public RequestWiseFile(int requestWiseFileId, Request request, String fileName, Date createdDate,
 			Physician physician, Admin admin, int docType, boolean isFinalize, boolean isDeleted,
-			boolean isPatientRecords) {
+			boolean isPatientRecords, String uploaderName, String fileExtension) {
 		super();
 		this.requestWiseFileId = requestWiseFileId;
 		this.request = request;
@@ -160,6 +177,17 @@ public class RequestWiseFile {
 		this.isFinalize = isFinalize;
 		this.isDeleted = isDeleted;
 		this.isPatientRecords = isPatientRecords;
+		this.uploaderName = uploaderName;
+		this.fileExtension = fileExtension;
+	}
+
+	@Override
+	public String toString() {
+		return "RequestWiseFile [requestWiseFileId=" + requestWiseFileId + ", request=" + request + ", fileName="
+				+ fileName + ", createdDate=" + createdDate + ", physician=" + physician + ", admin=" + admin
+				+ ", docType=" + docType + ", isFinalize=" + isFinalize + ", isDeleted=" + isDeleted
+				+ ", isPatientRecords=" + isPatientRecords + ", uploaderName=" + uploaderName + ", fileExtension="
+				+ fileExtension + "]";
 	}
 
 	public RequestWiseFile() {

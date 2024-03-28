@@ -372,10 +372,12 @@ public class ConciergeRequestService {
 
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
+		request.setRequestClient(requestClient);
+		
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
+		request.setRequestStatusLogs(requestStatusLog);
+		
 		String conciergeEmail = commonRequestDto.getReqEmail();
 		List<Concierge> conciergeList = conciergeDao.getExistingConciergeByEmail(conciergeEmail);
 
@@ -395,9 +397,9 @@ public class ConciergeRequestService {
 		// persisting object of Request
 		int requestId = requestDao.addNewRequest(request);
 		// persisting object of RequestClient
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 		// Persisting the requestStatusLogobject
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		int requestConciergeId = conciergeDao.addRequestConcierge(requestConcierge);
 		
@@ -460,10 +462,12 @@ public class ConciergeRequestService {
 
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
+		request.setRequestClient(requestClient);
+		
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
+		request.setRequestStatusLogs(requestStatusLog);
+		
 		String conciergeEmail = commonRequestDto.getReqEmail();
 		List<Concierge> conciergeList = conciergeDao.getExistingConciergeByEmail(conciergeEmail);
 
@@ -488,9 +492,9 @@ public class ConciergeRequestService {
 
 		int requestId = requestDao.addNewRequest(request);
 
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		int requestConciergeId = conciergeDao.addRequestConcierge(requestConcierge);
 

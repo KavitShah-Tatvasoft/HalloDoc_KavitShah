@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="./css/footer.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-
+        
         <title>Patient Profile</title>
     </head>
 <body>
@@ -111,6 +111,7 @@
             Back
         </div>
 
+        <form action="">
         <div class="submit-info-txt">
            User Profile
         </div>
@@ -229,11 +230,14 @@
         </div>
 
         <div class="bottom-btns mt-3">
-            <button type="submit" class="bottom-btns-edit">Edit</button>
-            <button type="submit" class="bottom-btns-submit">Save</button>
-            <button type="reset" class="bottom-btns-cancel">Cancel</button>
+            <button type="button" id="edit-btn-pdashboard" onclick="editPatientDetails()" class="bottom-btns-edit">Edit</button>
+            <button type="submit" id="save-btn-pdashboard" class="bottom-btns-submit">Save</button>
+            <button type="reset" id="cancel-btn-pdashboard" onclick="editPatientDetails()" class="bottom-btns-cancel">Cancel</button>
         </div>
+        </form>
     </div>
+
+
 
     <footer>
         <div class="footer-flex">
@@ -250,6 +254,7 @@
       </script>
 
 <script src="./js/darktheme.js"></script>
+<script src="./js/patient-profile.js"></script>
 
 </body>
 </html>

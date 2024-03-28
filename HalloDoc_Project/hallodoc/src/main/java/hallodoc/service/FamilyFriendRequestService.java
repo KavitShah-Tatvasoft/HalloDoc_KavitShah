@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -384,17 +385,22 @@ public class FamilyFriendRequestService {
 
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
+		request.setRequestClient(requestClient);
+		
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
+		request.setRequestStatusLogs(requestStatusLog);
+		
 		if (!(commonRequestDto.getDocument().isEmpty())) {
 
 			// Setting the requestWiseFile
 			requestWiseFile = creatRequestWiseFile(commonRequestDto, currentDate, request, session);
-
-			// Persisting the requestWiseFile
-			int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
+			List<RequestWiseFile> requestWiseFilesList = new ArrayList<RequestWiseFile>();
+			requestWiseFilesList.add(requestWiseFile);
+			request.setListRequestWiseFiles(requestWiseFilesList);
+			
+//			// Persisting the requestWiseFile
+//			int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 		}
 
 		// persisting object
@@ -405,9 +411,9 @@ public class FamilyFriendRequestService {
 
 		int requestId = requestDao.addNewRequest(request);
 
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		String isExsist = "new";
 		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest,isExsist);
@@ -459,27 +465,33 @@ public class FamilyFriendRequestService {
 
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
+		request.setRequestClient(requestClient);
 
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
-		// persisting object of Request
-		int requestId = requestDao.addNewRequest(request);
-		// persisting object of RequestClient
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
-		// Persisting the requestStatusLogobject
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		request.setRequestStatusLogs(requestStatusLog);
+		
 
 		if (!(commonRequestDto.getDocument().isEmpty())) {
 
 			// Setting the requestWiseFile
 			requestWiseFile = creatRequestWiseFile(commonRequestDto, currentDate, request, session);
-
-			// Persisting the requestWiseFile
-			int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
+			List<RequestWiseFile> requestWiseFilesList = new ArrayList<RequestWiseFile>();
+			requestWiseFilesList.add(requestWiseFile);
+			request.setListRequestWiseFiles(requestWiseFilesList);
+			
+//			// Persisting the requestWiseFile
+//			int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 		}
 
+		// persisting object of Request
+		int requestId = requestDao.addNewRequest(request);
+		
+//		// persisting object of RequestClient
+//		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//		// Persisting the requestStatusLogobject
+//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		
 		if (password==null) {
 			String isExsist = "old";
 			String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest,isExsist);

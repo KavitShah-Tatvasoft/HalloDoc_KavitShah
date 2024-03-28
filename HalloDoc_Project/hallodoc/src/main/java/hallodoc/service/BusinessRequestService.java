@@ -384,10 +384,12 @@ public class BusinessRequestService {
 
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
+		request.setRequestClient(requestClient);
+		
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
+		request.setRequestStatusLogs(requestStatusLog);
+		
 		String businessEmail = commonRequestDto.getReqEmail();
 		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
 
@@ -414,9 +416,9 @@ public class BusinessRequestService {
 
 		int requestId = requestDao.addNewRequest(request);
 
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		int requestBusinessId = businessDao.addRequestBusiness(requestBusiness);
 
@@ -474,10 +476,12 @@ public class BusinessRequestService {
 
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
-
+		request.setRequestClient(requestClient);
+		
 		// Setting the requestStatusLogobject
 		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-
+		request.setRequestStatusLogs(requestStatusLog);
+		
 		String businessEmail = commonRequestDto.getReqEmail();
 		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
 
@@ -497,9 +501,9 @@ public class BusinessRequestService {
 		// persisting object of Request
 		int requestId = requestDao.addNewRequest(request);
 		// persisting object of RequestClient
-		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 		// Persisting the requestStatusLogobject
-		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		int requestBusinessId = businessDao.addRequestBusiness(requestBusiness);
 

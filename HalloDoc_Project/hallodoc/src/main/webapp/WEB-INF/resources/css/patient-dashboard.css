@@ -11,7 +11,7 @@
     display: none;
 }
 a{
-    text-decoration: none;
+    text-decoration: none !important;
 }
 .relative-pos-class{
     position: relative;
@@ -37,7 +37,7 @@ a{
 }
 
 .main-container{
-    width: 95%;
+    width: 95% !important;
     margin-top: 80px;
     background-color: white;
     border-radius: 5px;

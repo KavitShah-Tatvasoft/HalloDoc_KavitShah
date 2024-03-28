@@ -18,8 +18,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="./css/create-patient-request.css">
-<link rel="stylesheet" href="./css/FamilyFriend-request.css">
+<link rel="stylesheet" href="<c:url value='/resources/css/create-patient-request.css' />">
+<link rel="stylesheet" href="<c:url value='/resources/css/FamilyFriend-request.css' />">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link

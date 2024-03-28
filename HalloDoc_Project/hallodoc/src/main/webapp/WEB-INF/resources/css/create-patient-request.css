@@ -2,6 +2,14 @@
 	display: none;
 }
 
+#save-btn-pdashboard{
+  display: none;
+}
+
+#cancel-btn-pdashboard{
+  display: none;
+}
+
 #passError1, #passError, #stateErrorField{
 	color: red;
 	margin-left: 8px

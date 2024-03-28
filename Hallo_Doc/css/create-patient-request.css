@@ -3,6 +3,14 @@
   color: white;
 }
 
+#save-btn-pdashboard{
+  display: none;
+}
+
+#cancel-btn-pdashboard{
+  display: none;
+}
+
 .map-text-flex-patient-profile-only:hover span{
   color: white;
 }

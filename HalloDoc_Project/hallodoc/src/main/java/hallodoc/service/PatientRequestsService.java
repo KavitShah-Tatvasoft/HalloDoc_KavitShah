@@ -1,5 +1,6 @@
 package hallodoc.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
@@ -369,8 +370,6 @@ public class PatientRequestsService {
 			// Setting object of AspNetUsers
 			aspNetUsers = createAspNetUsers(createPatientRequestDto, currentDate);
 
-			// persisting object of AspNetUser
-			int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
 
 			// Get Object corresponding to region
 			List<Region> list = regionDao.getRegionEntry(createPatientRequestDto.getState());
@@ -391,9 +390,7 @@ public class PatientRequestsService {
 
 			// Setting the user object
 			user = createUser(createPatientRequestDto, currentDate, aspNetUsers, region, day, year, monthName, role);
-
-			// persisting object of User
-			int userId = userDao.addNewPatientRequest(user);
+			aspNetUsers.setUser(user);
 
 			// Getting Request Type Object
 			requestType = requestTypeDao.getRequestTypeObject("Patient");
@@ -401,30 +398,40 @@ public class PatientRequestsService {
 			// Setting the request object
 			request = createRequest(createPatientRequestDto, currentDate, requestType, user, region);
 
-			// persisting object of Request
-			int requestId = requestDao.addNewRequest(request);
 
 			// Setting the requestClient object
 			requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 					monthName);
-
-			// persisting object of Request
-			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+			request.setRequestClient(requestClient);
 
 			// Setting the requestStatusLogobject
 			requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
-
-			// Persisting the requestStatusLogobject
-			int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+			request.setRequestStatusLogs(requestStatusLog);
 
 			if (!(createPatientRequestDto.getDocument().isEmpty())) {
 
 				// Setting the requestWiseFile
 				requestWiseFile = creatRequestWiseFile(createPatientRequestDto, currentDate, request, session);
-
-				// Persisting the requestWiseFile
-				int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
+				List<RequestWiseFile> requestWiseFilesList = new ArrayList<RequestWiseFile>();
+				requestWiseFilesList.add(requestWiseFile);
+				request.setListRequestWiseFiles(requestWiseFilesList);
+				
+//				// Persisting the requestWiseFile
+//				int requestWiseFileId = requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 			}
+			
+			// persisting object of AspNetUser
+			int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
+	
+//			int userId = userDao.addNewPatientRequest(user);
+			
+			
+//			// persisting object of Request
+			int requestId = requestDao.addNewRequest(request);
+
+//			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+//			// Persisting the requestStatusLogobject
+//			int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 			return true;
 		}
@@ -498,30 +505,36 @@ public class PatientRequestsService {
 			// Setting the request object
 			request = createRequest(createPatientRequestDto, currentDate, requestType, user, region);
 
-			// persisting object of Request
-			int requestId = requestDao.addNewRequest(request);
 
 			// Setting the requestClient object
 			requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 					monthName);
-
-			// persisting object of Request
-			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+			request.setRequestClient(requestClient);
 
 			// Setting the requestStatusLogobject
 			requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
-
-			// Persisting the requestStatusLogobject
-			int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
-
+			request.setRequestStatusLogs(requestStatusLog);
+			
+			
 			if (!(createPatientRequestDto.getDocument().isEmpty())) {
 
 				// Setting the requestWiseFile
 				requestWiseFile = creatRequestWiseFile(createPatientRequestDto, currentDate, request, session);
-
-				// Persisting the requestWiseFile
-				int requestWiseFileId =requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
+				List<RequestWiseFile> requestWiseFilesList = new ArrayList<RequestWiseFile>();
+				requestWiseFilesList.add(requestWiseFile);
+				request.setListRequestWiseFiles(requestWiseFilesList);
+				
+//				// Persisting the requestWiseFile
+//				int requestWiseFileId =requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 			}
+			
+			// persisting object of Request
+			int requestId = requestDao.addNewRequest(request);
+			
+
+//			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
+
+//			int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 			return true;
 		}
