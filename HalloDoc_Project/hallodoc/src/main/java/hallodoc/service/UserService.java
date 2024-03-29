@@ -2,6 +2,7 @@ package hallodoc.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +20,10 @@ import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
 import hallodoc.dto.CommonRequestDto;
+import hallodoc.dto.UserProfileDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
+import hallodoc.helper.Constants;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
 import hallodoc.model.Request;
@@ -48,6 +51,8 @@ public class UserService {
 	
 	@Autowired
 	private RequestDao requestDao;
+	
+	
 	
 	private String resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest) {
 
@@ -123,19 +128,21 @@ public class UserService {
 	
 	public String uploadRequestDocument(CommonsMultipartFile document, String name, Request request, HttpSession session, Date date) {
 		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
+
+		String formattedDate = sdf.format(date);
+		
 		RequestWiseFile requestWiseFile = new RequestWiseFile();
 
 		// Getting details from file obj
 
-		
 		String fileName = document.getOriginalFilename();
 		byte[] data = document.getBytes();
-		String fileExtension = document.getOriginalFilename().split(".",2)[1];
-		
-		String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources"
-				+ File.separator + "fileuploads" + File.separator + "patient" + File.separator
-				+ document.getOriginalFilename();
-
+		String fileExtension = document.getOriginalFilename().substring(document.getOriginalFilename().lastIndexOf('.') + 1);
+		String storedFileName = "patient" + formattedDate +"-"+ fileName ;
+		System.out.println(storedFileName);
+		String path = Constants.getUplaodPath(session) + storedFileName;
 		System.out.println(path);
 
 		try {
@@ -156,6 +163,7 @@ public class UserService {
 		requestWiseFile.setDeleted(false);
 		requestWiseFile.setUploaderName(name);
 		requestWiseFile.setFileExtension(fileExtension);
+		requestWiseFile.setStoredFileName(storedFileName);
 		
 		requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 		
@@ -166,5 +174,7 @@ public class UserService {
 		Request request =  requestDao.getRequestOb(id);
 		return request;
 	}
+	
+	
 
 }

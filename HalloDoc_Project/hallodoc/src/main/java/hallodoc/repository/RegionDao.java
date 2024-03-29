@@ -32,5 +32,14 @@ public class RegionDao {
 		return list;
 
 	}
+	
+	public List<Region> getAllRegions(){
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM Region";
+		Query q = s.createQuery(queryString);
+		List<Region> list = q.list();
+		s.close();
+		return list;
+	}
 
 }

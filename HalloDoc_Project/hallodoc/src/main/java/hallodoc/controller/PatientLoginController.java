@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,9 +26,11 @@ import hallodoc.dto.CreateNewPasswordDto;
 import hallodoc.dto.CreatePatientDto;
 import hallodoc.dto.DashboardDataDto;
 import hallodoc.dto.RequestDocumentsDto;
+import hallodoc.dto.UserProfileDto;
 import hallodoc.email.EmailService;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
+import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.User;
 import hallodoc.service.PatientService;
@@ -179,6 +182,8 @@ public class PatientLoginController {
 			System.out.println("Session not found");
 		}
 		
+		List<Region> regionList = pService.getAllRegions();
+		m.addAttribute("regions", regionList);
 		return "/patient/patient-profile";
 	}
 	
@@ -285,6 +290,14 @@ public class PatientLoginController {
 		RedirectView redirectView = new RedirectView("/patientViewRequestDocuments/" + requestId, true);
 		return redirectView;
 	}
-
+	
+	@PostMapping(value="/updateUserProfile")
+	public RedirectView updateUserProfile(@ModelAttribute("updateUserProfile") UserProfileDto userProfileDto, HttpServletRequest request) {
+		System.out.println("in update profile service");
+		pService.updateUserProfile(userProfileDto, request);
+		System.out.println("in update profile service1");
+		RedirectView redirectView = new RedirectView("/patientProfile", true);
+		return redirectView;
+	}
 
 }

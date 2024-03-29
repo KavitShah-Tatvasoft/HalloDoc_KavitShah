@@ -31,12 +31,11 @@
 </head>
 <body>
 	<%@ include file="patient-navbar.jsp"%>
-	<%@ page import="java.io.File" %>
+	<%@ page import="java.io.File"%>
 	<%
-		
-		String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources"
-				+ File.separator + "fileuploads" + File.separator + "patient";
-	 	pageContext.setAttribute("path", path);
+	String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources" + File.separator
+			+ "fileuploads" + File.separator + "patient";
+	pageContext.setAttribute("path", path);
 	%>
 	<div
 		class="container-fluid footer-container main-container relative-pos-class ">
@@ -62,12 +61,15 @@
 				for you to review.</div>
 
 			<div class="col-12 mt-4">
-				<form action="${pageContext.request.contextPath}/uploadRequestDocument" method="post" enctype="multipart/form-data">
+				<form
+					action="${pageContext.request.contextPath}/uploadRequestDocument"
+					method="post" enctype="multipart/form-data">
 					<div class="input-group mb-3" style="position: relative">
-						<input type="file" name="documentFile" class="form-control" id="inputGroupFile02">
-
-						<input type="text" value="${reqId }" name="requestId" hidden />
-						 <input type="text" value="${userOb.firstName } ${userOb.lastName }" name="uploaderName" hidden />
+						<input type="file" name="documentFile" class="form-control"
+							id="inputGroupFile02"> <input type="text"
+							value="${reqId }" name="requestId" hidden /> <input type="text"
+							value="${userOb.firstName } ${userOb.lastName }"
+							name="uploaderName" hidden />
 
 						<button type="submit" id="submit-button-upload"
 							style="display: none;"></button>
@@ -86,7 +88,7 @@
 
 			<div class="col-12 doc-download-flex">
 				<div class="doc-text">Documents</div>
-				<button class="download-all-btn">
+				<button class="download-all-btn" onclick="downloadAll()"> 
 					<span class="download-all-text">Download All</span> <img
 						src="<c:url value="/resources/images/download-all.svg" />"
 						class="download-all-image" alt="">
@@ -96,7 +98,7 @@
 
 		<div class="row mobile-cards">
 			<c:forEach items="${docList}" var="listOb">
-			<hr class="mt-3">
+				<hr class="mt-3">
 				<div class="col-12 single-mobile-card">
 					<div class="mobile-checkbox-name-flex">
 						<input type="checkbox" name="row1"> <span
@@ -144,12 +146,12 @@
 								class="pdf-img" alt=""><span>${listOb.filename }</span></td>
 							<td>${listOb.uploaderName }</td>
 							<td>${formattedDate }</td>
-							<td><a href="${path }/${listOb.filename}" download class="cloud-download-btn">
-									<img
-										src="<c:url value="/resources/images/cloud-arrow-down.svg" />"
-										class="cloud-btn-down" alt="">
-								</a></td>
-					</tr>
+							<td><a class="link" href="${listOb.url}" download="${listOb.filename}"
+								class="cloud-download-btn"> <img
+									src="<c:url value="/resources/images/cloud-arrow-down.svg" />"
+									class="cloud-btn-down" alt="">
+							</a></td>
+						</tr>
 					</c:forEach>
 
 				</tbody>
@@ -221,7 +223,8 @@ footer {
 		});
 	</script>
 
-	<script src="./js/darktheme.js"></script>
+	<script src="<c:url value="/resources/js/darktheme.js" />"></script>
+	<script src="<c:url value="/resources/js/patient-view-document.js" />"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

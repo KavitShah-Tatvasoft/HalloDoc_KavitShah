@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="patient-navbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -15,14 +16,19 @@
 	crossorigin="anonymous" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/resources/css/create-patient-request.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/create-patient-request.css' />">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/navbar.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/patient-profile-map.css' />">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 <script
@@ -36,149 +42,186 @@
 		class="container-fluid patient-form footer-container shadow p-3 bg-white rounded relative-position extra-margin">
 
 		<div class="back-btn-top " role="button" onclick="history.go(-1)">
-			<img src="<c:url value='/resources/images/chevron-left.svg' />" alt=""> Back
+			<img src="<c:url value='/resources/images/chevron-left.svg' />"
+				alt=""> Back
 		</div>
-		<form action="">
-		<div class="submit-info-txt">User Profile</div>
+		<form action="${pageContext.request.contextPath}/updateUserProfile" method="post">
+			<div class="submit-info-txt">User Profile</div>
 
-		<div class="row">
-			<!--Row 1-->
+			<div class="row">
+				<!--Row 1-->
 
-			<div class="col-12 mb-3">
-				<!--Patient Information col-->
-				<span class="patient-text">General Information</span>
-			</div>
-
-			<div class="col-12 col-md-6">
-				<!--First Name col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2 editDetails" name="userFirstName"
-						id="floatingInput-2" placeholder="First Name" value="${userOb.firstName }" autocomplete="off" disabled="disabled">
-					<label for="floatingInput-2">First Name</label>
+				<div class="col-12 mb-3">
+					<!--Patient Information col-->
+					<span class="patient-text">General Information</span>
 				</div>
-			</div>
 
-			<div class="col-12 col-md-6">
-				<!--Last Name col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-1 editDetails" name="userLastName"
-						id="floatingInput-3" placeholder="Last Name" value="${userOb.lastName }" disabled="disabled" autocomplete="off">
-					<label for="floatingInput-3">Last Name</label>
+				<div class="col-12 col-md-6">
+					<!--First Name col-->
+					<div class="form-floating mb-3 inp">
+						<input type="text" class="form-control input-2 editDetails"
+							name="userFirstName" id="floatingInput-2"
+							placeholder="First Name" value="${userOb.firstName }"
+							autocomplete="off" disabled="disabled"> <label
+							for="floatingInput-2">First Name</label>
+					</div>
 				</div>
-			</div>
 
-			<div class="col-12 col-md-6">
-				<div class="form-floating mb-3 inp custom-date-input">
-					<!--Date Picker col-->
-					<input type="date" class="form-control input-1 editDetails" value="" disabled="disabled"
-						id="floatingInput-4" placeholder="Date Of Birth"  name="userDOB"
-						autocomplete="off"> <label for="floatingInput-4">Date
-						of Birth</label> <img src="<c:url value='/resources/images/calendar4-week.svg' />" alt=""
-						class="custom-date-icon">
+				<div class="col-12 col-md-6">
+					<!--Last Name col-->
+					<div class="form-floating mb-3 inp">
+						<input type="text" class="form-control input-1 editDetails"
+							name="userLastName" id="floatingInput-3" placeholder="Last Name"
+							value="${userOb.lastName }" disabled="disabled"
+							autocomplete="off"> <label for="floatingInput-3">Last
+							Name</label>
+					</div>
 				</div>
-			</div>
 
-		</div>
-
-		<div class="row">
-			<!--Row 2-->
-
-			<div class="col-12 mb-3 add-extra-margin">
-				<!--Patient Contact Information col-->
-				<span class="patient-text">Patient Contact Information</span>
-			</div>
-
-			<div class="col-4 col-md-2">
-				<!--Mobile Type col-->
-				<div class="form-floating mb-3 inp">
-					<select name="Number_Type" id="floatingInput-5"
-						class="form-control form-select input-2 editDetails" disabled="disabled">
-						<option value="Mobile" selected>Mobile</option>
-						<option value="Home">Home</option>
-					</select> <label for="floatingInput-5">Type</label>
+				<div class="col-12 col-md-6">
+					<div class="form-floating mb-3 inp custom-date-input">
+						<!--Date Picker col-->
+						<input type="date" class="form-control input-1 editDetails"
+							value="${userOb.dateObject}" disabled="disabled" id="floatingInput-4"
+							placeholder="Date Of Birth" name="userDOB" autocomplete="off">
+						<label for="floatingInput-4">Date of Birth</label> <img
+							src="<c:url value='/resources/images/calendar4-week.svg' />"
+							alt="" class="custom-date-icon">
+					</div>
 				</div>
+
 			</div>
 
-			<div class="col-8 col-md-4">
-				<!--Phone Number col-->
-				<div
-					class="form-floating mb-3 inp phonecolheight phonecolheight-patient-profile-only">
-					<input type="tel" class="form-control phoneflags editDetails" name="userMobile" id="phone" value="+91 ${userOb.mobile}" disabled="disabled"  />
+			<div class="row">
+				<!--Row 2-->
+
+				<div class="col-12 mb-3 add-extra-margin">
+					<!--Patient Contact Information col-->
+					<span class="patient-text">Patient Contact Information</span>
 				</div>
-			</div>
 
-
-			<div class="col-12 col-md-6">
-				<!--Email col-->
-				<div class="form-floating mb-3 inp">
-					<input type="email" class="form-control input-2 editDetails" name="userEmail" value="${userOb.email }" disabled="disabled"
-						id="floatingInput-5" placeholder="Email" autocomplete="off">
-					<label for="floatingInput-5">Email</label>
+				<div class="col-4 col-md-2">
+					<!--Mobile Type col-->
+					<div class="form-floating mb-3 inp">
+						<select  id="floatingInput-5"
+							class="form-control form-select input-2 editDetails"
+							disabled="disabled">
+							<option value="Mobile" selected>Mobile</option>
+							<option value="Home">Home</option>
+						</select> <label for="floatingInput-5">Type</label>
+					</div>
 				</div>
-			</div>
 
-		</div>
-
-		<div class="row">
-			<!--Row 3-->
-
-			<div class="col-12 mb-3 add-extra-margin">
-				<!--Patient Location col-->
-				<span class="patient-text">Location Information</span>
-			</div>
-
-			<div class="col-12 col-md-6">
-				<!--Street col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2 editDetails" name="userStreet" value="${userOb.street }" disabled="disabled"
-						id="floatingInput-7" placeholder="Street" autocomplete="off">
-					<label for="floatingInput-7">Street</label>
+				<div class="col-8 col-md-4">
+					<!--Phone Number col-->
+					<div
+						class="form-floating mb-3 inp phonecolheight phonecolheight-patient-profile-only">
+						<input type="tel" class="form-control phoneflags editDetails"
+							name="userMobile" id="phone" value="+91${userOb.mobile}"
+							disabled="disabled" />
+					</div>
 				</div>
-			</div>
 
-			<div class="col-12 col-md-6">
-				<!--City col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2 editDetails" name="userCity" value="${userOb.city }" disabled="disabled"
-						id="floatingInput-8" placeholder="City" autocomplete="off">
-					<label for="floatingInput-8">City</label>
+
+				<div class="col-12 col-md-6">
+					<!--Email col-->
+					<div class="form-floating mb-3 inp">
+						<input type="email" class="form-control input-2" 
+							value="${userOb.email }" disabled="disabled" id="floatingInput-5"
+							placeholder="Email" autocomplete="off"> <label
+							for="floatingInput-5">Email</label>
+					</div>
 				</div>
+
 			</div>
 
-			<div class="col-12 col-md-6">
-				<!--State col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2 editDetails" name="userState" value="${userOb.state }" disabled="disabled"
-						id="floatingInput-9" placeholder="State" autocomplete="off">
-					<label for="floatingInput-9">State</label>
+			<div class="row">
+				<!--Row 3-->
+
+				<div class="col-12 mb-3 add-extra-margin">
+					<!--Patient Location col-->
+					<span class="patient-text">Location Information</span>
 				</div>
-			</div>
 
-			<div class="col-8 col-md-4">
-				<!--Zip Code col-->
-				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2 editDetails" name="userZipCode" value="${userOb.zipcode }" disabled="disabled"
-						id="floatingInput-10" placeholder="Zip Code" autocomplete="off">
-					<label for="floatingInput-10">Zip Code</label>
+				<div class="col-12 col-md-6">
+					<!--Street col-->
+					<div class="form-floating mb-3 inp">
+						<input type="text" class="form-control input-2 editDetails"
+							name="userStreet" value="${userOb.street }" disabled="disabled"
+							id="floatingInput-7" placeholder="Street" autocomplete="off">
+						<label for="floatingInput-7">Street</label>
+					</div>
 				</div>
-			</div>
 
-			<div class="col-2   ">
-				<!--Room #/ Suite(Optional) col-->
-				<div class="map-text-flex map-text-flex-patient-profile-only">
-					<img src="<c:url value='/resources/images/geo-alt-fill.svg' />" alt=""
-						class="map-icon"> <span class="map-text">Map</span>
+				<div class="col-12 col-md-6">
+					<!--City col-->
+					<div class="form-floating mb-3 inp">
+						<input type="text" class="form-control input-2 editDetails"
+							name="userCity" value="${userOb.city }" disabled="disabled"
+							id="floatingInput-8" placeholder="City" autocomplete="off">
+						<label for="floatingInput-8">City</label>
+					</div>
 				</div>
+
+				<div class="col-12 col-md-6">
+					<!--State col-->
+					<div class="form-floating mb-3 inp">
+						<!-- 						<input type="text" class="form-control input-2 editDetails" -->
+						<%-- 							name="userState" value="${userOb.state }" disabled="disabled" --%>
+						<!-- 							id="floatingInput-9" placeholder="State" autocomplete="off"> -->
+						<select name="userState" id="state"
+							class="form-control form-select input-2 editDetails"
+							disabled="disabled">
+
+
+							<c:set var="userState" value="${userOb.state }" />
+
+							<c:forEach items="${regions}" var="regionOb">
+								<c:choose>
+									<c:when test="${regionOb.name == userState}">
+										<option value="${regionOb.name}" selected>${userOb.state }</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${regionOb.name}">${regionOb.name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+
+						</select> <label for="state">State</label>
+
+					</div>
+				</div>
+
+				<div class="col-8 col-md-4">
+					<!--Zip Code col-->
+					<div class="form-floating mb-3 inp">
+						<input type="text" class="form-control input-2 editDetails"
+							name="userZipCode" value="${userOb.zipcode }" disabled="disabled"
+							id="floatingInput-10" placeholder="Zip Code" autocomplete="off">
+						<label for="floatingInput-10">Zip Code</label>
+					</div>
+				</div>
+
+				<div class="col-2   ">
+					<!--Room #/ Suite(Optional) col-->
+					<div type="button" class="map-text-flex map-text-flex-patient-profile-only" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<img src="<c:url value='/resources/images/geo-alt-fill.svg' />"
+							alt="" class="map-icon"> <span class="map-text">Map</span>
+					</div>
+				</div>
+
 			</div>
 
-		</div>
+			<div class="bottom-btns mt-3">
+				<button type="button" id="edit-btn-pdashboard"
+					onclick="editPatientDetails()" class="bottom-btns-edit">Edit</button>
+				<button type="submit" id="save-btn-pdashboard"
+					class="bottom-btns-submit">Save</button>
+				<button type="reset" id="cancel-btn-pdashboard"
+					onclick="editPatientDetails()" class="bottom-btns-cancel">Cancel</button>
+			</div>
 
-		<div class="bottom-btns mt-3">
-			<button type="button" id="edit-btn-pdashboard" onclick="editPatientDetails()" class="bottom-btns-edit">Edit</button>
-			<button type="submit" id="save-btn-pdashboard" class="bottom-btns-submit">Save</button>
-			<button type="reset" id="cancel-btn-pdashboard" onclick="editPatientDetails()" class="bottom-btns-cancel">Cancel</button>
-		</div>
-		
 		</form>
 	</div>
 	<%@include file="footer-black.jsp"%>
@@ -191,9 +234,52 @@
 							utilsScript : "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 						});
 	</script>
+	
+	 <script>
+        $(document).ready(function () {
+        // $("#Map").click(function () {
+            
+            var Street = "${userOb.street}";
+            var City =  "${userOb.city}";
+            var State =  "${userOb.state}";
+            var ZipCode =  "${userOb.zipcode}";
+
+                
+            // Define the address to geocode
+            var address = "https://maps.google.com/maps?q=" + Street + City + State + ZipCode + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
+            $("#gmap_canvas").attr("src", address);
+
+        });
+    // });
+    </script>	
+	
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/patient-profile.js' />"></script>
-	
+
+
+	<!-- Modal -->
+	<div class="modal fade " id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+
+				<div class="modal-body">
+
+
+					<div class="mapouter">
+						<div class="gmap_canvas">
+							<iframe width="100%" height="500" id="gmap_canvas" src=""
+								frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+						</div>
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

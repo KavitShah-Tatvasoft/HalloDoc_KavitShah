@@ -32,6 +32,7 @@ import hallodoc.email.EmailService;
 import hallodoc.enumerations.AspNetRolesEnum;
 import hallodoc.enumerations.DocType;
 import hallodoc.enumerations.RequestStatus;
+import hallodoc.helper.Constants;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
@@ -248,15 +249,18 @@ public class FamilyFriendRequestService {
 		RequestWiseFile requestWiseFile = new RequestWiseFile();
 
 		// Getting details from file obj
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
+		String formattedDate = sdf.format(currentDate);
 
 		CommonsMultipartFile file = commonRequestDto.getDocument();
 		String fileName = file.getOriginalFilename();
+		String storedFileName = "patient" + formattedDate +"-"+ fileName ;
+		String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.') + 1);
+		String name = commonRequestDto.getPtFirstName()+" "+commonRequestDto.getPtLastName();
+		String path = Constants.getUplaodPath(session) + storedFileName;
 		byte[] data = file.getBytes();
 
-		String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources"
-				+ File.separator + "fileuploads" + File.separator + "patient" + File.separator
-				+ file.getOriginalFilename();
-
+		
 		System.out.println(path);
 
 		try {
@@ -275,7 +279,10 @@ public class FamilyFriendRequestService {
 		requestWiseFile.setDocType(DocType.TEST_ONE.getDocId());
 		requestWiseFile.setFinalize(false);
 		requestWiseFile.setDeleted(false);
-
+		requestWiseFile.setUploaderName(name);
+		requestWiseFile.setFileExtension(fileExtension);
+		requestWiseFile.setStoredFileName(storedFileName);
+		
 		return requestWiseFile;
 	}
 

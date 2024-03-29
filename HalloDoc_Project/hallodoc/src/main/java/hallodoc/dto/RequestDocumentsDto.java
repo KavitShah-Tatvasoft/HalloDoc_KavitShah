@@ -2,6 +2,9 @@ package hallodoc.dto;
 
 import java.util.Date;
 
+import hallodoc.helper.Constants;
+import hallodoc.service.PatientService;
+
 public class RequestDocumentsDto {
 
 	private String confirmationNumber;
@@ -9,10 +12,19 @@ public class RequestDocumentsDto {
 	private Date createdDate;
 	private String uploaderName;
 	private String fileExtension;
+	private String storedFileName;
+	
+	
+	
+	
+	public String getStoredFileName() {
+		return storedFileName;
+	}
 
-	
-	
-	
+	public void setStoredFileName(String storedFileName) {
+		this.storedFileName = storedFileName;
+	}
+
 	public String getConfirmationNumber() {
 		return confirmationNumber;
 	}
@@ -55,21 +67,23 @@ public class RequestDocumentsDto {
 	
 	
 	
-	@Override
-	public String toString() {
-		return "RequestDocumentsDto [confirmationNumber=" + confirmationNumber + ", filename=" + filename
-				+ ", createdDate=" + createdDate + ", uploaderName=" + uploaderName + ", fileExtension=" + fileExtension
-				+ "]";
-	}
-	
+
 	public RequestDocumentsDto(String confirmationNumber, String filename, Date createdDate, String uploaderName,
-			String fileExtension) {
+			String fileExtension, String storedFileName) {
 		super();
 		this.confirmationNumber = confirmationNumber;
 		this.filename = filename;
 		this.createdDate = createdDate;
 		this.uploaderName = uploaderName;
 		this.fileExtension = fileExtension;
+		this.storedFileName = storedFileName;
+	}
+
+	@Override
+	public String toString() {
+		return "RequestDocumentsDto [confirmationNumber=" + confirmationNumber + ", filename=" + filename
+				+ ", createdDate=" + createdDate + ", uploaderName=" + uploaderName + ", fileExtension=" + fileExtension
+				+ ", storedFileName=" + storedFileName + "]";
 	}
 
 	public RequestDocumentsDto() {
@@ -77,5 +91,9 @@ public class RequestDocumentsDto {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public String getUrl() {
+		String prefix = Constants.CONTEXT_PATH;
+		return String.format("%s/%s/%s/%s/%s", prefix, "resources", "fileuploads", "patient", storedFileName);
+	}
 	
 }

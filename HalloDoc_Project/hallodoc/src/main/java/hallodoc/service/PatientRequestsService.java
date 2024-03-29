@@ -16,6 +16,7 @@ import com.password4j.types.Bcrypt;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.enumerations.DocType;
 import hallodoc.enumerations.RequestStatus;
+import hallodoc.helper.Constants;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUserRoles;
 import hallodoc.model.AspNetUsers;
@@ -263,17 +264,19 @@ public class PatientRequestsService {
 			Request request, HttpSession session) {
 
 		RequestWiseFile requestWiseFile = new RequestWiseFile();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
+		String formattedDate = sdf.format(currentDate);
 
 		// Getting details from file obj
 
 		CommonsMultipartFile file = createPatientRequestDto.getDocument();
 		String fileName = file.getOriginalFilename();
+		String storedFileName = "patient" + formattedDate +"-"+ fileName ;
+		String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.') + 1);
 		byte[] data = file.getBytes();
-
-		String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources"
-				+ File.separator + "fileuploads" + File.separator + "patient" + File.separator
-				+ file.getOriginalFilename();
-
+		String name = createPatientRequestDto.getFirstName()+" "+createPatientRequestDto.getLastName();
+		String path = Constants.getUplaodPath(session) + storedFileName;
 		System.out.println(path);
 
 		try {
@@ -292,6 +295,9 @@ public class PatientRequestsService {
 		requestWiseFile.setDocType(DocType.TEST_ONE.getDocId());
 		requestWiseFile.setFinalize(false);
 		requestWiseFile.setDeleted(false);
+		requestWiseFile.setUploaderName(name);
+		requestWiseFile.setFileExtension(fileExtension);
+		requestWiseFile.setStoredFileName(storedFileName);
 
 		return requestWiseFile;
 	}

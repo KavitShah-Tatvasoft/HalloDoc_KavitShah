@@ -1,5 +1,7 @@
 package hallodoc.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -317,7 +319,15 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
+	public LocalDate getDateObject() {
+		String stringDate = intDate+" "+strMonth+", "+intYear;
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM, yyyy");
+		LocalDate date = LocalDate.parse(stringDate, format);
+		return date;
+	}
+	
 	
 	
 	

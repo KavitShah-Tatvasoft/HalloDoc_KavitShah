@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "request_wise_file")
 public class RequestWiseFile {
@@ -28,6 +31,9 @@ public class RequestWiseFile {
 	
 	@Column(name = "file_name")
 	private String fileName;
+	
+	@Column(name = "stored_file_name")
+	private String storedFileName;
 	
 	@Column(name = "created_date")
 	private Date createdDate;
@@ -65,6 +71,16 @@ public class RequestWiseFile {
 	private String fileExtension;
 	
 	
+	
+	
+
+	public String getStoredFileName() {
+		return storedFileName;
+	}
+
+	public void setStoredFileName(String storedFileName) {
+		this.storedFileName = storedFileName;
+	}
 
 	public String getUploaderName() {
 		return uploaderName;
@@ -163,13 +179,15 @@ public class RequestWiseFile {
 	}
 
 	
-	public RequestWiseFile(int requestWiseFileId, Request request, String fileName, Date createdDate,
-			Physician physician, Admin admin, int docType, boolean isFinalize, boolean isDeleted,
+	
+	public RequestWiseFile(int requestWiseFileId, Request request, String fileName, String storedFileName,
+			Date createdDate, Physician physician, Admin admin, int docType, boolean isFinalize, boolean isDeleted,
 			boolean isPatientRecords, String uploaderName, String fileExtension) {
 		super();
 		this.requestWiseFileId = requestWiseFileId;
 		this.request = request;
 		this.fileName = fileName;
+		this.storedFileName = storedFileName;
 		this.createdDate = createdDate;
 		this.physician = physician;
 		this.admin = admin;
@@ -184,10 +202,10 @@ public class RequestWiseFile {
 	@Override
 	public String toString() {
 		return "RequestWiseFile [requestWiseFileId=" + requestWiseFileId + ", request=" + request + ", fileName="
-				+ fileName + ", createdDate=" + createdDate + ", physician=" + physician + ", admin=" + admin
-				+ ", docType=" + docType + ", isFinalize=" + isFinalize + ", isDeleted=" + isDeleted
-				+ ", isPatientRecords=" + isPatientRecords + ", uploaderName=" + uploaderName + ", fileExtension="
-				+ fileExtension + "]";
+				+ fileName + ", storedFileName=" + storedFileName + ", createdDate=" + createdDate + ", physician="
+				+ physician + ", admin=" + admin + ", docType=" + docType + ", isFinalize=" + isFinalize
+				+ ", isDeleted=" + isDeleted + ", isPatientRecords=" + isPatientRecords + ", uploaderName="
+				+ uploaderName + ", fileExtension=" + fileExtension + "]";
 	}
 
 	public RequestWiseFile() {

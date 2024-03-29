@@ -56,7 +56,7 @@ public class RequestDao {
 	
 	public List<RequestDocumentsDto> getDocuments(int id){
 		Session s = this.sessionFactory.openSession();
-		String query = "select new hallodoc.dto.RequestDocumentsDto(re.confirmationNumber, rwf.fileName, rwf.createdDate, rwf.uploaderName, rwf.fileExtension) from Request re left join RequestWiseFile rwf on re.requestId = rwf.request.requestId where re.requestId=:reqId";
+		String query = "select new hallodoc.dto.RequestDocumentsDto(re.confirmationNumber, rwf.fileName, rwf.createdDate, rwf.uploaderName, rwf.fileExtension, rwf.storedFileName) from Request re left join RequestWiseFile rwf on re.requestId = rwf.request.requestId where re.requestId=:reqId";
 		Query<RequestDocumentsDto> query1 = s.createQuery(query);
 		query1.setParameter("reqId", id);
 		List<RequestDocumentsDto> requests = query1.list();
