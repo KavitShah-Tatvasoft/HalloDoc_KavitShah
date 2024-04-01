@@ -66,14 +66,14 @@
 
 
 								<div class="continue-cancel-flex" id="link-for-me">
-									<a href="submit-information-me.html"><div type="button"
+									<a href="<c:url value='registeredPatientMeRequest' />"><div type="button"
 											class="me-type-btn">Continue</div></a>
 									<button type="button" class="else-type-btn"
 										data-bs-dismiss="modal">Cancel</button>
 								</div>
 
 								<div class="continue-cancel-flex" id="link-for-someone-else">
-									<a href="submit-information-someonelse.html"><div
+									<a href="<c:url value='registeredPatientOthersRequest' />"><div
 											type="button" class="me-type-btn">Continue</div></a>
 									<button type="button" class="else-type-btn"
 										data-bs-dismiss="modal">Cancel</button>
@@ -162,7 +162,10 @@
 							<td class="responsive-flex"><c:set var="adminName"
 									value="${dataOb.adminFirstName}" /> <c:choose>
 									<c:when test="${empty adminName}">
-
+										<button class="table-btn-contact">
+											<span class="table-btn-contact-flex"><img
+												src="<c:url value='/resources/images/person.svg' />" alt="">No Admin</span>
+										</button>
 									</c:when>
 									<c:otherwise>
 										<button class="table-btn-contact">
@@ -173,7 +176,10 @@
 								</c:choose> <c:set var="physicianName" value="${dataOb.physicianFirstName}" />
 								<c:choose>
 									<c:when test="${empty physicianName}">
-
+										<button class="table-btn-contact">
+											<span class="table-btn-contact-flex"><img
+												src="<c:url value='/resources/images/person-add.svg' />" alt="">No Physician</span>
+										</button>
 									</c:when>
 									<c:otherwise>
 										<button class="table-btn-contact">
@@ -186,7 +192,7 @@
 							<c:set var="documents" value="${dataOb.count}" />
 							<c:choose>
 								<c:when test="${documents == 0}">
-									<td><span class="doc-btn">No File Uploaded</span></a></td>
+									<td></td>
 								</c:when>
 								<c:otherwise>
 									<td><a

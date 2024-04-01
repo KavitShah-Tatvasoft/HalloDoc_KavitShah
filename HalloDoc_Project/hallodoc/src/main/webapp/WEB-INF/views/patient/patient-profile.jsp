@@ -237,7 +237,6 @@
 	
 	 <script>
         $(document).ready(function () {
-        // $("#Map").click(function () {
             
             var Street = "${userOb.street}";
             var City =  "${userOb.city}";
@@ -250,7 +249,6 @@
             $("#gmap_canvas").attr("src", address);
 
         });
-    // });
     </script>	
 	
 

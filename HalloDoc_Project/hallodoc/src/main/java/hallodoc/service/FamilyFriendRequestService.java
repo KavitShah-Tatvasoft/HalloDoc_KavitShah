@@ -167,11 +167,11 @@ public class FamilyFriendRequestService {
 		userOb.setLastName(commonRequestDto.getPtLastName());
 		userOb.setEmail(commonRequestDto.getPtEmail());
 		userOb.setMobile(commonRequestDto.getPtMobileNumber());
-		userOb.setStreet(commonRequestDto.getPtStreet());
-		userOb.setState(commonRequestDto.getPtState());
-		userOb.setCity(commonRequestDto.getPtCity());
-		userOb.setZipcode(commonRequestDto.getPtZipcode());
-		userOb.setRegion(region);
+//		userOb.setStreet(commonRequestDto.getPtStreet());
+//		userOb.setState(commonRequestDto.getPtState());
+//		userOb.setCity(commonRequestDto.getPtCity());
+//		userOb.setZipcode(commonRequestDto.getPtZipcode());
+//		userOb.setRegion(region);
 		userOb.setStrMonth(monthName);
 		userOb.setIntYear(year);
 		userOb.setIntDate(day);
@@ -256,7 +256,7 @@ public class FamilyFriendRequestService {
 		String fileName = file.getOriginalFilename();
 		String storedFileName = "patient" + formattedDate +"-"+ fileName ;
 		String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.') + 1);
-		String name = commonRequestDto.getPtFirstName()+" "+commonRequestDto.getPtLastName();
+		String name = commonRequestDto.getReqFirstName()+" "+commonRequestDto.getReqLastName();
 		String path = Constants.getUplaodPath(session) + storedFileName;
 		byte[] data = file.getBytes();
 
@@ -297,11 +297,11 @@ public class FamilyFriendRequestService {
 		user.setFirstName(commonRequestDto.getPtFirstName());
 		user.setLastName(commonRequestDto.getPtLastName());
 		user.setMobile(commonRequestDto.getPtMobileNumber());
-		user.setStreet(commonRequestDto.getPtStreet());
-		user.setCity(commonRequestDto.getPtCity());
-		user.setState(commonRequestDto.getPtState());
-		user.setRegion(region);
-		user.setZipcode(commonRequestDto.getPtZipcode());
+//		user.setStreet(commonRequestDto.getPtStreet());
+//		user.setCity(commonRequestDto.getPtCity());
+//		user.setState(commonRequestDto.getPtState());
+//		user.setRegion(region);
+//		user.setZipcode(commonRequestDto.getPtZipcode());
 		user.setIntDate(day);
 		user.setIntYear(year);
 		user.setStrMonth(month);
@@ -464,7 +464,7 @@ public class FamilyFriendRequestService {
 		UpdateAspNetUser(commonRequestDto, aspNetUsers, region, day, year, monthName, currentDate);
 
 		// Getting Request Type Object
-		requestType = requestTypeDao.getRequestTypeObject(AspNetRolesEnum.PATIENT.getAspNetRolesName());
+		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.FAMILY.getRequestType());
 
 		// Setting the request object
 		request = createRequest(commonRequestDto, currentDate, requestType, user, region);
@@ -510,26 +510,19 @@ public class FamilyFriendRequestService {
 	public boolean createNewFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws Exception {
 
-		String ptPhoneNumber = commonRequestDto.getPtMobileNumber();
 		String reqPhoneNumber = commonRequestDto.getReqMobileNumber();
-		String ptZipCode = commonRequestDto.getPtZipcode();
-
+		String ptPhoneNumber = commonRequestDto.getPtMobileNumber();
+		
 		String regex = "^\\d{10}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(ptPhoneNumber);
 		Matcher matcher2 = pattern.matcher(reqPhoneNumber);
 
-		String regex1 = "^\\d+$";
-		Pattern pattern1 = Pattern.compile(regex1);
-		Matcher matcher1 = pattern1.matcher(ptZipCode);
+		
 
 //	if (!matcher.matches()) {
 //		return false;
 //		}
-//
-//		else if (!matcher1.matches()) {
-//		return false;
-//	}
 //
 //		else if (!matcher2.matches()) {
 //			return false;

@@ -10,23 +10,30 @@ import hallodoc.dto.UserProfileDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
+import hallodoc.model.RequestClient;
+import hallodoc.model.RequestType;
+import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetUserDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
+import hallodoc.repository.RequestTypeDao;
 import hallodoc.repository.UserDao;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -53,6 +60,9 @@ public class PatientService {
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private RequestTypeDao requestTypeDao;
+	
 	public List<DashboardDataDto> getDashboardData(AspNetUsers aspNetUsers) {
 
 		User user = aspNetUsers.getUser();
@@ -157,57 +167,118 @@ public class PatientService {
 	}
 
 	public void updateUserProfile(UserProfileDto userProfileDto, HttpServletRequest request) {
-		
-		
-			
-			AspNetUsers aspNetUsers = (AspNetUsers)request.getSession().getAttribute("aspUser");
-			System.out.println("Hello");
-			User user = aspNetUsers.getUser();
-			System.out.println(userProfileDto);
-			System.out.println(userProfileDto.getUserDOB());
-			
+
+		Date modDate = new Date();
+		AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
+		System.out.println("Hello");
+		User user = aspNetUsers.getUser();
+		System.out.println(userProfileDto);
+		System.out.println(userProfileDto.getUserDOB());
+
 //			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 //			LocalDate date = LocalDate.parse(userProfileDto.getUserDOB(), format);
 //			System.out.println(date);
 //			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-			
-			String[] monthArray = {"January","February","March","April","May","June","July","August","September","October","November","December"};
-			String dateString = userProfileDto.getUserDOB().format(userProfileDto.getUserDOB());
-			String[] tokens = dateString.split("-");
-			int year = Integer.parseInt(tokens[0]);
-			int day = Integer.parseInt(tokens[2]);
-			int month = Integer.parseInt(tokens[1]);
-			String monthName = monthArray[month-1];
+
+		String[] monthArray = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+				"October", "November", "December" };
+		String dateString = userProfileDto.getUserDOB().format(userProfileDto.getUserDOB());
+		String[] tokens = dateString.split("-");
+		int year = Integer.parseInt(tokens[0]);
+		int day = Integer.parseInt(tokens[2]);
+		int month = Integer.parseInt(tokens[1]);
+		String monthName = monthArray[month - 1];
 //			String monthName = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(userProfileDto.getUserDOB());
-			
-			user.setFirstName(userProfileDto.getUserFirstName());
-			user.setLastName(userProfileDto.getUserLastName());
-			user.setIntDate(day);
-			user.setIntYear(year);
-			user.setStrMonth(monthName);
-			
-			if(userProfileDto.getUserMobile().startsWith("0")) {
-				String mobile = userProfileDto.getUserMobile().substring(1);
-				user.setMobile(mobile);
-			}
-			else {
-				String mobile = userProfileDto.getUserMobile();
-				user.setMobile(mobile);
-			}
-			
-			user.setStreet(userProfileDto.getUserStreet());
-			user.setCity(userProfileDto.getUserCity());
-			user.setState(userProfileDto.getUserState());
-			user.setZipcode(userProfileDto.getUserZipCode());
-			
-			aspNetUsers.setUser(user);
-			
-			apsnetuserdao.updateAspNetUser(aspNetUsers);
-			System.out.println("updated aspuser");
-			request.getSession(false).removeAttribute("aspUser");
-			request.getSession(false).setAttribute("aspUser", aspNetUsers);
-			
-			
+
+		user.setFirstName(userProfileDto.getUserFirstName());
+		user.setLastName(userProfileDto.getUserLastName());
+		user.setIntDate(day);
+		user.setIntYear(year);
+		user.setStrMonth(monthName);
+
+		if (userProfileDto.getUserMobile().startsWith("0")) {
+			String mobile = userProfileDto.getUserMobile().substring(1);
+			user.setMobile(mobile);
+		} else {
+			String mobile = userProfileDto.getUserMobile();
+			user.setMobile(mobile);
+		}
+
+		List<Region> regionList = regionDao.getRegionEntry(userProfileDto.getUserState());
+		try {
+			Region region = regionList.get(0);
+			user.setRegion(region);
+		} catch (Exception e) {
+			System.out.println("Region not found");
+		}
+
+		user.setStreet(userProfileDto.getUserStreet());
+		user.setCity(userProfileDto.getUserCity());
+		user.setState(userProfileDto.getUserState());
+		user.setZipcode(userProfileDto.getUserZipCode());
+		user.setModifiedDate(modDate);
 		
+		aspNetUsers.setPhone_number(user.getMobile());
+		aspNetUsers.setUser(user);
+		
+		apsnetuserdao.updateAspNetUser(aspNetUsers);
+		System.out.println("updated aspuser");
+		
+		//updating request table
+		RequestType requestTypePatient = requestTypeDao.getRequestTypeObject("Patient");
+		List<Request> reqList = requestDao.getUserRequestByType(user,requestTypePatient);
+
+		for (Request requestListData : reqList) {
+			requestListData.setFirstName(userProfileDto.getUserFirstName());
+			requestListData.setLastName(userProfileDto.getUserLastName());
+			requestListData.setPhoneNumber(user.getMobile());
+			requestListData.setModifieDate(modDate);
+			
+			//updating requestWiseFile
+			
+			List<RequestWiseFile> reqWiseFileList = requestListData.getListRequestWiseFiles();
+			List<RequestWiseFile> updatedList = new ArrayList();
+			for (RequestWiseFile requestWiseFile : reqWiseFileList) {
+				requestWiseFile.setUploaderName(userProfileDto.getUserFirstName()+" "+userProfileDto.getUserLastName());
+				updatedList.add(requestWiseFile);
+			}
+			
+			requestListData.setListRequestWiseFiles(updatedList);
+			
+			//updating requestClient table
+			
+			RequestClient client = requestListData.getRequestClient();
+			client.setFirstName(userProfileDto.getUserFirstName());
+			client.setLastName(userProfileDto.getUserLastName());
+			client.setPhoneNumber(user.getMobile());
+			client.setNotiMobile(user.getMobile());
+			client.setIntDate(day);
+			client.setIntYear(year);
+			client.setStrMonth(monthName);
+			
+			requestListData.setRequestClient(client);
+			
+			requestDao.updateRequest(requestListData);
+		}
+		
+		List<Request> reqListOtherType = requestDao.getUserRequestByOtherType(user,requestTypePatient);
+		for (Request requestOther : reqListOtherType) {
+			RequestClient client = requestOther.getRequestClient();
+			client.setFirstName(userProfileDto.getUserFirstName());
+			client.setLastName(userProfileDto.getUserLastName());
+			client.setPhoneNumber(user.getMobile());
+			client.setNotiMobile(user.getMobile());
+			client.setIntDate(day);
+			client.setIntYear(year);
+			client.setStrMonth(monthName);
+			
+			requestOther.setRequestClient(client);
+			requestDao.updateRequest(requestOther);
+		}
+		
+		
+		request.getSession(false).removeAttribute("aspUser");
+		request.getSession(false).setAttribute("aspUser", aspNetUsers);
+
 	}
 }

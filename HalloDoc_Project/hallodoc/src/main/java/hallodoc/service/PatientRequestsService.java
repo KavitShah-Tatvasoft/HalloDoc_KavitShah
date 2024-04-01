@@ -313,11 +313,11 @@ public class PatientRequestsService {
 		user.setFirstName(createPatientRequestDto.getFirstName());
 		user.setLastName(createPatientRequestDto.getLastName());
 		user.setMobile(createPatientRequestDto.getMobileNumber());
-		user.setStreet(createPatientRequestDto.getStreet());
-		user.setCity(createPatientRequestDto.getCity());
-		user.setState(createPatientRequestDto.getState());
-		user.setZipcode(createPatientRequestDto.getZipcode());
-		user.setRegion(region);
+//		user.setStreet(createPatientRequestDto.getStreet());
+//		user.setCity(createPatientRequestDto.getCity());
+//		user.setState(createPatientRequestDto.getState());
+//		user.setZipcode(createPatientRequestDto.getZipcode());
+//		user.setRegion(region);
 		user.setIntDate(day);
 		user.setIntYear(year);
 		user.setStrMonth(monthName);
@@ -454,19 +454,13 @@ public class PatientRequestsService {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(phoneNumber);
 
-		String regex1 = "^\\d+$";
-		Pattern pattern1 = Pattern.compile(regex1);
-		Matcher matcher1 = pattern1.matcher(zipCode);
+		
 
 		if (!(pass1.equals(pass2))) {
 			return false;
 		}
 
 		else if (!matcher.matches()) {
-			return false;
-		}
-
-		else if (!matcher1.matches()) {
 			return false;
 		}
 

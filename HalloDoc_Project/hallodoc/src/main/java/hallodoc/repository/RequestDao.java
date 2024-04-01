@@ -1,5 +1,6 @@
 package hallodoc.repository;
 
+import java.net.Authenticator.RequestorType;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import hallodoc.dto.DashboardDataDto;
 import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.model.Request;
+import hallodoc.model.RequestType;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 
@@ -60,6 +62,7 @@ public class RequestDao {
 		Query<RequestDocumentsDto> query1 = s.createQuery(query);
 		query1.setParameter("reqId", id);
 		List<RequestDocumentsDto> requests = query1.list();
+		s.close();
 		return requests;
 	}
 
@@ -75,6 +78,33 @@ public class RequestDao {
 		System.out.println("Query result obtained");
 		s.close();
 		return results;
+	}
+	
+	public List<Request> getUserRequestByType(User user,RequestType reqType){
+		Session s = this.sessionFactory.openSession();
+		String hql = "from Request as req where req.user=:user and req.requestType=:reqType";
+		Query query = s.createQuery(hql);
+		query.setParameter("user", user);
+		query.setParameter("reqType", reqType);
+		List<Request> reqList = query.list();
+		s.close();
+		return reqList;
+	}
+	
+	public List<Request> getUserRequestByOtherType(User user,RequestType reqType){
+		Session s = this.sessionFactory.openSession();
+		String hql = "from Request as req where req.user=:user and req.requestType!=:reqType";
+		Query query = s.createQuery(hql);
+		query.setParameter("user", user);
+		query.setParameter("reqType", reqType);
+		List<Request> reqList = query.list();
+		s.close();
+		return reqList;
+	}
+	
+	@Transactional
+	public void updateRequest(Request request) {
+		this.hibernateTemplate.update(request);
 	}
 
 }

@@ -157,11 +157,11 @@ public class ConciergeRequestService {
 		userOb.setLastName(commonRequestDto.getPtLastName());
 		userOb.setEmail(commonRequestDto.getPtEmail());
 		userOb.setMobile(commonRequestDto.getPtMobileNumber());
-		userOb.setStreet(commonRequestDto.getReqStreet());
-		userOb.setState(commonRequestDto.getReqState());
-		userOb.setCity(commonRequestDto.getReqCity());
-		userOb.setZipcode(commonRequestDto.getReqZipcode());
-		userOb.setRegion(region);
+//		userOb.setStreet(commonRequestDto.getReqStreet());
+//		userOb.setState(commonRequestDto.getReqState());
+//		userOb.setCity(commonRequestDto.getReqCity());
+//		userOb.setZipcode(commonRequestDto.getReqZipcode());
+//		userOb.setRegion(region);
 		userOb.setStrMonth(monthName);
 		userOb.setIntYear(year);
 		userOb.setIntDate(day);
@@ -365,7 +365,7 @@ public class ConciergeRequestService {
 		UpdateAspNetUser(commonRequestDto, aspNetUsers, region, day, year, monthName, currentDate);
 
 		// Getting Request Type Object
-		requestType = requestTypeDao.getRequestTypeObject(AspNetRolesEnum.PATIENT.getAspNetRolesName());
+		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.CONCIERGE.getRequestType());
 
 		// Setting the request object
 		request = createRequest(commonRequestDto, currentDate, requestType, user, region);

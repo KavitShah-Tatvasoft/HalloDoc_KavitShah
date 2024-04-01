@@ -81,7 +81,7 @@
 <!-- 		Main Nav Bar -->
 
 		<ul class="nav nav-underline cm-margin ms-3 inner-nav">
-			<li class="nav-item"><a class="nav-link" aria-current="page"
+			<li class="nav-item"><a class="nav-link active" aria-current="page"
 				href="<c:url value='/patientDashboard' />">Dashboard</a></li>
 			<li class="nav-item"><a class="nav-link"
 				href="<c:url value='/patientProfile' />">Profile</a></li>

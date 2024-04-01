@@ -1,7 +1,11 @@
-
-a{
-    text-decoration: none;
+.nav-underline .nav-link.active{
+    font-weight: 500 !important;
+    color: #01bce9 !important;
+    border-bottom-color: currentcolor;
 }
+a{
+    text-decoration: none !important;
+} 
 
 body{
     background-color: #f9f9f9 !important;
@@ -211,7 +215,7 @@ a.nav-link {
     }
 
     .cm-margin{
-        display: none;
+        display: none !important;
     }
 
     .rounded{

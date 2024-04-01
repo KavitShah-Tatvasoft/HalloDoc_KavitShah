@@ -157,11 +157,4 @@ public class CreatePatientRequestDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }

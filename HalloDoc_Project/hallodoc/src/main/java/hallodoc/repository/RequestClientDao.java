@@ -1,5 +1,7 @@
 package hallodoc.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
@@ -23,5 +25,6 @@ public class RequestClientDao {
 		int id = (Integer) this.hibernateTemplate.save(requestClient);
 		return id;
 	}
+	
 
 }

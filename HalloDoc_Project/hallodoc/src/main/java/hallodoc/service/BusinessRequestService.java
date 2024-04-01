@@ -160,11 +160,11 @@ public class BusinessRequestService {
 		userOb.setLastName(commonRequestDto.getPtLastName());
 		userOb.setEmail(commonRequestDto.getPtEmail());
 		userOb.setMobile(commonRequestDto.getPtMobileNumber());
-		userOb.setStreet(commonRequestDto.getPtStreet());
-		userOb.setState(commonRequestDto.getPtState());
-		userOb.setCity(commonRequestDto.getPtCity());
-		userOb.setZipcode(commonRequestDto.getPtZipcode());
-		userOb.setRegion(region);
+//		userOb.setStreet(commonRequestDto.getPtStreet());
+//		userOb.setState(commonRequestDto.getPtState());
+//		userOb.setCity(commonRequestDto.getPtCity());
+//		userOb.setZipcode(commonRequestDto.getPtZipcode());
+//		userOb.setRegion(region);
 		userOb.setStrMonth(monthName);
 		userOb.setIntYear(year);
 		userOb.setIntDate(day);
@@ -469,8 +469,8 @@ public class BusinessRequestService {
 		UpdateAspNetUser(commonRequestDto, aspNetUsers, region, day, year, monthName, currentDate);
 
 		// Getting Request Type Object
-		requestType = requestTypeDao.getRequestTypeObject(AspNetRolesEnum.PATIENT.getAspNetRolesName());
-
+		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.BUSINESS.getRequestType());
+		
 		// Setting the request object
 		request = createRequest(commonRequestDto, currentDate, requestType, user, region);
 
