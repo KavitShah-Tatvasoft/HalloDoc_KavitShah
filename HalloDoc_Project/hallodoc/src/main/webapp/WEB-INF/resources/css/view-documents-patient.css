@@ -170,6 +170,7 @@ input[type="file"]{
     border-radius: 5px;
     padding: 3px 6px;
     background-color: white;
+    display: inline-block;
 }
 
 .cloud-btn-down {

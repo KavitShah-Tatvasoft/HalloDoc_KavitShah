@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import hallodoc.dto.CommonRequestDto;
+import hallodoc.dto.SomeoneElseRequestDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
 import hallodoc.model.User;
@@ -72,6 +73,31 @@ public class EmailService {
 
 		mailSender.send(messagePreparator);
 	}
+	
+	public void sendCreatePasswordMailForOthers(SomeoneElseRequestDto someoneElseRequestDto, HttpServletRequest httpServletRequest,
+			LocalDateTime date, EmailToken token) {
+		String name = capitalize(someoneElseRequestDto.getFirstName()) + " "
+				+ capitalize(someoneElseRequestDto.getLastName());
+		String url = getBaseUrl(httpServletRequest) + "/createPatient/" + token.getToken();
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(someoneElseRequestDto.getEmail());
+				message.setSubject("Create Password Link");
+				String content = "<html><h1>Create Password Request<h1>" + "<br>" + "<h2> Hello, " + name + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">We have received an account creation request. "
+						+ "So,in order to create your account we need your password,so please click the below link to create password:</p>"
+						+ " <a href=" + url + ">Click here to create your password</a> <br>"
+						+ "<p>If you didn't request an account creation then please ignore this mail.</p>" + "</html>";
+				message.setText(content, true);
+
+			}
+		};
+
+		mailSender.send(messagePreparator);
+	}
+	
 	
 	public void resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest,
 			LocalDateTime date, EmailToken token) {

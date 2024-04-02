@@ -8,6 +8,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -29,7 +31,7 @@
 <script src="<c:url value="/resources/js/patient-dashboard.js" />"></script>
 <title>Patient Dashboard</title>
 </head>
-<body>
+<body onload="showToast(${showalert})">
 	<%@ include file="patient-navbar.jsp"%>
 	<div class="container-fluid main-container relative-pos-class">
 		<div class="main-container-top-text">Medical History</div>
@@ -66,8 +68,8 @@
 
 
 								<div class="continue-cancel-flex" id="link-for-me">
-									<a href="<c:url value='registeredPatientMeRequest' />"><div type="button"
-											class="me-type-btn">Continue</div></a>
+									<a href="<c:url value='registeredPatientMeRequest' />"><div
+											type="button" class="me-type-btn">Continue</div></a>
 									<button type="button" class="else-type-btn"
 										data-bs-dismiss="modal">Cancel</button>
 								</div>
@@ -164,7 +166,8 @@
 									<c:when test="${empty adminName}">
 										<button class="table-btn-contact">
 											<span class="table-btn-contact-flex"><img
-												src="<c:url value='/resources/images/person.svg' />" alt="">No Admin</span>
+												src="<c:url value='/resources/images/person.svg' />" alt="">No
+												Admin</span>
 										</button>
 									</c:when>
 									<c:otherwise>
@@ -178,7 +181,8 @@
 									<c:when test="${empty physicianName}">
 										<button class="table-btn-contact">
 											<span class="table-btn-contact-flex"><img
-												src="<c:url value='/resources/images/person-add.svg' />" alt="">No Physician</span>
+												src="<c:url value='/resources/images/person-add.svg' />"
+												alt="">No Physician</span>
 										</button>
 									</c:when>
 									<c:otherwise>
@@ -216,8 +220,9 @@
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="panelsStayOpen-headingOne">
 							<button class="accordion-button" type="button"
-								data-bs-toggle="collapse" data-bs-target="#id${dataOb.requestId }"
-								aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+								data-bs-toggle="collapse"
+								data-bs-target="#id${dataOb.requestId }" aria-expanded="false"
+								aria-controls="panelsStayOpen-collapseOne">
 								<span class="mobile-card-case-flex"> <img
 									src="<c:url value='/resources/images/clock-blue.svg' />" alt="">
 									<fmt:formatDate value="${dataOb.createdDate}"
@@ -226,7 +231,8 @@
 								</span>
 							</button>
 						</h2>
-						<div id="id${dataOb.requestId }" class="accordion-collapse collapse"
+						<div id="id${dataOb.requestId }"
+							class="accordion-collapse collapse"
 							aria-labelledby="panelsStayOpen-headingOne">
 							<div class="accordion-body">
 								<div class="accordian-case-outer-flex">
@@ -341,8 +347,10 @@
 
 										</c:when>
 										<c:otherwise>
-											<a href="<c:url value='/patientViewRequestDocuments/${dataOb.requestId }' />">
-												<div class="doc-btn extra-prop-doc-btn">(${dataOb.count}) Documents</div>
+											<a
+												href="<c:url value='/patientViewRequestDocuments/${dataOb.requestId }' />">
+												<div class="doc-btn extra-prop-doc-btn">(${dataOb.count})
+													Documents</div>
 											</a>
 										</c:otherwise>
 									</c:choose>
@@ -357,12 +365,50 @@
 
 		</div>
 	</div>
+	
+		<div class="toaster">
+		<div class="toaster-content">
+				<c:set var="status" value="${showAlertTypeJsp}" />
+				
+				<c:choose>
+					<c:when test="${status == 'faliure'}">
+						<i class="uil uil-exclamation toaster-check"></i>
+					</c:when>
+					<c:otherwise>
+						<i class="uil uil-check toaster-check"></i>
+					</c:otherwise>
+				</c:choose>
+				
+				
+			
+			<div class="message">
+
+				<c:choose>
+					<c:when test="${status == 'faliure'}">
+						<span class="message-text text-1">Faliure</span>
+					</c:when>
+					<c:when test="${status == 'success'}">
+						<span class="message-text text-1">Success</span>
+					</c:when>
+					<c:otherwise>
+						<span class="message-text text-1">Message</span>
+					</c:otherwise>
+				</c:choose>
+
+				<span class="message-text text-2"> ${msg}</span>
+			</div>
+		</div>
+		<i class="uil uil-multiply toaster-close"></i>
+		<div class="progress"></div>
+	</div>
 
 	<%@ include file="footer-black.jsp"%>
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
+	<script src="<c:url value='/resources/js/toasters.js' />"></script>
 	<script
-	src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' />">
-</body>
-</body>
-</html>
+		src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' />">
+		</body>
+		</body>
+		</html>
+	

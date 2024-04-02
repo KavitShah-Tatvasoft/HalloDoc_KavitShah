@@ -142,9 +142,8 @@
 					<!--Street col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="street" class="form-control input-2"
-							id="street" placeholder="Street" autocomplete="off">
-						<label for="street">Street</label>
-						<span id="street_error"></span>
+							id="street" placeholder="Street" autocomplete="off"> <label
+							for="street">Street</label> <span id="street_error"></span>
 					</div>
 				</div>
 
@@ -152,19 +151,27 @@
 					<!--City col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="city" class="form-control input-2"
-							id="city" placeholder="City" autocomplete="off">
-						<label for="city">City</label>
-						<span id="city_error"></span>
+							id="city" placeholder="City" autocomplete="off"> <label
+							for="city">City</label> <span id="city_error"></span>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<!--State col-->
 					<div class="form-floating mb-3 inp">
-						<input type="text" name="state" class="form-control input-2"
-							id="state" placeholder="State" autocomplete="off">
-						<label for="state">State</label>
-						<span id="state_error"></span>
+						<!-- 						<input type="text" name="state" class="form-control input-2" -->
+						<!-- 							id="state" placeholder="State" autocomplete="off"> -->
+						<!-- 						<label for="state">State</label> -->
+
+						<select name="state" id="state" class="form-control input-2">
+
+
+							<c:forEach items="${regions}" var="regionOb">
+								<option value="${regionOb.name}">${regionOb.name}</option>
+							</c:forEach>
+
+
+						</select> <label for="state">State</label> <span id="state_error"></span>
 					</div>
 				</div>
 
@@ -172,9 +179,8 @@
 					<!--Zip Code col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="zipcode" class="form-control input-2"
-							id="zipcode" placeholder="Zip Code" autocomplete="off">
-						<label for="zipcode">Zip Code</label>
-						<span id="zipcode_error"></span>
+							id="zipcode" placeholder="Zip Code" autocomplete="off"> <label
+							for="zipcode">Zip Code</label> <span id="zipcode_error"></span>
 					</div>
 				</div>
 
@@ -263,6 +269,7 @@
 	</script>
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
-	<script src="<c:url value='/resources/js/submit-information-me-else.js' />"></script>
+	<script
+		src="<c:url value='/resources/js/submit-information-me-else.js' />"></script>
 </body>
 </html>

@@ -47,7 +47,6 @@ public class PatientLoginController {
 
 	@Autowired
 	private EmailService emailService;
-	
 
 	@RequestMapping("/patientHome")
 	public String patientHomePage() {
@@ -121,10 +120,13 @@ public class PatientLoginController {
 	}
 
 	@RequestMapping(value = "sendResetPasswordRequest", method = RequestMethod.POST)
-	public String resetPasswordRequest(@RequestParam("email") String email, HttpServletRequest httpServletRequest) {
+	public RedirectView resetPasswordRequest(@RequestParam("email") String email, HttpServletRequest httpServletRequest,
+			RedirectAttributes attributes) {
 		String emailStatus = emailService.sendForgetPasswordMail(httpServletRequest, email);
 		System.out.println(emailStatus);
-		return "patient/patient-login";
+		attributes.addFlashAttribute("message", "Reset Email sent Successfully");
+		attributes.addFlashAttribute("alertType", "success");
+		return new RedirectView("patient_login");
 	}
 
 	@RequestMapping("/patient_submit_request")
@@ -133,10 +135,10 @@ public class PatientLoginController {
 	}
 
 	@RequestMapping("/patient_login")
-	public  ModelAndView RegisteredPatientLogin(HttpServletRequest request) {
+	public ModelAndView RegisteredPatientLogin(HttpServletRequest request) {
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		ModelAndView modelAndView = new ModelAndView("patient/patient-login");
-		
+
 		if (inputFlashMap != null) {
 			String message = (String) inputFlashMap.get("message");
 			String showAlertType = (String) inputFlashMap.get("alertType");
@@ -148,51 +150,52 @@ public class PatientLoginController {
 		}
 		return modelAndView;
 	}
-	
+
 	@RequestMapping("/patientDashboard")
 	public ModelAndView PatientDashboard(HttpServletRequest request) {
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		ModelAndView modelAndView = new ModelAndView("patient/patient-dashboard");
 		if (inputFlashMap != null) {
+			System.out.println("Not null");
 			String message = (String) inputFlashMap.get("message");
 			String showAlertType = (String) inputFlashMap.get("alertType");
 			modelAndView.addObject("msg", message);
 			modelAndView.addObject("showalert", true);
 			modelAndView.addObject("showAlertTypeJsp", showAlertType);
 		} else {
+			System.out.println("null");
 			modelAndView.addObject("showalert", false);
 		}
-		
+
 		AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
 		List<DashboardDataDto> data = pService.getDashboardData(aspNetUsers);
 		modelAndView.addObject("requestData", data);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping("/patientProfile")
 	public String patientProfile(HttpServletRequest request, Model m) {
-		
+
 		try {
 			HttpSession session = request.getSession(false);
-			AspNetUsers aspNetUsers = (AspNetUsers)session.getAttribute("aspUser"); 
+			AspNetUsers aspNetUsers = (AspNetUsers) session.getAttribute("aspUser");
 			User user = aspNetUsers.getUser();
-			m.addAttribute("userOb",user);
+			m.addAttribute("userOb", user);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Session not found");
 		}
-		
+
 		List<Region> regionList = pService.getAllRegions();
 		m.addAttribute("regions", regionList);
 		return "/patient/patient-profile";
 	}
-	
-	
+
 //	@RequestMapping("/patientDashboard")
 //	public String PatientDashboard() {
 //		return "patient/patient-dashboard";
 //	}
-	
+
 //	@RequestMapping("/patient_login")
 //	public String RegisteredPatientLogin() {
 //		return "patient/patient-login";
@@ -222,62 +225,56 @@ public class PatientLoginController {
 //			return "patient/patient-dashboard";
 //		}
 //	}
-	
+
 	@RequestMapping(value = "/loginValidator", method = RequestMethod.POST)
-	public RedirectView LoginValidator(@RequestParam("username") String username, @RequestParam("password") String password,
-			Model m, RedirectAttributes attributes, HttpServletRequest request) {
+	public RedirectView LoginValidator(@RequestParam("username") String username,
+			@RequestParam("password") String password, Model m, RedirectAttributes attributes,
+			HttpServletRequest request) {
 		int roleId = this.uService.validateUser(username, password, request);
 		if (roleId == -1) {
-			attributes.addFlashAttribute("message",
-					"Login Failed! No such user found");
+			attributes.addFlashAttribute("message", "Login Failed! No such user found");
 			attributes.addFlashAttribute("alertType", "faliure");
 			return new RedirectView("patient_login");
-		}
-		else if(roleId == -2) {
+		} else if (roleId == -2) {
 			attributes.addFlashAttribute("message",
 					"Login Failed! Password not created! Please check the registered mail to create password");
 			attributes.addFlashAttribute("alertType", "faliure");
 			return new RedirectView("patient_login");
-		}
-		else if(roleId == -3) {
-			attributes.addFlashAttribute("message",
-					"Login Failed! Username or password dosen't match");
+		} else if (roleId == -3) {
+			attributes.addFlashAttribute("message", "Login Failed! Username or password dosen't match");
 			attributes.addFlashAttribute("alertType", "faliure");
 			return new RedirectView("patient_login");
 		}
-		
-		else if(roleId == 3) {
-			attributes.addFlashAttribute("message",
-					"Logged in Succesfully");
+
+		else if (roleId == 3) {
+			attributes.addFlashAttribute("message", "Logged in Succesfully");
 			attributes.addFlashAttribute("alertType", "success");
 			return new RedirectView("patientDashboard");
-		}
-		else {
-			attributes.addFlashAttribute("message",
-					"Logged in Succesfully");
+		} else {
+			attributes.addFlashAttribute("message", "Logged in Succesfully");
 			attributes.addFlashAttribute("alertType", "success");
 			return new RedirectView("patientDashboard");
 		}
 	}
-	
-	
+
 	@RequestMapping("/patientViewRequestDocuments/{reqId}")
-	public String LoginValidator(@PathVariable("reqId") int id , HttpServletRequest request, Model m){
+	public String LoginValidator(@PathVariable("reqId") int id, HttpServletRequest request, Model m) {
 		System.out.println("in show doc");
 		m.addAttribute("reqId", id);
 		List<RequestDocumentsDto> requests = pService.getRequestDocuments(id);
 		m.addAttribute("docList", requests);
 		AspNetUsers aspNetUsersOb = (AspNetUsers) request.getSession().getAttribute("aspUser");
 		User userOb = aspNetUsersOb.getUser();
-		
+
 		m.addAttribute("userOb", userOb);
 		System.out.println(requests.get(0));
 		return "patient/patient-view-documents";
 	}
-	
+
 	@RequestMapping(value = "/uploadRequestDocument", method = RequestMethod.POST)
-	public RedirectView uploadRequestDocument(@RequestParam("documentFile") CommonsMultipartFile document, 
-			@RequestParam("uploaderName") String name, @RequestParam("requestId") int requestId	, HttpServletRequest request){
+	public RedirectView uploadRequestDocument(@RequestParam("documentFile") CommonsMultipartFile document,
+			@RequestParam("uploaderName") String name, @RequestParam("requestId") int requestId,
+			HttpServletRequest request) {
 		System.out.println("in upload");
 		Date date = new Date();
 		Request requestOb = uService.getRequestObject(requestId);
@@ -290,13 +287,26 @@ public class PatientLoginController {
 		RedirectView redirectView = new RedirectView("/patientViewRequestDocuments/" + requestId, true);
 		return redirectView;
 	}
-	
-	@PostMapping(value="/updateUserProfile")
-	public RedirectView updateUserProfile(@ModelAttribute("updateUserProfile") UserProfileDto userProfileDto, HttpServletRequest request) {
+
+	@PostMapping(value = "/updateUserProfile")
+	public RedirectView updateUserProfile(@ModelAttribute("updateUserProfile") UserProfileDto userProfileDto,
+			HttpServletRequest request) {
 		System.out.println("in update profile service");
 		pService.updateUserProfile(userProfileDto, request);
 		System.out.println("in update profile service1");
 		RedirectView redirectView = new RedirectView("/patientProfile", true);
+		return redirectView;
+	}
+
+	@RequestMapping("/userLogout")
+	public RedirectView userLogout(RedirectAttributes attributes, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		session.invalidate();
+		System.out.println("Session invalidated");
+		RedirectView redirectView = new RedirectView("/patient_login", true);
+		attributes.addFlashAttribute("message", "Logged out successfully!");
+		attributes.addFlashAttribute("alertType", "success");
 		return redirectView;
 	}
 

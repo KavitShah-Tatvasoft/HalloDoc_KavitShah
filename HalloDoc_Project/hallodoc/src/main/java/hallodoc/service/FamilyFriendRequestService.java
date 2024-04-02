@@ -305,9 +305,9 @@ public class FamilyFriendRequestService {
 		user.setIntDate(day);
 		user.setIntYear(year);
 		user.setStrMonth(month);
-		user.setModifiedBy(aspNetUsers);
+//		user.setModifiedBy(aspNetUsers);
 		user.setModifiedDate(date);
-
+		aspNetUsers.setUser(user);
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
 	}
 
@@ -416,12 +416,12 @@ public class FamilyFriendRequestService {
 
 //		int userId = userDao.addNewPatientRequest(user); 
 
-		int requestId = requestDao.addNewRequest(request);
 
 //		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
 //		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
+		int requestId = requestDao.addNewRequest(request);
 		String isExsist = "new";
 		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest,isExsist);
 		System.out.println(mailSentStatus);

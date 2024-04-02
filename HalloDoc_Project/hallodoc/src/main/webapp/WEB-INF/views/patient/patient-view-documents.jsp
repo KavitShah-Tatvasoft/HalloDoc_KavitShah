@@ -146,11 +146,11 @@
 								class="pdf-img" alt=""><span>${listOb.filename }</span></td>
 							<td>${listOb.uploaderName }</td>
 							<td>${formattedDate }</td>
-							<td><a class="link" href="${listOb.url}" download="${listOb.filename}"
+							<td><div class="cloud-download-btn"><a class="link" href="${listOb.url}" download="${listOb.filename}"
 								class="cloud-download-btn"> <img
 									src="<c:url value="/resources/images/cloud-arrow-down.svg" />"
 									class="cloud-btn-down" alt="">
-							</a></td>
+							</a></div></td>
 						</tr>
 					</c:forEach>
 

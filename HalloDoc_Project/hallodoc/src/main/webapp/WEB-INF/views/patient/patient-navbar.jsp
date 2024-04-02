@@ -50,7 +50,7 @@
 					class="mx-1 profile-name"> <strong>${aspUser.user.firstName} ${aspUser.user.lastName}</strong>
 				</span>
 				<div>
-					<a href="patient-login.html">
+					<a href="<c:url value='/userLogout' />">
 						<div class="logout-btn">
 							<img src="<c:url value="/resources/images/box-arrow-right.svg" />"
 								class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span>

@@ -331,7 +331,7 @@ public class BusinessRequestService {
 		user.setIntYear(year);
 		user.setStrMonth(month);
 		user.setModifiedDate(date);
-
+		aspNetUsers.setUser(user);
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
 	}
 

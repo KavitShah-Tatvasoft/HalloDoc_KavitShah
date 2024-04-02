@@ -4,9 +4,12 @@ import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,12 +23,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.dto.SomeoneElseRequestDto;
+import hallodoc.email.EmailService;
 import hallodoc.enumerations.AspNetRolesEnum;
 import hallodoc.enumerations.DocType;
 import hallodoc.enumerations.RequestStatus;
 import hallodoc.helper.Constants;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
@@ -35,6 +40,7 @@ import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetRolesDao;
 import hallodoc.repository.AspNetUserDao;
+import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.PatientNewRequestDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestClientDao;
@@ -76,6 +82,12 @@ public class RegisteredPatientOthersRequestService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private EmailTokenDao emailTokenDao;
+
+	@Autowired
+	private EmailService mailer;
 
 	private String getFormattedDate(Date date) {
 
@@ -173,7 +185,7 @@ public class RegisteredPatientOthersRequestService {
 		request.setCompletedByPhysician(false);
 		request.setConfirmationNumber(getNewConfirmationNumber(someoneElseRequestDto, region, currentDate));
 		request.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-
+		request.setRelationName(someoneElseRequestDto.getRelation());
 		return request;
 	}
 
@@ -215,8 +227,8 @@ public class RegisteredPatientOthersRequestService {
 
 	}
 
-	private RequestWiseFile creatRequestWiseFile(SomeoneElseRequestDto someoneElseRequestDto, Date currentDate, Request request,
-			HttpSession session, User requestorUser) {
+	private RequestWiseFile creatRequestWiseFile(SomeoneElseRequestDto someoneElseRequestDto, Date currentDate,
+			Request request, HttpSession session, User requestorUser) {
 
 		RequestWiseFile requestWiseFile = new RequestWiseFile();
 
@@ -255,6 +267,149 @@ public class RegisteredPatientOthersRequestService {
 		requestWiseFile.setStoredFileName(storedFileName);
 
 		return requestWiseFile;
+	}
+
+	private String sendCreatePasswordMail(SomeoneElseRequestDto someoneElseRequestDto,
+			HttpServletRequest httpServletRequest, String isExsist) {
+
+		EmailToken emailToken = new EmailToken();
+
+		UUID newToken = UUID.randomUUID();
+		String createdToken = newToken.toString();
+
+		System.out.println(createdToken);
+
+		emailToken.setToken(createdToken);
+		emailToken.setEmail(someoneElseRequestDto.getEmail());
+		emailToken.setResetCompleted(false);
+		emailToken.setSentDate(LocalDateTime.now());
+
+		// persisting the object of EmailToken
+
+		if (isExsist.equals("old")) {
+			List<EmailToken> emailList = emailTokenDao.getDuplicateEmailEntry(someoneElseRequestDto.getEmail());
+
+			for (EmailToken email : emailList) {
+				email.setResetCompleted(true);
+			}
+
+			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
+			System.out.println(emailChange);
+		}
+
+		int mailId = emailTokenDao.createNewEmail(emailToken);
+
+		mailer.sendCreatePasswordMailForOthers(someoneElseRequestDto, httpServletRequest, LocalDateTime.now(),
+				emailToken);
+
+		return "success";
+	}
+	
+	private void UpdateAspNetUser(SomeoneElseRequestDto someoneElseRequestDto, AspNetUsers aspNetUsers, Region region, int day,
+			int year, String month, Date date) {
+
+		User user = aspNetUsers.getUser();
+
+		aspNetUsers.setModified_date(date);
+		aspNetUsers.setPhone_number(someoneElseRequestDto.getPhoneNumber());
+
+		user.setFirstName(someoneElseRequestDto.getFirstName());
+		user.setLastName(someoneElseRequestDto.getLastName());
+		user.setMobile(someoneElseRequestDto.getPhoneNumber());
+
+		user.setIntDate(day);
+		user.setIntYear(year);
+		user.setStrMonth(month);
+
+		user.setModifiedDate(date);
+		aspNetUsers.setUser(user);
+		apsnetuserdao.updateAspNetUser(aspNetUsers);
+	}
+
+	public String createOldOthersRequest(SomeoneElseRequestDto someoneElseRequestDto, HttpServletRequest httpRequest,
+			AspNetUsers registeredAspNetUser) throws ParseException {
+		// Creating required objects
+		AspNetUsers aspNetUsers;
+		AspNetUsers requestorAspNetUsers;
+		User user;
+		User requestorUser;
+		Region region;
+		Request request;
+		RequestType requestType;
+		Date currentDate = new Date();
+		RequestClient requestClient;
+		RequestStatusLog requestStatusLog;
+		RequestWiseFile requestWiseFile;
+
+		requestorAspNetUsers = (AspNetUsers) httpRequest.getSession().getAttribute("aspUser");
+
+		if (requestorAspNetUsers == null) {
+//				throw new Exception("No Session obj found in new other request");
+			System.out.println("No Session obj found in new other request");
+		}
+
+		requestorUser = requestorAspNetUsers.getUser();
+
+		// Get Object corresponding to region
+		List<Region> regionList = regionDao.getRegionEntry(someoneElseRequestDto.getState());
+		region = regionList.get(0);
+
+		// Extarcting required fields from date
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		String dateString = dateFormat.format(someoneElseRequestDto.getFormatedDate());
+		String[] tokens = dateString.split("-");
+		int day = Integer.parseInt(tokens[0]);
+		int year = Integer.parseInt(tokens[2]);
+		String monthName = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(someoneElseRequestDto.getFormatedDate());
+
+		// Getting Role
+		AspNetRoles role = aspNetRolesDao.getRoleObject(AspNetRolesEnum.PATIENT.getAspNetRolesName());
+
+		// Getting Request Type Object
+		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.FAMILY.getRequestType());
+
+		aspNetUsers = registeredAspNetUser;
+		user = aspNetUsers.getUser();
+		String password = aspNetUsers.getPassword_hash();
+
+		// updating aspNetUser object
+		UpdateAspNetUser(someoneElseRequestDto, aspNetUsers, region, day, year, monthName, currentDate);
+
+		// Getting Request Type Object
+		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.FAMILY.getRequestType());
+
+		// Setting the request object
+		request = createRequest(someoneElseRequestDto, currentDate, requestType, user,requestorUser, region);
+
+		// Setting the requestClient object
+		requestClient = createRequestClient(someoneElseRequestDto, currentDate, request, region, day, year, monthName);
+		request.setRequestClient(requestClient);
+
+		// Setting the requestStatusLogobject
+		requestStatusLog = creatRequestStatusLog(someoneElseRequestDto, currentDate, request);
+		request.setRequestStatusLogs(requestStatusLog);
+
+		if (!(someoneElseRequestDto.getDocument().isEmpty())) {
+			HttpSession session = httpRequest.getSession();
+			// Setting the requestWiseFile
+			requestWiseFile = creatRequestWiseFile(someoneElseRequestDto, currentDate, request, session,requestorUser);
+			List<RequestWiseFile> requestWiseFilesList = new ArrayList<RequestWiseFile>();
+			requestWiseFilesList.add(requestWiseFile);
+			request.setListRequestWiseFiles(requestWiseFilesList);
+
+		}
+
+		// persisting object of Request
+		int requestId = requestDao.addNewRequest(request);
+
+
+		if (password == null) {
+			String isExsist = "old";
+			String mailSentStatus = sendCreatePasswordMail(someoneElseRequestDto, httpRequest, isExsist);
+		}
+
+		return "created old";
 	}
 
 	public String createNewOthersRequest(SomeoneElseRequestDto someoneElseRequestDto, HttpServletRequest httpRequest)
@@ -318,6 +473,22 @@ public class RegisteredPatientOthersRequestService {
 		requestStatusLog = creatRequestStatusLog(someoneElseRequestDto, currentDate, request);
 		request.setRequestStatusLogs(requestStatusLog);
 
+		if (!(someoneElseRequestDto.getDocument().isEmpty())) {
+
+			// Setting the requestWiseFile
+			HttpSession session = httpRequest.getSession();
+			requestWiseFile = creatRequestWiseFile(someoneElseRequestDto, currentDate, request, session, requestorUser);
+			List<RequestWiseFile> requestWiseFilesList = new ArrayList<RequestWiseFile>();
+			requestWiseFilesList.add(requestWiseFile);
+			request.setListRequestWiseFiles(requestWiseFilesList);
+		}
+
+		int aspNetId = apsnetuserdao.createPatient(aspNetUsers);
+		int requestId = requestDao.addNewRequest(request);
+		String isExsist = "new";
+		String mailSentStatus = sendCreatePasswordMail(someoneElseRequestDto, httpRequest, isExsist);
+		System.out.println(mailSentStatus);
+
 		return "created new";
 	}
 
@@ -343,7 +514,8 @@ public class RegisteredPatientOthersRequestService {
 
 		if (list.size() > 0) {
 			// method for old user
-			String status = "change me";
+			AspNetUsers aspNetUsers = list.get(0);
+			String status = createOldOthersRequest(someoneElseRequestDto, httpRequest,aspNetUsers );
 			return status;
 		}
 

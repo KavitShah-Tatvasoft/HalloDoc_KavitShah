@@ -318,8 +318,10 @@ public class ConciergeRequestService {
 		user.setIntYear(year);
 		user.setStrMonth(month);
 		user.setModifiedDate(date);
-
+		aspNetUsers.setUser(user);
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
+
+
 	}
 
 	private boolean createOldUserConciergeRequest(CommonRequestDto commonRequestDto, HttpSession session,
