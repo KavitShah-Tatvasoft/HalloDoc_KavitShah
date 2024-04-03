@@ -28,6 +28,10 @@ public class AspNetUsers {
 	@OneToOne(mappedBy = "aspNetUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
 	
+	@OneToOne(mappedBy = "aspNetUsers", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Admin admin;
+
+	
 	public User getUser() {
 		return user;
 	}

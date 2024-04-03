@@ -1,10 +1,13 @@
 package hallodoc.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,36 +25,76 @@ public class Region {
 	@Column(name = "abbreviation")
 	private String abbreviation;
 
+	@ManyToMany(mappedBy = "regions")
+    private List<Admin> admins;
+	
+	
+	
+	public Region(int regionId, String name, String abbreviation, List<Admin> admins) {
+		super();
+		this.regionId = regionId;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.admins = admins;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Region [regionId=" + regionId + ", name=" + name + ", abbreviation=" + abbreviation + ", admins="
+				+ admins + "]";
+	}
+
+
+
 	public int getRegionId() {
 		return regionId;
 	}
+
+
 
 	public void setRegionId(int regionId) {
 		this.regionId = regionId;
 	}
 
+
+
 	public String getName() {
 		return name;
 	}
+
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+
+
 	public String getAbbreviation() {
 		return abbreviation;
 	}
+
+
 
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
 
-	public Region(int regionId, String name, String abbreviation) {
-		super();
-		this.regionId = regionId;
-		this.name = name;
-		this.abbreviation = abbreviation;
+
+
+	public List<Admin> getAdmins() {
+		return admins;
 	}
+
+
+
+	public void setAdmins(List<Admin> admins) {
+		this.admins = admins;
+	}
+
+
 
 	public Region() {
 		super();

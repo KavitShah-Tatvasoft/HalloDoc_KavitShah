@@ -250,7 +250,13 @@ public class PatientLoginController {
 			attributes.addFlashAttribute("message", "Logged in Succesfully");
 			attributes.addFlashAttribute("alertType", "success");
 			return new RedirectView("patientDashboard");
-		} else {
+		} 
+		else if (roleId == 1) {
+			attributes.addFlashAttribute("message", "Logged in Succesfully");
+			attributes.addFlashAttribute("alertType", "success");
+			return new RedirectView("adminDashboard");
+		} 
+		else {
 			attributes.addFlashAttribute("message", "Logged in Succesfully");
 			attributes.addFlashAttribute("alertType", "success");
 			return new RedirectView("patientDashboard");

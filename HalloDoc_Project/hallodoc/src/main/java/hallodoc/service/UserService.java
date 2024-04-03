@@ -26,11 +26,13 @@ import hallodoc.enumerations.DocType;
 import hallodoc.helper.Constants;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
+import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetUserDao;
 import hallodoc.repository.EmailTokenDao;
+import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestWiseFileDao;
 
@@ -51,6 +53,9 @@ public class UserService {
 	
 	@Autowired
 	private RequestDao requestDao;
+	
+	@Autowired
+	private RegionDao regionDao;
 	
 	
 	
@@ -111,9 +116,13 @@ public class UserService {
 				boolean verified = Password.check(password, passwordHash).with(bcrypt);
 
 				if (verified) {
+					
+					List<Region> regionList = regionDao.getAllRegions();
+					
 					System.out.println("verified" + role);
 					HttpSession session = request.getSession();
 					session.setAttribute("aspUser",user);
+					session.setAttribute("regionList", regionList);
 					return role;
 				} else {
 					System.out.println("password not match");

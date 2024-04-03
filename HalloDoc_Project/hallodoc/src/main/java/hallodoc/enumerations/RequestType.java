@@ -3,9 +3,9 @@ package hallodoc.enumerations;
 public enum RequestType {
 
 	BUSINESS(1, "Business"),
-	CONCIERGE(2, "Patient"),
+	PATIENT(2, "Patient"),
 	FAMILY(3, "Family"),
-	PATIENT(4, "Concierge");
+	CONCIERGE(4, "Concierge");
 	
 	private String requestType;
 	private int id;

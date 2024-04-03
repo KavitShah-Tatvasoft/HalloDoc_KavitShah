@@ -88,7 +88,8 @@
 				<value>hallodoc.model.Concierge</value>
 				<value>hallodoc.model.RequestBusiness</value>
 				<value>hallodoc.model.RequestConcierge</value>
-				
+				<value>hallodoc.model.Role</value>
+				<value>hallodoc.model.Menu</value>
 			</list>
 		</property>
 	</bean>

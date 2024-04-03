@@ -59,7 +59,7 @@ body{
 .offcanvas-body .dropdown-toggle::after{
     position: absolute;
     top: 13px;
-    content: url("../SRS Screen Shorts/chevron-right.svg");
+    content: url("../images/chevron-right.svg");
     border: none;
     left: 13rem;
 }

@@ -44,9 +44,6 @@ public class Concierge {
 	@JoinColumn(name = "region_id")
 	private Region region;
 	
-	@Column(name = "request_id")
-	private int requestId;
-	
 	@Column(name = "role_id")
 	private int roleId;
 
@@ -122,13 +119,7 @@ public class Concierge {
 		this.region = region;
 	}
 
-	public int getRequestId() {
-		return requestId;
-	}
-
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
-	}
+	
 
 	public int getRoleId() {
 		return roleId;
@@ -163,7 +154,6 @@ public class Concierge {
 		this.zipCode = zipCode;
 		this.createdDate = createdDate;
 		this.region = region;
-		this.requestId = requestId;
 		this.roleId = roleId;
 	}
 
@@ -171,7 +161,7 @@ public class Concierge {
 	public String toString() {
 		return "Concierge [conciergeId=" + conciergeId + ", conciergeName=" + conciergeName + ", email=" + email
 				+ ", address=" + address + ", street=" + street + ", city=" + city + ", state=" + state + ", zipCode="
-				+ zipCode + ", createdDate=" + createdDate + ", region=" + region + ", requestId=" + requestId
+				+ zipCode + ", createdDate=" + createdDate + ", region=" + region 
 				+ ", roleId=" + roleId + "]";
 	}
 
