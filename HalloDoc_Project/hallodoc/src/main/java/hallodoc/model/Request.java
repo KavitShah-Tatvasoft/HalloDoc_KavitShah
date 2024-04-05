@@ -24,87 +24,87 @@ public class Request {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "request_id")
 	private int requestId;
-	
+
 //	@Column(name = "request_type_id")
 //	private int requestTypeId;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "request_type_id")
 	private RequestType requestType;
-	
+
 //	@Column(name = "user_id")
 //	private String userId;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@Column(name = "first_name")
 	private String firstName;
-	
+
 	@Column(name = "last_name")
 	private String lastName;
-	
+
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
 	private String email;
-	
+
 	private int status;
-	
+
 //	@Column(name = "physician_id")
 //	private int physicianId;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "physician_id")
 	private Physician physician;
-	
+
 	@Column(name = "confirmation_number")
 	private String confirmationNumber;
-	
+
 	@Column(name = "created_date")
 	private Date createdDate;
-	
+
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
-	
+
 	@Column(name = "modified_date")
 	private Date modifieDate;
-	
+
 //	@Column(name = "declined_by")
 //	private int declinedBy;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "declined_by")
 	private AspNetUsers aspUsers;
-	
+
 	@Column(name = "last_wellness_date")
 	private Date lastWellnessDate;
-	
+
 	@Column(name = "call_type")
 	private int callType;
-	
+
 	@Column(name = "completed_by_physician")
 	private boolean completedByPhysician;
-	
+
 	@Column(name = "last_reservation_date")
 	private Date lastReservationDate;
-	
+
 	@Column(name = "accepted_date")
 	private Date acceptedDate;
-	
+
 	@Column(name = "relation_name")
 	private String relationName;
-	
+
 	@Column(name = "case_number")
 	private String caseNumber;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private RequestClient requestClient;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private RequestStatusLog requestStatusLogs;
-	
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private List<RequestWiseFile> listRequestWiseFiles;
 
@@ -351,7 +351,4 @@ public class Request {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-	
 }

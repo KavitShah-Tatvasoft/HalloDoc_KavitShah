@@ -1,17 +1,23 @@
+<%@page import="org.apache.commons.fileupload.RequestContext"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="common-navbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/admin-dashboard.css' />">
 <link rel="stylesheet"
@@ -20,6 +26,8 @@
 	href="<c:url value='/resources/css/pop-ups.css' />">
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/toaster.css' />">
 
 <!-- <link rel="stylesheet" -->
 <!-- 	href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" /> -->
@@ -28,11 +36,10 @@
 
 <title>Admin Dashboard</title>
 </head>
-<body>
+<body onload="showToast(${showalert})">
 	<div class="container-fluid  footer-container mt-5">
 		<div class="row">
 			<div class="col-lg-2 col-md-4 col-4 mb-2">
-
 				<div class="row-cards new new-active" id="card1"
 					onclick="changeStatus(this)">
 					<div class="inner-row-cards">
@@ -242,13 +249,15 @@
 									<div class="admin-table-filter-by-select">
 										<select class="form-select on-select" id="select"
 											aria-label="Default select example" style="color: gray;">
-											<option selected="">Select Physician</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
+											<option selected value="All">All</option>
+
+											<c:forEach items="${regionList}" var="region">
+												<option value="${region.name }">${region.name }</option>
+											</c:forEach>
 										</select>
 										<button type="button" class="dropdown-button-search">
-											<img src="<c:url value='/resources/images/search.svg'/>" class="dropsearch" alt="" srcset="">
+											<img src="<c:url value='/resources/images/search.svg'/>"
+												class="dropsearch" alt="" srcset="">
 										</button>
 									</div>
 
@@ -286,25 +295,27 @@
 		</div>
 
 		<div class="table-responsive show-table">
-			<table class="table">
-				<thead>
-					<tr class="thead-clr align-middle">
-						<th colspan="2">Name</th>
-						<th></th>
-						<th>Date of Birth</th>
-						<th>Region</th>
-						<th>Physician Name</th>
-						<th>Date of Service</th>
-						<th>Address</th>
-						<th>Notes</th>
-						<th>Chat With</th>
-						<th>Actions</th>
+			<table class="table" id="admin-table">
+				<thead id="table-thead-admin">
+					<tr class="thead-clr align-middle" id="table-headers-admin">
+						<th colspan="2" >Name</th>
+						<th ></th>
+						<th class="table-columns s1 s2 s3 s4 s5">Date of Birth</th>
+						<th class="table-columns  s5">Region</th>
+						<th class="table-columns  s1 s2 s3">Requestor</th>
+						<th class="table-columns  s2 s3 s4 s5 s6">Physician Name</th>
+						<th class="table-columns  s2 s3 s4 s5 s6">Date of Service</th>
+						<th class="table-columns  s1">Requested Date</th>
+						<th class="table-columns  s1 s2 s3 s4 s6">Phone</th>
+						<th >Address</th>
+						<th class="table-columns  s1 s2 s3 s5">Notes</th>
+						<th >Actions</th>
 					</tr>
 				</thead>
 				<tbody class="align-middle">
 					<tr class="tr-clr">
-						<th colspan="2"><span class="text-nowrap">Brown,
-								Ernest</span></th>
+						<td colspan="2"><span class="text-nowrap">Brown,
+								Ernest</span></td>
 						<td>
 							<button type="button" class="theme-btn" id="message-btn"></button>
 							<label for="message-btn"> <img
@@ -314,7 +325,9 @@
 						</td>
 						<td class="text-nowrap">Oct 13,2022(0)</td>
 						<td class="text-nowrap">District of Columbia</td>
+						<td></td>
 						<td>Dr. Brown</td>
+						<td></td>
 						<td></td>
 						<td>1331, Maryland Ave SW Washington, DC 20024</td>
 						<td>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -353,7 +366,7 @@
 								<button type="button"
 									class="btn dashboard-dropdown-btn dropdown-toggle"
 									data-bs-toggle="dropdown" aria-expanded="false">
-									Dropdown</button>
+									Action</button>
 								<ul class="dropdown-menu dropdown-menu-end">
 									<li>
 										<div class="action-dropdown-flex dropdown-item ">
@@ -428,7 +441,7 @@
 									<li>
 										<div class="action-dropdown-flex dropdown-item">
 											<img
-												src="<c:url value='/resources/images/view-uplaod.png' />"
+												src="<c:url value='/resources/images/view-upload.png' />"
 												class="dropdown-icons" alt=""> <a
 												href="<c:url value='' />" class="action-dropdown-text "
 												type="button">View Uploads</a>
@@ -1045,6 +1058,43 @@
 		</div>
 	</div>
 
+	<div class="toaster">
+		<div class="toaster-content">
+			<c:set var="status" value="${showAlertTypeJsp}" />
+
+			<c:choose>
+				<c:when test="${status == 'faliure'}">
+					<i class="uil uil-exclamation toaster-check"></i>
+				</c:when>
+				<c:otherwise>
+					<i class="uil uil-check toaster-check"></i>
+				</c:otherwise>
+			</c:choose>
+
+
+
+			<div class="message">
+
+				<c:choose>
+					<c:when test="${status == 'faliure'}">
+						<span class="message-text text-1">Faliure</span>
+					</c:when>
+					<c:when test="${status == 'success'}">
+						<span class="message-text text-1">Success</span>
+					</c:when>
+					<c:otherwise>
+						<span class="message-text text-1">Message</span>
+					</c:otherwise>
+				</c:choose>
+
+				<span class="message-text text-2"> ${msg}</span>
+			</div>
+		</div>
+		<i class="uil uil-multiply toaster-close"></i>
+		<div class="progress"></div>
+	</div>
+
+
 	<%@include file="footer-black.jsp"%>
 
 	<!-- clear-case -->
@@ -1058,8 +1108,10 @@
 						});
 	</script>
 
+	<script src="<c:url value='/resources/js/toasters.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/admin-dashboard.js' />"></script>
-	<script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' />"></script>
+	<script
+		src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' />"></script>
 </body>
 </html>

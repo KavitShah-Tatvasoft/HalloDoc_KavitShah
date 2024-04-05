@@ -842,7 +842,22 @@ a.nav-link {
 }
 
 .tr-clr th, .tr-clr td {
-	background-color: green !important;
+	background-color:#60be5e !important;
+	color: white !important;
+}
+
+.tr-family th, .tr-family td {
+	background-color: #d69b4b!important;
+	color: white !important;
+}
+
+.tr-business th, .tr-business td {
+	background-color: #e0657a!important;
+	color: white !important;
+}
+
+.tr-concierge th, .tr-concierge td {
+	background-color: #097dba!important;
 	color: white !important;
 }
 

@@ -10,7 +10,8 @@ public enum RequestStatus {
 	CANCELLED(6, "Cancelled"),
 	CANCELLED_BY_PATIENT(7, "CancelledByPatient"),
 	CLOSED(8, "Closed"),
-	UNPAID(9, "Unpaid"), CLEAR(10, "Clear"),
+	UNPAID(9, "Unpaid"),
+	CLEAR(10, "Clear"),
 	BLOCK(11, "Block");
 
 	private int requestId;

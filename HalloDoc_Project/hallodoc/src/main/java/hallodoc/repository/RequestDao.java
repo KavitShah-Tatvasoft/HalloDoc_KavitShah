@@ -107,4 +107,14 @@ public class RequestDao {
 		this.hibernateTemplate.update(request);
 	}
 
+	public List<Request> getRequstStatusData(int status){
+		Session s = this.sessionFactory.openSession();
+		String hql = "from Request as req where req.status=:status";
+		Query query = s.createQuery(hql);
+		query.setParameter("status", status);
+		List<Request> requestsList = query.list();
+		s.close();
+		return requestsList;
+	}
+
 }

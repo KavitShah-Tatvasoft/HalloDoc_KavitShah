@@ -1,130 +1,116 @@
 @charset "ISO-8859-1";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+.toaster {
+	box-sizing: border-box !important;
+	display: none;
+	position: absolute;
+	top: 25px;
+	right: 30px;
+	border-radius: 6px;
+	background: #fff;
+	padding: 20px 35px 20px 25px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	transform: translateX(calc(100% + 30px));
+	transition: all 0.5s cubic-bezier(0.68, -0.55, 0.25, 1.35);
 }
 
-body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f4f7ff;
-  overflow: hidden;
+.toaster.active {
+	transform: translateX(0);
 }
 
-.toast {
-  position: absolute;
-  top: 25px;
-  right: 30px;
-  border-radius: 12px;
-  background: #fff;
-  padding: 20px 35px 20px 25px;
-  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transform: translateX(calc(100% + 30px));
-  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+.toaster-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.toast.active {
-  transform: translateX(0%);
+.toaster-check {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 35px;
+	width: 35px;
+	background-color: #01bce9;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 20px;
 }
 
-.toast .toast-content {
-  display: flex;
-  align-items: center;
+.message {
+	display: flex;
+	flex-direction: column;
+	margin: 0 20px;
 }
 
-.toast-content .check {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 35px;
-  min-width: 35px;
-  background-color: #2770ff;
-  color: #fff;
-  font-size: 20px;
-  border-radius: 50%;
+.message-text {
+	font-size: 20px !important;
+	font-weight: 600 !important;
 }
 
-.toast-content .message {
-  display: flex;
-  flex-direction: column;
-  margin: 0 20px;
+.text-1 {
+	color: #333;
 }
 
-.message .text {
-  font-size: 16px;
-  font-weight: 400;
-  color: #666666;
+.text-2 {
+	color: #666;
+	font-weight: 400 !important;
+	font-size: 16px !important;
 }
 
-.message .text.text-1 {
-  font-weight: 600;
-  color: #333;
+.toaster-close {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	padding: 5px;
+	cursor: pointer;
+	opacity: 0.7;
 }
 
-.toast .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.7;
+.toaster-close:hover {
+	opacity: 1;
 }
 
-.toast .close:hover {
-  opacity: 1;
+.progress {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 3px !important;
+	width: 100%;
+	background: #ddd;
 }
 
-.toast .progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  width: 100%;
-
+.progress::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	height: 100% !important;
+	width: 100%;
+	background-color: #01bce9;
 }
 
-.toast .progress:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #2770ff;
+.progress.active::before {
+	animation: progress 5s linear forwards;
 }
 
-.progress.active:before {
-  animation: progress 5s linear forwards;
+@keyframes progress { 100%{
+	right: 100%;
 }
 
-@keyframes progress {
-  100% {
-    right: 100%;
-  }
+}
+.toaster-btn {
+	padding: 10px 40px;
+	font-size: 20px;
+	outline: none;
+	border: none;
+	background-color: #01bce9;
+	color: #fff;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
-button {
-  padding: 12px 20px;
-  font-size: 20px;
-  outline: none;
-  border: none;
-  background-color: #2770ff;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background-color: #2770ff;
-}
-
-.toast.active ~ button {
-  pointer-events: none;
+.toaster-btn:hover {
+	background-color: #01bce9;
 }

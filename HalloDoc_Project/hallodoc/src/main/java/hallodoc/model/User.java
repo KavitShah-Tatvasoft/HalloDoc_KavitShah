@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -29,7 +31,8 @@ public class User {
 //	@Column(name="aspnet_user_id")
 //	private int aspnetUserId;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aspnet_user_id")
 	private AspNetUsers aspNetUsers;
 	

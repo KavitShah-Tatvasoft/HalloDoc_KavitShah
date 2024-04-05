@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "physician")
 public class Physician {
@@ -18,6 +20,7 @@ public class Physician {
 	@Column(name = "physician_id")
 	private int physicianId;
 	
+	@JsonIgnore
 	@Column(name = "aspnet_user_id")
 	private int aspnetUserId;
 	
@@ -64,12 +67,14 @@ public class Physician {
 	@Column(name = "alt_phone")
 	private String altPhone;
 	
+	@JsonIgnore
 	@Column(name = "created_by")
 	private int createdBy;
 	
-	@Column(name = "created_date")
+	@Column(name = "created_date")  // make sure to add/remove json ignore
 	private Date createdDate;
 	
+	@JsonIgnore
 	@Column(name = "modified_by")
 	private int modifiedBy;
 	

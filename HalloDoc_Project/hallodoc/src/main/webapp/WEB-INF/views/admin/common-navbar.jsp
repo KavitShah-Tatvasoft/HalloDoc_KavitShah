@@ -27,8 +27,7 @@
 						<div class="offcanvas-body">
 
 							<div class="sidebar-profile-text">
-								<span> Welcome, </span> <span> <strong>Admin
-										admin2</strong>
+								<span> Welcome, </span> <span> <strong>${aspUser.user.firstName} ${aspUser.user.lastName}</strong>
 								</span>
 							</div>
 							<ul class="nav sidebar-list-flex">
@@ -90,8 +89,8 @@
 			</div>
 
 			<div class="nav-right">
-				<span class="mx-1 profile-name"> Welcome </span> <span
-					class="mx-1 profile-name"> <strong>Admin admin2</strong>
+				<span class="mx-1 profile-name"> Welcome, </span> <span
+					class="mx-1 profile-name"> <strong>${aspUser.user.firstName} ${aspUser.user.lastName}</strong>
 				</span>
 				<div>
 					<a href="login.html">
