@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.model.Physician;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
+import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestType;
 
 import java.text.*;
@@ -13,14 +15,22 @@ import java.text.*;
 public class RequestNewDataDtoMapper {
 
 	private static String requestDateFormat(Date date) {
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		DateFormat dateFormat = new SimpleDateFormat("MMMM dd, YYYY", Locale.ENGLISH);
 		String dateString = dateFormat.format(date);
 		return dateString;
 	}
-	
+
 	public static NewRequestDataDto mapDataNeWDataDto(Request request){
 		NewRequestDataDto newDto = new NewRequestDataDto();
 		RequestClient requestClient = request.getRequestClient();
+		RequestStatusLog requestStatusLog = request.getRequestStatusLogs();
+		Physician physician = request.getPhysician();
+		if(physician == null) {
+			newDto.setPhysicianName("-");
+		}
+		else {			
+			newDto.setPhysicianName(physician.getFirstName() + " " + physician.getLastName());
+		}
 		newDto.setCity(requestClient.getCity());
 		newDto.setState(requestClient.getState());
 		newDto.setZipcode(requestClient.getZipcode());
@@ -36,7 +46,10 @@ public class RequestNewDataDtoMapper {
 		newDto.setReqPhoneNumber(request.getPhoneNumber());
 		newDto.setReqPhoneNumberType(request.getRequestType().getName());
 		newDto.setNotes(requestClient.getNotes());
-		
+		newDto.setDateOfService(requestDateFormat(requestStatusLog.getCreatedDate()));
+		newDto.setRegion(requestClient.getState());
+		newDto.setDeleted(request.isDeleted());
+		newDto.setPtEmail(requestClient.getEmail());
 		return newDto;
 	}
 }

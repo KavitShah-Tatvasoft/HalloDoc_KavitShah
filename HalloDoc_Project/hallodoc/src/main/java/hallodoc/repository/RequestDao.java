@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import hallodoc.dto.DashboardDataDto;
 import hallodoc.dto.RequestDocumentsDto;
+import hallodoc.dto.StatusWiseCountDto;
 import hallodoc.model.Request;
 import hallodoc.model.RequestType;
 import hallodoc.model.RequestWiseFile;
@@ -107,14 +108,24 @@ public class RequestDao {
 		this.hibernateTemplate.update(request);
 	}
 
-	public List<Request> getRequstStatusData(int status){
+	public List<Request> getRequstStatusData(List<Integer> status){
 		Session s = this.sessionFactory.openSession();
-		String hql = "from Request as req where req.status=:status";
+		String hql = "from Request as req where req.status IN :status";
 		Query query = s.createQuery(hql);
 		query.setParameter("status", status);
 		List<Request> requestsList = query.list();
 		s.close();
 		return requestsList;
+	}
+	
+	
+	public List<StatusWiseCountDto> getStatusWiseRequestCount(){
+		Session s = this.sessionFactory.openSession();
+		
+		String hql = "select new hallodoc.dto.StatusWiseCountDto(re.status,COUNT(re.requestId)) from Request re group by re.status";
+		Query query = s.createQuery(hql);
+		List<StatusWiseCountDto> list = query.list();
+		return list;
 	}
 
 }

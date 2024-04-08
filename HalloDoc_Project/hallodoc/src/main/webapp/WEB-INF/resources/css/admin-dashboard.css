@@ -828,6 +828,21 @@ a.nav-link {
 	left: 82px;
 }
 
+.telephone-border{
+	border: 1px solid white;
+	border-radius: 5px;
+	background-color:transperant;
+	padding: 4px 6px 4px 10px;
+	color:white;
+	display:inline-flex;
+	gap:12px;
+	align-items: center;
+}
+
+.margin-bottoms{
+	margin-bottom:10px;
+}
+
 .arrow-width {
 	width: 45px;
 }
@@ -1030,6 +1045,30 @@ a.nav-link {
 
 .patient-type-color-icon {
 	background-color: #60be5e;
+	border-radius: 50%;
+	height: 10px;
+	width: 10px;
+	margin-left: 10px;
+}
+
+.family-type-color-icon {
+	background-color: #d69b4b;
+	border-radius: 50%;
+	height: 10px;
+	width: 10px;
+	margin-left: 10px;
+}
+
+.business-type-color-icon {
+	background-color: #e0657a;
+	border-radius: 50%;
+	height: 10px;
+	width: 10px;
+	margin-left: 10px;
+}
+
+.concierge-type-color-icon {
+	background-color: #097dba;
 	border-radius: 50%;
 	height: 10px;
 	width: 10px;

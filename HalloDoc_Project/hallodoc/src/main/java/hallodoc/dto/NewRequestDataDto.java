@@ -17,8 +17,43 @@ public class NewRequestDataDto {
 	private String state;
 	private String zipcode;
 	private String notes;
+	private String physicianName;
+	private String dateOfService;
+	private String region;
+	private boolean isDeleted;
+	private String ptEmail;
 	
 	
+	public String getPtEmail() {
+		return ptEmail;
+	}
+	public void setPtEmail(String ptEmail) {
+		this.ptEmail = ptEmail;
+	}
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
+	}
+	public String getPhysicianName() {
+		return physicianName;
+	}
+	public void setPhysicianName(String physicianName) {
+		this.physicianName = physicianName;
+	}
+	public String getDateOfService() {
+		return dateOfService;
+	}
+	public void setDateOfService(String dateOfService) {
+		this.dateOfService = dateOfService;
+	}
 	public String getStreet() {
 		return street;
 	}
@@ -111,10 +146,20 @@ public class NewRequestDataDto {
 	}
 	
 	
-	
+	@Override
+	public String toString() {
+		return "NewRequestDataDto [name=" + name + ", day=" + day + ", month=" + month + ", year=" + year
+				+ ", requestor=" + requestor + ", requestedDate=" + requestedDate + ", ptPhoneNumber=" + ptPhoneNumber
+				+ ", ptPhoneNumberType=" + ptPhoneNumberType + ", reqPhoneNumber=" + reqPhoneNumber
+				+ ", reqPhoneNumberType=" + reqPhoneNumberType + ", street=" + street + ", city=" + city + ", state="
+				+ state + ", zipcode=" + zipcode + ", notes=" + notes + ", physicianName=" + physicianName
+				+ ", dateOfService=" + dateOfService + ", region=" + region + ", isDeleted=" + isDeleted + ", ptEmail="
+				+ ptEmail + "]";
+	}
 	public NewRequestDataDto(String name, int day, String month, int year, String requestor, String requestedDate,
 			String ptPhoneNumber, String ptPhoneNumberType, String reqPhoneNumber, String reqPhoneNumberType,
-			String street, String city, String state, String zipcode, String notes) {
+			String street, String city, String state, String zipcode, String notes, String physicianName,
+			String dateOfService, String region, boolean isDeleted, String ptEmail) {
 		super();
 		this.name = name;
 		this.day = day;
@@ -131,14 +176,11 @@ public class NewRequestDataDto {
 		this.state = state;
 		this.zipcode = zipcode;
 		this.notes = notes;
-	}
-	@Override
-	public String toString() {
-		return "NewRequestDataDto [name=" + name + ", day=" + day + ", month=" + month + ", year=" + year
-				+ ", requestor=" + requestor + ", requestedDate=" + requestedDate + ", ptPhoneNumber=" + ptPhoneNumber
-				+ ", ptPhoneNumberType=" + ptPhoneNumberType + ", reqPhoneNumber=" + reqPhoneNumber
-				+ ", reqPhoneNumberType=" + reqPhoneNumberType + ", street=" + street + ", city=" + city + ", state="
-				+ state + ", zipcode=" + zipcode + ", notes=" + notes + "]";
+		this.physicianName = physicianName;
+		this.dateOfService = dateOfService;
+		this.region = region;
+		this.isDeleted = isDeleted;
+		this.ptEmail = ptEmail;
 	}
 	public NewRequestDataDto() {
 		super();

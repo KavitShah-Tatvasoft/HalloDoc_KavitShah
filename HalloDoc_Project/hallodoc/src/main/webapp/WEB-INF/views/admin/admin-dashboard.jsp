@@ -36,7 +36,7 @@
 
 <title>Admin Dashboard</title>
 </head>
-<body onload="showToast(${showalert})">
+<body onload="showToast(${showalert}) ">
 	<div class="container-fluid  footer-container mt-5">
 		<div class="row">
 			<div class="col-lg-2 col-md-4 col-4 mb-2">
@@ -49,7 +49,7 @@
 							class="row-card-img new-icon-resize" id="new-active"> <span
 							class="row-card-text">NEW</span>
 					</div>
-					<h4 class="type_no_txt">1449</h4>
+					<h4 class="type_no_txt" id="new-request-count"></h4>
 					<div id="new-img" class="absolutivity">
 						<img
 							src="<c:url value='/resources/images/down-arrow-card1.svg' />"
@@ -68,7 +68,7 @@
 							alt="" class="row-card-img hidden new-icon-resize"
 							id="pending-active"> <span class="row-card-text">PENDING</span>
 					</div>
-					<h4 class="type_no_txt">271</h4>
+					<h4 class="type_no_txt" id="pending-request-count"></h4>
 					<div id="pending-img" class="absolutivity hidden">
 						<img
 							src="<c:url value='/resources/images/down-arrow-card2.svg' />"
@@ -87,7 +87,7 @@
 							alt="" class="row-card-img hidden" id="active-active"> <span
 							class="row-card-text">ACTIVE</span>
 					</div>
-					<h4 class="type_no_txt">22</h4>
+					<h4 class="type_no_txt" id="active-request-count"></h4>
 					<div id="active-img" class="absolutivity hidden">
 						<img
 							src="<c:url value='/resources/images/down-arrow-card3.svg' />"
@@ -106,7 +106,7 @@
 							alt="" class="row-card-img hidden new-icon-resize"
 							id="conclude-active"> <span class="row-card-text">CONCLUDE</span>
 					</div>
-					<h4 class="type_no_txt">1079</h4>
+					<h4 class="type_no_txt" id="conclude-request-count"></h4>
 					<div id="conclude-img" class="absolutivity hidden">
 						<img
 							src="<c:url value='/resources/images/down-arrow-card4.svg' />"
@@ -127,7 +127,7 @@
 							CLOSE</span>
 
 					</div>
-					<h4 class="type_no_txt">1452</h4>
+					<h4 class="type_no_txt" id="to-close-request-count"></h4>
 					<div id="to-close-img" class="absolutivity hidden">
 						<img
 							src="<c:url value='/resources/images/down-arrow-card5.svg' />"
@@ -146,7 +146,7 @@
 							alt="" class="row-card-img unpaid-icon hidden" id="unpaid-active">
 						<span class="row-card-text">UNPAID</span>
 					</div>
-					<h4 class="type_no_txt">1452</h4>
+					<h4 class="type_no_txt" id="unpaid-request-count"></h4>
 					<div id="unpaid-img" class="absolutivity hidden">
 						<img
 							src="<c:url value='/resources/images/down-arrow-card6.svg' />"
@@ -506,8 +506,11 @@
 			</table>
 		</div>
 
+
+		<div class="empty-accordion"></div>
+
 		<div class="accordion mb-4" id="accordionPanelsStayOpenExample">
-			<div class="accordion-item">
+			<div class="accordion-item accordion-item-main d-none" id="accordion-single-card" >
 				<h2 class="accordion-header" id="panelsStayOpen-headingOne">
 					<button class="accordion-button" type="button"
 						data-bs-toggle="collapse"
@@ -517,12 +520,12 @@
 						<div class="card-head">
 							<div class="patient-type-card-main-flex-item">
 								<div class="patient_card_name">
-									<div class="add-patient-type-margin">Patient, Test</div>
+									<div class="add-patient-type-margin" id="accordion-patient-name-id">Patient, Test</div>
 								</div>
 
 								<div class="admin-dash-patient-type-flex">
 									<span class="patient-type-text">Patient</span>
-									<div class="patient-type-color-icon"></div>
+									<div class="color-icon"></div>
 								</div>
 							</div>
 
@@ -536,8 +539,8 @@
 						</div>
 					</button>
 				</h2>
-				<div id="panelsStayOpen-collapseOne"
-					class="accordion-collapse collapse"
+				<div id="panelsStayOpen-collapseOne" 
+					class="accordion-collapse collapse change-id"
 					aria-labelledby="panelsStayOpen-headingOne">
 					<div class="accordion-body">
 						<hr class="no-margin-hr" />
@@ -548,113 +551,121 @@
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
 									alt="D.O.B" /></span> <span class="extended-label">Date of
-									Birth:</span> <span class="extended-text">15-01-2003 (21)</span>
+									Birth:</span> <span class="extended-text dateOfBirth">15-01-2003 (21)</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/envelope-blue.svg' />"
 									alt="Email" /></span> <span class="extended-label">Email:</span> <span
-									class="extended-text">kavit.shah@etatvasoft.com</span>
+									class="extended-text accordion-pt-email">kavit.shah@etatvasoft.com</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/telephone-blue.svg' />"
 									alt="Number" /></span> <span class="extended-label">Patient:</span> <span
-									class="extended-text">6351627219</span>
+									class="extended-text accordion-pt-phone">6351627219</span>
 							</div>
+							
+							<div class="extended-flex">
+								<span class="circular_border"><img
+									src="<c:url value='/resources/images/telephone-blue.svg' />"
+									alt="Number" /></span> <span class="extended-label requestor-type-text">Requestor Contact:</span> <span
+									class="extended-text accordion-requestor-phone">6351627219</span>
+							</div>
+							
 							<div class="extended-flex">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/journal-text.svg' />"
 									alt="Note" /></span> <span class="extended-label">Transfer<br />Note:
-								</span> <span class="extended-text">Lorem ipsum dolor sit amet
+								</span> <span class="extended-text accordion-transfer-note">Lorem ipsum dolor sit amet
 									consectetur adipisicing elit.</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
 									alt="D.O.S" /></span> <span class="extended-label">Date of
-									Service:</span> <span class="extended-text">Jan 31,2023 8:30 AM</span>
+									Service:</span> <span class="extended-text accordion-date-of-service">Jan 31,2023 8:30 AM</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/person-add.svg' />"
 									alt="Physician" /></span> <span class="extended-label">Physician:</span>
-								<span class="extended-text">Dr. AGOLA</span>
+								<span class="extended-text accordion-physician-name">Dr. AGOLA</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/person.svg' />"
 									alt="Requestor" /></span> <span class="extended-label">Requestor:</span>
-								<span class="extended-text">Patient Agola Three,
+								<span class="extended-text accordion-requestor">Patient Agola Three,
 									BhoomiOne</span>
 							</div>
 
 							<div class="row p-3 text-center">
 
-								<div class="col-6 mb-3 accordion-btns">
-									<a class="accordion-btn-admin purple-background-btn"
+								<div class="col-6 mb-3 accordion-btns news d-none action-class">
+									<a class="accordion-btn-admin purple-background-btn "
 										role="button" data-bs-toggle="modal"
 										data-bs-target="#assign-case">Assign Case</a>
 								</div>
 
-								<div class="col-6 mb-3">
+								<div class="col-6 mb-3 to-closes d-none action-class">
 									<a class="accordion-btn-admin purple-background-btn"
 										role="button" href="<c:url value='' />">Close Case</a>
 								</div>
 
-								<div class="col-6 mb-3">
+								<div class="col-6 mb-3 pendings d-none action-class">
 									<a class="accordion-btn-admin orange-background-btn"
 										role="button" data-bs-toggle="modal"
 										data-bs-target="#send-agreement">Send Agreement</a>
 								</div>
 
-								<div class="col-6 mb-3 accordion-btns">
+								<div class="col-6 mb-3 accordion-btns news d-none action-class">
 									<a class="accordion-btn-admin red-background-btn" role="button"
 										data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel
 										Case</a>
 								</div>
 
-								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin red-background-btn"
+								<div class="col-6 mb-3 news d-none action-class">
+									<a class="accordion-btn-admin red-background-btn "
 										data-bs-toggle="modal" data-bs-target="#block-case"
 										role="button">Block Case</a>
 								</div>
 
-								<div class="col-6 mb-3 accordion-btns">
+								<div class="col-6 mb-3 accordion-btns ">
 									<a href="<c:url value='' />"
 										class="accordion-btn-admin green-background-btn" role="button">View
 										Notes</a>
 								</div>
 
-								<div class="col-6 mb-3">
+								<div class="col-6 mb-3 pendings actives concludes to-closes unpaids d-none action-class">
 									<a href="view-uploads-patient-conclude.html"
 										class="accordion-btn-admin green-background-btn" role="button">View
 										Uploads</a>
 								</div>
 
-								<div class="col-6 mb-3">
+								<div class="col-6 mb-3 actives to-closes d-none action-class">
 									<a href="<c:url value='' />"
 										class="accordion-btn-admin orange-background-btn"
 										role="button">Orders</a>
 								</div>
 
-								<div class="col-6 accordion-btns">
+								<div class="col-6 accordion-btns pendings d-none action-class">
 									<a class="accordion-btn-admin blue-background-btn"
 										data-bs-toggle="modal" data-bs-target="#transfer-case"
 										role="button">Transfer</a>
 								</div>
 
-								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin green-background-btn"
+								<div class="col-6 mb-3 actives concludes to-closes d-none action-class">
+									<a class="accordion-btn-admin green-background-btn "
 										href="<c:url value='' />" role="button">Encounter</a>
 								</div>
 
-								<div class="col-6 mb-3 accordion-btns">
+								<div class="col-6 mb-3 accordion-btns actives concludes to-closes d-none action-class">
 									<a class="accordion-btn-admin dark-green-background-btn"
 										href="<c:url value='' />" role="button">Doctors Note</a>
 								</div>
 
-								<div class="col-6 mb-3">
+								<div class="col-6 mb-3 pendings to-closes d-none action-class">
 									<a class="accordion-btn-admin orange-background-btn"
 										data-bs-toggle="modal" data-bs-target="#clear-case"
 										role="button">Clear Case</a>
@@ -664,23 +675,16 @@
 									<a class="accordion-btn-admin green-background-btn"
 										role="button">Email</a>
 								</div>
+								
+								<div class="col-6 mb-3 accordion-btns concludes d-none action-class">
+									<a class="accordion-btn-admin green-background-btn"
+										role="button">Conclude Care</a>
+								</div>
 
 
 
 							</div>
 
-
-							<div class="extended-flex-bottom">
-								<span class="bottom-btn-texts">Chat with:</span>
-								<div class="btn">
-									<img src="<c:url value='/resources/images/person.svg' />"
-										class="bottom-btn-img" alt="" />Patient
-								</div>
-								<div class="btn">
-									<img src="<c:url value='/resources/images/person-add.svg' />"
-										class="bottom-btn-img" alt="" />Provider
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

@@ -38,6 +38,8 @@ public class AdminController {
 			modelAndView.addObject("msg", message);
 			modelAndView.addObject("showalert", true);
 			modelAndView.addObject("showAlertTypeJsp", showAlertType);
+			
+			
 		} else {
 			modelAndView.addObject("showalert", false);
 		}
@@ -48,19 +50,21 @@ public class AdminController {
 	@RequestMapping(value="/getRequestData",method = RequestMethod.POST)
 	@ResponseBody
 	public List<NewRequestDataDto> getNewRequestData(@RequestParam("status") String status) {
-		List<Request> requestsList = aService.getNewStatusRequests(hallodoc.enumerations.RequestStatus.UNASSIGNED.getRequestId());
-		List<NewRequestDataDto> newRequestDataDtoList = new ArrayList<NewRequestDataDto>();
-		NewRequestDataDto newRequestDataDto ;
-		for (Request request : requestsList) {
-			newRequestDataDto = RequestNewDataDtoMapper.mapDataNeWDataDto(request);
-			newRequestDataDtoList.add(newRequestDataDto);
-		}
-		
 		System.out.println(status);
-		System.out.println(requestsList.get(0).getFirstName());
-		System.out.println(requestsList.get(1).getFirstName());
-		System.out.println(requestsList.get(2).getFirstName());
-		return newRequestDataDtoList;
+		
+			List<NewRequestDataDto> requestsList = aService.getStatusCorrespondingRequests(status);
+			return requestsList;
+	
+	}
+	
+	@RequestMapping(value="/getStatusWiseCount",method = RequestMethod.POST)
+	@ResponseBody
+	public List<Integer> getStatusRequestCount() {
+		
+			List<Integer> countLists = aService.getStatusWiseRequestCount();
+		
+			return countLists;
+	
 	}
 	
 }

@@ -20,6 +20,7 @@ public class DashboardDataDto {
 	private String adminFirstName;
 	private String adminLastName;
 	private Long count;
+	
 	public Integer getRequestId() {
 		return requestId;
 	}
