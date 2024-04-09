@@ -21,6 +21,15 @@
 	<mvc:resources location="/WEB-INF/resources/"
 		mapping="/resources/**" />
 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/*" />
+			 <mvc:exclude-mapping path="/admin/errorPage"/>
+			<bean class="hallodoc.interceptor.AdminInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+
 	<context:component-scan base-package="hallodoc"></context:component-scan>
 
 	<!-- <mvc:interceptors> -->
@@ -40,7 +49,7 @@
 
 	<bean name="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		
+
 	</bean>
 
 	<bean
@@ -90,6 +99,7 @@
 				<value>hallodoc.model.RequestConcierge</value>
 				<value>hallodoc.model.Role</value>
 				<value>hallodoc.model.Menu</value>
+				<value>hallodoc.model.EmailLog</value>
 			</list>
 		</property>
 	</bean>
@@ -109,7 +119,7 @@
 		name="transactionManager">
 		<property name="sessionFactory" ref="factory" />
 	</bean>
-	
+
 </beans>
 
 

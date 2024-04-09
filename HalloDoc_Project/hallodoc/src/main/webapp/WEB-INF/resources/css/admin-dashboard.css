@@ -57,8 +57,8 @@
 	opacity: 0.3 !important;
 }
 
-.admin-table-filter-by-select{
-	width:100%;
+.admin-table-filter-by-select {
+	width: 100%;
 }
 
 /* <!-- ---------------------------------------------------------------NAV BAR------------------------------------------------------ -->// */
@@ -828,19 +828,19 @@ a.nav-link {
 	left: 82px;
 }
 
-.telephone-border{
+.telephone-border {
 	border: 1px solid white;
 	border-radius: 5px;
-	background-color:transperant;
+	background-color: transperant;
 	padding: 4px 6px 4px 10px;
-	color:white;
-	display:inline-flex;
-	gap:12px;
+	color: white;
+	display: inline-flex;
+	gap: 12px;
 	align-items: center;
 }
 
-.margin-bottoms{
-	margin-bottom:10px;
+.margin-bottoms {
+	margin-bottom: 10px;
 }
 
 .arrow-width {
@@ -857,22 +857,22 @@ a.nav-link {
 }
 
 .tr-clr th, .tr-clr td {
-	background-color:#60be5e !important;
+	background-color: #60be5e !important;
 	color: white !important;
 }
 
 .tr-family th, .tr-family td {
-	background-color: #d69b4b!important;
+	background-color: #d69b4b !important;
 	color: white !important;
 }
 
 .tr-business th, .tr-business td {
-	background-color: #e0657a!important;
+	background-color: #e0657a !important;
 	color: white !important;
 }
 
 .tr-concierge th, .tr-concierge td {
-	background-color: #097dba!important;
+	background-color: #097dba !important;
 	color: white !important;
 }
 
@@ -906,10 +906,9 @@ a.nav-link {
 	cursor: pointer;
 }
 
-.card-head{
-	width:100%;
+.card-head {
+	width: 100%;
 }
-
 
 .all-label {
 	background-color: white;
@@ -989,6 +988,14 @@ a.nav-link {
 }
 
 /* ---------------------- */
+
+.wait-time-flex{
+	display:flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap:5px;
+}
+
 .map_btn_admin_accordian:hover {
 	background-color: #01bce9;
 	color: white;
@@ -1013,11 +1020,11 @@ a.nav-link {
 	border-radius: 0;
 	overflow-anchor: none !important;
 	transition: none !important;
-	z-index:0 !important;
+	z-index: 0 !important;
 }
 
-.accordion-button::after{
-	content:none !important;
+.accordion-button::after {
+	content: none !important;
 }
 
 .accordion-button:focus {
@@ -1041,6 +1048,10 @@ a.nav-link {
 
 .no-margin-hr {
 	margin: 0px !important;
+}
+
+.card-head {
+	border-bottom: 1px solid #d3c1c1;
 }
 
 .patient-type-color-icon {
@@ -1132,6 +1143,10 @@ a.nav-link {
 	text-decoration: none;
 }
 
+.empty-accordion {
+	display: none;
+}
+
 @media screen and (max-width: 425px) {
 	.patient_card_address_admin {
 		font-size: 15px;
@@ -1205,13 +1220,15 @@ a.nav-link {
 
 @media screen and (max-width:767px) {
 	.admin-table-filter {
-    width: 98% !important;
-}
-	
+		width: 98% !important;
+	}
 	.show-table {
 		display: none;
 	}
 	.accordion {
+		display: block;
+	}
+	.empty-accordion {
 		display: block;
 	}
 	.show_cards {

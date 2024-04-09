@@ -8,6 +8,8 @@ public class NewRequestDataDto {
 	private int year;
 	private String requestor;
 	private String requestedDate;
+	private String requestedTime;
+	private String requestedTimeDifference;
 	private String ptPhoneNumber;
 	private String ptPhoneNumberType;
 	private String reqPhoneNumber;
@@ -19,11 +21,31 @@ public class NewRequestDataDto {
 	private String notes;
 	private String physicianName;
 	private String dateOfService;
+	private String timeOfService;
 	private String region;
 	private boolean isDeleted;
 	private String ptEmail;
 	
 	
+	
+	public String getRequestedTimeDifference() {
+		return requestedTimeDifference;
+	}
+	public void setRequestedTimeDifference(String requestedTimeDifference) {
+		this.requestedTimeDifference = requestedTimeDifference;
+	}
+	public String getRequestedTime() {
+		return requestedTime;
+	}
+	public void setRequestedTime(String requestedTime) {
+		this.requestedTime = requestedTime;
+	}
+	public String getTimeOfService() {
+		return timeOfService;
+	}
+	public void setTimeOfService(String timeOfService) {
+		this.timeOfService = timeOfService;
+	}
 	public String getPtEmail() {
 		return ptEmail;
 	}
@@ -146,20 +168,13 @@ public class NewRequestDataDto {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "NewRequestDataDto [name=" + name + ", day=" + day + ", month=" + month + ", year=" + year
-				+ ", requestor=" + requestor + ", requestedDate=" + requestedDate + ", ptPhoneNumber=" + ptPhoneNumber
-				+ ", ptPhoneNumberType=" + ptPhoneNumberType + ", reqPhoneNumber=" + reqPhoneNumber
-				+ ", reqPhoneNumberType=" + reqPhoneNumberType + ", street=" + street + ", city=" + city + ", state="
-				+ state + ", zipcode=" + zipcode + ", notes=" + notes + ", physicianName=" + physicianName
-				+ ", dateOfService=" + dateOfService + ", region=" + region + ", isDeleted=" + isDeleted + ", ptEmail="
-				+ ptEmail + "]";
-	}
+	
+	
 	public NewRequestDataDto(String name, int day, String month, int year, String requestor, String requestedDate,
-			String ptPhoneNumber, String ptPhoneNumberType, String reqPhoneNumber, String reqPhoneNumberType,
-			String street, String city, String state, String zipcode, String notes, String physicianName,
-			String dateOfService, String region, boolean isDeleted, String ptEmail) {
+			String requestedTime, String requestedTimeDifference, String ptPhoneNumber, String ptPhoneNumberType,
+			String reqPhoneNumber, String reqPhoneNumberType, String street, String city, String state, String zipcode,
+			String notes, String physicianName, String dateOfService, String timeOfService, String region,
+			boolean isDeleted, String ptEmail) {
 		super();
 		this.name = name;
 		this.day = day;
@@ -167,6 +182,8 @@ public class NewRequestDataDto {
 		this.year = year;
 		this.requestor = requestor;
 		this.requestedDate = requestedDate;
+		this.requestedTime = requestedTime;
+		this.requestedTimeDifference = requestedTimeDifference;
 		this.ptPhoneNumber = ptPhoneNumber;
 		this.ptPhoneNumberType = ptPhoneNumberType;
 		this.reqPhoneNumber = reqPhoneNumber;
@@ -178,9 +195,21 @@ public class NewRequestDataDto {
 		this.notes = notes;
 		this.physicianName = physicianName;
 		this.dateOfService = dateOfService;
+		this.timeOfService = timeOfService;
 		this.region = region;
 		this.isDeleted = isDeleted;
 		this.ptEmail = ptEmail;
+	}
+	@Override
+	public String toString() {
+		return "NewRequestDataDto [name=" + name + ", day=" + day + ", month=" + month + ", year=" + year
+				+ ", requestor=" + requestor + ", requestedDate=" + requestedDate + ", requestedTime=" + requestedTime
+				+ ", requestedTimeDifference=" + requestedTimeDifference + ", ptPhoneNumber=" + ptPhoneNumber
+				+ ", ptPhoneNumberType=" + ptPhoneNumberType + ", reqPhoneNumber=" + reqPhoneNumber
+				+ ", reqPhoneNumberType=" + reqPhoneNumberType + ", street=" + street + ", city=" + city + ", state="
+				+ state + ", zipcode=" + zipcode + ", notes=" + notes + ", physicianName=" + physicianName
+				+ ", dateOfService=" + dateOfService + ", timeOfService=" + timeOfService + ", region=" + region
+				+ ", isDeleted=" + isDeleted + ", ptEmail=" + ptEmail + "]";
 	}
 	public NewRequestDataDto() {
 		super();

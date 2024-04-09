@@ -1,3 +1,5 @@
+<%@page import="hallodoc.model.AspNetUsers"%>
+<%@page import="hallodoc.exceptions.FailedAuthorizationException"%>
 <%@page import="org.apache.commons.fileupload.RequestContext"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -17,7 +19,9 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/admin-dashboard.css' />">
 <link rel="stylesheet"
@@ -33,6 +37,8 @@
 <!-- 	href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" /> -->
 <!-- <script -->
 <!-- 	src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script> -->
+
+
 
 <title>Admin Dashboard</title>
 </head>
@@ -298,8 +304,8 @@
 			<table class="table" id="admin-table">
 				<thead id="table-thead-admin">
 					<tr class="thead-clr align-middle" id="table-headers-admin">
-						<th colspan="2" >Name</th>
-						<th ></th>
+						<th colspan="2">Name</th>
+						<th></th>
 						<th class="table-columns s1 s2 s3 s4 s5">Date of Birth</th>
 						<th class="table-columns  s5">Region</th>
 						<th class="table-columns  s1 s2 s3">Requestor</th>
@@ -307,9 +313,9 @@
 						<th class="table-columns  s2 s3 s4 s5 s6">Date of Service</th>
 						<th class="table-columns  s1">Requested Date</th>
 						<th class="table-columns  s1 s2 s3 s4 s6">Phone</th>
-						<th >Address</th>
+						<th>Address</th>
 						<th class="table-columns  s1 s2 s3 s5">Notes</th>
-						<th >Actions</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody class="align-middle">
@@ -510,7 +516,8 @@
 		<div class="empty-accordion"></div>
 
 		<div class="accordion mb-4" id="accordionPanelsStayOpenExample">
-			<div class="accordion-item accordion-item-main d-none" id="accordion-single-card" >
+			<div class="accordion-item accordion-item-main d-none"
+				id="accordion-single-card">
 				<h2 class="accordion-header" id="panelsStayOpen-headingOne">
 					<button class="accordion-button" type="button"
 						data-bs-toggle="collapse"
@@ -520,7 +527,8 @@
 						<div class="card-head">
 							<div class="patient-type-card-main-flex-item">
 								<div class="patient_card_name">
-									<div class="add-patient-type-margin" id="accordion-patient-name-id">Patient, Test</div>
+									<div class="add-patient-type-margin"
+										id="accordion-patient-name-id">Patient, Test</div>
 								</div>
 
 								<div class="admin-dash-patient-type-flex">
@@ -536,10 +544,17 @@
 								<a href="<c:url value='' />" class="map_btn_admin_accordian">Map
 									Location</a>
 							</div>
+
+							<div class="wait-time-flex news action-class d-none ">
+								<img alt="" src="<c:url value='/resources/images/clock.svg' />">
+								<span class="patient-wait-time">Wait Time:</span> <span><strong
+									class="request-time-diffrence"></strong></span>
+							</div>
+
 						</div>
 					</button>
 				</h2>
-				<div id="panelsStayOpen-collapseOne" 
+				<div id="panelsStayOpen-collapseOne"
 					class="accordion-collapse collapse change-id"
 					aria-labelledby="panelsStayOpen-headingOne">
 					<div class="accordion-body">
@@ -547,57 +562,77 @@
 						<div class="patient_card extended-1" id="extended-1">
 							<a href="<c:url value='' />" class="view_case_btn" role="button">
 								View Case </a>
-							<div class="extended-flex">
+							<div
+								class="extended-flex action-class d-none news pendings actives concludes to-closes">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
 									alt="D.O.B" /></span> <span class="extended-label">Date of
-									Birth:</span> <span class="extended-text dateOfBirth">15-01-2003 (21)</span>
+									Birth:</span> <span class="extended-text dateOfBirth">15-01-2003
+									(21)</span>
 							</div>
-							<div class="extended-flex">
+							<div class="extended-flex ">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/envelope-blue.svg' />"
 									alt="Email" /></span> <span class="extended-label">Email:</span> <span
 									class="extended-text accordion-pt-email">kavit.shah@etatvasoft.com</span>
 							</div>
-							<div class="extended-flex">
+							<div
+								class="extended-flex action-class d-none news pendings actives concludes unpaids">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/telephone-blue.svg' />"
 									alt="Number" /></span> <span class="extended-label">Patient:</span> <span
 									class="extended-text accordion-pt-phone">6351627219</span>
 							</div>
-							
-							<div class="extended-flex">
+
+							<div
+								class="extended-flex action-class d-none news pendings actives concludes unpaids requestor-phone-class">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/telephone-blue.svg' />"
-									alt="Number" /></span> <span class="extended-label requestor-type-text">Requestor Contact:</span> <span
-									class="extended-text accordion-requestor-phone">6351627219</span>
+									alt="Number" /></span> <span
+									class="extended-label requestor-type-text">Requestor
+									Contact:</span> <span class="extended-text accordion-requestor-phone">6351627219</span>
 							</div>
-							
-							<div class="extended-flex">
+
+							<div
+								class="extended-flex action-class d-none news pendings actives to-closes">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/journal-text.svg' />"
 									alt="Note" /></span> <span class="extended-label">Transfer<br />Note:
-								</span> <span class="extended-text accordion-transfer-note">Lorem ipsum dolor sit amet
-									consectetur adipisicing elit.</span>
+								</span> <span class="extended-text accordion-transfer-note">Lorem
+									ipsum dolor sit amet consectetur adipisicing elit.</span>
 							</div>
-							<div class="extended-flex">
+							<div
+								class="extended-flex action-class d-none pendings actives concludes to-closes unpaids">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
 									alt="D.O.S" /></span> <span class="extended-label">Date of
-									Service:</span> <span class="extended-text accordion-date-of-service">Jan 31,2023 8:30 AM</span>
+									Service:</span> <span class="extended-text accordion-date-of-service">Jan
+									31,2023 8:30 AM</span>
 							</div>
-							<div class="extended-flex">
+
+							<div class="extended-flex action-class d-none news">
+								<span class="circular_border"><img
+									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
+									alt="D.O.R" /></span> <span class="extended-label">Date of
+									Request:</span> <span class="extended-text accordion-date-of-service">Jan
+									31,2023 8:30 AM</span>
+							</div>
+
+							<div
+								class="extended-flex action-class d-none pendings actives concludes to-closes unpaids">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/person-add.svg' />"
 									alt="Physician" /></span> <span class="extended-label">Physician:</span>
-								<span class="extended-text accordion-physician-name">Dr. AGOLA</span>
+								<span class="extended-text accordion-physician-name">Dr.
+									AGOLA</span>
 							</div>
-							<div class="extended-flex">
+							<div
+								class="extended-flex action-class d-none news pendings actives">
 								<span class="circular_border"><img
 									src="<c:url value='/resources/images/person.svg' />"
 									alt="Requestor" /></span> <span class="extended-label">Requestor:</span>
-								<span class="extended-text accordion-requestor">Patient Agola Three,
-									BhoomiOne</span>
+								<span class="extended-text accordion-requestor">Patient
+									Agola Three, BhoomiOne</span>
 							</div>
 
 							<div class="row p-3 text-center">
@@ -637,7 +672,8 @@
 										Notes</a>
 								</div>
 
-								<div class="col-6 mb-3 pendings actives concludes to-closes unpaids d-none action-class">
+								<div
+									class="col-6 mb-3 pendings actives concludes to-closes unpaids d-none action-class">
 									<a href="view-uploads-patient-conclude.html"
 										class="accordion-btn-admin green-background-btn" role="button">View
 										Uploads</a>
@@ -655,12 +691,14 @@
 										role="button">Transfer</a>
 								</div>
 
-								<div class="col-6 mb-3 actives concludes to-closes d-none action-class">
+								<div
+									class="col-6 mb-3 actives concludes to-closes d-none action-class">
 									<a class="accordion-btn-admin green-background-btn "
 										href="<c:url value='' />" role="button">Encounter</a>
 								</div>
 
-								<div class="col-6 mb-3 accordion-btns actives concludes to-closes d-none action-class">
+								<div
+									class="col-6 mb-3 accordion-btns actives concludes to-closes d-none action-class">
 									<a class="accordion-btn-admin dark-green-background-btn"
 										href="<c:url value='' />" role="button">Doctors Note</a>
 								</div>
@@ -675,8 +713,9 @@
 									<a class="accordion-btn-admin green-background-btn"
 										role="button">Email</a>
 								</div>
-								
-								<div class="col-6 mb-3 accordion-btns concludes d-none action-class">
+
+								<div
+									class="col-6 mb-3 accordion-btns concludes d-none action-class">
 									<a class="accordion-btn-admin green-background-btn"
 										role="button">Conclude Care</a>
 								</div>
@@ -796,21 +835,23 @@
 				<div class="modal-body">
 					<div>
 
-						<form action="">
+						<form method="post" id="sendLinkForm">
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp"
-										id="floatingInput-2" placeholder="First Name"
-										autocomplete="off"> <label for="floatingInput-2"
+									<input type="text" name="firstName"
+										class="form-control input-1 agreement-inp"
+										id="firstName" placeholder="First Name"
+										autocomplete="off"> <label for="firstName"
 										class="agreement-label">First Name</label>
 								</div>
 							</div>
 
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp"
-										id="floatingInput-2" placeholder="Last Name"
-										autocomplete="off"> <label for="floatingInput-2"
+									<input type="text" name="lastName"
+										class="form-control input-1 agreement-inp"
+										id="lastName" placeholder="Last Name"
+										autocomplete="off"> <label for="lastName"
 										class="agreement-label">Last Name</label>
 								</div>
 							</div>
@@ -818,25 +859,28 @@
 							<div class="col-12 col-md-6 ">
 								<!--Phone Number col-->
 								<div class="form-floating inp send-link-pop-up-only">
-									<input type="tel"
-										class="form-control phoneflags phonecolheight" id="phone" />
+									<input type="tel" name="phoneNumber"
+										class="form-control phoneflags" id="phone" />
 								</div>
 							</div>
 
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
-									<input type="email" class="form-control input-1 agreement-inp"
-										id="floatingInput-2" placeholder="Email" autocomplete="off">
-									<label for="floatingInput-2" class="agreement-label">Email</label>
+									<input type="email" name="email"
+										class="form-control input-1 agreement-inp"
+										id="phoneNumber" placeholder="Email" autocomplete="off">
+									<label for="phoneNumber" class="agreement-label">Email</label>
 								</div>
 							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="send-btn" data-bs-dismiss="modal">Send</button>
+								<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+							</div>
+
 						</form>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="send-btn">Send</button>
-						<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
 
-					</div>
 				</div>
 			</div>
 		</div>

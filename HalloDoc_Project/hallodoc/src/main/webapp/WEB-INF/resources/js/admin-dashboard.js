@@ -78,26 +78,11 @@ const changeStatus = (element) => {
 					tbody.append(card)
 				}
 
-				if (current_state == "pending" && !(data.deleted)) {
+				if (current_state != "new" && !(data.deleted)) {
 					var card = createOtherReqRow(data, current_state);
 					tbody.append(card)
 				}
-				if (current_state == "active" && !(data.deleted)) {
-					var card = createOtherReqRow(data, current_state);
-					tbody.append(card)
-				}
-				if (current_state == "conclude" && !(data.deleted)) {
-					var card = createOtherReqRow(data, current_state);
-					tbody.append(card)
-				}
-				if (current_state == "to-close" && !(data.deleted)) {
-					var card = createOtherReqRow(data, current_state);
-					tbody.append(card)
-				}
-				if (current_state == "unpaid" && !(data.deleted)) {
-					var card = createOtherReqRow(data, current_state);
-					tbody.append(card)
-				}
+
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
 				console.log(accordionCard);
@@ -180,7 +165,7 @@ function createNewReqRow(data) {
 						</td>
 						<td class="text-nowrap">`+ data.month + ` ` + data.day + `,` + data.year + `</td>
 						<td class="text-nowrap">`+ data.requestor + `</td>
-						<td >`+ data.requestedDate + `</td>
+						<td >`+ data.requestedDate + `<div>` + data.requestedTimeDifference + `</div></td>
 						<td> <div class="telephone-border"><img src="/hallodoc/resources/images/telephone.svg">`+ data.ptPhoneNumber + `</div>
 							 <div>(`+ data.ptPhoneNumberType + `)</div>
 							  <div class="telephone-border"><img src="/hallodoc/resources/images/telephone.svg">`+ data.reqPhoneNumber + `</div>
@@ -434,8 +419,10 @@ $(document).ready(function() {
 			console.log("Success")
 			console.log(res)
 			let tbody = $("#admin-table tbody")
+			let accordionBody = $(".empty-accordion")
 			tbody.empty()
-
+			accordionBody.empty()
+			let count = 121;
 			res.forEach(function(data) {
 
 				const obj = {};
@@ -462,8 +449,16 @@ $(document).ready(function() {
 					var card = createNewReqRow(data);
 					tbody.append(card)
 				}
+
+				var initalAccordionCard = poplulateAccordions(data, "new", count)
+				accordionBody.append(initalAccordionCard)
+				count += 1
 			})
 
+			const currentActions = document.getElementsByClassName("news")
+			for (let i = 0; i < currentActions.length; i++) {
+				currentActions[i].classList.remove('d-none')
+			}
 
 
 		},
@@ -476,11 +471,11 @@ $(document).ready(function() {
 function poplulateAccordions(data, current_state, count) {
 
 	var card = $("#accordion-single-card").clone().removeClass("d-none")
-	
+
 	card.find(".action-class").addClass("d-none")
 
 	var button = card.find(".accordion-button")
-	button.attr("data-bs-target", "#p" + data.zipcode + count)
+	button.attr("data-bs-target", "#p" + data.zipcode + data.ptPhoneNumber + count)
 
 	var ptName = card.find("#accordion-patient-name-id")
 	ptName.text(data.name)
@@ -491,6 +486,8 @@ function poplulateAccordions(data, current_state, count) {
 
 	if (data.reqPhoneNumberType == "Patient") {
 		colorIcon.addClass("patient-type-color-icon")
+		card.find(".requestor-phone-class").remove()
+
 	}
 	if (data.reqPhoneNumberType == "Family") {
 		colorIcon.addClass("family-type-color-icon")
@@ -504,7 +501,7 @@ function poplulateAccordions(data, current_state, count) {
 
 	card.find(".patient_card_address_admin").text(data.street + ", " + data.city + ", " + data.state + ", " + data.zipcode)
 
-	card.find(".change-id").attr("id", "p" + data.zipcode + count)
+	card.find(".change-id").attr("id", "p" + data.zipcode + data.ptPhoneNumber + count)
 
 	card.find(".dateOfBirth").text(data.month + " " + data.day + ", " + data.year)
 
@@ -513,19 +510,55 @@ function poplulateAccordions(data, current_state, count) {
 	card.find(".accordion-pt-phone").text(data.ptPhoneNumber)
 
 	card.find(".accordion-requestor-phone").text(data.reqPhoneNumber)
-	
+
 	card.find(".accordion-transfer-note").text(data.notes)
-	
+
 	card.find(".accordion-date-of-service").text(data.dateOfService)
-	
+
 	card.find(".accordion-physician-name").text(data.physicianName)
-	
+
 	card.find(".accordion-requestor").text(data.requestor)
-	
-	
-	
+
+	card.find(".requestor-type-text").text(data.reqPhoneNumberType + ":")
+
+	card.find(".request-time-diffrence").text(data.requestedDate + " " + data.requestedTime + "(" + data.requestedTimeDifference + ")")
+
 	return card;
 }
+
+// SendLinkFormSubmit
+
+$("#sendLinkForm").submit(function(event) {
+	
+	event.preventDefault();
+	var serializedForm1 = $(this).serializeArray();
+
+	var payloadData = {}
+	$(serializedForm1).each(function(i,value){
+		payloadData[value.name] = value.value
+	})
+
+	console.log(payloadData);
+
+	$.ajax({
+		url: 'sendLinkByEmail',
+		type: 'POST',
+		data: payloadData,
+		success: function(data) {
+			console.log(data)
+			console.log("Form Submitted")
+		},
+		error: function(data) {
+			console.log(data)
+			console.log("Error while send link ajax call")
+		}
+
+
+	});
+
+	$("#sendLinkForm").get(0).reset() 
+	
+});
 
 let open = document.querySelectorAll(".show_cards");
 console.log(open);
