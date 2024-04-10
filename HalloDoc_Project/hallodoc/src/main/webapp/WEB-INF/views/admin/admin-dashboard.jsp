@@ -211,38 +211,11 @@
 						<div class="inner-table-top-flex-left">
 
 							<div class="relativity search-1">
-								<input class="form-control search-btn" type="text"
+								<input class="form-control search-btn" id="patient-name-search" onblur="filterRequest()" type="text"
 									placeholder="Search Patients"> <img
 									src="<c:url value='/resources/images/search.svg' />" alt=""
 									class="search-img">
 							</div>
-
-							<!-- <div class="dropdown-center relativity ms-2 search-2">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="region_dropdown">All Region</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Action two</a></li>
-                                    <li><a class="dropdown-item" href="#">Action three</a></li>
-                                </ul>
-                                <img src="./SRS Screen Shorts/search.svg" alt="" class="search-img">
-                            </div> -->
-
-							<!-- 							// dynamic states list here -->
-
-							<!-- 							<div class="dropdown-center relativity ms-2 search-2"> -->
-							<!-- 								<select class="btn btn-secondary form-select select-dropdown-admin"> -->
-							<!-- 									<option value=""><a class="dropdown-item" href="#">All -->
-							<!-- 											Regions</a></option> -->
-							<!-- 									<option><a class="dropdown-item" href="#">Newyork</a></option> -->
-							<!-- 									<option><a class="dropdown-item" href="#">Maryland</a></option> -->
-							<!-- 									<option><a class="dropdown-item" href="#">London</a></option> -->
-							<%-- 								</select> <img src="<c:url value='/resources/images/search.svg' />" alt="" --%>
-							<!-- 									class="search-img"> -->
-
-							<!-- 							</div> -->
 
 							<div class="admin-table-filter">
 								<div class="d-flex align-items-center">
@@ -253,7 +226,7 @@
                                                 </button> -->
 
 									<div class="admin-table-filter-by-select">
-										<select class="form-select on-select" id="select"
+										<select class="form-select on-select" id="region-name-search" onchange="filterRequest()"
 											aria-label="Default select example" style="color: gray;">
 											<option selected value="All">All</option>
 
@@ -272,27 +245,52 @@
 
 						</div>
 
-						<div class="inner-table-top-flex-right gap-2 me-2">
+						<div class="inner-table-top-flex-right inner-table-top-flex-right-top gap-2 me-2">
 							<!-- provided flex to all child using class > * {}  -->
 							<div>
-								<button class="all-label">All</button>
+								<button class="all-label button-class active-btn d-none" id="all-type-req" data-value="All" onclick="changeActiveBtn(this);filterRequest()" id="all-type-req">All</button>
+								<label for="all-type-req" style="display: flex" class="show-active-button-class commom-label-class">
+								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
+									<span class="table-top-flex-text">All</span>
+								</div>
+							</label>
 							</div>
-							<div class="gap-2 patient-type-flex">
-								<div id="green-dot"></div>
-								<span class="table-top-flex-text">Patient</span>
-							</div>
-							<div class="gap-2 patient-type-flex">
-								<div id="orange-dot"></div>
-								<span class="table-top-flex-text">Family/Friend</span>
-							</div>
-							<div class="gap-2 patient-type-flex">
-								<div id="magenta-dot"></div>
-								<span class="table-top-flex-text">Business</span>
-							</div>
-							<div class="gap-2 patient-type-flex">
-								<div id="blue-dot"></div>
-								<span class="table-top-flex-text">Concierge</span>
-							</div>
+
+							<button id="patient-type-req" class="button-class" data-value="Patient" onclick="changeActiveBtn(this);filterRequest()"
+								style="display: none;">Patient</button>
+							<label for="patient-type-req" style="display: flex" class="commom-label-class">
+								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
+									<div id="green-dot"></div>
+									<span class="table-top-flex-text">Patient</span>
+								</div>
+							</label>
+
+							<button id="family-type-req" class=" button-class" data-value="Family" onclick="changeActiveBtn(this);filterRequest()"
+								style="display: none;">Family</button>
+							<label for="family-type-req" style="display: flex" class="commom-label-class">
+								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
+									<div id="orange-dot"></div>
+									<span class="table-top-flex-text">Family/Friend</span>
+								</div>
+							</label>
+
+							<button id="business-type-req" class=" button-class" data-value="Business" onclick="changeActiveBtn(this);filterRequest()"
+								style="display: none;">Business</button>
+							<label for="business-type-req" style="display: flex" class="commom-label-class">
+								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
+									<div id="magenta-dot"></div>
+									<span class="table-top-flex-text">Business</span>
+								</div>
+							</label>
+
+							<button class="button-class" id="concierge-type-req" data-value="Concierge" onclick="changeActiveBtn(this);filterRequest()"
+								style="display: none;">Concierge</button>
+							<label for="concierge-type-req" style="display: flex" class="commom-label-class">
+								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
+									<div id="blue-dot"></div>
+									<span class="table-top-flex-text">Concierge</span>
+								</div>
+							</label>
 						</div>
 					</div>
 				</div>
@@ -839,20 +837,18 @@
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
 									<input type="text" name="firstName"
-										class="form-control input-1 agreement-inp"
-										id="firstName" placeholder="First Name"
-										autocomplete="off"> <label for="firstName"
-										class="agreement-label">First Name</label>
+										class="form-control input-1 agreement-inp" id="firstName"
+										placeholder="First Name" autocomplete="off"> <label
+										for="firstName" class="agreement-label">First Name</label>
 								</div>
 							</div>
 
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
 									<input type="text" name="lastName"
-										class="form-control input-1 agreement-inp"
-										id="lastName" placeholder="Last Name"
-										autocomplete="off"> <label for="lastName"
-										class="agreement-label">Last Name</label>
+										class="form-control input-1 agreement-inp" id="lastName"
+										placeholder="Last Name" autocomplete="off"> <label
+										for="lastName" class="agreement-label">Last Name</label>
 								</div>
 							</div>
 
@@ -867,9 +863,9 @@
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
 									<input type="email" name="email"
-										class="form-control input-1 agreement-inp"
-										id="phoneNumber" placeholder="Email" autocomplete="off">
-									<label for="phoneNumber" class="agreement-label">Email</label>
+										class="form-control input-1 agreement-inp" id="phoneNumber"
+										placeholder="Email" autocomplete="off"> <label
+										for="phoneNumber" class="agreement-label">Email</label>
 								</div>
 							</div>
 

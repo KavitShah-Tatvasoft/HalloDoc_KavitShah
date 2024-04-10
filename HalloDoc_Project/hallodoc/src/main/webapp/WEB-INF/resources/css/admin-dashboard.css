@@ -812,6 +812,14 @@ a.nav-link {
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
+	cursor: pointer;
+}
+
+.show-active-button-class{
+	border: 1px solid #696464;
+	border-radius:5px;
+	padding:3px 6px;
+	background-color: white;
 }
 
 .dropdown-toggle::after {
@@ -1180,8 +1188,12 @@ a.nav-link {
 	}
 	.inner-table-top-flex-right {
 		justify-content: flex-start;
-		margin-top: 15px;
 	}
+	
+		.inner-table-top-flex-right-top {
+		margin-top:15px;
+	}
+	
 	.inner-table-top-flex-left {
 		/* justify-content: space-evenly; */
 		width: 100%;

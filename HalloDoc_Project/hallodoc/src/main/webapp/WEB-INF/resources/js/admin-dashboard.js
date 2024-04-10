@@ -529,12 +529,12 @@ function poplulateAccordions(data, current_state, count) {
 // SendLinkFormSubmit
 
 $("#sendLinkForm").submit(function(event) {
-	
+
 	event.preventDefault();
 	var serializedForm1 = $(this).serializeArray();
 
 	var payloadData = {}
-	$(serializedForm1).each(function(i,value){
+	$(serializedForm1).each(function(i, value) {
 		payloadData[value.name] = value.value
 	})
 
@@ -556,9 +556,106 @@ $("#sendLinkForm").submit(function(event) {
 
 	});
 
-	$("#sendLinkForm").get(0).reset() 
-	
+	$("#sendLinkForm").get(0).reset()
+
 });
+
+function changeActiveBtn(element) {
+	console.log("change me")
+	$(".button-class").removeClass("active-btn")
+	$(".commom-label-class").removeClass("show-active-button-class")
+	$(element).addClass("active-btn")
+	$(element).next().addClass("show-active-button-class")
+}
+
+function filterRequest() {
+	debugger
+	var patientName = document.getElementById("patient-name-search").value
+	var stateName = document.getElementById("region-name-search").value
+	//	var requestType = $(".button-class.active-btn").html()
+	var requestType = $(".button-class.active-btn").attr("data-value")
+	var statusType = $("#type-text").html();
+
+	statusType = statusType.slice(1, -1).toLowerCase();
+	var current_state = statusType
+	if(current_state=="to close"){current_state = "to-close"}
+			
+
+	if (statusType == "new") {
+		statusType = 1
+	}
+	if (statusType == "pending") {
+		statusType = 2
+	}
+	if (statusType == "active") {
+		statusType = 3
+	}
+	if (statusType == "conclude") {
+		statusType = 4
+	}
+	if (statusType == "to close") {
+		statusType = 5
+	}
+	if (statusType == "unpaid") {
+		statusType = 6
+	}
+
+	var payLoadData = {}
+
+	payLoadData["patientName"] = patientName
+	payLoadData["stateName"] = stateName
+	payLoadData["requestType"] = requestType
+	payLoadData["statusType"] = statusType
+
+	console.log(payLoadData)
+
+	$.ajax({
+		url: 'searchRequestFilter',
+		type: 'POST',
+		data: payLoadData,
+		success: function(res) {
+			console.log("Filter Successfully Applied")
+
+			let tbody = $("#admin-table tbody")
+			let accordionBody = $(".empty-accordion")
+			tbody.empty()
+			accordionBody.empty()
+			var count = 120;
+			res.forEach(function(data) {
+
+				count = count + 1
+
+				if (current_state == "new" && !(data.deleted)) {
+					var card = createNewReqRow(data);
+					tbody.append(card)
+				}
+
+				if (current_state != "new" && !(data.deleted)) {
+					var card = createOtherReqRow(data, current_state);
+					tbody.append(card)
+				}
+
+
+				var accordionCard = poplulateAccordions(data, current_state, count)
+				console.log(accordionCard);
+				accordionBody.append(accordionCard)
+
+
+			})
+			
+			const currentActions = document.getElementsByClassName(current_state + "s")
+			for (let i = 0; i < currentActions.length; i++) {
+				currentActions[i].classList.remove('d-none')
+			}
+			
+			
+			},
+				error: function(res) {
+					console.log("Filter Failed to be Applied")
+				}
+});
+
+}
 
 let open = document.querySelectorAll(".show_cards");
 console.log(open);

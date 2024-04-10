@@ -19,12 +19,14 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.model.EmailLog;
 import hallodoc.model.Request;
 import hallodoc.service.AdminService;
 import hallodoc.service.PatientService;
+import hallodoc.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,6 +35,8 @@ public class AdminController {
 	@Autowired
 	private AdminService aService;
 	
+	@Autowired
+	private UserService uService;
 	
 	@RequestMapping("/errorPage")
 	public String showErrorPage(HttpServletRequest request) {
@@ -40,6 +44,7 @@ public class AdminController {
 		return "admin/authorization-error";
 	}
 	
+	@ResponseBody
 	@PostMapping("/sendLinkByEmail")
 	public String submitForm(HttpServletRequest request, SendLinkDto sendLinkDto) {
 	  System.out.println(sendLinkDto);
@@ -87,5 +92,15 @@ public class AdminController {
 			return countLists;
 	
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchRequestFilter",method = RequestMethod.POST)
+	public List<NewRequestDataDto> searchRequestFilter(RequestFiltersDto requestFiltersDto ){
+		
+		System.out.println(requestFiltersDto);
+		List<NewRequestDataDto> filteredList = uService.getFilteredRequest(requestFiltersDto);
+		return filteredList;
+	}
+	
 	
 }

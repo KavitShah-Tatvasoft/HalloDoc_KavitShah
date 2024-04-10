@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,10 +21,13 @@ import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
 import hallodoc.dto.CommonRequestDto;
+import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.UserProfileDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
 import hallodoc.helper.Constants;
+import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
@@ -184,6 +188,16 @@ public class UserService {
 		return request;
 	}
 	
-	
+	public List<NewRequestDataDto> getFilteredRequest(RequestFiltersDto requestFiltersDto){
+		List<Request> filteredList = requestDao.getFilteredRequests(requestFiltersDto);
+		List<NewRequestDataDto> newRequestDataDtos = new ArrayList<NewRequestDataDto>();
+		
+		NewRequestDataDto newRequestDataDto;
+		for (Request request : filteredList) {
+			newRequestDataDto = RequestNewDataDtoMapper.mapDataNeWDataDto(request);
+			newRequestDataDtos.add(newRequestDataDto);
+		}
+		return newRequestDataDtos;
+	}
 
 }

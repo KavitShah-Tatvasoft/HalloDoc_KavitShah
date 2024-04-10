@@ -5,8 +5,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,8 +22,10 @@ import org.springframework.stereotype.Repository;
 
 import hallodoc.dto.DashboardDataDto;
 import hallodoc.dto.RequestDocumentsDto;
+import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.StatusWiseCountDto;
 import hallodoc.model.Request;
+import hallodoc.model.RequestClient;
 import hallodoc.model.RequestType;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
@@ -36,7 +44,7 @@ public class RequestDao {
 		int id = (Integer) this.hibernateTemplate.save(request);
 		return id;
 	}
-	
+
 	public Request getRequestOb(int id) {
 		Request request = (Request) this.hibernateTemplate.get(Request.class, id);
 		return request;
@@ -56,8 +64,8 @@ public class RequestDao {
 		s.close();
 		return result.size();
 	}
-	
-	public List<RequestDocumentsDto> getDocuments(int id){
+
+	public List<RequestDocumentsDto> getDocuments(int id) {
 		Session s = this.sessionFactory.openSession();
 		String query = "select new hallodoc.dto.RequestDocumentsDto(re.confirmationNumber, rwf.fileName, rwf.createdDate, rwf.uploaderName, rwf.fileExtension, rwf.storedFileName) from Request re left join RequestWiseFile rwf on re.requestId = rwf.request.requestId where re.requestId=:reqId";
 		Query<RequestDocumentsDto> query1 = s.createQuery(query);
@@ -71,7 +79,7 @@ public class RequestDao {
 		Session s = this.sessionFactory.openSession();
 
 		Query<DashboardDataDto> query = s.createQuery(
-		  "select new hallodoc.dto.DashboardDataDto(re.requestId,physician.physicianId,physician.firstName,physician.lastName,re.createdDate,re.status,ad.adminId,ad.firstName,ad.lastName,count(ref.request.requestId)) from Request re left join re.listRequestWiseFiles ref left join re.requestStatusLogs.admin ad left join re.physician physician where re.user=:loginUser group by re.requestId,ad.adminId,physician.physicianId");
+				"select new hallodoc.dto.DashboardDataDto(re.requestId,physician.physicianId,physician.firstName,physician.lastName,re.createdDate,re.status,ad.adminId,ad.firstName,ad.lastName,count(ref.request.requestId)) from Request re left join re.listRequestWiseFiles ref left join re.requestStatusLogs.admin ad left join re.physician physician where re.user=:loginUser group by re.requestId,ad.adminId,physician.physicianId");
 		query.setParameter("loginUser", user);
 
 		List<DashboardDataDto> results = query.list();
@@ -80,8 +88,8 @@ public class RequestDao {
 		s.close();
 		return results;
 	}
-	
-	public List<Request> getUserRequestByType(User user,RequestType reqType){
+
+	public List<Request> getUserRequestByType(User user, RequestType reqType) {
 		Session s = this.sessionFactory.openSession();
 		String hql = "from Request as req where req.user=:user and req.requestType=:reqType";
 		Query query = s.createQuery(hql);
@@ -91,8 +99,8 @@ public class RequestDao {
 		s.close();
 		return reqList;
 	}
-	
-	public List<Request> getUserRequestByOtherType(User user,RequestType reqType){
+
+	public List<Request> getUserRequestByOtherType(User user, RequestType reqType) {
 		Session s = this.sessionFactory.openSession();
 		String hql = "from Request as req where req.user=:user and req.requestType!=:reqType";
 		Query query = s.createQuery(hql);
@@ -102,13 +110,13 @@ public class RequestDao {
 		s.close();
 		return reqList;
 	}
-	
+
 	@Transactional
 	public void updateRequest(Request request) {
 		this.hibernateTemplate.update(request);
 	}
 
-	public List<Request> getRequstStatusData(List<Integer> status){
+	public List<Request> getRequstStatusData(List<Integer> status) {
 		Session s = this.sessionFactory.openSession();
 		String hql = "from Request as req where req.status IN :status";
 		Query query = s.createQuery(hql);
@@ -117,14 +125,86 @@ public class RequestDao {
 		s.close();
 		return requestsList;
 	}
-	
-	
-	public List<StatusWiseCountDto> getStatusWiseRequestCount(){
+
+	public List<StatusWiseCountDto> getStatusWiseRequestCount() {
 		Session s = this.sessionFactory.openSession();
-		
+
 		String hql = "select new hallodoc.dto.StatusWiseCountDto(re.status,COUNT(re.requestId)) from Request re group by re.status";
 		Query query = s.createQuery(hql);
 		List<StatusWiseCountDto> list = query.list();
+		s.close();
+		return list;
+	}
+
+	public List<Request> getFilteredRequests(RequestFiltersDto requestFiltersDto) {
+	
+		Session s = this.sessionFactory.openSession();
+
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<Request> cr = cb.createQuery(Request.class);
+		Root<Request> root = cr.from(Request.class);
+
+		Join<Request, RequestClient> clientJoin = root.join("requestClient");
+		
+		Join<Request, RequestType> requestTypeJoin = root.join("requestType");
+
+		Predicate[] predicates = new Predicate[4];
+
+		if (!requestFiltersDto.getPatientName().equals("")) {
+			predicates[0] = cb.like(clientJoin.get("firstName"), requestFiltersDto.getPatientName() + "%");
+		} else {
+			predicates[0] = cb.like(clientJoin.get("firstName"), "%");
+		}
+
+		if (!requestFiltersDto.getStateName().equals("All")) {
+			predicates[1] = cb.equal(clientJoin.get("state"), requestFiltersDto.getStateName());
+		} else {
+			predicates[1] = cb.like(clientJoin.get("state"), "%");
+		}
+
+		switch (requestFiltersDto.getStatusType()) {
+		case "1":
+			predicates[2] = root.get("status").in(1);
+			break;
+
+		case "2":
+			predicates[2] = root.get("status").in(2);
+			break;
+
+		case "3":
+			predicates[2] = root.get("status").in(4,5);
+			break;
+
+		case "4":
+			predicates[2] = root.get("status").in(6);
+			break;
+
+		case "5":
+			predicates[2] = root.get("status").in(3,7,8);
+			break;
+
+		case "6":
+			predicates[2] = root.get("status").in(9);
+			break;
+
+		default:
+			predicates[2] = root.get("status").in(1,2,3,4,5,6,7,8,9);
+			break;
+		}
+
+		
+		if(!requestFiltersDto.getRequestType().equals("All")) {
+			predicates[3] = cb.equal(requestTypeJoin.get("name"), requestFiltersDto.getRequestType());
+		}else {
+			predicates[3] = cb.like(requestTypeJoin.get("name"), "%");
+		}
+		
+		cr.select(root).where(predicates);
+
+		Query<Request> query = s.createQuery(cr);
+
+		List<Request> list = query.getResultList();
+		s.close();
 		return list;
 	}
 
