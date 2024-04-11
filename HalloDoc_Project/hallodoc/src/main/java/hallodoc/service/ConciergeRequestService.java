@@ -219,19 +219,6 @@ public class ConciergeRequestService {
 		return requestClient;
 	}
 
-	private RequestStatusLog creatRequestStatusLog(CommonRequestDto commonRequestDto, Date currentDate,
-			Request request) {
-
-		RequestStatusLog requestStatusLog = new RequestStatusLog();
-
-		requestStatusLog.setRequest(request);
-		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-		requestStatusLog.setCreatedDate(currentDate);
-
-		return requestStatusLog;
-
-	}
-
 	private String sendCreatePasswordMail(CommonRequestDto commonRequestDto, HttpServletRequest httpServletRequest,
 			String isExsist) {
 
@@ -376,10 +363,6 @@ public class ConciergeRequestService {
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
 		
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
-		
 		String conciergeEmail = commonRequestDto.getReqEmail();
 		List<Concierge> conciergeList = conciergeDao.getExistingConciergeByEmail(conciergeEmail);
 
@@ -465,10 +448,6 @@ public class ConciergeRequestService {
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
-		
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
 		
 		String conciergeEmail = commonRequestDto.getReqEmail();
 		List<Concierge> conciergeList = conciergeDao.getExistingConciergeByEmail(conciergeEmail);

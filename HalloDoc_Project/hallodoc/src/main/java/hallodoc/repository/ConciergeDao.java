@@ -31,6 +31,8 @@ public class ConciergeDao {
 		Query q = s.createQuery(queryString);
 		q.setParameter("conciergeEmail", conciergeEmail);
 		List<Concierge> list = q.list();
+		s.close();
+
 		return list;
 	}
 	

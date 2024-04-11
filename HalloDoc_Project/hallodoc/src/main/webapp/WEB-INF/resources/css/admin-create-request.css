@@ -216,13 +216,13 @@ display: none;
 }
 
 .map-text-flex{
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  border: 1px solid #01bce9;
-  border-radius: 5px;
-  width: 16%;
-  height: 57px;
+  display: flex !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  border: 1px solid #01bce9 !important;
+  border-radius: 5px !important;
+  width: 16% !important;
+  height: 57px !important;
 }
 
 

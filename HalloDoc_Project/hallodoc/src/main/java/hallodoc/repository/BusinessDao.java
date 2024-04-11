@@ -32,6 +32,8 @@ public class BusinessDao {
 		Query q = s.createQuery(queryString);
 		q.setParameter("businessEmail", businessEmail);
 		List<Business> list = q.list();
+		s.close();
+
 		return list;
 	}
 	

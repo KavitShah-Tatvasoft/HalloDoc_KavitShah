@@ -176,8 +176,8 @@
 							src="<c:url value='/resources/images/send.svg' />"
 							class="btn-info-img"> <span class="btns-text">Send
 								Link</span>
-						</a> <a href="<c:url value='' />" class="btn btn-info mx-1"
-							role="button"> <img
+						</a> <a href="<c:url value='adminCreatePatientRequest' />"
+							class="btn btn-info mx-1" role="button"> <img
 							src="<c:url value='/resources/images/pencil-square.svg' />"
 							class="btn-info-img"> <span class="btns-text">Create
 								Request</span>
@@ -211,7 +211,8 @@
 						<div class="inner-table-top-flex-left">
 
 							<div class="relativity search-1">
-								<input class="form-control search-btn" id="patient-name-search" onblur="filterRequest()" type="text"
+								<input class="form-control search-btn" id="patient-name-search"
+									onblur="filterRequest()" type="text"
 									placeholder="Search Patients"> <img
 									src="<c:url value='/resources/images/search.svg' />" alt=""
 									class="search-img">
@@ -226,7 +227,8 @@
                                                 </button> -->
 
 									<div class="admin-table-filter-by-select">
-										<select class="form-select on-select" id="region-name-search" onchange="filterRequest()"
+										<select class="form-select on-select" id="region-name-search"
+											onchange="filterRequest()"
 											aria-label="Default select example" style="color: gray;">
 											<option selected value="All">All</option>
 
@@ -245,47 +247,64 @@
 
 						</div>
 
-						<div class="inner-table-top-flex-right inner-table-top-flex-right-top gap-2 me-2">
+						<div
+							class="inner-table-top-flex-right inner-table-top-flex-right-top gap-2 me-2">
 							<!-- provided flex to all child using class > * {}  -->
 							<div>
-								<button class="all-label button-class active-btn d-none" id="all-type-req" data-value="All" onclick="changeActiveBtn(this);filterRequest()" id="all-type-req">All</button>
-								<label for="all-type-req" style="display: flex" class="show-active-button-class commom-label-class">
-								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
-									<span class="table-top-flex-text">All</span>
-								</div>
-							</label>
+								<button class="all-label button-class active-btn d-none"
+									id="all-type-req" data-value="All"
+									onclick="changeActiveBtn(this);filterRequest()"
+									id="all-type-req">All</button>
+								<label for="all-type-req" style="display: flex"
+									class="show-active-button-class commom-label-class">
+									<div class="gap-2 patient-type-flex inner-table-top-flex-right">
+										<span class="table-top-flex-text">All</span>
+									</div>
+								</label>
 							</div>
 
-							<button id="patient-type-req" class="button-class" data-value="Patient" onclick="changeActiveBtn(this);filterRequest()"
+							<button id="patient-type-req" class="button-class"
+								data-value="Patient"
+								onclick="changeActiveBtn(this);filterRequest()"
 								style="display: none;">Patient</button>
-							<label for="patient-type-req" style="display: flex" class="commom-label-class">
+							<label for="patient-type-req" style="display: flex"
+								class="commom-label-class">
 								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
 									<div id="green-dot"></div>
 									<span class="table-top-flex-text">Patient</span>
 								</div>
 							</label>
 
-							<button id="family-type-req" class=" button-class" data-value="Family" onclick="changeActiveBtn(this);filterRequest()"
+							<button id="family-type-req" class=" button-class"
+								data-value="Family"
+								onclick="changeActiveBtn(this);filterRequest()"
 								style="display: none;">Family</button>
-							<label for="family-type-req" style="display: flex" class="commom-label-class">
+							<label for="family-type-req" style="display: flex"
+								class="commom-label-class">
 								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
 									<div id="orange-dot"></div>
 									<span class="table-top-flex-text">Family/Friend</span>
 								</div>
 							</label>
 
-							<button id="business-type-req" class=" button-class" data-value="Business" onclick="changeActiveBtn(this);filterRequest()"
+							<button id="business-type-req" class=" button-class"
+								data-value="Business"
+								onclick="changeActiveBtn(this);filterRequest()"
 								style="display: none;">Business</button>
-							<label for="business-type-req" style="display: flex" class="commom-label-class">
+							<label for="business-type-req" style="display: flex"
+								class="commom-label-class">
 								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
 									<div id="magenta-dot"></div>
 									<span class="table-top-flex-text">Business</span>
 								</div>
 							</label>
 
-							<button class="button-class" id="concierge-type-req" data-value="Concierge" onclick="changeActiveBtn(this);filterRequest()"
+							<button class="button-class" id="concierge-type-req"
+								data-value="Concierge"
+								onclick="changeActiveBtn(this);filterRequest()"
 								style="display: none;">Concierge</button>
-							<label for="concierge-type-req" style="display: flex" class="commom-label-class">
+							<label for="concierge-type-req" style="display: flex"
+								class="commom-label-class">
 								<div class="gap-2 patient-type-flex inner-table-top-flex-right">
 									<div id="blue-dot"></div>
 									<span class="table-top-flex-text">Concierge</span>
@@ -1138,6 +1157,7 @@
 		<div class="progress"></div>
 	</div>
 
+	
 
 	<%@include file="footer-black.jsp"%>
 

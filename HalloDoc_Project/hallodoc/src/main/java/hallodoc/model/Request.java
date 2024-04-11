@@ -102,11 +102,24 @@ public class Request {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private RequestClient requestClient;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "request")
 	private RequestStatusLog requestStatusLogs;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private List<RequestWiseFile> listRequestWiseFiles;
+	
+	@OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL, mappedBy = "request")
+	private RequestNotes requestNotes;
+	
+	
+
+	public RequestNotes getRequestNotes() {
+		return requestNotes;
+	}
+
+	public void setRequestNotes(RequestNotes requestNotes) {
+		this.requestNotes = requestNotes;
+	}
 
 	public int getRequestId() {
 		return requestId;
@@ -300,25 +313,13 @@ public class Request {
 		this.listRequestWiseFiles = listRequestWiseFiles;
 	}
 
-	@Override
-	public String toString() {
-		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", status=" + status + ", physician=" + physician + ", confirmationNumber=" + confirmationNumber
-				+ ", createdDate=" + createdDate + ", isDeleted=" + isDeleted + ", modifieDate=" + modifieDate
-				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
-				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
-				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
-				+ ", requestClient=" + requestClient + ", requestStatusLogs=" + requestStatusLogs
-				+ ", listRequestWiseFiles=" + listRequestWiseFiles + "]";
-	}
-
+	
 	public Request(int requestId, RequestType requestType, User user, String firstName, String lastName,
 			String phoneNumber, String email, int status, Physician physician, String confirmationNumber,
 			Date createdDate, boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate,
 			int callType, boolean completedByPhysician, Date lastReservationDate, Date acceptedDate,
 			String relationName, String caseNumber, RequestClient requestClient, RequestStatusLog requestStatusLogs,
-			List<RequestWiseFile> listRequestWiseFiles) {
+			List<RequestWiseFile> listRequestWiseFiles, RequestNotes requestNotes) {
 		super();
 		this.requestId = requestId;
 		this.requestType = requestType;
@@ -344,6 +345,20 @@ public class Request {
 		this.requestClient = requestClient;
 		this.requestStatusLogs = requestStatusLogs;
 		this.listRequestWiseFiles = listRequestWiseFiles;
+		this.requestNotes = requestNotes;
+	}
+
+	@Override
+	public String toString() {
+		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", status=" + status + ", physician=" + physician + ", confirmationNumber=" + confirmationNumber
+				+ ", createdDate=" + createdDate + ", isDeleted=" + isDeleted + ", modifieDate=" + modifieDate
+				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
+				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
+				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
+				+ ", requestClient=" + requestClient + ", requestStatusLogs=" + requestStatusLogs
+				+ ", listRequestWiseFiles=" + listRequestWiseFiles + ", requestNotes=" + requestNotes + "]";
 	}
 
 	public Request() {

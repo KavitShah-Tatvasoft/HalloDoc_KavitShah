@@ -100,6 +100,7 @@
 				<value>hallodoc.model.Role</value>
 				<value>hallodoc.model.Menu</value>
 				<value>hallodoc.model.EmailLog</value>
+				<value>hallodoc.model.RequestNotes</value>
 			</list>
 		</property>
 	</bean>

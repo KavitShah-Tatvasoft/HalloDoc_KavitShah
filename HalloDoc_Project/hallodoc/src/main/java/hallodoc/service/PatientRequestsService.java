@@ -113,9 +113,6 @@ public class PatientRequestsService {
 		String month = tokens[1];
 		String year = tokens[2];
 
-//        if(Integer.parseInt(month)<10) {
-//        	month = "0" + month;
-//        }
 
 		return day + month + year;
 	}
@@ -137,11 +134,6 @@ public class PatientRequestsService {
 		endDate.setMinutes(59);
 		endDate.setSeconds(59);
 
-//		String pattern = "yyyy-MM-dd";
-//		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-//		
-//		String startString = formatter.format(startDate);
-//		String endString = formatter.format(endDate);
 
 //		String currentNewRequests = String.format("%04d", patientNewRequestDao.getNewRequestsNo(new Date()));
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
@@ -247,18 +239,7 @@ public class PatientRequestsService {
 		return requestClient;
 	}
 
-	private RequestStatusLog creatRequestStatusLog(CreatePatientRequestDto createPatientRequestDto, Date currentDate,
-			Request request) {
-
-		RequestStatusLog requestStatusLog = new RequestStatusLog();
-
-		requestStatusLog.setRequest(request);
-		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-		requestStatusLog.setCreatedDate(currentDate);
-
-		return requestStatusLog;
-
-	}
+	
 
 	private RequestWiseFile creatRequestWiseFile(CreatePatientRequestDto createPatientRequestDto, Date currentDate,
 			Request request, HttpSession session) {
@@ -410,10 +391,7 @@ public class PatientRequestsService {
 					monthName);
 			request.setRequestClient(requestClient);
 
-			// Setting the requestStatusLogobject
-			requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
-			request.setRequestStatusLogs(requestStatusLog);
-
+			
 			if (!(createPatientRequestDto.getDocument().isEmpty())) {
 
 				// Setting the requestWiseFile
@@ -509,12 +487,7 @@ public class PatientRequestsService {
 			// Setting the requestClient object
 			requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 					monthName);
-			request.setRequestClient(requestClient);
-
-			// Setting the requestStatusLogobject
-			requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
-			request.setRequestStatusLogs(requestStatusLog);
-			
+			request.setRequestClient(requestClient);			
 			
 			if (!(createPatientRequestDto.getDocument().isEmpty())) {
 

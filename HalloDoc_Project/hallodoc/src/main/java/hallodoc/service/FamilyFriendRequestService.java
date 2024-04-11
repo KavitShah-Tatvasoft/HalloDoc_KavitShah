@@ -230,19 +230,6 @@ public class FamilyFriendRequestService {
 		return requestClient;
 	}
 
-	private RequestStatusLog creatRequestStatusLog(CommonRequestDto commonRequestDto, Date currentDate,
-			Request request) {
-
-		RequestStatusLog requestStatusLog = new RequestStatusLog();
-
-		requestStatusLog.setRequest(request);
-		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-		requestStatusLog.setCreatedDate(currentDate);
-
-		return requestStatusLog;
-
-	}
-
 	private RequestWiseFile creatRequestWiseFile(CommonRequestDto commonRequestDto, Date currentDate, Request request,
 			HttpSession session) {
 
@@ -394,10 +381,6 @@ public class FamilyFriendRequestService {
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
 		
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
-		
 		if (!(commonRequestDto.getDocument().isEmpty())) {
 
 			// Setting the requestWiseFile
@@ -473,10 +456,6 @@ public class FamilyFriendRequestService {
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
-
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
 		
 
 		if (!(commonRequestDto.getDocument().isEmpty())) {

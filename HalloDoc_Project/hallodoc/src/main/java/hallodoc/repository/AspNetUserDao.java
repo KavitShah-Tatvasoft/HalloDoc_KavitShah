@@ -30,6 +30,8 @@ public class AspNetUserDao {
 		Query q = s.createQuery(queryString);
 		q.setParameter("user_username", u_username);
 		List<AspNetUsers> list = q.list();
+		s.close();
+
 		return list;
 	}
 
@@ -40,6 +42,7 @@ public class AspNetUserDao {
 		Query q = s.createQuery(queryString);
 		q.setParameter("user_email", u_email);
 		List<AspNetUsers> list = q.list();
+		s.close();
 		return list;
 	}
 
@@ -49,6 +52,7 @@ public class AspNetUserDao {
 		Query q = s.createQuery(queryString);
 		q.setParameter("user_email", email);
 		List<AspNetUsers> list = q.list();
+		s.close();
 		if (list.size() > 0) {
 			return "success";
 		} else {

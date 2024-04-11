@@ -8,7 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class CreatePatientRequestDto {
 
-	private String symptoms;
+	private String symptoms;     // Admin notes in case of request created by ADMIN
 	private String firstName;
 	private String lastName;
 	private static String dob;

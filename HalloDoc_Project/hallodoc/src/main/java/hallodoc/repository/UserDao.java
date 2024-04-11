@@ -35,6 +35,8 @@ public class UserDao {
 		Query q = s.createQuery(queryString);
 		q.setParameter("userEmail", userEmail);
 		List<User> list = q.list();
+		s.close();
+
 		return list;
 	}
 	

@@ -214,19 +214,6 @@ public class RegisteredPatientOthersRequestService {
 		return requestClient;
 	}
 
-	private RequestStatusLog creatRequestStatusLog(SomeoneElseRequestDto someoneElseRequestDto, Date currentDate,
-			Request request) {
-
-		RequestStatusLog requestStatusLog = new RequestStatusLog();
-
-		requestStatusLog.setRequest(request);
-		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-		requestStatusLog.setCreatedDate(currentDate);
-
-		return requestStatusLog;
-
-	}
-
 	private RequestWiseFile creatRequestWiseFile(SomeoneElseRequestDto someoneElseRequestDto, Date currentDate,
 			Request request, HttpSession session, User requestorUser) {
 
@@ -386,10 +373,6 @@ public class RegisteredPatientOthersRequestService {
 		requestClient = createRequestClient(someoneElseRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
 
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(someoneElseRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
-
 		if (!(someoneElseRequestDto.getDocument().isEmpty())) {
 			HttpSession session = httpRequest.getSession();
 			// Setting the requestWiseFile
@@ -468,10 +451,6 @@ public class RegisteredPatientOthersRequestService {
 		// Setting the requestClient object
 		requestClient = createRequestClient(someoneElseRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
-
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(someoneElseRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
 
 		if (!(someoneElseRequestDto.getDocument().isEmpty())) {
 

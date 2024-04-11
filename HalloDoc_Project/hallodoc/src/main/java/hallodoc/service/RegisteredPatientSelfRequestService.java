@@ -160,19 +160,6 @@ public class RegisteredPatientSelfRequestService {
 		return requestClient;
 	}
 
-	private RequestStatusLog creatRequestStatusLog(CreatePatientRequestDto createPatientRequestDto, Date currentDate,
-			Request request) {
-
-		RequestStatusLog requestStatusLog = new RequestStatusLog();
-
-		requestStatusLog.setRequest(request);
-		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-		requestStatusLog.setCreatedDate(currentDate);
-
-		return requestStatusLog;
-
-	}
-
 	private RequestWiseFile creatRequestWiseFile(CreatePatientRequestDto createPatientRequestDto, Date currentDate,
 			Request request, HttpSession session) {
 
@@ -256,10 +243,6 @@ public class RegisteredPatientSelfRequestService {
 		requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 				monthName);
 		request.setRequestClient(requestClient);
-
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(createPatientRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
 
 		if (!(createPatientRequestDto.getDocument().isEmpty())) {
 

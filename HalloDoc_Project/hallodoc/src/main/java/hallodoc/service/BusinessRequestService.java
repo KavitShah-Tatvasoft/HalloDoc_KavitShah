@@ -223,19 +223,6 @@ public class BusinessRequestService {
 		return requestClient;
 	}
 
-	private RequestStatusLog creatRequestStatusLog(CommonRequestDto commonRequestDto, Date currentDate,
-			Request request) {
-
-		RequestStatusLog requestStatusLog = new RequestStatusLog();
-
-		requestStatusLog.setRequest(request);
-		requestStatusLog.setStatus(RequestStatus.UNASSIGNED.getRequestId());
-		requestStatusLog.setCreatedDate(currentDate);
-
-		return requestStatusLog;
-
-	}
-
 	private String updateBusiness(CommonRequestDto commonRequestDto, Business business, LocalDateTime date,
 			Region region) {
 
@@ -386,10 +373,6 @@ public class BusinessRequestService {
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
 		
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
-		
 		String businessEmail = commonRequestDto.getReqEmail();
 		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
 
@@ -477,10 +460,6 @@ public class BusinessRequestService {
 		// Setting the requestClient object
 		requestClient = createRequestClient(commonRequestDto, currentDate, request, region, day, year, monthName);
 		request.setRequestClient(requestClient);
-		
-		// Setting the requestStatusLogobject
-		requestStatusLog = creatRequestStatusLog(commonRequestDto, currentDate, request);
-		request.setRequestStatusLogs(requestStatusLog);
 		
 		String businessEmail = commonRequestDto.getReqEmail();
 		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
