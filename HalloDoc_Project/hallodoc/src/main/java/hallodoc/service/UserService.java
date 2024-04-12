@@ -210,15 +210,15 @@ public class UserService {
 	
 	public String updateViewCaseDetails(UpdateCaseDto updateCaseDto) {
 		
-		if(updateCaseDto.getPhoneNumber().contains("+")) {
-			String phone = updateCaseDto.getPhoneNumber();
-//			String tokens[2] = phone.split("");
-		}
-		
+//		if(updateCaseDto.getPhoneNumber().contains("+")) {
+//			String phone = updateCaseDto.getPhoneNumber();
+////			String tokens[2] = phone.split("");
+//		}
+		System.out.println(updateCaseDto.getDateOfBirth());
 		String[] tokens = updateCaseDto.getDateOfBirth().split("-");
-		int day = Integer.parseInt(tokens[0]);
-		int monthInt = Integer.parseInt(tokens[1]);
-		int year = Integer.parseInt(tokens[2]);
+		int day = Integer.parseInt(tokens[2]);
+		int monthInt = Integer.parseInt(tokens[1]) - 1;
+		int year = Integer.parseInt(tokens[0]);
 		String[] months = {"January","February","March","April","June","July","August","September","October","November","December"};
 		String month = months[monthInt];
 		
@@ -250,7 +250,7 @@ public class UserService {
 		requestClient.setIntDate(day);
 		requestClient.setIntYear(year);
 		requestClient.setStrMonth(month);
-		
+		requestClient.setNotiMobile(updateCaseDto.getPhoneNumber());
 		request.setRequestClient(requestClient);
 		
 		apsnetuserdao.updateAspNetUser(aspNetUsers);

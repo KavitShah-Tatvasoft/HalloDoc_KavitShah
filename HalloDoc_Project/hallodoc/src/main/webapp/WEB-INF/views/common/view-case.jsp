@@ -153,7 +153,7 @@
 					<!--Phone Number col-->
 					<div class="form-floating mb-3 inp phonecolheight">
 						<input type="tel" class="form-control phoneflags patient-details"
-							value="+91 ${requestOb.requestClient.phoneNumber}" id="phone"
+							value="${requestOb.requestClient.phoneNumber}" id="phone"
 							disabled />
 					</div>
 				</div>
