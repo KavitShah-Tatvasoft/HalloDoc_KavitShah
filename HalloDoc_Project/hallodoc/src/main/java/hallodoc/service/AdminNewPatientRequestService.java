@@ -150,11 +150,6 @@ public class AdminNewPatientRequestService {
 		userOb.setLastName(createPatientRequestDto.getLastName());
 		userOb.setEmail(createPatientRequestDto.getEmail());
 		userOb.setMobile(createPatientRequestDto.getMobileNumber());
-//		userOb.setStreet(createPatientRequestDto.getStreet());
-//		userOb.setState(createPatientRequestDto.getState());
-//		userOb.setCity(createPatientRequestDto.getCity());
-//		userOb.setZipcode(createPatientRequestDto.getZipcode());
-//		userOb.setRegion(region);
 		userOb.setStrMonth(monthName);
 		userOb.setIntYear(year);
 		userOb.setIntDate(day);
@@ -379,6 +374,10 @@ public class AdminNewPatientRequestService {
 		requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 				monthName);
 		request.setRequestClient(requestClient);
+		
+		requestNotes = createNotes(createPatientRequestDto, request, httpRequest);
+		request.setRequestNotes(requestNotes);
+
 		
 		int requestId = requestDao.addNewRequest(request);
 		

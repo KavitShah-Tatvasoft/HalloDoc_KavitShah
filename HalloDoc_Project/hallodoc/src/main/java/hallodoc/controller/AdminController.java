@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendLinkDto;
+import hallodoc.dto.UpdateCaseDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.model.EmailLog;
 import hallodoc.model.Request;
@@ -138,9 +141,27 @@ public class AdminController {
 		if (status.equalsIgnoreCase("UserExsist")) {
 			attributes.addFlashAttribute("message", "User already exisits");
 			attributes.addFlashAttribute("alertType", "faliure");
+		}else {
+			attributes.addFlashAttribute("message", "Request Created");
+			attributes.addFlashAttribute("alertType", "success");
 		}
 
 		return redirectView;
 	}
+	
+	@RequestMapping("/viewCase/{requestId}")
+	public String viewCasePatient(@PathVariable("requestId") int id, HttpServletRequest request, Model m) {
+		Request requestOb = uService.getViewCaseRequest(id);
+		m.addAttribute("requestOb",requestOb);	
+		return "common/view-case";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "viewCase/updateCaseDetails", method = RequestMethod.POST)
+	public String updateCase(UpdateCaseDto updateCaseDto) {
+		String status = uService.updateViewCaseDetails(updateCaseDto);
+		return "Success";
+	}
+	
 
 }

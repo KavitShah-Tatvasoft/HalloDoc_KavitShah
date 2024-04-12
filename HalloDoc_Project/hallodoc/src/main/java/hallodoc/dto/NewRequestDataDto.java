@@ -25,7 +25,7 @@ public class NewRequestDataDto {
 	private String region;
 	private boolean isDeleted;
 	private String ptEmail;
-	
+	private int requestId;
 	
 	
 	public String getRequestedTimeDifference() {
@@ -170,11 +170,18 @@ public class NewRequestDataDto {
 	
 	
 	
+	public int getRequestId() {
+		return requestId;
+	}
+	public void setRequestId(int requestId) {
+		this.requestId = requestId;
+	}
+	
 	public NewRequestDataDto(String name, int day, String month, int year, String requestor, String requestedDate,
 			String requestedTime, String requestedTimeDifference, String ptPhoneNumber, String ptPhoneNumberType,
 			String reqPhoneNumber, String reqPhoneNumberType, String street, String city, String state, String zipcode,
 			String notes, String physicianName, String dateOfService, String timeOfService, String region,
-			boolean isDeleted, String ptEmail) {
+			boolean isDeleted, String ptEmail, int requestId) {
 		super();
 		this.name = name;
 		this.day = day;
@@ -199,6 +206,7 @@ public class NewRequestDataDto {
 		this.region = region;
 		this.isDeleted = isDeleted;
 		this.ptEmail = ptEmail;
+		this.requestId = requestId;
 	}
 	@Override
 	public String toString() {
@@ -209,7 +217,7 @@ public class NewRequestDataDto {
 				+ ", reqPhoneNumberType=" + reqPhoneNumberType + ", street=" + street + ", city=" + city + ", state="
 				+ state + ", zipcode=" + zipcode + ", notes=" + notes + ", physicianName=" + physicianName
 				+ ", dateOfService=" + dateOfService + ", timeOfService=" + timeOfService + ", region=" + region
-				+ ", isDeleted=" + isDeleted + ", ptEmail=" + ptEmail + "]";
+				+ ", isDeleted=" + isDeleted + ", ptEmail=" + ptEmail + ", requestId=" + requestId + "]";
 	}
 	public NewRequestDataDto() {
 		super();

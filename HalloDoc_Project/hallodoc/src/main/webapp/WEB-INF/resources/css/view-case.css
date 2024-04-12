@@ -14,6 +14,46 @@
   background-color: #9c2323;
 }
 
+.type-color{
+    background-color: #5fbc61;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.patient-type-color-icon {
+	background-color: #60be5e;
+	border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.family-type-color-icon {
+	background-color: #d69b4b;
+	border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.business-type-color-icon {
+	background-color: #e0657a;
+	border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.concierge-type-color-icon {
+	background-color: #097dba;
+	border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .edit-text{
   display: flex;
@@ -206,13 +246,7 @@
     align-items: center;
 }
 
-.type-color{
-    background-color: #5fbc61;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .view-reservation-text{
     font-weight: 600;

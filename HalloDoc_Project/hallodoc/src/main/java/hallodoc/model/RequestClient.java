@@ -1,5 +1,8 @@
 package hallodoc.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -288,7 +291,12 @@ public class RequestClient {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public LocalDate getDateObject() {
+		String stringDate = intDate+" "+strMonth+", "+intYear;
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM, yyyy");
+		LocalDate date = LocalDate.parse(stringDate, format);
+		return date;
+	}
 	
 	
 	

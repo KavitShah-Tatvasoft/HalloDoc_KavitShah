@@ -72,10 +72,11 @@ public class RequestNewDataDtoMapper {
 		newDto.setPtPhoneNumberType(hallodoc.enumerations.RequestType.PATIENT.getRequestType());
 		newDto.setReqPhoneNumber(request.getPhoneNumber());
 		newDto.setReqPhoneNumberType(request.getRequestType().getName());
-		newDto.setNotes((requestClient.getNotes()!= "null"?requestClient.getNotes():"-"));
+		newDto.setNotes((requestClient.getNotes() != null?requestClient.getNotes():"-"));
 		newDto.setRegion(requestClient.getState());
 		newDto.setDeleted(request.isDeleted());
 		newDto.setPtEmail(requestClient.getEmail());
+		newDto.setRequestId(request.getRequestId());
 		return newDto;
 	}
 }

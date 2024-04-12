@@ -205,7 +205,7 @@ function createNewReqRow(data) {
 										<div class="action-dropdown-flex dropdown-item">
 											<img src="/hallodoc/resources/images/view-case.png"
 												class="dropdown-icons" alt=""> <a
-												href="view-case.html" class=" action-dropdown-text"
+												href="viewCase/` + data.requestId + `" class=" action-dropdown-text"
 												type="button">View Case</a>
 										</div>
 									</li>
@@ -298,7 +298,7 @@ function createOtherReqRow(data, current_state) {
 										<div class="action-dropdown-flex dropdown-item" id="view-case">
 											<img src="/hallodoc/resources/images/view-case.png"
 												class="dropdown-icons" alt=""> <a
-												href="view-case.html" class=" action-dropdown-text"
+												href="viewCase/` + data.requestId + `" class=" action-dropdown-text"
 												type="button">View Case</a>
 										</div>
 									</li>

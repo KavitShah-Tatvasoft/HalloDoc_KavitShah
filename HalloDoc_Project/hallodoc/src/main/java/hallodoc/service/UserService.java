@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import com.password4j.types.Bcrypt;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.RequestFiltersDto;
+import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserProfileDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
@@ -32,6 +34,7 @@ import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
+import hallodoc.model.RequestClient;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetUserDao;
@@ -198,6 +201,62 @@ public class UserService {
 			newRequestDataDtos.add(newRequestDataDto);
 		}
 		return newRequestDataDtos;
+	}
+	
+	public Request getViewCaseRequest(int reqId) {
+		Request requestOb = requestDao.getRequestOb(reqId);
+		return requestOb;
+	}
+	
+	public String updateViewCaseDetails(UpdateCaseDto updateCaseDto) {
+		
+		if(updateCaseDto.getPhoneNumber().contains("+")) {
+			String phone = updateCaseDto.getPhoneNumber();
+//			String tokens[2] = phone.split("");
+		}
+		
+		String[] tokens = updateCaseDto.getDateOfBirth().split("-");
+		int day = Integer.parseInt(tokens[0]);
+		int monthInt = Integer.parseInt(tokens[1]);
+		int year = Integer.parseInt(tokens[2]);
+		String[] months = {"January","February","March","April","June","July","August","September","October","November","December"};
+		String month = months[monthInt];
+		
+		Request request = requestDao.getRequestOb(updateCaseDto.getReqId());
+		RequestClient requestClient = request.getRequestClient();
+		User user = request.getUser();
+		AspNetUsers aspNetUsers = user.getAspNetUsers();
+		
+		aspNetUsers.setPhone_number(updateCaseDto.getPhoneNumber());
+		
+		user.setFirstName(updateCaseDto.getFirstName());
+		user.setLastName(updateCaseDto.getLastName());
+		user.setMobile(updateCaseDto.getPhoneNumber());
+		user.setIntDate(day);
+		user.setIntYear(year);
+		user.setStrMonth(month);
+		
+		aspNetUsers.setUser(user);
+		
+		if(request.getRequestType().getRequestTypeId() == 2) {
+			request.setFirstName(updateCaseDto.getFirstName());
+			request.setLastName(updateCaseDto.getLastName());
+			request.setPhoneNumber(updateCaseDto.getPhoneNumber());
+		}
+		
+		requestClient.setFirstName(updateCaseDto.getFirstName());
+		requestClient.setLastName(updateCaseDto.getLastName());
+		requestClient.setPhoneNumber(updateCaseDto.getPhoneNumber());
+		requestClient.setIntDate(day);
+		requestClient.setIntYear(year);
+		requestClient.setStrMonth(month);
+		
+		request.setRequestClient(requestClient);
+		
+		apsnetuserdao.updateAspNetUser(aspNetUsers);
+		requestDao.updateRequest(request);
+		
+		return "Updated";
 	}
 
 }

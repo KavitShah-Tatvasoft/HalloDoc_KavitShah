@@ -14,16 +14,16 @@ public class RequestType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "request_type_id")
-	private String requestTypeId;
+	private int requestTypeId;
 	
 	@Column(name = "name")
 	private String name;
 
-	public String getRequestTypeId() {
+	public int getRequestTypeId() {
 		return requestTypeId;
 	}
 
-	public void setRequestTypeId(String requestTypeId) {
+	public void setRequestTypeId(int requestTypeId) {
 		this.requestTypeId = requestTypeId;
 	}
 
@@ -40,7 +40,7 @@ public class RequestType {
 		return "RequestType [requestTypeId=" + requestTypeId + ", name=" + name + "]";
 	}
 
-	public RequestType(String requestTypeId, String name) {
+	public RequestType(int requestTypeId, String name) {
 		super();
 		this.requestTypeId = requestTypeId;
 		this.name = name;
