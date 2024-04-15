@@ -75,14 +75,18 @@ public class RequestDao {
 		return requests;
 	}
 
-	public List<DashboardDataDto> getAllUserRequests(User user) {
+	public List<Request> getAllUserRequests(User user) {
 		Session s = this.sessionFactory.openSession();
 
-		Query<DashboardDataDto> query = s.createQuery(
-				"select new hallodoc.dto.DashboardDataDto(re.requestId,physician.physicianId,physician.firstName,physician.lastName,re.createdDate,re.status,ad.adminId,ad.firstName,ad.lastName,count(ref.request.requestId)) from Request re left join re.listRequestWiseFiles ref left join re.requestStatusLogs.admin ad left join re.physician physician where re.user=:loginUser group by re.requestId,ad.adminId,physician.physicianId");
-		query.setParameter("loginUser", user);
+//		Query<DashboardDataDto> query = s.createQuery(
+//				"select new hallodoc.dto.DashboardDataDto(re.requestId,physician.physicianId,physician.firstName,physician.lastName,re.createdDate,re.status,ad.adminId,ad.firstName,ad.lastName,count(ref.request.requestId)) from Request re left join re.listRequestWiseFiles ref left join re.user.aspNetUsers.admin ad left join re.physician physician where re.user=:loginUser group by re.requestId,ad.adminId,physician.physicianId");
+		
+		String query = "FROM Request re where re.user=:loginUser";
+		Query hql = s.createQuery(query);
+		hql.setParameter("loginUser", user);
+		
 
-		List<DashboardDataDto> results = query.list();
+		List<Request> results = hql.list();
 
 		System.out.println("Query result obtained");
 		s.close();

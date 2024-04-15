@@ -51,9 +51,8 @@ public class RequestNewDataDtoMapper {
 		}
 
 		if (status != 1) {
-			RequestStatusLog requestStatusLog = request.getRequestStatusLogs();
-			newDto.setDateOfService(requestDateFormat(requestStatusLog.getCreatedDate()));
-			newDto.setTimeOfService(requestTimeFormat(requestStatusLog.getCreatedDate()));
+			newDto.setDateOfService(requestDateFormat(request.getAcceptedDate()));
+			newDto.setTimeOfService(requestTimeFormat(request.getAcceptedDate()));
 		}
 
 		newDto.setCity(requestClient.getCity());

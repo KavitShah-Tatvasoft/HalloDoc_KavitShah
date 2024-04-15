@@ -21,6 +21,8 @@ import com.password4j.BcryptFunction;
 import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
+import hallodoc.dto.BlockCaseDto;
+import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.RequestFiltersDto;
@@ -30,17 +32,24 @@ import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
 import hallodoc.helper.Constants;
 import hallodoc.mapper.RequestNewDataDtoMapper;
+import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.BlockRequests;
+import hallodoc.model.CaseTag;
 import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
+import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetUserDao;
+import hallodoc.repository.BlockRequestsDao;
+import hallodoc.repository.CaseTagDao;
 import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
+import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.repository.RequestWiseFileDao;
 
 @Service
@@ -62,8 +71,16 @@ public class UserService {
 	private RequestDao requestDao;
 	
 	@Autowired
+	private RequestStatusLogDao requestStatusLogDao;
+	
+	@Autowired
 	private RegionDao regionDao;
 	
+	@Autowired
+	private CaseTagDao caseTagDao;
+	
+	@Autowired
+	private BlockRequestsDao blockRequestsDao;
 	
 	
 	private String resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest) {
@@ -203,10 +220,10 @@ public class UserService {
 		return newRequestDataDtos;
 	}
 	
-	public Request getViewCaseRequest(int reqId) {
-		Request requestOb = requestDao.getRequestOb(reqId);
-		return requestOb;
-	}
+//	public Request getViewCaseRequest(int reqId) {
+//		Request requestOb = requestDao.getRequestOb(reqId);
+//		return requestOb;
+//	}
 	
 	public String updateViewCaseDetails(UpdateCaseDto updateCaseDto) {
 		
@@ -258,5 +275,63 @@ public class UserService {
 		
 		return "Updated";
 	}
+	
+	public List<CaseTag> getAllCancellationReasons(){
+		List<CaseTag> caseTags = caseTagDao.getCancellationReasons();
+		return caseTags;
+	}
+	
+	public boolean cancelRequestedCase(CancelCaseDetailsDto cancelCaseDetailsDto , HttpServletRequest httpServletRequest) {
+		Request request = requestDao.getRequestOb(cancelCaseDetailsDto.getRequestId());
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		Date date = new Date();
+		request.setStatus(3);
+		request.setCaseTag(cancelCaseDetailsDto.getCaseTagId());
+		request.setModifieDate(date);
+		
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(3);
+		requestStatusLog.setAdmin(admin);
+		requestStatusLog.setNotes(cancelCaseDetailsDto.getAdditionalNotes());
+		requestStatusLog.setCreatedDate(date);
+		
+		requestDao.updateRequest(request);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		
+		return true;
+	}
+	
+	public boolean blockRequestedCase(BlockCaseDto blockCaseDto,HttpServletRequest httpServletRequest) {
+		Request request = requestDao.getRequestOb(blockCaseDto.getRequestId());
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		Date date = new Date();
+			
+		request.setStatus(11);
+		request.setModifieDate(date);
+		
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(11);
+		requestStatusLog.setAdmin(admin);
+		requestStatusLog.setNotes(blockCaseDto.getBlockReason());
+		requestStatusLog.setCreatedDate(date);
+		
+		BlockRequests blockRequests = new BlockRequests();
+		blockRequests.setPhoneNumber(request.getRequestClient().getPhoneNumber());
+		blockRequests.setEmail(request.getRequestClient().getEmail());
+		blockRequests.setActive(false);
+		blockRequests.setReason(blockCaseDto.getBlockReason());
+		blockRequests.setRequest(request);
+		
+		requestDao.updateRequest(request);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		blockRequestsDao.addBlockRequest(blockRequests);
+		
+		return true;
+	}
+	
 
 }

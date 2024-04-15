@@ -101,6 +101,8 @@
 				<value>hallodoc.model.Menu</value>
 				<value>hallodoc.model.EmailLog</value>
 				<value>hallodoc.model.RequestNotes</value>
+				<value>hallodoc.model.CaseTag</value>
+				<value>hallodoc.model.BlockRequests</value>
 			</list>
 		</property>
 	</bean>

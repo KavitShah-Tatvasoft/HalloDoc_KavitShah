@@ -161,22 +161,8 @@
 								</c:otherwise>
 							</c:choose>
 
-							<td class="responsive-flex"><c:set var="adminName"
-									value="${dataOb.adminFirstName}" /> <c:choose>
-									<c:when test="${empty adminName}">
-										<button class="table-btn-contact">
-											<span class="table-btn-contact-flex"><img
-												src="<c:url value='/resources/images/person.svg' />" alt="">No
-												Admin</span>
-										</button>
-									</c:when>
-									<c:otherwise>
-										<button class="table-btn-contact">
-											<span class="table-btn-contact-flex"><img
-												src="<c:url value='/resources/images/person.svg' />" alt="">${dataOb.adminFirstName}</span>
-										</button>
-									</c:otherwise>
-								</c:choose> <c:set var="physicianName" value="${dataOb.physicianFirstName}" />
+							<td class="responsive-flex">
+							<c:set var="physicianName" value="${dataOb.physicianFirstName}" />
 								<c:choose>
 									<c:when test="${empty physicianName}">
 										<button class="table-btn-contact">
@@ -261,19 +247,6 @@
 										<span class="img-icon-border"> <img
 											src="<c:url value='/resources/images/person.svg' />" alt="">
 										</span>
-
-										<c:set var="adminName" value="${dataOb.adminFirstName}" />
-										<c:choose>
-											<c:when test="${empty adminName}">
-												<span class="font-500">Admin : -- </span>
-											</c:when>
-											<c:otherwise>
-												<span class="font-500">Admin :
-													${dataOb.adminFirstName} ${dataOb.adminLastName} </span>
-											</c:otherwise>
-										</c:choose>
-
-
 									</div>
 
 									<div class="accordian-case-inner-flex">

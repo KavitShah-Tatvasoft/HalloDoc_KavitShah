@@ -6,6 +6,16 @@ function switchWhite() {
 	alert("switched to white theme")
 }
 
+function cancelCase(ptName, reqId) {
+	$(".cancel-case-text-change").text(ptName)
+	$("#cancel-case-request-id").val(reqId)
+}
+
+function blockCase(ptName, reqId) {
+	$(".block-patient-name-text").text(ptName)
+	$("#block-case-request-id").val(reqId)
+}
+
 const changeStatus = (element) => {
 	const stateName = document.getElementById("type-text")
 	const states = document.getElementsByClassName("row-cards")
@@ -13,9 +23,10 @@ const changeStatus = (element) => {
 	const capitalizedState = current_state.charAt(0).toUpperCase() + current_state.slice(1);
 	console.log(current_state)
 	stateName.innerHTML = "(" + capitalizedState + ")"
-
+	$(".state-type-class-name").attr("data-state", current_state)
 	if (current_state == "to-close") {
 		stateName.innerHTML = "(To Close)"
+		$(".state-type-class-name").attr("data-state", "to-close")
 	}
 
 	for (let i = 0; i < states.length; ++i) {
@@ -33,6 +44,82 @@ const changeStatus = (element) => {
 		}
 	}
 
+	//	const obj = {};
+	//	const columns = document.getElementsByClassName("table-columns");
+	//	const th_states_key = ['new', 'pending', 'active', 'conclude', 'to-close', 'unpaid'];
+	//	const th_states_values = ['s1', 's2', 's3', 's4', 's5', 's6'];
+	//
+	//	for (let i = 0; i < th_states_key.length; i++) {
+	//		obj[th_states_key[i]] = th_states_values[i];
+	//	}
+	//
+	//	for (let i = 0; i < columns.length; ++i) {
+	//		columns[i].classList.add('d-none');
+	//	}
+	//
+	//	for (let i = 0; i < columns.length; ++i) {
+	//		if (columns[i].classList.contains(obj[current_state])) {
+	//			columns[i].classList.remove('d-none');
+	//		}
+	//	}
+	//
+	//
+	//	$.ajax({
+	//		url: 'getRequestData',
+	//		type: 'POST',
+	//		dataType: 'json',
+	//		data: {
+	//			status: current_state
+	//		},
+	//
+	//		success: function(res) {
+	//			console.log("Success")
+	//			console.log(res)
+	//			let tbody = $("#admin-table tbody")
+	//			let accordionBody = $(".empty-accordion")
+	//			tbody.empty()
+	//			accordionBody.empty()
+	//			var count = 120;
+	//			res.forEach(function(data) {
+	//
+	//				count = count + 1
+	//
+	//				if (current_state == "new" && !(data.deleted)) {
+	//					var card = createNewReqRow(data);
+	//					tbody.append(card)
+	//				}
+	//
+	//				if (current_state != "new" && !(data.deleted)) {
+	//					var card = createOtherReqRow(data, current_state);
+	//					tbody.append(card)
+	//				}
+	//
+	//
+	//				var accordionCard = poplulateAccordions(data, current_state, count)
+	//				console.log(accordionCard);
+	//				accordionBody.append(accordionCard)
+	//
+	//			})
+	//
+	//			const currentActions = document.getElementsByClassName(current_state + "s")
+	//			for (let i = 0; i < currentActions.length; i++) {
+	//				currentActions[i].classList.remove('d-none')
+	//			}
+	//
+	//		},
+	//		error: function() {
+	//			console.log("error fetching request data")
+	//		}
+	//
+	//	})
+
+	loadData(current_state)
+	loadCount()
+
+
+}
+
+function loadData(current_state) {
 	const obj = {};
 	const columns = document.getElementsByClassName("table-columns");
 	const th_states_key = ['new', 'pending', 'active', 'conclude', 'to-close', 'unpaid'];
@@ -101,14 +188,9 @@ const changeStatus = (element) => {
 		}
 
 	})
-
-	loadCount()
-
-
 }
 
 function loadCount() {
-
 
 	$.ajax({
 		url: 'getStatusWiseCount',
@@ -196,7 +278,7 @@ function createNewReqRow(data) {
 											<img
 												src="/hallodoc/resources/images/x-circle-grey.svg"
 												class="dropdown-icons" alt=""> <a
-												class=" action-dropdown-text" type="button"
+												class=" action-dropdown-text" type="button"  onclick="cancelCase('`+ data.name + `','` + data.requestId + `')"
 												data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel
 												Case</a>
 										</div>
@@ -214,7 +296,7 @@ function createNewReqRow(data) {
 											<img
 												src="/hallodoc/resources/images/journal-text.svg"
 												class="dropdown-icons" alt=""> <a
-												href="view-notes.html" class="action-dropdown-text"
+												href="viewNotes/`+ data.requestId +`" class="action-dropdown-text"
 												type="button">View Notes</a>
 										</div>
 									</li>
@@ -223,7 +305,7 @@ function createNewReqRow(data) {
 										<div class="action-dropdown-flex dropdown-item">
 											<img src="/hallodoc/resources/images/ban-grey.svg"
 												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" data-bs-toggle="modal"
+												class="action-dropdown-text" data-bs-toggle="modal" onclick="blockCase('`+ data.name + `','` + data.requestId + `')"
 												data-bs-target="#block-case" role="button">Block Patient</a>
 										</div>
 									</li>
@@ -318,7 +400,7 @@ function createOtherReqRow(data, current_state) {
 											<img
 												src="/hallodoc/resources/images/journal-text.svg"
 												class="dropdown-icons" alt=""> <a
-												href="view-notes.html" class="action-dropdown-text"
+												href="viewNotes/`+ data.requestId +`" class="action-dropdown-text"
 												type="button">View Notes</a>
 										</div>
 									</li>
@@ -578,8 +660,8 @@ function filterRequest() {
 
 	statusType = statusType.slice(1, -1).toLowerCase();
 	var current_state = statusType
-	if(current_state=="to close"){current_state = "to-close"}
-			
+	if (current_state == "to close") { current_state = "to-close" }
+
 
 	if (statusType == "new") {
 		statusType = 1
@@ -642,20 +724,87 @@ function filterRequest() {
 
 
 			})
-			
+
 			const currentActions = document.getElementsByClassName(current_state + "s")
 			for (let i = 0; i < currentActions.length; i++) {
 				currentActions[i].classList.remove('d-none')
 			}
-			
-			
-			},
-				error: function(res) {
-					console.log("Filter Failed to be Applied")
-				}
-});
+
+
+		},
+		error: function(res) {
+			console.log("Filter Failed to be Applied")
+		}
+	});
 
 }
 
-let open = document.querySelectorAll(".show_cards");
-console.log(open);
+
+$("#cancelCaseForm").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var caseTagId = document.getElementById("cancellation-reason").value
+	var additionalNotes = document.getElementById("additional-notes-cancellation").value
+	var requestId = document.getElementById("cancel-case-request-id").value
+	var current_state = $(".state-type-class-name").attr("data-state")
+	var payLoadData = {}
+
+	payLoadData["caseTagId"] = caseTagId
+	payLoadData["additionalNotes"] = additionalNotes
+	payLoadData["requestId"] = requestId
+
+	console.log(payLoadData)
+
+	$.ajax({
+		url: 'cancelRequestedCase',
+		type: 'POST',
+		data: payLoadData,
+		success: function(res) {
+			loadCount()
+			loadData(current_state)
+			console.log("Request Cancelled")
+		},
+		error: function(res) {
+			console.log("Request Failed to be Cancelled")
+		}
+
+	});
+
+	$("#cancelCaseForm").get(0).reset()
+
+
+});
+
+$("#blockPatientForm").submit(function(event) {
+	event.preventDefault();
+
+	var blockReason = document.getElementById("block-case-reason").value
+	var requestId = document.getElementById("block-case-request-id").value
+	var current_state = $(".state-type-class-name").attr("data-state")
+	var payLoadData = {}
+
+	payLoadData["blockReason"] = blockReason
+	payLoadData["requestId"] = requestId
+
+	console.log(payLoadData)
+
+	$.ajax({
+		url: 'blockRequestedCase',
+		type: 'POST',
+		data: payLoadData,
+		success: function(res) {
+			loadCount()
+			loadData(current_state)
+			console.log("Request Blocked")
+		},
+		error: function(res) {
+			console.log("Failed to block request")
+		}
+
+	});
+
+	$("blockPatientForm").get(0).reset()
+
+
+
+});

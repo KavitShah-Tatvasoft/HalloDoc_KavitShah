@@ -31,7 +31,7 @@ public class User {
 //	@Column(name="aspnet_user_id")
 //	private int aspnetUserId;
 	
-	@JsonIgnore
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aspnet_user_id")
 	private AspNetUsers aspNetUsers;

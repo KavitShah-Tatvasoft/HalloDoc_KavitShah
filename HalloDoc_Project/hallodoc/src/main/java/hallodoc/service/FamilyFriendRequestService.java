@@ -345,7 +345,6 @@ public class FamilyFriendRequestService {
 		RequestType requestType;
 		Date currentDate = new Date();
 		RequestClient requestClient;
-		RequestStatusLog requestStatusLog;
 		RequestWiseFile requestWiseFile;
 
 		// Setting object of AspNetUsers
@@ -402,7 +401,6 @@ public class FamilyFriendRequestService {
 
 //		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
-//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		int requestId = requestDao.addNewRequest(request);
 		String isExsist = "new";
@@ -423,7 +421,6 @@ public class FamilyFriendRequestService {
 		RequestType requestType;
 		Date currentDate = new Date();
 		RequestClient requestClient;
-		RequestStatusLog requestStatusLog;
 		RequestWiseFile requestWiseFile;
 
 		aspNetUsers = apsnetuserdao.getUserByEmail(commonRequestDto.getPtEmail()).get(0);
@@ -475,8 +472,6 @@ public class FamilyFriendRequestService {
 		
 //		// persisting object of RequestClient
 //		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
-//		// Persisting the requestStatusLogobject
-//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 		
 		if (password==null) {
 			String isExsist = "old";

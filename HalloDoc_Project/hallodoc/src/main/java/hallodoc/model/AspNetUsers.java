@@ -32,6 +32,12 @@ public class AspNetUsers {
 	private Admin admin;
 
 	
+	public Admin getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
 	public User getUser() {
 		return user;
 	}
@@ -81,14 +87,10 @@ public class AspNetUsers {
 	public void setCreated_date(Date created_date) {
 		this.created_date = created_date;
 	}
-	@Override
-	public String toString() {
-		return "AspNetUsers [id=" + id + ", password_hash=" + password_hash + ", email=" + email + ", phone_number="
-				+ phone_number + ", modified_date=" + modified_date + ", user_name=" + user_name + ", created_date="
-				+ created_date + ", user=" + user + "]";
-	}
+	
+	
 	public AspNetUsers(int id, String password_hash, String email, String phone_number, Date modified_date,
-			String user_name, Date created_date, User user) {
+			String user_name, Date created_date, User user, Admin admin) {
 		super();
 		this.id = id;
 		this.password_hash = password_hash;
@@ -98,6 +100,13 @@ public class AspNetUsers {
 		this.user_name = user_name;
 		this.created_date = created_date;
 		this.user = user;
+		this.admin = admin;
+	}
+	@Override
+	public String toString() {
+		return "AspNetUsers [id=" + id + ", password_hash=" + password_hash + ", email=" + email + ", phone_number="
+				+ phone_number + ", modified_date=" + modified_date + ", user_name=" + user_name + ", created_date="
+				+ created_date + ", user=" + user + ", admin=" + admin + "]";
 	}
 	public AspNetUsers() {
 		super();

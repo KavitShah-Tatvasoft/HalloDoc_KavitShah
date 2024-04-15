@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
+<%-- <link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />"> --%>
 </head>
 <body>
 	<!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
@@ -94,7 +94,8 @@
 				</span>
 				<div>
 					<a href="login.html">
-						<div class="logout-btn-admin">
+						<div class="logout-btn"> 
+<!-- 						removed logout-btn-admin -->
 							<img
 								src="<c:url value='/resources/images/box-arrow-right.svg' />"
 								class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span>

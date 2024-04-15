@@ -346,7 +346,6 @@ public class PatientRequestsService {
 			RequestType requestType;
 			Date currentDate = new Date();
 			RequestClient requestClient;
-			RequestStatusLog requestStatusLog;
 			RequestWiseFile requestWiseFile;
 
 			// generating hash

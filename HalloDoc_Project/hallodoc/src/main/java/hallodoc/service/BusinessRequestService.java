@@ -336,7 +336,6 @@ public class BusinessRequestService {
 		Date currentDate = new Date();
 		LocalDateTime currentLocalDate = LocalDateTime.now();
 		RequestClient requestClient;
-		RequestStatusLog requestStatusLog;
 		RequestWiseFile requestWiseFile;
 		Business businessObj;
 
@@ -401,7 +400,6 @@ public class BusinessRequestService {
 
 //		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 
-//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 
 		int requestBusinessId = businessDao.addRequestBusiness(requestBusiness);
 
@@ -428,7 +426,6 @@ public class BusinessRequestService {
 		Date currentDate = new Date();
 		LocalDateTime currentLocalDate = LocalDateTime.now();
 		RequestClient requestClient;
-		RequestStatusLog requestStatusLog;
 		RequestWiseFile requestWiseFile;
 		Business businessObj;
 
@@ -481,8 +478,7 @@ public class BusinessRequestService {
 		int requestId = requestDao.addNewRequest(request);
 		// persisting object of RequestClient
 //		int requestClientId = requestClientDao.addNewRequestClient(requestClient);
-		// Persisting the requestStatusLogobject
-//		int requestStatusLogId = requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+
 
 		int requestBusinessId = businessDao.addRequestBusiness(requestBusiness);
 

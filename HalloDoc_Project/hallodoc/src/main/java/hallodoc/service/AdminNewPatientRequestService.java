@@ -68,8 +68,6 @@ public class AdminNewPatientRequestService {
 	@Autowired
 	private RequestDao requestDao;
 
-	@Autowired
-	private RequestStatusLogDao requestStatusLogDao;
 
 	@Autowired
 	private RequestTypeDao requestTypeDao;

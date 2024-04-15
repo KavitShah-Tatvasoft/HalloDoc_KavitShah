@@ -7,6 +7,10 @@
   color: white;
 }
 
+.form-control:focus {
+	box-shadow:none !important;
+}
+
 .back-btn-top:hover img{
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
 }
@@ -50,7 +54,7 @@
 }
 
 textarea{
-    resize: none;
+    resize: none !important;
 }
 
 .bottom-btns-submit{
@@ -70,19 +74,19 @@ textarea{
 
 
 .patient-form{
-    width: 60%;
+    width: 60% !important;
 }
 
 @media screen and (max-width:1024px) {
     .patient-form{
-      width: 80%;
+      width: 80%  !important;
     }
   }
   
 
   @media screen and (max-width:900px){
     .patient-form{
-      width: 90%;
+      width: 90%  !important;
     }
   }
 
@@ -98,7 +102,7 @@ textarea{
 
   @media screen and (max-width:425px) {
     .patient-form{
-      width: 95%;
+      width: 95%  !important;
     }
   }
 

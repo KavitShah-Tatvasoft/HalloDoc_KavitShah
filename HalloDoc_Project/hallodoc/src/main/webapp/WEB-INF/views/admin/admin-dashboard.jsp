@@ -168,7 +168,7 @@
 				<div class="patient-btns-flex mt-4">
 					<div class="d-flex align-items-center">
 						<h4 id="remove-extra-margin">Patients</h4>
-						<span id="type-text">(New)</span>
+						<span id="type-text" data-state="new" class="state-type-class-name">(New)</span>
 					</div>
 					<div>
 						<a class="btn btn-info mx-1" role="button" data-bs-toggle="modal"
@@ -408,8 +408,8 @@
 												src="<c:url value='/resources/images/x-circle-grey.svg' />"
 												class="dropdown-icons" alt=""> <a
 												class=" action-dropdown-text" type="button"
-												data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel
-												Case</a>
+												onclick="alert('Hello')" data-bs-toggle="modal"
+												data-bs-target="#cancel-case">Cancel Case</a>
 										</div>
 									</li>
 
@@ -577,6 +577,7 @@
 					<div class="accordion-body">
 						<hr class="no-margin-hr" />
 						<div class="patient_card extended-1" id="extended-1">
+
 							<a href="<c:url value='' />" class="view_case_btn" role="button">
 								View Case </a>
 							<div
@@ -913,37 +914,43 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div>
-						<span class="font-clr-light">Patient Name :</span> <span
-							class="cancel-case-blue-text">John Snow</span><br>
-					</div>
+				<form method="post" id="cancelCaseForm">
+					<div class="modal-body">
+						<div>
+							<span class="font-clr-light">Patient Name :</span> <span
+								class="cancel-case-blue-text cancel-case-text-change"></span><br>
+						</div>
 
-					<form action="">
+
 						<div class="container">
 							<div
 								class="row cancel-pop-up-select-height cancel-pop-margin-top">
 
-								<select name="Number_Type" id="floatingInput-5"
+								<select name="cancellation-id" id="cancellation-reason"
 									class="form-control form-select cancel-case-pop-text-clr">
-									<option value="check" hidden selected>Reason for
+									<option value="0" hidden selected>Reason for
 										Cancellation</option>
-									<option value="Mobile">Reason 1</option>
-									<option value="Home">Reason 2</option>
+									<c:forEach items="${cancelReasons}" var="reason">
+										<option value="${reason.caseTagId}">${reason.name}</option>
+									</c:forEach>
 								</select>
 
 							</div>
 						</div>
 						<textarea name="message"
-							class="form-control cancel-pop-margin-top" id="" cols="12"
-							rows="5" placeholder="Provide Additional Notes  "></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="send-btn">Confirm</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+							class="form-control cancel-pop-margin-top"
+							id="additional-notes-cancellation" cols="12" rows="5"
+							placeholder="Provide Additional Notes  "></textarea>
+						<input type="text" name="cancel-request-id"
+							id="cancel-case-request-id" hidden>
 
-				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="send-btn" data-bs-dismiss="modal">Confirm</button>
+						<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -1019,23 +1026,25 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div>
-						<span class="font-clr-light">Patient Name :</span> <span
-							class="cancel-case-blue-text">John Snow</span><br>
-					</div>
+				<form method="post" id="blockPatientForm">
+					<div class="modal-body">
+						<div>
+							<span class="font-clr-light">Patient Name :</span> <span
+								class="cancel-case-blue-text block-patient-name-text" ></span><br>
+						</div>
 
-					<form action="">
 						<textarea name="message"
-							class="form-control cancel-pop-margin-top" id="" cols="12"
+							class="form-control cancel-pop-margin-top" id="block-case-reason" cols="12"
 							rows="5" placeholder="Reason for Block Request"></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="send-btn">Confirm</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-
-				</div>
+							
+						<input type="text" id="block-case-request-id" hidden>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="send-btn" data-bs-dismiss="modal">Confirm</button>
+						<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -1053,13 +1062,14 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div>
-						<span class="font-clr-light">To assign this request, search
-							and select another Physician.</span><br>
-					</div>
+				<form action="">
+					<div class="modal-body">
+						<div>
+							<span class="font-clr-light">To assign this request,
+								search and select another Physician.</span><br>
+						</div>
 
-					<form action="">
+
 
 						<div class="col-12 mt-3">
 							<div class="form-floating mb-3 inp">
@@ -1087,13 +1097,13 @@
 						<textarea name="message"
 							class="form-control assign-case-margin-top" id="" cols="12"
 							rows="5" placeholder="Description"></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="send-btn">Confirm</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
 
-				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="send-btn" data-bs-dismiss="modal">Confirm</button>
+						<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -1157,7 +1167,7 @@
 		<div class="progress"></div>
 	</div>
 
-	
+
 
 	<%@include file="footer-black.jsp"%>
 

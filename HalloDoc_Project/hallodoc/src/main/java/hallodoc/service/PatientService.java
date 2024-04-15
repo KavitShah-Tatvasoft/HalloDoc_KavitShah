@@ -7,6 +7,7 @@ import hallodoc.dto.CreatePatientDto;
 import hallodoc.dto.DashboardDataDto;
 import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.UserProfileDto;
+import hallodoc.mapper.RequestToDashboardDataMapper;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
@@ -67,8 +68,15 @@ public class PatientService {
 
 		User user = aspNetUsers.getUser();
 		int userId = user.getUserID();
-		List<DashboardDataDto> dashboardDataDtoData = requestDao.getAllUserRequests(user);
-		System.out.println(dashboardDataDtoData.get(0));
+		List<Request> requests = requestDao.getAllUserRequests(user);
+		List<DashboardDataDto> dashboardDataDtoData = new ArrayList<DashboardDataDto>();
+		System.out.println(requests.get(0));
+		
+		for (Request request : requests) {
+			DashboardDataDto dashboardDataDto =  RequestToDashboardDataMapper.mapDashboardData(request);
+			dashboardDataDtoData.add(dashboardDataDto);
+		}
+		
 		return dashboardDataDtoData;
 	}
 
