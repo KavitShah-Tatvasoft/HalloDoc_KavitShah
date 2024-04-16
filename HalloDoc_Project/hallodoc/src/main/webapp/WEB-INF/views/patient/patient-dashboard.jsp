@@ -244,12 +244,6 @@
 									</div>
 
 									<div class="accordian-case-inner-flex">
-										<span class="img-icon-border"> <img
-											src="<c:url value='/resources/images/person.svg' />" alt="">
-										</span>
-									</div>
-
-									<div class="accordian-case-inner-flex">
 										<div class="img-icon-border">
 											<img src="<c:url value='/resources/images/person-add.svg' />"
 												alt="">

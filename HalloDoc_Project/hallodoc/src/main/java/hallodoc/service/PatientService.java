@@ -70,7 +70,6 @@ public class PatientService {
 		int userId = user.getUserID();
 		List<Request> requests = requestDao.getAllUserRequests(user);
 		List<DashboardDataDto> dashboardDataDtoData = new ArrayList<DashboardDataDto>();
-		System.out.println(requests.get(0));
 		
 		for (Request request : requests) {
 			DashboardDataDto dashboardDataDto =  RequestToDashboardDataMapper.mapDashboardData(request);

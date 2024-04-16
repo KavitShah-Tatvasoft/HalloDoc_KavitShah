@@ -204,8 +204,8 @@
 }
 
 .patient-form{
-    width: 60%;
-    background-color: white;
+    width: 60% !important;
+    background-color: white !important;
 }
 
 .relative-position{
@@ -458,13 +458,13 @@ display: none;
 
 @media screen and (max-width:1024px) {
   .patient-form{
-    width: 80%;
+    width: 80% !important;
   }
 }
 
 @media screen and (max-width:900px){
   .patient-form{
-    width: 90%;
+    width: 90% !important;
   }
 }
 
@@ -548,7 +548,7 @@ input[type="tel"]::placeholder{
 
 @media screen and (max-width:425px) {
   .patient-form{
-    width: 95%;
+    width: 95% !important;
   }
   .patient-text{
     font-size: 15px;

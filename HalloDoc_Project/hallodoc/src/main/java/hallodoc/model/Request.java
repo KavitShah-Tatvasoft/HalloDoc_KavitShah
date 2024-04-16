@@ -23,7 +23,7 @@ public class Request {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "request_id")
-	private int requestId;
+	private Integer requestId;
 
 //	@Column(name = "request_type_id")
 //	private int requestTypeId;
@@ -114,35 +114,61 @@ public class Request {
 	@Column(name = "case_tag_physician")
 	private Integer caseTagPhysician;
 
-	public Integer getCaseTag() {
-		return caseTag;
-	}
-
-	public void setCaseTag(Integer caseTag) {
+	public Request(Integer requestId, RequestType requestType, User user, String firstName, String lastName,
+			String phoneNumber, String email, int status, Physician physician, String confirmationNumber,
+			Date createdDate, boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate,
+			int callType, boolean completedByPhysician, Date lastReservationDate, Date acceptedDate,
+			String relationName, String caseNumber, RequestClient requestClient,
+			List<RequestWiseFile> listRequestWiseFiles, RequestNotes requestNotes, Integer caseTag,
+			Integer caseTagPhysician) {
+		super();
+		this.requestId = requestId;
+		this.requestType = requestType;
+		this.user = user;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.status = status;
+		this.physician = physician;
+		this.confirmationNumber = confirmationNumber;
+		this.createdDate = createdDate;
+		this.isDeleted = isDeleted;
+		this.modifieDate = modifieDate;
+		this.aspUsers = aspUsers;
+		this.lastWellnessDate = lastWellnessDate;
+		this.callType = callType;
+		this.completedByPhysician = completedByPhysician;
+		this.lastReservationDate = lastReservationDate;
+		this.acceptedDate = acceptedDate;
+		this.relationName = relationName;
+		this.caseNumber = caseNumber;
+		this.requestClient = requestClient;
+		this.listRequestWiseFiles = listRequestWiseFiles;
+		this.requestNotes = requestNotes;
 		this.caseTag = caseTag;
-	}
-
-	public int getCaseTagPhysician() {
-		return caseTagPhysician;
-	}
-
-	public void setCaseTagPhysician(int caseTagPhysician) {
 		this.caseTagPhysician = caseTagPhysician;
 	}
 
-	public RequestNotes getRequestNotes() {
-		return requestNotes;
+	@Override
+	public String toString() {
+		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", status=" + status + ", physician=" + physician + ", confirmationNumber=" + confirmationNumber
+				+ ", createdDate=" + createdDate + ", isDeleted=" + isDeleted + ", modifieDate=" + modifieDate
+				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
+				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
+				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
+				+ ", requestClient=" + requestClient + ", listRequestWiseFiles=" + listRequestWiseFiles
+				+ ", requestNotes=" + requestNotes + ", caseTag=" + caseTag + ", caseTagPhysician=" + caseTagPhysician
+				+ "]";
 	}
 
-	public void setRequestNotes(RequestNotes requestNotes) {
-		this.requestNotes = requestNotes;
-	}
-
-	public int getRequestId() {
+	public Integer getRequestId() {
 		return requestId;
 	}
 
-	public void setRequestId(int requestId) {
+	public void setRequestId(Integer requestId) {
 		this.requestId = requestId;
 	}
 
@@ -314,7 +340,6 @@ public class Request {
 		this.requestClient = requestClient;
 	}
 
-
 	public List<RequestWiseFile> getListRequestWiseFiles() {
 		return listRequestWiseFiles;
 	}
@@ -323,51 +348,27 @@ public class Request {
 		this.listRequestWiseFiles = listRequestWiseFiles;
 	}
 
-	@Override
-	public String toString() {
-		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", status=" + status + ", physician=" + physician + ", confirmationNumber=" + confirmationNumber
-				+ ", createdDate=" + createdDate + ", isDeleted=" + isDeleted + ", modifieDate=" + modifieDate
-				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
-				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
-				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
-				+ ", requestClient=" + requestClient + ", listRequestWiseFiles=" + listRequestWiseFiles + ", requestNotes=" + requestNotes + ", caseTag="
-				+ caseTag + ", caseTagPhysician=" + caseTagPhysician + "]";
+	public RequestNotes getRequestNotes() {
+		return requestNotes;
 	}
 
-	public Request(int requestId, RequestType requestType, User user, String firstName, String lastName,
-			String phoneNumber, String email, int status, Physician physician, String confirmationNumber,
-			Date createdDate, boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate,
-			int callType, boolean completedByPhysician, Date lastReservationDate, Date acceptedDate,
-			String relationName, String caseNumber, RequestClient requestClient,
-			List<RequestWiseFile> listRequestWiseFiles, RequestNotes requestNotes, int caseTag, int caseTagPhysician) {
-		super();
-		this.requestId = requestId;
-		this.requestType = requestType;
-		this.user = user;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.status = status;
-		this.physician = physician;
-		this.confirmationNumber = confirmationNumber;
-		this.createdDate = createdDate;
-		this.isDeleted = isDeleted;
-		this.modifieDate = modifieDate;
-		this.aspUsers = aspUsers;
-		this.lastWellnessDate = lastWellnessDate;
-		this.callType = callType;
-		this.completedByPhysician = completedByPhysician;
-		this.lastReservationDate = lastReservationDate;
-		this.acceptedDate = acceptedDate;
-		this.relationName = relationName;
-		this.caseNumber = caseNumber;
-		this.requestClient = requestClient;
-		this.listRequestWiseFiles = listRequestWiseFiles;
+	public void setRequestNotes(RequestNotes requestNotes) {
 		this.requestNotes = requestNotes;
+	}
+
+	public Integer getCaseTag() {
+		return caseTag;
+	}
+
+	public void setCaseTag(Integer caseTag) {
 		this.caseTag = caseTag;
+	}
+
+	public Integer getCaseTagPhysician() {
+		return caseTagPhysician;
+	}
+
+	public void setCaseTagPhysician(Integer caseTagPhysician) {
 		this.caseTagPhysician = caseTagPhysician;
 	}
 

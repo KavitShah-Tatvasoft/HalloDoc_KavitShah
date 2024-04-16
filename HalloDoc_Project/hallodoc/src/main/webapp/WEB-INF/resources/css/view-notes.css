@@ -1,144 +1,145 @@
-*{
-    box-sizing: border-box;
+* {
+	box-sizing: border-box;
 }
 
-.back-btn-top:hover{
-  background-color: #01bce9;
-  color: white;
+.extra-height-notes {
+	margin-top: 35px !important;
+}
+
+.less-extra-height-notes {
+	margin-top: 20px !important;
+}
+
+.back-btn-top:hover {
+	background-color: #01bce9;
+	color: white;
 }
 
 .form-control:focus {
-	box-shadow:none !important;
+	box-shadow: none !important;
 }
 
-.back-btn-top:hover img{
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+.back-btn-top:hover img {
+	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg)
+		brightness(200%) contrast(101%);
 }
 
-.bottom-btns-submit:hover{
-  background-color: #1991b3;
+.bottom-btns-submit:hover {
+	background-color: #1991b3;
 }
 
 .back-btn-top {
-    display: flex;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    border: 1px solid #01bce9;
-    border-radius: 5px;
-    padding: 9px 12px 9px 8px;
-    color: #01bce9;
-    gap: 4px;
-    width: 84px;
-    position: absolute;
-    top: -27px;
-    right: 15px;
+	display: flex;
+	font-family: 'Poppins', sans-serif;
+	font-size: 15px;
+	border: 1px solid #01bce9;
+	border-radius: 5px;
+	padding: 9px 12px 9px 8px;
+	color: #01bce9;
+	gap: 4px;
+	width: 84px;
+	position: absolute;
+	top: -27px;
+	right: 15px;
 }
 
-.top-patient-view-text{
-    position: absolute;
-    top: -17px;
-    left: 15px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+.top-patient-view-text {
+	position: absolute;
+	top: -17px;
+	left: 15px;
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
 }
 
-.view-reservation-text{
-    font-weight: 600;
-    font-size: 24px;
+.view-reservation-text {
+	font-weight: 600;
+	font-size: 24px;
 }
 
-.form-control:focus{
-    box-shadow: none;
+.form-control:focus {
+	box-shadow: none;
 }
 
-textarea{
-    resize: none !important;
+textarea {
+	resize: none !important;
 }
 
-.bottom-btns-submit{
-    background-color: #01bce9;
-    color: white;
-    border: 1px solid #01bce9;
-    border-radius: 3px;
-    border-radius: 5px;
-    padding: 7px 10px;
-    font-size: 13px;
-  }
-
-.submit-btn-flex{
-    display: flex;
-    justify-content: flex-end;
+.bottom-btns-submit {
+	background-color: #01bce9;
+	color: white;
+	border: 1px solid #01bce9;
+	border-radius: 3px;
+	border-radius: 5px;
+	padding: 7px 10px;
+	font-size: 13px;
 }
 
-
-.patient-form{
-    width: 60% !important;
+.submit-btn-flex {
+	display: flex;
+	justify-content: flex-end;
 }
 
-@media screen and (max-width:1024px) {
-    .patient-form{
-      width: 80%  !important;
-    }
-  }
-  
+.patient-form {
+	width: 60% !important;
+}
 
-  @media screen and (max-width:900px){
-    .patient-form{
-      width: 90%  !important;
-    }
-  }
-
-  @media screen and (max-width:550px) {
-    .view-reservation-text{
-      font-size: 22px;
-    }
-
-    .back-btn-top{
-      transform: scale(0.89);
-    }
-  }
-
-  @media screen and (max-width:425px) {
-    .patient-form{
-      width: 95%  !important;
-    }
-  }
-
-  .relative-position{
-    position: relative;
-  }
-  
-  .extra-margin{
-    margin-top: 40px;
-    margin-bottom: 50px;
-  }
-
-  .background-colour-white{
-    box-shadow: grey 0px 0px 4px;
-    border-radius: 5px;
-    background-color: white;
-    padding: 15px;
-  }
-
-  .note-heading-icon-flex{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .transfer-icon{
-    height: auto;
-    width: 20px;
-  }
-
-  .note-text{
-    padding-left: 30px;
-    font-size: 13px;
-    color: rgb(58, 56, 56);
-  }
-
-  .note-heading{
-    font-weight: 600;
-  }
+@media screen and (max-width:767px) {
+	.mobile-extra-margin-top {
+		margin-top: 20px !important; 
+	}
+}
+	@media screen and (max-width:1024px) {
+		.patient-form {
+			width: 80% !important;
+		}
+	}
+	@media screen and (max-width:900px) {
+		.patient-form {
+			width: 90% !important;
+		}
+	}
+	@media screen and (max-width:550px) {
+		.view-reservation-text {
+			font-size: 22px;
+		}
+		.back-btn-top {
+			transform: scale(0.89);
+		}
+	}
+	@media screen and (max-width:425px) {
+		.patient-form {
+			width: 95% !important;
+		}
+	}
+	.relative-position {
+		position: relative;
+	}
+	.extra-margin {
+		margin-top: 40px;
+		margin-bottom: 50px;
+	}
+	.background-colour-white {
+		box-shadow: grey 0px 0px 4px;
+		border-radius: 5px;
+		background-color: white;
+		padding: 15px;
+	}
+	.note-heading-icon-flex {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.transfer-icon {
+		height: auto;
+		width: 20px;
+	}
+	.note-text {
+		padding-left: 30px;
+		font-size: 13px;
+		color: rgb(58, 56, 56);
+	}
+	.note-heading {
+		font-weight: 600;
+	}

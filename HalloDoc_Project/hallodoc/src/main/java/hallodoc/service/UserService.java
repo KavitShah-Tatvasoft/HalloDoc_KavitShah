@@ -28,10 +28,12 @@ import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserProfileDto;
+import hallodoc.dto.ViewNotesDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
 import hallodoc.helper.Constants;
 import hallodoc.mapper.RequestNewDataDtoMapper;
+import hallodoc.mapper.ViewNotesMapper;
 import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.BlockRequests;
@@ -40,6 +42,7 @@ import hallodoc.model.EmailToken;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
+import hallodoc.model.RequestNotes;
 import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
@@ -49,6 +52,7 @@ import hallodoc.repository.CaseTagDao;
 import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
+import hallodoc.repository.RequestNotesDao;
 import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.repository.RequestWiseFileDao;
 
@@ -81,6 +85,9 @@ public class UserService {
 	
 	@Autowired
 	private BlockRequestsDao blockRequestsDao;
+	
+	@Autowired
+	private RequestNotesDao requestNotesDao;
 	
 	
 	private String resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest) {
@@ -331,6 +338,58 @@ public class UserService {
 		blockRequestsDao.addBlockRequest(blockRequests);
 		
 		return true;
+	}
+	
+	public List<ViewNotesDto> getRequestSpecificLogs(int reqId){
+		List<RequestStatusLog> requestStatusLogs = requestStatusLogDao.getAllRequestSpecificLogs(reqId);
+		List<RequestNotes> requestNotes = requestNotesDao.getRequestSpecificNote(reqId);
+		List<ViewNotesDto> viewNotesDtos = new ArrayList<ViewNotesDto>();
+		
+		if(requestStatusLogs.size() == 0 && requestNotes.size() == 0) {
+			return viewNotesDtos;
+		}
+		if(requestStatusLogs.size() == 0 && requestNotes.size()>0) {
+			ViewNotesDto viewNotesDto = new ViewNotesDto();
+			viewNotesDto.setAdminNotes(requestNotes.get(0).getAdminNotes());
+			viewNotesDto.setProviderNotes(requestNotes.get(0).getPhysicanNotes());
+			viewNotesDtos.add(viewNotesDto);
+			return viewNotesDtos;
+		}
+		if(requestStatusLogs.size()>0) {
+			for (RequestStatusLog requestStatusLog : requestStatusLogs) {
+				ViewNotesDto viewNotesDto = ViewNotesMapper.mapViewNotesData(requestStatusLog);
+				if(requestNotes.size()>0) {
+					viewNotesDto.setAdminNotes(requestNotes.get(0).getAdminNotes());
+					viewNotesDto.setProviderNotes(requestNotes.get(0).getPhysicanNotes());
+				}
+				viewNotesDtos.add(viewNotesDto);
+			}
+			
+			return viewNotesDtos;
+		}
+		
+		return viewNotesDtos;
+	}
+	
+	public void updateAdminNote(String adminNote, int reqId, AspNetUsers user) {
+		List<RequestNotes> requestNotes = requestNotesDao.getRequestSpecificNote(reqId);
+		if(requestNotes.size()>0) {
+			RequestNotes requestNote = requestNotes.get(0);
+			requestNote.setAdminNotes(adminNote);
+			requestNote.setModifiedBy(user);
+			
+			requestNotesDao.updateRequestNotes(requestNote);
+		}
+		else {
+			RequestNotes requestNote = new RequestNotes();
+			Request request = requestDao.getRequestOb(reqId);
+			requestNote.setAdminNotes(adminNote);
+			requestNote.setCreatedBy(user);
+			requestNote.setModifiedBy(user);
+			requestNote.setRequest(request);
+			
+			requestNotesDao.saveRequestNotes(requestNote);
+		}
 	}
 	
 

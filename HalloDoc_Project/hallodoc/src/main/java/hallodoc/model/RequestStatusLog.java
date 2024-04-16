@@ -22,8 +22,6 @@ public class RequestStatusLog {
 	@Column(name = "request_status_log_id")
 	private int request_status_log_id;
 	
-//	@Column(name = "request_id")
-//	private int requestId;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "request_id")
@@ -31,22 +29,15 @@ public class RequestStatusLog {
 	
 	private int status;
 	
-//	@Column(name = "physician_id")
-//	private int physicianId;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "physician_id")
 	private Physician physician;
 	
-//	@Column(name = "admin_id")
-//	private int adminId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "admin_id")
 	private Admin admin;
 	
-//	@Column(name = "trans_to_physician_id")
-//	private int transToPhysicianId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "trans_to_physician_id")

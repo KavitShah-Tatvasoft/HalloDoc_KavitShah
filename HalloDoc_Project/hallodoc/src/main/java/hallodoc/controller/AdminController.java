@@ -32,10 +32,13 @@ import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.UpdateCaseDto;
+import hallodoc.dto.ViewNotesDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
+import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
 import hallodoc.model.EmailLog;
 import hallodoc.model.Request;
+import hallodoc.model.RequestStatusLog;
 import hallodoc.service.AdminNewPatientRequestService;
 import hallodoc.service.AdminService;
 import hallodoc.service.PatientService;
@@ -192,9 +195,24 @@ public class AdminController {
 	
 	@RequestMapping(value="/viewNotes/{requestId}")
 	public String viewNotes(@PathVariable("requestId") int id, HttpServletRequest request, Model m) {
-		Request requestOb = uService.getRequestObject(id);
-		m.addAttribute("requestOb",requestOb);	
+		m.addAttribute("reqId", id);
 		return "common/view-notes";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getViewNotesData", method = RequestMethod.POST)
+	public List<ViewNotesDto> getViewNotesData(@RequestParam ("reqId") int id){
+		List<ViewNotesDto> viewNotesDtos =  uService.getRequestSpecificLogs(id);
+		return viewNotesDtos;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/updateAdminNote",method = RequestMethod.POST)
+	public String updateAdminNote(@RequestParam("adminNote") String adminNote, @RequestParam("reqId") int id, HttpServletRequest httpServletRequest ) {
+		AspNetUsers aspNetUsers =(AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		uService.updateAdminNote(adminNote,id,aspNetUsers);
+		return "Success";
 	}
 
 }
