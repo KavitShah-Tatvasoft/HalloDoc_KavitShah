@@ -41,5 +41,15 @@ public class RegionDao {
 		s.close();
 		return list;
 	}
+	
+	public List<Region> getRegionById(int regionId){
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM Region where regionId=:regionId";
+		Query q = s.createQuery(queryString);
+		q.setParameter("regionId", regionId);
+		List<Region> list = q.list();
+		s.close();
+		return list;
+	}
 
 }

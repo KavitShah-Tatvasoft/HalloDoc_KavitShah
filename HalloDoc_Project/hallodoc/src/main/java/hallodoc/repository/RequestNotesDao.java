@@ -2,6 +2,8 @@ package hallodoc.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -32,10 +34,12 @@ public class RequestNotesDao {
 		return requestNotes;
 	}
 	
+	@Transactional
 	public void updateRequestNotes(RequestNotes requestNotes) {
 		this.hibernateTemplate.update(requestNotes);
 	}
 	
+	@Transactional	
 	public int saveRequestNotes(RequestNotes requestNotes) {
 		int id = (Integer)this.hibernateTemplate.save(requestNotes);
 		return id;

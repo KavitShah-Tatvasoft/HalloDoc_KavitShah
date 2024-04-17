@@ -41,7 +41,7 @@ public class RequestStatusLog {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "trans_to_physician_id")
-	private Physician physician1;
+	private Physician transToPhysician;
 	
 	private String notes;
 	
@@ -51,98 +51,119 @@ public class RequestStatusLog {
 	@Column(name = "trans_to_admin")
 	private boolean transToAdmin;
 
-	public int getRequest_status_log_id() {
-		return request_status_log_id;
-	}
-
-	public void setRequest_status_log_id(int request_status_log_id) {
-		this.request_status_log_id = request_status_log_id;
-	}
-
-	public Request getRequest() {
-		return request;
-	}
-
-	public void setRequest(Request request) {
-		this.request = request;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public Physician getPhysician() {
-		return physician;
-	}
-
-	public void setPhysician(Physician physician) {
-		this.physician = physician;
-	}
-
-	public Admin getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
-	}
-
-	public Physician getPhysician1() {
-		return physician1;
-	}
-
-	public void setPhysician1(Physician physician1) {
-		this.physician1 = physician1;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public boolean isTransToAdmin() {
-		return transToAdmin;
-	}
-
-	public void setTransToAdmin(boolean transToAdmin) {
-		this.transToAdmin = transToAdmin;
-	}
-
-	@Override
-	public String toString() {
-		return "RequestStatusLog [request_status_log_id=" + request_status_log_id + ", request=" + request + ", status="
-				+ status + ", physician=" + physician + ", admin=" + admin + ", physician1=" + physician1 + ", notes="
-				+ notes + ", createdDate=" + createdDate + ", transToAdmin=" + transToAdmin + "]";
-	}
-
+	
 	public RequestStatusLog(int request_status_log_id, Request request, int status, Physician physician, Admin admin,
-			Physician physician1, String notes, Date createdDate, boolean transToAdmin) {
+			Physician transToPhysician, String notes, Date createdDate, boolean transToAdmin) {
 		super();
 		this.request_status_log_id = request_status_log_id;
 		this.request = request;
 		this.status = status;
 		this.physician = physician;
 		this.admin = admin;
-		this.physician1 = physician1;
+		this.transToPhysician = transToPhysician;
 		this.notes = notes;
 		this.createdDate = createdDate;
 		this.transToAdmin = transToAdmin;
 	}
+
+
+	@Override
+	public String toString() {
+		return "RequestStatusLog [request_status_log_id=" + request_status_log_id + ", request=" + request + ", status="
+				+ status + ", physician=" + physician + ", admin=" + admin + ", transToPhysician=" + transToPhysician
+				+ ", notes=" + notes + ", createdDate=" + createdDate + ", transToAdmin=" + transToAdmin + "]";
+	}
+
+
+	public int getRequest_status_log_id() {
+		return request_status_log_id;
+	}
+
+
+	public void setRequest_status_log_id(int request_status_log_id) {
+		this.request_status_log_id = request_status_log_id;
+	}
+
+
+	public Request getRequest() {
+		return request;
+	}
+
+
+	public void setRequest(Request request) {
+		this.request = request;
+	}
+
+
+	public int getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+
+	public Physician getPhysician() {
+		return physician;
+	}
+
+
+	public void setPhysician(Physician physician) {
+		this.physician = physician;
+	}
+
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
+
+	public Physician getTransToPhysician() {
+		return transToPhysician;
+	}
+
+
+	public void setTransToPhysician(Physician transToPhysician) {
+		this.transToPhysician = transToPhysician;
+	}
+
+
+	public String getNotes() {
+		return notes;
+	}
+
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+	public boolean isTransToAdmin() {
+		return transToAdmin;
+	}
+
+
+	public void setTransToAdmin(boolean transToAdmin) {
+		this.transToAdmin = transToAdmin;
+	}
+
 
 	public RequestStatusLog() {
 		super();

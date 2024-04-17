@@ -1,7 +1,10 @@
 package hallodoc.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import org.springframework.http.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -32,6 +38,7 @@ import hallodoc.dto.ViewNotesDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
 import hallodoc.helper.Constants;
+import hallodoc.helper.ExcelSheetHelper;
 import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.mapper.ViewNotesMapper;
 import hallodoc.model.Admin;
@@ -390,6 +397,20 @@ public class UserService {
 			
 			requestNotesDao.saveRequestNotes(requestNote);
 		}
+	}
+	
+	
+	public ResponseEntity<Resource> exportDataToExcelSheet(List<NewRequestDataDto> list,String status) throws IOException {
+		
+		String fileName = status + "-exportData.xlsx";
+		
+		ByteArrayInputStream byteArrayInputStream =  ExcelSheetHelper.dataTOExcel(list, status);
+		InputStreamResource file = new InputStreamResource(byteArrayInputStream);
+		
+		ResponseEntity<Resource> body = ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+		.contentType(MediaType.parseMediaType("application/vnd.ms-excel")).body(file);
+		
+		return body;
 	}
 	
 

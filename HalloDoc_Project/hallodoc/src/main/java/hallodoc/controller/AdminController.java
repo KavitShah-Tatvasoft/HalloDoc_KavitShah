@@ -1,5 +1,6 @@
 package hallodoc.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,10 +28,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
+import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.UpdateCaseDto;
@@ -37,6 +42,7 @@ import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
 import hallodoc.model.EmailLog;
+import hallodoc.model.Physician;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
 import hallodoc.service.AdminNewPatientRequestService;
@@ -77,9 +83,9 @@ public class AdminController {
 		ModelAndView modelAndView = new ModelAndView("admin/admin-dashboard");
 		List<CaseTag> caseTags = uService.getAllCancellationReasons();
 		modelAndView.addObject("cancelReasons", caseTags);
-		
+
 		if (inputFlashMap != null) {
-			
+
 			String message = (String) inputFlashMap.get("message");
 			String showAlertType = (String) inputFlashMap.get("alertType");
 			modelAndView.addObject("msg", message);
@@ -153,66 +159,91 @@ public class AdminController {
 		if (status.equalsIgnoreCase("UserExsist")) {
 			attributes.addFlashAttribute("message", "User already exisits");
 			attributes.addFlashAttribute("alertType", "faliure");
-		}else {
+		} else {
 			attributes.addFlashAttribute("message", "Request Created");
 			attributes.addFlashAttribute("alertType", "success");
 		}
 
 		return redirectView;
 	}
-	
+
 	@RequestMapping("/viewCase/{requestId}")
 	public String viewCasePatient(@PathVariable("requestId") int id, HttpServletRequest request, Model m) {
 		Request requestOb = uService.getRequestObject(id);
-		m.addAttribute("requestOb",requestOb);	
+		m.addAttribute("requestOb", requestOb);
 		return "common/view-case";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "viewCase/updateCaseDetails", method = RequestMethod.POST)
 	public String updateCase(UpdateCaseDto updateCaseDto) {
 		String status = uService.updateViewCaseDetails(updateCaseDto);
 		return "Success";
 	}
-	
-	
+
 	@ResponseBody
-	@RequestMapping(value="/cancelRequestedCase")
+	@RequestMapping(value = "/cancelRequestedCase")
 	public String cancelCase(CancelCaseDetailsDto cancelCaseDetailsDto, HttpServletRequest httpServletRequest) {
 		System.out.println(cancelCaseDetailsDto);
 		Boolean status = uService.cancelRequestedCase(cancelCaseDetailsDto, httpServletRequest);
 		return "Cancelled Case";
 	}
-	
-	
+
 	@ResponseBody
-	@RequestMapping(value="/blockRequestedCase")
+	@RequestMapping(value = "/blockRequestedCase")
 	public String blockCase(BlockCaseDto blockCaseDto, HttpServletRequest httpServletRequest) {
 		System.out.println(blockCaseDto);
 		Boolean status = uService.blockRequestedCase(blockCaseDto, httpServletRequest);
 		return "Blocked Case";
 	}
-	
-	@RequestMapping(value="/viewNotes/{requestId}")
+
+	@RequestMapping(value = "/viewNotes/{requestId}")
 	public String viewNotes(@PathVariable("requestId") int id, HttpServletRequest request, Model m) {
 		m.addAttribute("reqId", id);
 		return "common/view-notes";
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/getViewNotesData", method = RequestMethod.POST)
-	public List<ViewNotesDto> getViewNotesData(@RequestParam ("reqId") int id){
-		List<ViewNotesDto> viewNotesDtos =  uService.getRequestSpecificLogs(id);
+	@RequestMapping(value = "/getViewNotesData", method = RequestMethod.POST)
+	public List<ViewNotesDto> getViewNotesData(@RequestParam("reqId") int id) {
+		List<ViewNotesDto> viewNotesDtos = uService.getRequestSpecificLogs(id);
 		return viewNotesDtos;
 	}
-	
-	
+
 	@ResponseBody
-	@RequestMapping(value="/updateAdminNote",method = RequestMethod.POST)
-	public String updateAdminNote(@RequestParam("adminNote") String adminNote, @RequestParam("reqId") int id, HttpServletRequest httpServletRequest ) {
-		AspNetUsers aspNetUsers =(AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
-		uService.updateAdminNote(adminNote,id,aspNetUsers);
+	@RequestMapping(value = "/updateAdminNote", method = RequestMethod.POST)
+	public String updateAdminNote(@RequestParam("adminNote") String adminNote, @RequestParam("reqId") int id,
+			HttpServletRequest httpServletRequest) {
+		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		uService.updateAdminNote(adminNote, id, aspNetUsers);
 		return "Success";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/getPhysiciansByRegion", method = RequestMethod.POST)
+	public List<PhysicianAssignCaseDto> getPhysicianByRegion(@RequestParam("regionId") int regionId) {
+		List<PhysicianAssignCaseDto> physicians = aService.getPhysicianByRegion(regionId);
+		return physicians;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/assignPhysician",method = RequestMethod.POST)
+	public String assignPhysicianToRequest(AssignCaseDto assignCaseDto, HttpServletRequest httpServletRequest) {
+		System.out.println(assignCaseDto);
+		
+		aService.assignPhysicianToRequest(assignCaseDto,httpServletRequest);
+		return "Success";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/exportStatusWiseData",method = RequestMethod.POST)
+	public ResponseEntity<Resource> exportDataToExcel(@RequestParam("status") String status) throws IOException {
+		System.out.println(status);
+		List<NewRequestDataDto> requestsList = aService.getStatusCorrespondingRequests(status);
+		ResponseEntity<Resource> resource = uService.exportDataToExcelSheet(requestsList,status);
+		return resource;
+	}
+	
+	
 }

@@ -16,6 +16,12 @@ function blockCase(ptName, reqId) {
 	$("#block-case-request-id").val(reqId)
 }
 
+function assignCase(reqId) {
+	$("#assign-case-request-id").val(reqId)
+	var showPhysicianError = document.getElementById("select-physician-error")
+	showPhysicianError.innerHTML = ""
+}
+
 const changeStatus = (element) => {
 	const stateName = document.getElementById("type-text")
 	const states = document.getElementsByClassName("row-cards")
@@ -24,6 +30,9 @@ const changeStatus = (element) => {
 	console.log(current_state)
 	stateName.innerHTML = "(" + capitalizedState + ")"
 	$(".state-type-class-name").attr("data-state", current_state)
+
+	$(".export-btn-state-admindashboard").attr("onclick", "exportData('" + current_state.toUpperCase() + "')")
+
 	if (current_state == "to-close") {
 		stateName.innerHTML = "(To Close)"
 		$(".state-type-class-name").attr("data-state", "to-close")
@@ -268,7 +277,7 @@ function createNewReqRow(data) {
 											<img
 												src="/hallodoc/resources/images/journal-check-grey.svg"
 												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" role="button"
+												class="action-dropdown-text" role="button"  onclick="assignCase('` + data.requestId + `')"
 												data-bs-toggle="modal" data-bs-target="#assign-case">Assign
 												Case</a>
 										</div>
@@ -296,7 +305,7 @@ function createNewReqRow(data) {
 											<img
 												src="/hallodoc/resources/images/journal-text.svg"
 												class="dropdown-icons" alt=""> <a
-												href="viewNotes/`+ data.requestId +`" class="action-dropdown-text"
+												href="viewNotes/`+ data.requestId + `" class="action-dropdown-text"
 												type="button">View Notes</a>
 										</div>
 									</li>
@@ -400,7 +409,7 @@ function createOtherReqRow(data, current_state) {
 											<img
 												src="/hallodoc/resources/images/journal-text.svg"
 												class="dropdown-icons" alt=""> <a
-												href="viewNotes/`+ data.requestId +`" class="action-dropdown-text"
+												href="viewNotes/`+ data.requestId + `" class="action-dropdown-text"
 												type="button">View Notes</a>
 										</div>
 									</li>
@@ -808,3 +817,102 @@ $("#blockPatientForm").submit(function(event) {
 
 
 });
+
+function getPhysiciansByRegion() {
+
+	var showRegionError = document.getElementById("select-region-error")
+	var physicianId = $(".physician-name-class option:selected").val()
+	var region = $(".region-name-class option:selected").val()
+
+	if (region == "none") {
+		showRegionError.innerHTML = "Please select a region."
+	}
+	console.log(region)
+	$.ajax({
+		url: 'getPhysiciansByRegion',
+		type: 'POST',
+		data: {
+			regionId: region
+		},
+		success: function(res) {
+			console.log(res)
+			console.log("Physician List Obtained")
+
+			$(".physician-name-class").empty()
+			$(".physician-name-class").append("<option value='0' hidden selected>Select Physician</option>")
+
+			res.forEach(function(data) {
+				$(".physician-name-class").append("<option value='" + data.physicianId + "'>Dr. " + data.firstName + " " + data.lastName + "</option>")
+			})
+
+		},
+		error: function(res) {
+			console.log("Failed to Obtain Physician List ")
+		}
+
+	});
+
+}
+
+$("#assign-case-form").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var showPhysicianError = document.getElementById("select-physician-error")
+	var reqId = document.getElementById("assign-case-request-id").value
+	var physicianId = $(".physician-name-class option:selected").val()
+	var description = document.getElementById("description-text-area").value
+
+	payload = {}
+	payload["reqId"] = reqId
+	payload["physicianId"] = physicianId
+	payload["description"] = description
+
+	if (physicianId == 0) {
+
+		showPhysicianError.innerHTML = "Please select a physician."
+	} else {
+		$(".close-assign-case").click()
+		$.ajax({
+			url: 'assignPhysician',
+			type: 'POST',
+			data: payload,
+			success: function(data) {
+				console.log("assigned sucessfully")
+			},
+			error: function(data) {
+				console.log("failed to assign provider")
+			}
+		})
+
+		$("#assign-case-form").get(0).reset()
+	}
+})
+
+function exportData(current_status) {
+
+	console.log(current_status)
+	$.ajax({
+		url: 'exportStatusWiseData',
+		type: 'POST',
+		xhrFields: {
+			responseType: 'blob'
+		},
+		data: {
+			status: current_status
+		}, success: function(data) {
+			console.log("export succesful")
+			var blob = new Blob([data]);
+			var link = document.createElement("a");
+			link.href = window.URL.createObjectURL(blob);
+			link.download = "Documents.xlsx";
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}, error: function(data) {
+			console.log("export failed")
+		}
+
+
+	})
+
+}

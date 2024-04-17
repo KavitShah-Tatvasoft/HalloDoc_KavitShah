@@ -1,8 +1,11 @@
 package hallodoc.service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.StatusWiseCountDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
+import hallodoc.model.Admin;
+import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailLog;
+import hallodoc.model.Physician;
+import hallodoc.model.Region;
 import hallodoc.model.Request;
+import hallodoc.model.RequestStatusLog;
 import hallodoc.repository.LogsDao;
+import hallodoc.repository.PhysicianDao;
+import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
+import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.email.*;
 
 @Service
@@ -32,6 +45,15 @@ public class AdminService {
 	
 	@Autowired
 	private LogsDao logsDao;
+	
+	@Autowired
+	private RegionDao regionDao;
+	
+	@Autowired
+	private RequestStatusLogDao requestStatusLogDao;
+	
+	@Autowired
+	private PhysicianDao physicianDao;
 
 	public List<NewRequestDataDto> getStatusCorrespondingRequests(String status) {
 
@@ -158,6 +180,55 @@ public class AdminService {
 		}	
 		
 		return isSent;
+	}
+	
+	public List<PhysicianAssignCaseDto> getPhysicianByRegion(int regionId){
+		List<Region> region =  regionDao.getRegionById(regionId);
+		List<Physician> physicians = region.get(0).getPhysician();
+		List<PhysicianAssignCaseDto> physicianAssignCaseDtos = new ArrayList<PhysicianAssignCaseDto>();
+		
+		for (Physician physician : physicians) {
+			PhysicianAssignCaseDto physicianAssignCaseDto = new PhysicianAssignCaseDto();
+			physicianAssignCaseDto.setFirstName(physician.getFirstName());
+			physicianAssignCaseDto.setLastName(physician.getLastName());
+			physicianAssignCaseDto.setPhysicianId(physician.getPhysicianId());
+			physicianAssignCaseDtos.add(physicianAssignCaseDto);
+		}
+		
+		return physicianAssignCaseDtos;
+	}
+	
+	public void assignPhysicianToRequest(AssignCaseDto assignCaseDto,HttpServletRequest httpServletRequest) {
+		Request request = requestDao.getRequestOb(assignCaseDto.getReqId());
+		Physician physician = physicianDao.getPhysicianById(assignCaseDto.getPhysicianId());
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		Date date = new Date();
+		
+		String pattern = "MMMM dd, yyyy";
+		String timePattern = "KK:mm:ss aa"; 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(timePattern);
+		String fDate = simpleDateFormat.format(date);
+		String fTime = simpleTimeFormat.format(date);
+		
+		request.setPhysician(physician);
+		request.setModifieDate(date);
+		String transferNote = "Admin transferred case to Dr. " + physician.getFirstName() + " on "+ fDate + " at " +
+				fTime + " : " + assignCaseDto.getDescription();
+		
+		
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(hallodoc.enumerations.RequestStatus.UNASSIGNED.getRequestId());
+		requestStatusLog.setAdmin(admin);
+		requestStatusLog.setPhysician(physician);
+		requestStatusLog.setTransToPhysician(physician);
+		requestStatusLog.setCreatedDate(date);
+		requestStatusLog.setNotes(transferNote);
+		
+		requestDao.updateRequest(request);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 	}
 
 }

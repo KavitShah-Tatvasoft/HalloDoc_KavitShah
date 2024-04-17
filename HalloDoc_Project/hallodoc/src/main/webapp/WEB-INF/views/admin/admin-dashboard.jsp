@@ -168,7 +168,8 @@
 				<div class="patient-btns-flex mt-4">
 					<div class="d-flex align-items-center">
 						<h4 id="remove-extra-margin">Patients</h4>
-						<span id="type-text" data-state="new" class="state-type-class-name">(New)</span>
+						<span id="type-text" data-state="new"
+							class="state-type-class-name">(New)</span>
 					</div>
 					<div>
 						<a class="btn btn-info mx-1" role="button" data-bs-toggle="modal"
@@ -181,12 +182,11 @@
 							src="<c:url value='/resources/images/pencil-square.svg' />"
 							class="btn-info-img"> <span class="btns-text">Create
 								Request</span>
-						</a> <a href="#" class="btn btn-info mx-1" role="button"
-							onclick="switchBlack()"> <img
+						</a> <a href="#" class="btn btn-info mx-1 export-btn-state-admindashboard" role="button"
+							onclick="exportData('NEW')"> <img
 							src="<c:url value='/resources/images/export 1.svg' />"
 							class="btn-info-img"> <span class="btns-text">Export</span>
-						</a> <a href="#" class="btn btn-info mx-1" role="button"
-							onclick="switchBlack()"> <img
+						</a> <a href="#" class="btn btn-info mx-1 " role="button" > <img
 							src="<c:url value='/resources/images/exxport.svg' />"
 							class="btn-info-img"> <span class="btns-text">Export
 								All</span>
@@ -966,7 +966,7 @@
 					<h3 class="modal-title fs-5" id="staticBackdropLabel">Assign
 						Request</h3>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+						aria-label="Close" class="close-assign-case"></button>
 				</div>
 				<div class="modal-body">
 					<div>
@@ -974,41 +974,42 @@
 							and select another Physician.</span><br>
 					</div>
 
-					<form action="">
+					<form method="post" id="assign-case-form">
 
 						<div class="col-12 mt-3">
 							<div class="form-floating mb-3 inp">
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select input-2">
-									<option value="Mobile" selected>Newyork</option>
-									<option value="Home">London</option>
-									<option value="Home">Germany</option>
-								</select> <label for="floatingInput-5">Narrow Search by Region</label>
+								<select name="Number_Type" id="region-select-option"
+									class="form-control form-select input-2 region-name-class"
+									onchange="getPhysiciansByRegion()">
+									<option value="none" selected hidden>Select a Region</option>
+									<c:forEach items="${regionList}" var="region">
+										<option value="${region.regionId }">${region.name }</option>
+									</c:forEach>
+								</select> <label for="region-select-option">Narrow Search by
+									Region</label> <span id="select-region-error"></span>
 							</div>
 						</div>
 
 						<div class="container">
 							<div class="row assign-case-select-height assign-case-margin-top">
 
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select assign-case-text-clr">
-									<option value="check" hidden selected>Select Physician</option>
-									<option value="Mobile">Person 1</option>
-									<option value="Home">Person 2</option>
-								</select>
+								<select name="Number_Type" id="physician-select-option"
+									class="form-control form-select assign-case-text-clr physician-name-class">
+									<option value="0" hidden selected>Select Physician</option>
 
+								</select> <span id="select-physician-error"></span>
 							</div>
 						</div>
 						<textarea name="message"
-							class="form-control assign-case-margin-top" id="" cols="12"
+							class="form-control assign-case-margin-top" id="description-text-area" cols="12"
 							rows="5" placeholder="Description"></textarea>
-					</form>
+						<input type="text" hidden id="assign-case-request-id">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="send-btn">Confirm</button>
+					<button type="submit" class="send-btn" >Confirm</button>
 					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -1030,15 +1031,15 @@
 					<div class="modal-body">
 						<div>
 							<span class="font-clr-light">Patient Name :</span> <span
-								class="cancel-case-blue-text block-patient-name-text" ></span><br>
+								class="cancel-case-blue-text block-patient-name-text"></span><br>
 						</div>
 
 						<textarea name="message"
-							class="form-control cancel-pop-margin-top" id="block-case-reason" cols="12"
-							rows="5" placeholder="Reason for Block Request"></textarea>
-							
+							class="form-control cancel-pop-margin-top" id="block-case-reason"
+							cols="12" rows="5" placeholder="Reason for Block Request"></textarea>
+
 						<input type="text" id="block-case-request-id" hidden>
-						
+
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="send-btn" data-bs-dismiss="modal">Confirm</button>

@@ -410,7 +410,7 @@ public class PatientRequestsService {
 			
 			
 //			// persisting object of Request
-			int requestId = requestDao.addNewRequest(request);
+//			int requestId = requestDao.addNewRequest(request);
 
 //			int requestClientId = requestClientDao.addNewRequestClient(requestClient);
 //			// Persisting the requestStatusLogobject
