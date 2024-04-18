@@ -21,8 +21,8 @@ import hallodoc.dto.NewRequestDataDto;
 
 public class ExcelSheetHelper {
 
-	public static String[] ALL_HEADERS = { "Name", "Date Of Birth", "Requestor", "Physician Name", "Date of Service",
-			"Requested Date", "Phone Number", "Requestor Phone", "Request Type", "Address", "Notes" };
+	public static String[] ALL_HEADERS = { "Name", "Date Of Birth", "Requestor","Requested Date", "Physician Name", "Date of Service",
+			 "Phone Number", "Requestor Phone", "Request Type", "Address", "Notes" };
 
 	public static String[] NEW_HEADERS = { "Name", "Date Of Birth", "Requestor", "Requested Date", "Phone Number",
 			"Requestor Phone", "Request Type", "Address", "Notes"
@@ -59,7 +59,7 @@ public class ExcelSheetHelper {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 
-			Sheet sheet = workbook.createSheet(currentStatus + "Status-Sheet");
+			Sheet sheet = workbook.createSheet(currentStatus);
 
 			Row row = sheet.createRow(0);
 
@@ -83,11 +83,11 @@ public class ExcelSheetHelper {
 							.setCellValue(data.getDay() + " " + data.getMonth() + "," + data.getYear());
 				}
 
-				if (currentStatus.equals("NEW") || currentStatus.equals("ACTIVE") || currentStatus.equals("PENDING") ) {
+				if (currentStatus.equals("NEW") || currentStatus.equals("ACTIVE") || currentStatus.equals("PENDING") || currentStatus.equals("ALL") ) {
 					dataRow.createCell(cellIndex++).setCellValue(data.getRequestor());
 				}
 
-				if (currentStatus.equals("NEW")) {
+				if (currentStatus.equals("NEW") || currentStatus.equals("ALL")) {
 					dataRow.createCell(cellIndex++).setCellValue(data.getRequestedDate());
 				}
 

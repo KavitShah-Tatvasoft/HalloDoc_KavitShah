@@ -182,11 +182,13 @@
 							src="<c:url value='/resources/images/pencil-square.svg' />"
 							class="btn-info-img"> <span class="btns-text">Create
 								Request</span>
-						</a> <a href="#" class="btn btn-info mx-1 export-btn-state-admindashboard" role="button"
-							onclick="exportData('NEW')"> <img
+						</a> <a href="#"
+							class="btn btn-info mx-1 export-btn-state-admindashboard"
+							role="button" onclick="exportData('NEW')"> <img
 							src="<c:url value='/resources/images/export 1.svg' />"
 							class="btn-info-img"> <span class="btns-text">Export</span>
-						</a> <a href="#" class="btn btn-info mx-1 " role="button" > <img
+						</a> <a href="#" class="btn btn-info mx-1 "
+							onclick="exportData('ALL')" role="button"> <img
 							src="<c:url value='/resources/images/exxport.svg' />"
 							class="btn-info-img"> <span class="btns-text">Export
 								All</span>
@@ -578,8 +580,8 @@
 						<hr class="no-margin-hr" />
 						<div class="patient_card extended-1" id="extended-1">
 
-							<a href="<c:url value='' />" class="view_case_btn" role="button">
-								View Case </a>
+							<a href="" class="view_case_btn view-case-anchor-class"
+								role="button"> View Case </a>
 							<div
 								class="extended-flex action-class d-none news pendings actives concludes to-closes">
 								<span class="circular_border"><img
@@ -628,14 +630,6 @@
 									31,2023 8:30 AM</span>
 							</div>
 
-							<div class="extended-flex action-class d-none news">
-								<span class="circular_border"><img
-									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
-									alt="D.O.R" /></span> <span class="extended-label">Date of
-									Request:</span> <span class="extended-text accordion-date-of-service">Jan
-									31,2023 8:30 AM</span>
-							</div>
-
 							<div
 								class="extended-flex action-class d-none pendings actives concludes to-closes unpaids">
 								<span class="circular_border"><img
@@ -656,7 +650,8 @@
 							<div class="row p-3 text-center">
 
 								<div class="col-6 mb-3 accordion-btns news d-none action-class">
-									<a class="accordion-btn-admin purple-background-btn "
+									<a
+										class="accordion-btn-admin purple-background-btn assign-case-anchor-class"
 										role="button" data-bs-toggle="modal"
 										data-bs-target="#assign-case">Assign Case</a>
 								</div>
@@ -673,21 +668,23 @@
 								</div>
 
 								<div class="col-6 mb-3 accordion-btns news d-none action-class">
-									<a class="accordion-btn-admin red-background-btn" role="button"
-										data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel
-										Case</a>
+									<a
+										class="accordion-btn-admin red-background-btn cancel-case-anchor-class"
+										role="button" data-bs-toggle="modal"
+										data-bs-target="#cancel-case">Cancel Case</a>
 								</div>
 
 								<div class="col-6 mb-3 news d-none action-class">
-									<a class="accordion-btn-admin red-background-btn "
+									<a
+										class="accordion-btn-admin red-background-btn block-case-anchor-class"
 										data-bs-toggle="modal" data-bs-target="#block-case"
 										role="button">Block Case</a>
 								</div>
 
 								<div class="col-6 mb-3 accordion-btns ">
-									<a href="<c:url value='' />"
-										class="accordion-btn-admin green-background-btn" role="button">View
-										Notes</a>
+									<a href=""
+										class="accordion-btn-admin green-background-btn view-notes-anchor-class"
+										role="button">View Notes</a>
 								</div>
 
 								<div
@@ -777,27 +774,31 @@
 						<form action="">
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp"
-										id="floatingInput-2" placeholder="Phone Number"
-										autocomplete="off"> <label for="floatingInput-2"
+									<input type="text" class="form-control input-1 agreement-inp agreement-phone" disabled
+										id="send-agreement-phone-no" placeholder="Phone Number"
+										autocomplete="off"> <label for="send-agreement-phone-no"
 										class="agreement-label">Phone Number</label>
 								</div>
 							</div>
 
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
-									<input type="email" class="form-control input-1 agreement-inp"
-										id="floatingInput-2" placeholder="Email" autocomplete="off">
-									<label for="floatingInput-2" class="agreement-label">Email</label>
+									<input type="email" class="form-control input-1 agreement-inp agreement-email"
+										id="send-agreement-email" placeholder="Email" autocomplete="off" disabled>
+									<label for="send-agreement-email" class="agreement-label">Email</label>
 								</div>
+								<span id="error-send-agreement"></span>
 							</div>
 						</form>
 					</div>
+					<form method="post" id="sendAgreementForm">
+					<input type="text" hidden id="send-agreement-req-id">
 					<div class="modal-footer">
-						<button type="button" class="send-btn">Confirm</button>
-						<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-
+						<button type="submit" class="send-btn">Confirm</button>
+						<button type="button" class="cancel-btn send-agreement-reset"  data-bs-dismiss="modal">Cancel</button>
 					</div>
+					
+					</form>
 				</div>
 			</div>
 		</div>
@@ -965,8 +966,8 @@
 				<div class="modal-header">
 					<h3 class="modal-title fs-5" id="staticBackdropLabel">Assign
 						Request</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close" class="close-assign-case"></button>
+					<button type="button" class="btn-close close-assign-case"
+						data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<div>
@@ -980,7 +981,7 @@
 							<div class="form-floating mb-3 inp">
 								<select name="Number_Type" id="region-select-option"
 									class="form-control form-select input-2 region-name-class"
-									onchange="getPhysiciansByRegion()">
+									onchange="getAssignCaseRegion()">
 									<option value="none" selected hidden>Select a Region</option>
 									<c:forEach items="${regionList}" var="region">
 										<option value="${region.regionId }">${region.name }</option>
@@ -1001,20 +1002,80 @@
 							</div>
 						</div>
 						<textarea name="message"
-							class="form-control assign-case-margin-top" id="description-text-area" cols="12"
-							rows="5" placeholder="Description"></textarea>
+							class="form-control assign-case-margin-top"
+							id="description-text-area" cols="12" rows="5"
+							placeholder="Description"></textarea>
 						<input type="text" hidden id="assign-case-request-id">
+
+						<div class="modal-footer">
+							<button type="submit" class="send-btn">Confirm</button>
+							<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
 				</div>
-				<div class="modal-footer">
-					<button type="submit" class="send-btn" >Confirm</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-				</div>
-				</form>
 			</div>
 		</div>
 	</div>
 
 	<!-- assign-case -->
+
+	<div class="modal fade" id="transfer-case" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content assign-scale">
+				<div class="modal-header">
+					<h3 class="modal-title fs-5" id="staticBackdropLabel">Transfer
+						Request</h3>
+					<button type="button" class="btn-close transfer-pop-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<form method="post" id="transfer-request-form">
+					<div class="modal-body">
+						<div>
+							<span class="font-clr-light">To assign this request,
+								search and select another Physician.</span><br>
+						</div>
+						
+						<div class="col-12 mt-3">
+							<div class="form-floating mb-3 inp">
+								<select name="Number_Type" id="region-select-option"
+									class="form-control form-select input-2 region-name-class-transfer" onchange="getTransferCaseRegion()">
+									<option value="0" selected hidden>Select a Region</option>
+									<c:forEach items="${regionList}" var="region">
+										<option value="${region.regionId }">${region.name }</option>
+									</c:forEach>
+								</select> <label for="region-select-option">Narrow Search by Region</label>
+								<span id="region-select-transfer-error"></span>
+							</div>
+						</div>
+
+						<div class="container">
+						
+							<div class="row assign-case-select-height assign-case-margin-top">
+
+								<select name="Number_Type" id="floatingInput-5" onchange="removePhysicianError()"
+									class="form-control form-select assign-case-text-clr physician-name-class-1 physician-name-class">
+									<option value="0" hidden selected>Select Physician</option>
+								</select>
+								<span id="select-physician-error-transfer"></span>
+							</div>
+						</div>
+						<textarea name="message"
+							class="form-control assign-case-margin-top" id="transfer-case-description-text" cols="12"
+							rows="5" placeholder="Description"></textarea>
+						<input type="text" hidden id="transfer-case-request-id">
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="send-btn" >Confirm</button>
+						<button type="reset" class="cancel-btn transfer-case-cancel-btn" data-bs-dismiss="modal">Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- transfer-case -->
 
 	<div class="modal fade" id="block-case" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
@@ -1052,85 +1113,36 @@
 
 	<!-- block-case -->
 
-	<div class="modal fade" id="transfer-case" data-bs-backdrop="static"
+
+
+	<div class="modal fade" id="clear-case-this" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content assign-scale">
-				<div class="modal-header">
-					<h3 class="modal-title fs-5" id="staticBackdropLabel">Transfer
-						Request</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<form action="">
-					<div class="modal-body">
-						<div>
-							<span class="font-clr-light">To assign this request,
-								search and select another Physician.</span><br>
-						</div>
-
-
-
-						<div class="col-12 mt-3">
-							<div class="form-floating mb-3 inp">
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select input-2">
-									<option value="Mobile" selected>Newyork</option>
-									<option value="Home">London</option>
-									<option value="Home">Germany</option>
-								</select> <label for="floatingInput-5">Narrow Search by Region</label>
-							</div>
-						</div>
-
-						<div class="container">
-							<div class="row assign-case-select-height assign-case-margin-top">
-
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select assign-case-text-clr">
-									<option value="check" hidden selected>Select Physician</option>
-									<option value="Mobile">Person 1</option>
-									<option value="Home">Person 2</option>
-								</select>
-
-							</div>
-						</div>
-						<textarea name="message"
-							class="form-control assign-case-margin-top" id="" cols="12"
-							rows="5" placeholder="Description"></textarea>
-
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="send-btn" data-bs-dismiss="modal">Confirm</button>
-						<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- transfer-case -->
-
-	<div class="modal fade" id="clear-case" data-bs-backdrop="static"
-		data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content modal-content-clear-case">
+			<div class="modal-content">
 				<div class="modal-body family-pop">
 					<img src="<c:url value='/resources/images/exclamation.png' />"
 						alt="" class="set-img">
 					<p class="information">Confirmation for clear case</p>
 					<span class="popup-txt">Are you sure you want to clear this
 						request? Once cleared this request then you are not able to see
-						this request.</span>
-					<div class="modal-footer mt-3">
-						<button type="button" class="send-btn">Clear</button>
-						<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-					</div>
+						this request.</span> <span class="clear-case-error"></span>
+					<form method="post" id="clear-case-form">
+						<input type="text" name="clear-request-id"
+							id="clear-case-request-id" hidden>
+						<div class="modal-footer mt-3">
+							<button type="submit" class="send-btn">Clear</button>
+							<button type="button" class="cancel-btn cancel-case-btn-class"
+								data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+	<!-- clear-case -->
 
 	<div class="toaster">
 		<div class="toaster-content">
@@ -1172,7 +1184,6 @@
 
 	<%@include file="footer-black.jsp"%>
 
-	<!-- clear-case -->
 	<script>
 		const phoneInputField = document.querySelector("#phone");
 		const phoneInput = window

@@ -32,9 +32,11 @@ import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.dto.ExportDataDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.RequestFiltersDto;
+import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.ViewNotesDto;
@@ -49,6 +51,7 @@ import hallodoc.service.AdminNewPatientRequestService;
 import hallodoc.service.AdminService;
 import hallodoc.service.PatientService;
 import hallodoc.service.UserService;
+import hallodoc.sms.SmsService;
 
 @Controller
 @RequestMapping("/admin")
@@ -62,6 +65,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminNewPatientRequestService adminRequestService;
+
+	@Autowired
+	private SmsService smsService;
 
 	@RequestMapping("/errorPage")
 	public String showErrorPage(HttpServletRequest request) {
@@ -225,25 +231,71 @@ public class AdminController {
 		List<PhysicianAssignCaseDto> physicians = aService.getPhysicianByRegion(regionId);
 		return physicians;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/assignPhysician",method = RequestMethod.POST)
+	@RequestMapping(value = "/assignPhysician", method = RequestMethod.POST)
 	public String assignPhysicianToRequest(AssignCaseDto assignCaseDto, HttpServletRequest httpServletRequest) {
 		System.out.println(assignCaseDto);
-		
-		aService.assignPhysicianToRequest(assignCaseDto,httpServletRequest);
+
+		aService.assignPhysicianToRequest(assignCaseDto, httpServletRequest);
 		return "Success";
 	}
-	
-	
+
 	@ResponseBody
-	@RequestMapping(value="/exportStatusWiseData",method = RequestMethod.POST)
-	public ResponseEntity<Resource> exportDataToExcel(@RequestParam("status") String status) throws IOException {
-		System.out.println(status);
-		List<NewRequestDataDto> requestsList = aService.getStatusCorrespondingRequests(status);
-		ResponseEntity<Resource> resource = uService.exportDataToExcelSheet(requestsList,status);
+	@RequestMapping(value = "/exportStatusWiseData", method = RequestMethod.POST)
+	public ResponseEntity<Resource> exportDataToExcel(ExportDataDto exportDataDto) throws IOException {
+
+		RequestFiltersDto requestFiltersDto = new RequestFiltersDto();
+		requestFiltersDto.setPatientName(exportDataDto.getPatientName());
+		requestFiltersDto.setRequestType(exportDataDto.getRequestType());
+		requestFiltersDto.setStateName(exportDataDto.getStateName());
+		requestFiltersDto.setStatusType(exportDataDto.getStatusType());
+
+		List<NewRequestDataDto> requestsList = uService.getFilteredRequest(requestFiltersDto);
+		ResponseEntity<Resource> resource = uService.exportDataToExcelSheet(requestsList,
+				exportDataDto.getCurrentStatus());
 		return resource;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/clearCase", method = RequestMethod.POST)
+	public String cancelCase(@RequestParam("reqId") int reqId, HttpServletRequest httpServletRequest) {
+
+		uService.clearRequestedCase(reqId, httpServletRequest);
+
+		return "cleared";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/transferPhysician", method = RequestMethod.POST)
+	public String transferRequestedCase(AssignCaseDto assignCaseDto, HttpServletRequest httpServletRequest) {
+
+		aService.transferRequestedCase(assignCaseDto, httpServletRequest);
+
+		return "Transferred";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getSendAgreementData", method = RequestMethod.POST)
+	public SendAgreementDto getSendAgreementDetails(@RequestParam("reqId") int reqId,
+			HttpServletRequest httpServletRequest) {
+
+		SendAgreementDto sendAgreementDto = uService.getRequiredSendAgreementDetails(reqId, httpServletRequest);
+		return sendAgreementDto;
+
+	}
+
+	@RequestMapping(value = "/sendAgreement")
+	public String sendAgreement() {
+		smsService.sendAgreementSMS();
+		return "Sent";
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value = "/sendAgreementToPatient", method = RequestMethod.POST)
+	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto) {
+		System.out.println(sendAgreementDto);
+		return "sent agreement";
+	}
+
 }

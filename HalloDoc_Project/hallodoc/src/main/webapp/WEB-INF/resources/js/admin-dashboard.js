@@ -11,6 +11,10 @@ function cancelCase(ptName, reqId) {
 	$("#cancel-case-request-id").val(reqId)
 }
 
+function clearCase(reqId) {
+	$("#clear-case-request-id").val(reqId)
+}
+
 function blockCase(ptName, reqId) {
 	$(".block-patient-name-text").text(ptName)
 	$("#block-case-request-id").val(reqId)
@@ -21,6 +25,21 @@ function assignCase(reqId) {
 	var showPhysicianError = document.getElementById("select-physician-error")
 	showPhysicianError.innerHTML = ""
 }
+
+function transferCase(reqId) {
+	$("#transfer-case-request-id").val(reqId)
+	var showPhysicianError = document.getElementById("select-physician-error-transfer")
+	var showRegionError = document.getElementById("region-select-transfer-error")
+	showPhysicianError.innerHTML = ""
+	showRegionError.innerHTML = ""
+}
+
+function removePhysicianError() {
+	var showPhysicianError = document.getElementById("select-physician-error-transfer")
+	showPhysicianError.innerHTML = ""
+}
+
+
 
 const changeStatus = (element) => {
 	const stateName = document.getElementById("type-text")
@@ -379,9 +398,9 @@ function createOtherReqRow(data, current_state) {
 										<div class="action-dropdown-flex dropdown-item" id="clear-case">
 											<img
 												src="/hallodoc/resources/images/x-circle-grey.svg"
-												class="dropdown-icons" alt=""> <a
+												class="dropdown-icons" alt=""> <a onclick="clearCase('` + data.requestId + `')"
 												class="action-dropdown-text" data-bs-toggle="modal"
-												data-bs-target="#clear-case" type="button">Clear Case</a>
+												data-bs-target="#clear-case-this" type="button">Clear Case</a>
 										</div>
 									</li>
 
@@ -428,7 +447,7 @@ function createOtherReqRow(data, current_state) {
 										<div class="action-dropdown-flex dropdown-item" id="transfer">
 											<img
 												src="/hallodoc/resources/images/journal-check-grey.svg"
-												class="dropdown-icons" alt=""> <a
+												class="dropdown-icons" alt=""> <a onclick="transferCase(`+ data.requestId + `)"
 												class="action-dropdown-text" data-bs-toggle="modal"
 												data-bs-target="#transfer-case" type="button">Transfer</a>
 										</div>
@@ -437,7 +456,7 @@ function createOtherReqRow(data, current_state) {
 									<li class="pendings d-none">
 										<div class="action-dropdown-flex dropdown-item" id=send-agreement">
 											<img src="/hallodoc/resources/images/document.png"
-												class="dropdown-icons" alt=""> <a
+												class="dropdown-icons" alt=""> <a onclick="sendAgreement(`+ data.requestId + `)"
 												class="action-dropdown-text" data-bs-toggle="modal"
 												data-bs-target="#send-agreement" type="button">Send
 												Agreement</a>
@@ -614,6 +633,15 @@ function poplulateAccordions(data, current_state, count) {
 
 	card.find(".request-time-diffrence").text(data.requestedDate + " " + data.requestedTime + "(" + data.requestedTimeDifference + ")")
 
+	card.find(".view-case-anchor-class").attr("href", "viewCase/" + data.requestId)
+
+	card.find(".assign-case-anchor-class").attr("onclick", "assignCase('" + data.requestId + "')")
+
+	card.find(".cancel-case-anchor-class").attr("onclick", "cancelCase('" + data.name + "','" + data.requestId + "')")
+
+	card.find(".view-notes-anchor-class").attr("href", "viewNotes/" + data.requestId)
+
+	card.find(".block-case-anchor-class").attr("onclick", "blockCase('" + data.name + "','" + data.requestId + "')")
 	return card;
 }
 
@@ -661,9 +689,9 @@ function changeActiveBtn(element) {
 
 function filterRequest() {
 	debugger
+	//	var requestType = $(".button-class.active-btn").html()
 	var patientName = document.getElementById("patient-name-search").value
 	var stateName = document.getElementById("region-name-search").value
-	//	var requestType = $(".button-class.active-btn").html()
 	var requestType = $(".button-class.active-btn").attr("data-value")
 	var statusType = $("#type-text").html();
 
@@ -818,15 +846,24 @@ $("#blockPatientForm").submit(function(event) {
 
 });
 
-function getPhysiciansByRegion() {
-
-	var showRegionError = document.getElementById("select-region-error")
-	var physicianId = $(".physician-name-class option:selected").val()
+function getAssignCaseRegion() {
 	var region = $(".region-name-class option:selected").val()
+	getPhysiciansByRegion(region)
 
-	if (region == "none") {
-		showRegionError.innerHTML = "Please select a region."
-	}
+}
+
+function getTransferCaseRegion() {
+	var showRegionError = document.getElementById("region-select-transfer-error")
+	showRegionError.innerHTML = ""
+	var region = $(".region-name-class-transfer option:selected").val()
+	getPhysiciansByRegion(region)
+
+}
+
+function getPhysiciansByRegion(region) {
+
+
+	debugger
 	console.log(region)
 	$.ajax({
 		url: 'getPhysiciansByRegion',
@@ -842,7 +879,7 @@ function getPhysiciansByRegion() {
 			$(".physician-name-class").append("<option value='0' hidden selected>Select Physician</option>")
 
 			res.forEach(function(data) {
-				$(".physician-name-class").append("<option value='" + data.physicianId + "'>Dr. " + data.firstName + " " + data.lastName + "</option>")
+				$(".physician-name-class").append("<option value='" + data[0] + "'>Dr. " + data[1] + " " + data[2] + "</option>")
 			})
 
 		},
@@ -891,15 +928,63 @@ $("#assign-case-form").submit(function(event) {
 function exportData(current_status) {
 
 	console.log(current_status)
+	debugger
+
+	if (current_status != "ALL") {
+
+		var patientName = document.getElementById("patient-name-search").value
+		var stateName = document.getElementById("region-name-search").value
+		var requestType = $(".button-class.active-btn").attr("data-value")
+
+		var statusType = $("#type-text").html();
+
+		statusType = statusType.slice(1, -1).toLowerCase();
+
+		if (statusType == "new") {
+			statusType = 1
+		}
+		if (statusType == "pending") {
+			statusType = 2
+		}
+		if (statusType == "active") {
+			statusType = 3
+		}
+		if (statusType == "conclude") {
+			statusType = 4
+		}
+		if (statusType == "to close") {
+			statusType = 5
+		}
+		if (statusType == "unpaid") {
+			statusType = 6
+		}
+
+
+
+		var payload = {}
+		payload["patientName"] = patientName
+		payload["stateName"] = stateName
+		payload["requestType"] = requestType
+		payload["statusType"] = statusType
+		payload["currentStatus"] = current_status
+
+	}
+	else {
+		var payload = {}
+		payload["patientName"] = ""
+		payload["stateName"] = "All"
+		payload["requestType"] = "All"
+		payload["statusType"] = 7
+		payload["currentStatus"] = current_status
+	}
 	$.ajax({
 		url: 'exportStatusWiseData',
 		type: 'POST',
 		xhrFields: {
 			responseType: 'blob'
 		},
-		data: {
-			status: current_status
-		}, success: function(data) {
+		data: payload,
+		success: function(data) {
 			console.log("export succesful")
 			var blob = new Blob([data]);
 			var link = document.createElement("a");
@@ -916,3 +1001,130 @@ function exportData(current_status) {
 	})
 
 }
+
+
+$("#clear-case-form").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var current_state = $(".state-type-class-name").attr("data-state")
+	var reqId = document.getElementById("clear-case-request-id").value
+	var error = document.getElementById("clear-case-error")
+
+	$.ajax({
+		url: 'clearCase',
+		type: 'POST',
+		data: {
+			reqId: reqId
+		},
+		success: function(data) {
+			$(".cancel-case-btn-class").click()
+			loadCount()
+			loadData(current_state)
+			console.log("Case Cleared Succesfully")
+
+		},
+		error: function(data) {
+			console.log("failed to assign provider")
+			error.innerHTML = "Failed to clear the case"
+		}
+	})
+
+
+
+})
+
+$("#transfer-request-form").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var showPhysicianError = document.getElementById("select-physician-error-transfer")
+	var showRegionError = document.getElementById("region-select-transfer-error")
+	var reqId = document.getElementById("transfer-case-request-id").value
+	var regionId = $(".region-name-class-transfer option:selected").val()
+	var physicianId = $(".physician-name-class-1 option:selected").val()
+	var description = document.getElementById("transfer-case-description-text").value
+	var current_state = $(".state-type-class-name").attr("data-state")
+	payload = {}
+	payload["reqId"] = reqId
+	payload["physicianId"] = physicianId
+	payload["description"] = description
+
+	if (regionId == 0) {
+		showRegionError.innerHTML = "Please select a region"
+	}
+	else if (physicianId == 0) {
+
+		showPhysicianError.innerHTML = "Please select a physician."
+	} else {
+		$(".transfer-pop-close").click()
+		$.ajax({
+			url: 'transferPhysician',
+			type: 'POST',
+			data: payload,
+			success: function(data) {
+				console.log("transferred physician sucessfully")
+				loadCount()
+				loadData(current_state)
+			},
+			error: function(data) {
+				console.log("failed to transfer provider")
+			}
+		})
+
+		$("#transfer-request-form").get(0).reset()
+	}
+})
+
+
+function sendAgreement(reqId) {
+	$("#send-agreement-req-id").val(reqId)
+
+	$.ajax({
+		url: 'getSendAgreementData',
+		type: 'POST',
+		data: {
+			reqId: reqId
+		},
+		success: function(data) {
+			console.log("data obtianed of email and phone")
+			console.log(data)
+
+			$(".agreement-phone").val(data.phoneNumber)
+			$(".agreement-email").val(data.email)
+
+		},
+		error: function(data) {
+			console.log("failed to obtian data of email and phone")
+		}
+	})
+}
+
+$("#sendAgreementForm").submit(function(event) {
+	event.preventDefault();
+	debugger
+	var reqId = document.getElementById("send-agreement-req-id").value
+	var phoneNumber = document.getElementById("send-agreement-phone-no").value
+	var email = document.getElementById("send-agreement-email").value
+
+	var payload = {}
+	payload["reqId"] = reqId
+	payload["phoneNumber"] = phoneNumber
+	payload["email"] = email
+
+	$.ajax({
+		url: 'sendAgreementToPatient',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+			$(".send-agreement-reset").click()
+			console.log("send agreement")
+			console.log(data)
+		},
+		error: function(data) {
+			console.log("failed to send agreement")
+			var error = document.getElementById("error-send-agreement")
+			error.innerHTML = "Error sending agreement! Please try again!"
+		}
+	})
+
+})
+

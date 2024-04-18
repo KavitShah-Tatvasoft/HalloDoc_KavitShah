@@ -53,20 +53,20 @@ function fillData(reqId) {
 				}
 
 				if (data.adminNotes != null) {
-					if (adminNotes == 1) {
+//					if (adminNotes == 1) {
 						$(".admin-notes-span").empty()
 						$(".admin-notes-textarea").empty()
-						adminNotes = 0
-					}
+//						adminNotes = 0
+//					}
 					$(".admin-notes-span").append("<div>" + data.adminNotes + "</div>")
 					$(".admin-notes-textarea").val(data.adminNotes)
 				}
 
 				if (data.providerNotes != null) {
-					if (physicianNotes == 1) {
+//					if (physicianNotes == 1) {
 						$(".physician-notes-span").empty()
-						physicianNotes = 0
-					}
+//						physicianNotes = 0
+//					}
 					$(".physician-notes-span").append("<div>" + data.providerNotes + "</div>")
 
 				}

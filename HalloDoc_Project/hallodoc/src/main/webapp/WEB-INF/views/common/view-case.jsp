@@ -140,10 +140,10 @@
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp custom-date-input">
 						<!--Date Picker col-->
-						<input type="date" class="form-control input-1 patient-details" value="${requestOb.requestClient.dateObject }"
-							id="patient-bdate" placeholder="Date Of Birth" autocomplete="off"
-							disabled> <label for="floatingInput-4">Date of
-							Birth</label> <img
+						<input type="date" class="form-control input-1 patient-details"
+							value="${requestOb.requestClient.dateObject }" id="patient-bdate"
+							placeholder="Date Of Birth" autocomplete="off" disabled>
+						<label for="floatingInput-4">Date of Birth</label> <img
 							src="<c:url value='/resources/images/calendar4-week.svg' />"
 							alt="" class="custom-date-icon">
 					</div>
@@ -251,9 +251,17 @@
 			</div>
 
 			<div class="bottom-btns mt-3">
-				<button type="button" class="bottom-btns-submit shrink-btns"
+			
+			<c:choose>
+				<c:when test="${requestOb.status == 1}">
+					<button type="button" class="bottom-btns-submit shrink-btns" onclick="assignCase(${requestOb.requestId})"
 					data-bs-toggle="modal" data-bs-target="#assign-case">Assign</button>
-				<a role="button" href="view-notes.html"
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+			
+				<a role="button" href="../viewNotes/${requestOb.requestId}"
 					class="bottom-btns-submit shrink-btns">View Notes</a>
 				<button type="reset" class="bottom-btns-cancel shrink-btns">Cancel</button>
 			</div>
@@ -271,7 +279,7 @@
 				<div class="modal-header">
 					<h3 class="modal-title fs-5" id="staticBackdropLabel">Assign
 						Request</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
+					<button type="button" class="btn-close close-assign-case" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -280,44 +288,49 @@
 							and select another Physician.</span><br>
 					</div>
 
-					<form>
+					<form method="post" id="assign-case-form">
 
 						<div class="col-12 mt-3">
 							<div class="form-floating mb-3 inp">
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select input-2">
+								<select name="Number_Type" id="region-select-option"
+									class="form-control form-select input-2 region-name-class"
+									onchange="getPhysiciansByRegion()">
+									<option value="none" selected hidden>Select a Region</option>
 									<c:forEach items="${regionList}" var="region">
-										<option value="${region.name }">${region.name }</option>
+										<option value="${region.regionId }">${region.name }</option>
 									</c:forEach>
-								</select> <label for="floatingInput-5">Narrow Search by Region</label>
+								</select> <label for="region-select-option">Narrow Search by
+									Region</label> <span id="select-region-error"></span>
 							</div>
 						</div>
 
 						<div class="container">
 							<div class="row assign-case-select-height assign-case-margin-top">
 
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select assign-case-text-clr">
-									<option value="check" hidden selected>Select Physician</option>
-									<option value="Mobile">Person 1</option>
-									<option value="Home">Person 2</option>
-								</select>
+								<select name="Number_Type" id="physician-select-option"
+									class="form-control form-select assign-case-text-clr physician-name-class">
+									<option value="0" hidden selected>Select Physician</option>
 
+								</select> <span id="select-physician-error"></span>
 							</div>
 						</div>
 						<textarea name="message"
-							class="form-control assign-case-margin-top" id="" cols="12"
-							rows="5" placeholder="Description"></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="send-btn">Confirm</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+							class="form-control assign-case-margin-top"
+							id="description-text-area" cols="12" rows="5"
+							placeholder="Description"></textarea>
+						<input type="text" hidden id="assign-case-request-id">
 
+						<div class="modal-footer">
+							<button type="submit" class="send-btn">Confirm</button>
+							<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- assign-case -->
 
 
 	<script>

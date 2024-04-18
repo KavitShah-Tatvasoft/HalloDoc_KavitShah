@@ -9,23 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
-@Table(name = "email_log")
-public class EmailLog {
+@Table(name="sms_log")
+public class SmsLog {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "email_log_id")
-	private int emailLogId;
+	@Column(name = "sms_log_id")
+	private int smsLogId;
 
 	@Column(name = "recipient_name")
 	private String recipientName;
 
-	@Column(name = "subject_name")
-	private String subjectName;
-
-	@Column(name = "email_id")
-	private String emailId;
+	@Column(name = "mobile_number")
+	private String mobileNumber;
 
 	@Column(name = "confirmation_number")
 	private String confirmationNumber;
@@ -42,14 +41,16 @@ public class EmailLog {
 	@Column(name = "physician_id")
 	private int physicianId;
 
+	@CreationTimestamp
 	@Column(name = "create_date")
 	private LocalDateTime createdDate;
 
+	@CreationTimestamp
 	@Column(name = "sent_date")
 	private LocalDateTime sentDate;
 
-	@Column(name = "is_email_sent")
-	private boolean isEmailSent;
+	@Column(name = "is_sms_sent")
+	private boolean isSmsSent;
 
 	@Column(name = "sent_tries")
 	private int sentTries;
@@ -60,31 +61,15 @@ public class EmailLog {
 	@Column(name = "is_expired")
 	private boolean isExpired;
 
-	@Column(name = "email_type")
-	private String emailType;
+	@Column(name = "sms_type")
+	private String smsType;
 
-	public boolean isExpired() {
-		return isExpired;
+	public int getSmsLogId() {
+		return smsLogId;
 	}
 
-	public void setExpired(boolean isExpired) {
-		this.isExpired = isExpired;
-	}
-
-	public String getEmailType() {
-		return emailType;
-	}
-
-	public void setEmailType(String emailType) {
-		this.emailType = emailType;
-	}
-
-	public int getEmailLogId() {
-		return emailLogId;
-	}
-
-	public void setEmailLogId(int emailLogId) {
-		this.emailLogId = emailLogId;
+	public void setSmsLogId(int smsLogId) {
+		this.smsLogId = smsLogId;
 	}
 
 	public String getRecipientName() {
@@ -95,20 +80,12 @@ public class EmailLog {
 		this.recipientName = recipientName;
 	}
 
-	public String getSubjectName() {
-		return subjectName;
+	public String getMobileNumber() {
+		return mobileNumber;
 	}
 
-	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 
 	public String getConfirmationNumber() {
@@ -167,12 +144,12 @@ public class EmailLog {
 		this.sentDate = sentDate;
 	}
 
-	public boolean isEmailSent() {
-		return isEmailSent;
+	public boolean isSmsSent() {
+		return isSmsSent;
 	}
 
-	public void setEmailSent(boolean isEmailSent) {
-		this.isEmailSent = isEmailSent;
+	public void setSmsSent(boolean isSmsSent) {
+		this.isSmsSent = isSmsSent;
 	}
 
 	public int getSentTries() {
@@ -191,24 +168,38 @@ public class EmailLog {
 		this.action = action;
 	}
 
-	@Override
-	public String toString() {
-		return "EmailLog [emailLogId=" + emailLogId + ", recipientName=" + recipientName + ", subjectName="
-				+ subjectName + ", emailId=" + emailId + ", confirmationNumber=" + confirmationNumber + ", roleId="
-				+ roleId + ", requestId=" + requestId + ", adminId=" + adminId + ", physicianId=" + physicianId
-				+ ", createdDate=" + createdDate + ", sentDate=" + sentDate + ", isEmailSent=" + isEmailSent
-				+ ", sentTries=" + sentTries + ", action=" + action + ", isExpired=" + isExpired + ", emailType="
-				+ emailType + "]";
+	public boolean isExpired() {
+		return isExpired;
 	}
 
-	public EmailLog(int emailLogId, String recipientName, String subjectName, String emailId, String confirmationNumber,
-			int roleId, int requestId, int adminId, int physicianId, LocalDateTime createdDate, LocalDateTime sentDate,
-			boolean isEmailSent, int sentTries, int action, boolean isExpired, String emailType) {
+	public void setExpired(boolean isExpired) {
+		this.isExpired = isExpired;
+	}
+
+	public String getSmsType() {
+		return smsType;
+	}
+
+	public void setSmsType(String smsType) {
+		this.smsType = smsType;
+	}
+
+	@Override
+	public String toString() {
+		return "SmsLog [smsLogId=" + smsLogId + ", recipientName=" + recipientName + ", mobileNumber=" + mobileNumber
+				+ ", confirmationNumber=" + confirmationNumber + ", roleId=" + roleId + ", requestId=" + requestId
+				+ ", adminId=" + adminId + ", physicianId=" + physicianId + ", createdDate=" + createdDate
+				+ ", sentDate=" + sentDate + ", isSmsSent=" + isSmsSent + ", sentTries=" + sentTries + ", action="
+				+ action + ", isExpired=" + isExpired + ", smsType=" + smsType + "]";
+	}
+
+	public SmsLog(int smsLogId, String recipientName, String mobileNumber, String confirmationNumber, int roleId,
+			int requestId, int adminId, int physicianId, LocalDateTime createdDate, LocalDateTime sentDate,
+			boolean isSmsSent, int sentTries, int action, boolean isExpired, String smsType) {
 		super();
-		this.emailLogId = emailLogId;
+		this.smsLogId = smsLogId;
 		this.recipientName = recipientName;
-		this.subjectName = subjectName;
-		this.emailId = emailId;
+		this.mobileNumber = mobileNumber;
 		this.confirmationNumber = confirmationNumber;
 		this.roleId = roleId;
 		this.requestId = requestId;
@@ -216,16 +207,17 @@ public class EmailLog {
 		this.physicianId = physicianId;
 		this.createdDate = createdDate;
 		this.sentDate = sentDate;
-		this.isEmailSent = isEmailSent;
+		this.isSmsSent = isSmsSent;
 		this.sentTries = sentTries;
 		this.action = action;
 		this.isExpired = isExpired;
-		this.emailType = emailType;
+		this.smsType = smsType;
 	}
 
-	public EmailLog() {
+	public SmsLog() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
 }

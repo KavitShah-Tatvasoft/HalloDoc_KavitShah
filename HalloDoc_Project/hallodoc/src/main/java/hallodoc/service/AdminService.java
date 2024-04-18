@@ -183,17 +183,19 @@ public class AdminService {
 	}
 	
 	public List<PhysicianAssignCaseDto> getPhysicianByRegion(int regionId){
-		List<Region> region =  regionDao.getRegionById(regionId);
-		List<Physician> physicians = region.get(0).getPhysician();
-		List<PhysicianAssignCaseDto> physicianAssignCaseDtos = new ArrayList<PhysicianAssignCaseDto>();
+//		List<Region> region =  regionDao.getRegionById(regionId);
+//		List<Physician> physicians = region.get(0).getPhysician();
+//		List<PhysicianAssignCaseDto> physicianAssignCaseDtos = new ArrayList<PhysicianAssignCaseDto>();
+//		
+//		for (Physician physician : physicians) {
+//			PhysicianAssignCaseDto physicianAssignCaseDto = new PhysicianAssignCaseDto();
+//			physicianAssignCaseDto.setFirstName(physician.getFirstName());
+//			physicianAssignCaseDto.setLastName(physician.getLastName());
+//			physicianAssignCaseDto.setPhysicianId(physician.getPhysicianId());
+//			physicianAssignCaseDtos.add(physicianAssignCaseDto);
+//		}
 		
-		for (Physician physician : physicians) {
-			PhysicianAssignCaseDto physicianAssignCaseDto = new PhysicianAssignCaseDto();
-			physicianAssignCaseDto.setFirstName(physician.getFirstName());
-			physicianAssignCaseDto.setLastName(physician.getLastName());
-			physicianAssignCaseDto.setPhysicianId(physician.getPhysicianId());
-			physicianAssignCaseDtos.add(physicianAssignCaseDto);
-		}
+		List<PhysicianAssignCaseDto> physicianAssignCaseDtos = physicianDao.getPhysicianByRegion(regionId);
 		
 		return physicianAssignCaseDtos;
 	}
@@ -229,6 +231,42 @@ public class AdminService {
 		
 		requestDao.updateRequest(request);
 		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+	}
+	
+	public void transferRequestedCase(AssignCaseDto assignCaseDto, HttpServletRequest httpServletRequest) {
+		
+		Request request = requestDao.getRequestOb(assignCaseDto.getReqId());
+		Physician physician = physicianDao.getPhysicianById(assignCaseDto.getPhysicianId());
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		Date date = new Date();
+		
+		String pattern = "MMMM dd, yyyy";
+		String timePattern = "KK:mm:ss aa"; 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(timePattern);
+		String fDate = simpleDateFormat.format(date);
+		String fTime = simpleTimeFormat.format(date);
+		
+		String transferNote = "Admin transferred case to Dr. " + physician.getFirstName() + " on "+ fDate + " at " +
+				fTime + " : " + assignCaseDto.getDescription();
+		
+		request.setStatus(1);
+		request.setPhysician(physician);
+		request.setModifieDate(date);
+		
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(hallodoc.enumerations.RequestStatus.UNASSIGNED.getRequestId());
+		requestStatusLog.setAdmin(admin);
+		requestStatusLog.setPhysician(physician);
+		requestStatusLog.setTransToPhysician(physician);
+		requestStatusLog.setCreatedDate(date);
+		requestStatusLog.setNotes(transferNote);
+		
+		requestDao.updateRequest(request);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		
 	}
 
 }

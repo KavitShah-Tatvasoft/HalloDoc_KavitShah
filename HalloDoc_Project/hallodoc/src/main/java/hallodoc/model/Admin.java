@@ -97,6 +97,170 @@ public class Admin {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="role_id")
 	private Role role;
+
+	public int getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
+
+	public AspNetUsers getAspNetUsers() {
+		return aspNetUsers;
+	}
+
+	public void setAspNetUsers(AspNetUsers aspNetUsers) {
+		this.aspNetUsers = aspNetUsers;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddressOne() {
+		return addressOne;
+	}
+
+	public void setAddressOne(String addressOne) {
+		this.addressOne = addressOne;
+	}
+
+	public String getAddressTwo() {
+		return addressTwo;
+	}
+
+	public void setAddressTwo(String addressTwo) {
+		this.addressTwo = addressTwo;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public List<Region> getRegions() {
+		return regions;
+	}
+
+	public void setRegions(List<Region> regions) {
+		this.regions = regions;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getAltPhone() {
+		return altPhone;
+	}
+
+	public void setAltPhone(String altPhone) {
+		this.altPhone = altPhone;
+	}
+
+	public AspNetUsers getAspNetUsers1() {
+		return aspNetUsers1;
+	}
+
+	public void setAspNetUsers1(AspNetUsers aspNetUsers1) {
+		this.aspNetUsers1 = aspNetUsers1;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public AspNetUsers getAspNetUsers2() {
+		return aspNetUsers2;
+	}
+
+	public void setAspNetUsers2(AspNetUsers aspNetUsers2) {
+		this.aspNetUsers2 = aspNetUsers2;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "Admin [adminId=" + adminId + ", aspNetUsers=" + aspNetUsers + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", addressOne=" + addressOne + ", addressTwo=" + addressTwo + ", city=" + city
+				+ ", regions=" + regions + ", zip=" + zip + ", altPhone=" + altPhone + ", aspNetUsers1=" + aspNetUsers1
+				+ ", createdDate=" + createdDate + ", aspNetUsers2=" + aspNetUsers2 + ", modifiedDate=" + modifiedDate
+				+ ", isDeleted=" + isDeleted + ", role=" + role + "]";
+	}
+
+	public Admin(int adminId, AspNetUsers aspNetUsers, String firstName, String lastName, String addressOne,
+			String addressTwo, String city, List<Region> regions, String zip, String altPhone, AspNetUsers aspNetUsers1,
+			Date createdDate, AspNetUsers aspNetUsers2, Date modifiedDate, boolean isDeleted, Role role) {
+		super();
+		this.adminId = adminId;
+		this.aspNetUsers = aspNetUsers;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.addressOne = addressOne;
+		this.addressTwo = addressTwo;
+		this.city = city;
+		this.regions = regions;
+		this.zip = zip;
+		this.altPhone = altPhone;
+		this.aspNetUsers1 = aspNetUsers1;
+		this.createdDate = createdDate;
+		this.aspNetUsers2 = aspNetUsers2;
+		this.modifiedDate = modifiedDate;
+		this.isDeleted = isDeleted;
+		this.role = role;
+	}
+
+	public Admin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

@@ -32,6 +32,7 @@ import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.RequestFiltersDto;
+import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserProfileDto;
 import hallodoc.dto.ViewNotesDto;
@@ -413,5 +414,44 @@ public class UserService {
 		return body;
 	}
 	
+	
+	public void clearRequestedCase(int reqId, HttpServletRequest httpServletRequest) {
+		
+		Request request = requestDao.getRequestOb(reqId);
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		Date date = new Date();
+		String note = "Admin " +  admin.getFirstName() + " cancelled the case on " + date;
+
+		requestStatusLog.setAdmin(admin);
+		requestStatusLog.setPhysician(request.getPhysician());
+		requestStatusLog.setNotes(note);
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(10);
+		requestStatusLog.setCreatedDate(date);
+		
+		request.setStatus(10);
+		request.setModifieDate(date);
+		
+		requestDao.updateRequest(request);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+	}
+	
+	public SendAgreementDto getRequiredSendAgreementDetails(int reqId, HttpServletRequest httpServletRequest) {
+		
+		SendAgreementDto sendAgreementDto = new SendAgreementDto();
+		Request request = requestDao.getRequestOb(reqId);
+		RequestClient requestClient = request.getRequestClient();
+		
+		sendAgreementDto.setEmail(requestClient.getEmail());
+		sendAgreementDto.setReqId(reqId);
+		String mobileNumber = requestClient.getPhoneNumber();
+		String updatedMobileNumber = mobileNumber.replace("+91","");
+		sendAgreementDto.setPhoneNumber(updatedMobileNumber.trim());
+		
+		return sendAgreementDto;
+		
+	}
 
 }

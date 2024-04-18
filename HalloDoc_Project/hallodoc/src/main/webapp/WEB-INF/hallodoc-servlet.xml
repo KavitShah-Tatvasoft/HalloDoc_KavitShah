@@ -103,6 +103,7 @@
 				<value>hallodoc.model.RequestNotes</value>
 				<value>hallodoc.model.CaseTag</value>
 				<value>hallodoc.model.BlockRequests</value>
+				<value>hallodoc.model.SmsLog</value>
 			</list>
 		</property>
 	</bean>
