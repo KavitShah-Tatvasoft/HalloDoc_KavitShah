@@ -1,5 +1,7 @@
 package hallodoc.email;
 
+import java.io.File;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -31,6 +34,8 @@ import hallodoc.model.Request;
 import hallodoc.model.User;
 import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.UserDao;
+
+import hallodoc.helper.*;
 
 @Service("emailService")
 public class EmailService {
@@ -53,9 +58,9 @@ public class EmailService {
 	public String getBaseUrl(HttpServletRequest req) {
 		return "" + req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
 	}
-	
-	public void sendPatientCreatePasswordMail(CreatePatientRequestDto createPatientRequestDto, HttpServletRequest httpServletRequest,
-			LocalDateTime date, EmailToken token) {
+
+	public void sendPatientCreatePasswordMail(CreatePatientRequestDto createPatientRequestDto,
+			HttpServletRequest httpServletRequest, LocalDateTime date, EmailToken token) {
 		String name = capitalize(createPatientRequestDto.getFirstName()) + " "
 				+ capitalize(createPatientRequestDto.getLastName());
 		String url = getBaseUrl(httpServletRequest) + "/createPatient/" + token.getToken();
@@ -77,7 +82,6 @@ public class EmailService {
 
 		mailSender.send(messagePreparator);
 	}
-
 
 	public void sendCreatePasswordMail(CommonRequestDto commonRequestDto, HttpServletRequest httpServletRequest,
 			LocalDateTime date, EmailToken token) {
@@ -260,8 +264,8 @@ public class EmailService {
 				message.setSubject(sendLinkDto.getEmailSubject());
 				String content = "<html><h1>Create New Request<h1>" + "<br>" + "<h2> Hello, " + name + "</h2><br>"
 						+ "<p style=\"\"margin-top:30px;\"\">We have attached below a link to register a new case. "
-						+ "So,in order to register the patient click the below link.</p>"
-						+ " <a href= ' " + url + " ' target = '_blank' >Click here to register.</a> <br>"
+						+ "So,in order to register the patient click the below link.</p>" + " <a href= ' " + url
+						+ " ' target = '_blank' >Click here to register.</a> <br>"
 						+ "<p>If you didn't request an account creation then please ignore this mail.</p>" + "</html>";
 				message.setText(content, true);
 
@@ -270,11 +274,13 @@ public class EmailService {
 
 		mailSender.send(messagePreparator);
 	}
-	
-	public void sendAgreementLink(String emailSubject, Request request, HttpServletRequest httpServletRequest, SendAgreementDto sendAgreementDto) {
-		String name = capitalize(request.getRequestClient().getFirstName()) + " " + capitalize(request.getRequestClient().getLastName()); 
+
+	public void sendAgreementLink(String emailSubject, Request request, HttpServletRequest httpServletRequest,
+			SendAgreementDto sendAgreementDto) {
+		String name = capitalize(request.getRequestClient().getFirstName()) + " "
+				+ capitalize(request.getRequestClient().getLastName());
 		String url = getBaseUrl(httpServletRequest) + "/user/sendReviewAgreement/" + request.getRequestId();
-		
+
 		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -284,14 +290,44 @@ public class EmailService {
 				String content = "<html><h1>Review Agreement<h1>" + "<br>" + "<h2> Hello, " + name + "</h2><br>"
 						+ "<p style=\"\"margin-top:30px;\"\">We have attached below a link so that you can review the agreement. "
 						+ "So,in order to continue with the process please click the below link to view the agreement.</p>"
-						+ " <a href= ' " + url + " ' target = '_blank' >Review Agreement</a> <br>"
-						+ "</html>";
+						+ " <a href= ' " + url + " ' target = '_blank' >Review Agreement</a> <br>" + "</html>";
 				message.setText(content, true);
 
 			}
 		};
 
 		mailSender.send(messagePreparator);
+	}
+
+	public void sendFilesViaEmail(String emailSubject, Request request, HttpServletRequest httpServletRequest,
+			List<String> fileNames, List<String> realFileName) {
+		String name = capitalize(request.getRequestClient().getFirstName()) + " "
+				+ capitalize(request.getRequestClient().getLastName());
+
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(request.getRequestClient().getEmail());
+//				message.setTo("pevovoy782@idsho.com");
+				message.setSubject(emailSubject);
+				String content = "<html> <h2> Hello, " + name + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">Hope that now you are well. We have attached below document/health reports that you might need for your refrence. For any assistance feel free to contact on our helpline number anytime.";
+					
+				message.setText(content, true);
+				
+				String path = Constants.getUplaodPath(httpServletRequest.getSession());
+				
+				for (int i=0;i<fileNames.size();i++) {
+					FileSystemResource file = new FileSystemResource(new File(path+"/"+fileNames.get(i)));
+					message.addAttachment(realFileName.get(i), file);
+				}
+				
+			}
+		};
+
+		mailSender.send(messagePreparator);
+
 	}
 
 }

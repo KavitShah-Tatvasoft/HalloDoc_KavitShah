@@ -16,7 +16,7 @@ a{
 }
 
 .mobile-cards{
-    display: none;
+    display: none !important;
 }
 
 .main-container-top-text{
@@ -67,9 +67,9 @@ a{
   }
 
 .main-container{
-    width: 70%;
+    width: 70% !important;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 5px !important;
     clear: both;
     box-shadow: -2px -2px 9px 0px #cdc5c5f7;
     border-radius: 5px;
@@ -109,12 +109,12 @@ th{
 }
 
 .file-upload-btn{                /*Upload button customization*/
-    background-color: #01bce9;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
+    background-color: #01bce9 !important;
+    color: white !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 5px ;
   }
 
   ::-webkit-file-upload-button {
@@ -221,7 +221,7 @@ input[type="file"]{
 
 .single-mobile-card{
     padding: 15px;
-    padding-left: 18px;
+    padding-left: 18px !important;
 }
 
 .mobile-checkbox-name-flex{
@@ -248,7 +248,7 @@ input[type="file"]{
 
 @media screen and (max-width:834px) {
     .main-container{
-        width: 90%;
+        width: 90% !important;
     }
 
     .width-col-2{
@@ -263,11 +263,11 @@ input[type="file"]{
 
 @media screen and (max-width:648px) {
     .table{
-        display: none;
+        display: none ;
     }
 
     .mobile-cards{
-        display: block;
+        display: block !important;
     }
 
     .upload-txt{

@@ -3,8 +3,8 @@ package hallodoc.enumerations;
 public enum MessageTypeEnum {
 
 		SEND_LINK(1, "Send Link"),
-		SEND_AGREEMENT(2, "Send Agreement");
-		
+		SEND_AGREEMENT(2, "Send Agreement"),
+		SEND_FILES(3,"Send Files");
 		private int messageTypeId;
 		private String messageType;
 		

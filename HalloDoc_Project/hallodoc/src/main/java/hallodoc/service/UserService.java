@@ -192,7 +192,9 @@ public class UserService {
 		String formattedDate = sdf.format(date);
 
 		RequestWiseFile requestWiseFile = new RequestWiseFile();
-
+		
+		AspNetUsers aspNetUsers = (AspNetUsers)session.getAttribute("aspUser");
+		User user = aspNetUsers.getUser();
 		// Getting details from file obj
 
 		String fileName = document.getOriginalFilename();
@@ -224,6 +226,18 @@ public class UserService {
 		requestWiseFile.setFileExtension(fileExtension);
 		requestWiseFile.setStoredFileName(storedFileName);
 
+			
+		switch (user.getAspNetRoles().getId()) {
+		case 1:
+			requestWiseFile.setAdmin(aspNetUsers.getAdmin());
+			break;
+		case 2:
+			requestWiseFile.setPhysician(null);
+			break;
+		default:
+			break;
+		}
+		
 		requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 
 		return "Uploaded Succesfully";
@@ -453,7 +467,7 @@ public class UserService {
 	public SendAgreementDto getRequiredSendAgreementDetails(int reqId, HttpServletRequest httpServletRequest) {
 
 		SendAgreementDto sendAgreementDto = new SendAgreementDto();
-		Request request = requestDao.getRequestOb(reqId);
+		Request request = requestDao.getRequestOb(reqId);		// change this 
 		RequestClient requestClient = request.getRequestClient();
 
 		sendAgreementDto.setEmail(requestClient.getEmail());
@@ -586,5 +600,91 @@ public class UserService {
 		requestDao.updateRequest(request);
 		return "accepted";
 	}
+	
+	public Request getRequestById(int id) {
+		return requestDao.getRequestOb(id);
+	}
+	
+	public void softDeleteRequestedFile(int fileId) {
+		RequestWiseFile requestWiseFile = this.requestWiseFileDao.getRequestWiseFileOb(fileId);
+		requestWiseFile.setDeleted(true);
+		requestWiseFileDao.deleteRequestedFile(requestWiseFile);
+	}
+	
+	
+	public String sendFilesToPatient(int reqId, String listOfId, HttpServletRequest httpServletRequest) {
+		String[] arrOfStr = listOfId.split(",");
+		List<Integer> list = new ArrayList<Integer>();
+		for (String a : arrOfStr) {
+			list.add(Integer.parseInt(a));
+		} 
+		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		
+		
+		LocalDateTime localDateTime = LocalDateTime.now();
+		
+		Request request = requestDao.getRequestOb(reqId);
+		
+		String recipientName = request.getRequestClient().getFirstName() + " "
+				+ request.getRequestClient().getLastName();
+		
+		List<RequestWiseFile> requestWiseFile = request.getListRequestWiseFiles();
+		List<String> storedfileNames = new ArrayList<String>();
+		List<String> realfileNames = new ArrayList<String>();
+		
+		requestWiseFile.stream().forEach(i->{
+            if(list.contains(i.getRequestWiseFileId())){
+            	storedfileNames.add(i.getStoredFileName());
+            	realfileNames.add(i.getFileName());
+            }
+        });
+		
+		String status = "";
+		EmailLog emailLog = new EmailLog();
+		String subject = "Health Reports/ Documents";
+		emailLog.setSubjectName(subject);
+		emailLog.setEmailId(request.getRequestClient().getEmail());
+		emailLog.setRequestId(request.getRequestId());
+		emailLog.setConfirmationNumber(request.getConfirmationNumber());
+		emailLog.setAdminId(admin.getAdminId());
+		emailLog.setCreatedDate(localDateTime);
+		emailLog.setSentDate(localDateTime);
+		emailLog.setAction(MessageTypeEnum.SEND_FILES.getMessageTypeId());
+		emailLog.setRecipientName(recipientName);
+		emailLog.setPhysicianId(request.getPhysician().getPhysicianId());
+		
+		boolean isSent = false;
+		int sentTries = 1;
+		for (int i = sentTries; i <= 3; i++) {
+			if (isSent) {
+				continue;
+			}
+			try {
+				this.emailService.sendFilesViaEmail(subject, request, httpServletRequest, storedfileNames, realfileNames);
+				isSent = true;
+				emailLog.setSentTries(i);
+				emailLog.setEmailSent(isSent);
+				this.logsDao.addEmailLogEntry(emailLog);
+				status = status + "mail send";
+
+			} catch (Exception e) {
+				if (i == 3) {
+					emailLog.setSentTries(3);
+					emailLog.setEmailSent(false);
+					this.logsDao.addEmailLogEntry(emailLog);
+					status = status + "failed to send mail";
+					return status;
+				}
+			}
+			
+		}
+		return status;
+		
+		
+		
+	}
 
 }
+
+	

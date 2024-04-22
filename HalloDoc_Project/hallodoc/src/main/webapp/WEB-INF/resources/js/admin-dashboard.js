@@ -438,7 +438,7 @@ function createOtherReqRow(data, current_state) {
 											<img
 												src="/hallodoc/resources/images/view-upload.png"
 												class="dropdown-icons" alt=""> <a
-												href="<c:url value='' />" class="action-dropdown-text "
+												href="../user/viewRequestUploads/`+ data.requestId +`" class="action-dropdown-text "
 												type="button">View Uploads</a>
 										</div>
 									</li>

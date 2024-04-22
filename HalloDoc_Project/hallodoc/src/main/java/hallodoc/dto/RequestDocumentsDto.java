@@ -13,16 +13,28 @@ public class RequestDocumentsDto {
 	private String uploaderName;
 	private String fileExtension;
 	private String storedFileName;
+	private Integer requestWiseFileId;
 	
 	
 	
 	
-	public String getStoredFileName() {
-		return storedFileName;
+	public RequestDocumentsDto(String confirmationNumber, String filename, Date createdDate, String uploaderName,
+			String fileExtension, String storedFileName, Integer requestWiseFileId) {
+		super();
+		this.confirmationNumber = confirmationNumber;
+		this.filename = filename;
+		this.createdDate = createdDate;
+		this.uploaderName = uploaderName;
+		this.fileExtension = fileExtension;
+		this.storedFileName = storedFileName;
+		this.requestWiseFileId = requestWiseFileId;
 	}
 
-	public void setStoredFileName(String storedFileName) {
-		this.storedFileName = storedFileName;
+	@Override
+	public String toString() {
+		return "RequestDocumentsDto [confirmationNumber=" + confirmationNumber + ", filename=" + filename
+				+ ", createdDate=" + createdDate + ", uploaderName=" + uploaderName + ", fileExtension=" + fileExtension
+				+ ", storedFileName=" + storedFileName + ", requestWiseFileId=" + requestWiseFileId + "]";
 	}
 
 	public String getConfirmationNumber() {
@@ -64,26 +76,21 @@ public class RequestDocumentsDto {
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
 	}
-	
-	
-	
 
-	public RequestDocumentsDto(String confirmationNumber, String filename, Date createdDate, String uploaderName,
-			String fileExtension, String storedFileName) {
-		super();
-		this.confirmationNumber = confirmationNumber;
-		this.filename = filename;
-		this.createdDate = createdDate;
-		this.uploaderName = uploaderName;
-		this.fileExtension = fileExtension;
+	public String getStoredFileName() {
+		return storedFileName;
+	}
+
+	public void setStoredFileName(String storedFileName) {
 		this.storedFileName = storedFileName;
 	}
 
-	@Override
-	public String toString() {
-		return "RequestDocumentsDto [confirmationNumber=" + confirmationNumber + ", filename=" + filename
-				+ ", createdDate=" + createdDate + ", uploaderName=" + uploaderName + ", fileExtension=" + fileExtension
-				+ ", storedFileName=" + storedFileName + "]";
+	public Integer getRequestWiseFileId() {
+		return requestWiseFileId;
+	}
+
+	public void setRequestWiseFileId(Integer requestWiseFileId) {
+		this.requestWiseFileId = requestWiseFileId;
 	}
 
 	public RequestDocumentsDto() {

@@ -65,23 +65,17 @@
 					action="${pageContext.request.contextPath}/uploadRequestDocument"
 					method="post" enctype="multipart/form-data">
 					<div class="input-group mb-3" style="position: relative">
-						<input type="file" name="documentFile" class="form-control"
-							id="inputGroupFile02"> <input type="text"
-							value="${reqId }" name="requestId" hidden /> <input type="text"
-							value="${userOb.firstName } ${userOb.lastName }"
-							name="uploaderName" hidden />
+						<input type="file" name="documentFile" class="form-control" id="inputGroupFile02">
+						<input type="text" value="${reqId }" name="requestId" hidden /> 
+						<input type="text" value="${userOb.firstName } ${userOb.lastName }" name="uploaderName" hidden />
 
 						<button type="submit" id="submit-button-upload"
 							style="display: none;"></button>
-						<button type="reset" id="reset-button-upload"
-							style="display: none;"></button>
+						
 						<label class="input-group-text file-upload-btn"
 							for="submit-button-upload"><img
 							src="<c:url value="/resources/images/cloud-arrow-up-white.svg" />"
 							class="upload-image-file" alt=""><span class="upload-txt">Upload</span></label>
-						<label for="reset-button-upload"
-							style="position: absolute; top: 12px; right: 110px"><img
-							src="<c:url value="/resources/images/trash.svg" />" /></label>
 					</div>
 				</form>
 			</div>
