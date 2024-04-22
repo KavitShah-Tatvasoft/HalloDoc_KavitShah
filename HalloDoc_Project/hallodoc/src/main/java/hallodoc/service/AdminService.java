@@ -149,6 +149,8 @@ public class AdminService {
 
 	public boolean sendRequestLink(HttpServletRequest request,SendLinkDto sendLinkDto) {
 		
+		AspNetUsers aspNetUsers = (AspNetUsers)request.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
 		LocalDateTime date = LocalDateTime.now();
 		EmailLog emailLog = new EmailLog();
 		emailLog.setSubjectName(sendLinkDto.getEmailSubject());
@@ -157,6 +159,7 @@ public class AdminService {
 		emailLog.setSentDate(date);
 		emailLog.setAction(1);
 		emailLog.setRecipientName(sendLinkDto.getFirstName()+" "+sendLinkDto.getLastName());
+		emailLog.setAdminId(admin.getAdminId());
 		boolean isSent = false;
 		int sentTries = 1;
 		for (int i = sentTries; i <= 3; i++) {

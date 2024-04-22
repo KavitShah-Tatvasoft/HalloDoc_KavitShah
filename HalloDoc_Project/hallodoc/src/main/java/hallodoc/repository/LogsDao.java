@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import hallodoc.model.EmailLog;
+import hallodoc.model.SmsLog;
 
 @Repository
 public class LogsDao {
@@ -22,6 +23,12 @@ public class LogsDao {
 	public int addEmailLogEntry(EmailLog emailLog) {
 		int emailLogId = (Integer) this.hibernateTemplate.save(emailLog);
 		return emailLogId;
+	}
+	
+	@Transactional
+	public int addSmsLogEntry(SmsLog smsLog) {
+		int smsLogId = (Integer) this.hibernateTemplate.save(smsLog);
+		return smsLogId;
 	}
 
 }

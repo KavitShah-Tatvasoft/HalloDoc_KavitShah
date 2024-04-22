@@ -22,10 +22,12 @@ import org.springframework.stereotype.Service;
 
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.SomeoneElseRequestDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
+import hallodoc.model.Request;
 import hallodoc.model.User;
 import hallodoc.repository.EmailTokenDao;
 import hallodoc.repository.UserDao;
@@ -261,6 +263,29 @@ public class EmailService {
 						+ "So,in order to register the patient click the below link.</p>"
 						+ " <a href= ' " + url + " ' target = '_blank' >Click here to register.</a> <br>"
 						+ "<p>If you didn't request an account creation then please ignore this mail.</p>" + "</html>";
+				message.setText(content, true);
+
+			}
+		};
+
+		mailSender.send(messagePreparator);
+	}
+	
+	public void sendAgreementLink(String emailSubject, Request request, HttpServletRequest httpServletRequest, SendAgreementDto sendAgreementDto) {
+		String name = capitalize(request.getRequestClient().getFirstName()) + " " + capitalize(request.getRequestClient().getLastName()); 
+		String url = getBaseUrl(httpServletRequest) + "/user/sendReviewAgreement/" + request.getRequestId();
+		
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(sendAgreementDto.getEmail());
+				message.setSubject(emailSubject);
+				String content = "<html><h1>Review Agreement<h1>" + "<br>" + "<h2> Hello, " + name + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">We have attached below a link so that you can review the agreement. "
+						+ "So,in order to continue with the process please click the below link to view the agreement.</p>"
+						+ " <a href= ' " + url + " ' target = '_blank' >Review Agreement</a> <br>"
+						+ "</html>";
 				message.setText(content, true);
 
 			}

@@ -285,17 +285,21 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(value = "/sendAgreement")
-	public String sendAgreement() {
-		smsService.sendAgreementSMS();
-		return "Sent";
-	}
-	
+//	@RequestMapping(value = "/sendAgreement")
+//	public String sendAgreement() {
+//		smsService.sendAgreementSMS();
+//		return "Sent";
+//	}
+//	
 	@ResponseBody
 	@RequestMapping(value = "/sendAgreementToPatient", method = RequestMethod.POST)
-	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto) {
+	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto, HttpServletRequest httpServletRequest) {
 		System.out.println(sendAgreementDto);
-		return "sent agreement";
+		String status = uService.sendAgreementToPatient(sendAgreementDto, httpServletRequest);
+		return status;
 	}
+	
+	
+	
 
 }
