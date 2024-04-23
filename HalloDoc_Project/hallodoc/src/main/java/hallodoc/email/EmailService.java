@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.SomeoneElseRequestDto;
@@ -328,6 +329,27 @@ public class EmailService {
 
 		mailSender.send(messagePreparator);
 
+	}
+	
+	public void sendNewOrder(String subject,Request request,HttpServletRequest httpServletRequest, OrdersDetailsDto ordersDetailsDto, String recipientName) {
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(ordersDetailsDto.getBusinessEmailContact());
+//				message.setTo("pevovoy782@idsho.com");
+				message.setSubject(subject);
+				String content = "<html> <h2> Hello, " + recipientName + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">We would like to place a new order. We have provided the prescription and order refills required below. Try to deliver the medicines on time. For any assistance feel free to contact on our helpline number anytime.</p>" +
+						"<br>Order Details are as follows:" +
+						"<br><br>Prescription : " + ordersDetailsDto.getBusinessPrescriptionDetails() + 
+						"<br><br>No. of Refills Required : " + ordersDetailsDto.getRefillsDetails();
+					
+				message.setText(content, true);
+			}
+		};
+
+		mailSender.send(messagePreparator);
 	}
 
 }

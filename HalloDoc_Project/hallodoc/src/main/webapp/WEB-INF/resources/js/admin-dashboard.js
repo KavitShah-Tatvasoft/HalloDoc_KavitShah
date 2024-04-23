@@ -456,7 +456,7 @@ function createOtherReqRow(data, current_state) {
 									<li class="pendings d-none">
 										<div class="action-dropdown-flex dropdown-item" id=send-agreement">
 											<img src="/hallodoc/resources/images/document.png"
-												class="dropdown-icons" alt=""> <a onclick="sendAgreement(`+ data.requestId + `)"
+												class="dropdown-icons" alt=""> <a =onclick"sendAgreement(`+ data.requestId + `)"
 												class="action-dropdown-text" data-bs-toggle="modal"
 												data-bs-target="#send-agreement" type="button">Send
 												Agreement</a>
@@ -468,17 +468,8 @@ function createOtherReqRow(data, current_state) {
 											<img
 												src="/hallodoc/resources/images/order-delivery.png"
 												class="dropdown-icons" alt=""> <a
-												href="<c:url value='' />" class="action-dropdown-text"
+												href="../user/sendOrderDetails/`+ data.requestId +`" class="action-dropdown-text"
 												type="button">Orders</a>
-										</div>
-									</li>
-
-									<li class="actives concludes to-closes d-none">
-										<div class="action-dropdown-flex dropdown-item" id="doctor-notes">
-											<img src="/hallodoc/resources/images/document.png"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" type="button"
-												href="<c:url value='' />">Doctor Notes</a>
 										</div>
 									</li>
 
@@ -487,7 +478,7 @@ function createOtherReqRow(data, current_state) {
 											<img src="/hallodoc/resources/images/document.png"
 												class="dropdown-icons" alt=""> <a
 												class="action-dropdown-text" type="button"
-												href="<c:url value='' />">Encounter</a>
+												href="../user/encounterForm/`+ data.requestId +`">Encounter</a>
 										</div>
 									</li>
 									
@@ -642,6 +633,14 @@ function poplulateAccordions(data, current_state, count) {
 	card.find(".view-notes-anchor-class").attr("href", "viewNotes/" + data.requestId)
 
 	card.find(".block-case-anchor-class").attr("onclick", "blockCase('" + data.name + "','" + data.requestId + "')")
+	
+	card.find(".clear-case-anchor").attr("onclick", "clearCase('" + data.requestId  + "')")
+	
+	card.find(".view-uploads-anchor").attr("href","../user/viewRequestUploads/"+ data.requestId )
+	
+	card.find(".send-agreement-anchor").attr("onclick", "sendAgreement('"+ data.requestId  +"')")
+	
+	card.find(".transfer-case-anchor").attr("onclick", "transferCase('" + data.requestId + "')")
 	return card;
 }
 

@@ -1,5 +1,7 @@
 package hallodoc.model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -375,6 +377,12 @@ public class Request {
 	public Request() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public LocalDate getDateOfServiceObject() {
+	return	acceptedDate.toInstant()
+	      .atZone(ZoneId.systemDefault())
+	      .toLocalDate();
 	}
 
 }

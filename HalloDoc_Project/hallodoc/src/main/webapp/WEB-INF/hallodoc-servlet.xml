@@ -104,6 +104,10 @@
 				<value>hallodoc.model.CaseTag</value>
 				<value>hallodoc.model.BlockRequests</value>
 				<value>hallodoc.model.SmsLog</value>
+				<value>hallodoc.model.OrderDetails</value>
+				<value>hallodoc.model.HealthProfessionalTypes</value>
+				<value>hallodoc.model.HealthProfessionals</value>
+				<value>hallodoc.model.EncounterForm</value>
 			</list>
 		</property>
 	</bean>

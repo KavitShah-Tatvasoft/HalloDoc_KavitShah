@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,14 +19,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import hallodoc.dto.EncounterFormDto;
+import hallodoc.dto.EncounterFormUserDetailsDto;
+import hallodoc.dto.OrderVendorDetailsDto;
+import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.RequestDocumentsDto;
+import hallodoc.dto.VendorDetailsDto;
 import hallodoc.email.EmailService;
 import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.EncounterForm;
+import hallodoc.model.HealthProfessionalTypes;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestWiseFile;
 import hallodoc.model.User;
+import hallodoc.repository.HealthProfessionalsDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.repository.RequestWiseFileDao;
@@ -42,11 +51,10 @@ public class UserController {
 	@Autowired
 	private RequestDao requestDao;
 	
-	@Autowired
-	private RequestStatusLogDao requestStatusLogDao;
 	
 	@Autowired
 	private PatientService pService;
+	
 
 	@RequestMapping(value = "/sendReviewAgreement/{reqId}")
 	public String showAgreementEmail(@PathVariable("reqId") int reqId, Model m) {
@@ -124,11 +132,9 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/deleteMultipleFiles", method = RequestMethod.POST)
 	public String deleteMultipleFiles(@RequestParam("data") String list) {
-		String[] arrOfStr = list.split(",");
-		for (String a : arrOfStr) {
-			uService.softDeleteRequestedFile(Integer.parseInt(a));   // can you in query
-		} 
-		 
+		
+			uService.softDeleteMultipleRequestedFile(list);   // can you in query
+
 		return "Success";
 	}
 	
@@ -139,6 +145,58 @@ public class UserController {
 		return status;
 	}
 	
+	@RequestMapping(value="/sendOrderDetails/{reqId}")
+	public String sendOrderDetails(@PathVariable("reqId") int reqId, Model model) {
+		System.out.println(reqId);
+		
+		List<HealthProfessionalTypes> professionList = uService.getActiveProfessions();
+		
+		model.addAttribute("reqId",reqId);
+		model.addAttribute("professionList",professionList);
+		
+		return "common/order-details";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getVendorDetails", method = RequestMethod.POST)
+	public List<VendorDetailsDto> getVendorDetails(@RequestParam("professionTypeId")int professionTypeId) {
+		System.out.println(professionTypeId +"hello");
+		List<VendorDetailsDto> vendorList = uService.getActiveVendors(professionTypeId);
+		return vendorList;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getSelectedVendorDetails", method = RequestMethod.POST)
+	public OrderVendorDetailsDto getSelectedVendorDetails(@RequestParam("vendorId") int vendorId) {
+		OrderVendorDetailsDto orderVendorDetailsDto = uService.getOrderVendorDetails(vendorId);
+		return orderVendorDetailsDto;
+	}
+	
+	
+	@RequestMapping(value="/sendOrderDetails", method = RequestMethod.POST)
+	public RedirectView sendOrderDetails(@ModelAttribute("orderDetails") OrdersDetailsDto ordersDetailsDto, HttpServletRequest httpServletRequest) {
+		String status = uService.sendOrderDetails(ordersDetailsDto,httpServletRequest);
+		RedirectView redirectView = new RedirectView("../admin/adminDashboard");
+		return redirectView;
+	}
+	
+	@RequestMapping(value="/encounterForm/{reqId}")
+	public String viewEncounterForm(@PathVariable("reqId") int reqId, Model m) {
+		EncounterFormUserDetailsDto encounterFormUserDetailsDto = uService.getEncounterFormUserDetailsDto(reqId);
+		EncounterFormDto encounterFormdto = uService.getEncounterFormDtoOb(reqId);
+		m.addAttribute("reqId",reqId);
+		m.addAttribute("userDetails",encounterFormUserDetailsDto);
+		m.addAttribute("encounterForm",encounterFormdto);
+		return "common/encounter-form";
+	}
+ 	
+	@RequestMapping(value="/editEncounterForm", method = RequestMethod.POST)
+	public RedirectView editEncounterFormDetails(@ModelAttribute("editEncounterForm") EncounterFormDto encounterFormDto, HttpServletRequest httpServletRequest) {
+//		System.out.println(encounterFormDto);
+		String status = uService.updateEncounterFormDetails(encounterFormDto,httpServletRequest );
+		return new RedirectView("../user/encounterForm/"+ encounterFormDto.getRequestId());
+	}
 }
 
 	

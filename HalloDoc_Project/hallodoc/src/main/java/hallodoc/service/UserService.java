@@ -30,11 +30,16 @@ import com.password4j.types.Bcrypt;
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CommonRequestDto;
+import hallodoc.dto.EncounterFormDto;
+import hallodoc.dto.EncounterFormUserDetailsDto;
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.OrderVendorDetailsDto;
+import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserProfileDto;
+import hallodoc.dto.VendorDetailsDto;
 import hallodoc.dto.ViewNotesDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
@@ -49,6 +54,10 @@ import hallodoc.model.BlockRequests;
 import hallodoc.model.CaseTag;
 import hallodoc.model.EmailLog;
 import hallodoc.model.EmailToken;
+import hallodoc.model.EncounterForm;
+import hallodoc.model.HealthProfessionalTypes;
+import hallodoc.model.HealthProfessionals;
+import hallodoc.model.OrderDetails;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
@@ -61,7 +70,10 @@ import hallodoc.repository.AspNetUserDao;
 import hallodoc.repository.BlockRequestsDao;
 import hallodoc.repository.CaseTagDao;
 import hallodoc.repository.EmailTokenDao;
+import hallodoc.repository.EncounterFormDao;
+import hallodoc.repository.HealthProfessionalsDao;
 import hallodoc.repository.LogsDao;
+import hallodoc.repository.OrderDetailsDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestNotesDao;
@@ -110,6 +122,15 @@ public class UserService {
 
 	@Autowired
 	private SmsService smsService;
+
+	@Autowired
+	private HealthProfessionalsDao healthProfessionalsDao;
+	
+	@Autowired
+	private OrderDetailsDao orderDetailsDao;
+	
+	@Autowired
+	private EncounterFormDao encounterFormDao;
 
 	private String resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest) {
 
@@ -192,8 +213,8 @@ public class UserService {
 		String formattedDate = sdf.format(date);
 
 		RequestWiseFile requestWiseFile = new RequestWiseFile();
-		
-		AspNetUsers aspNetUsers = (AspNetUsers)session.getAttribute("aspUser");
+
+		AspNetUsers aspNetUsers = (AspNetUsers) session.getAttribute("aspUser");
 		User user = aspNetUsers.getUser();
 		// Getting details from file obj
 
@@ -226,7 +247,6 @@ public class UserService {
 		requestWiseFile.setFileExtension(fileExtension);
 		requestWiseFile.setStoredFileName(storedFileName);
 
-			
 		switch (user.getAspNetRoles().getId()) {
 		case 1:
 			requestWiseFile.setAdmin(aspNetUsers.getAdmin());
@@ -237,7 +257,7 @@ public class UserService {
 		default:
 			break;
 		}
-		
+
 		requestWiseFileDao.addNewRequestWiseFile(requestWiseFile);
 
 		return "Uploaded Succesfully";
@@ -467,7 +487,7 @@ public class UserService {
 	public SendAgreementDto getRequiredSendAgreementDetails(int reqId, HttpServletRequest httpServletRequest) {
 
 		SendAgreementDto sendAgreementDto = new SendAgreementDto();
-		Request request = requestDao.getRequestOb(reqId);		// change this 
+		Request request = requestDao.getRequestOb(reqId); // change this
 		RequestClient requestClient = request.getRequestClient();
 
 		sendAgreementDto.setEmail(requestClient.getEmail());
@@ -574,7 +594,8 @@ public class UserService {
 
 	}
 
-	public String acceptAgreement(int reqId, HttpServletRequest httpServletRequest, boolean acceptance, String cancellationReasons) {
+	public String acceptAgreement(int reqId, HttpServletRequest httpServletRequest, boolean acceptance,
+			String cancellationReasons) {
 
 		Request request = requestDao.getRequestOb(reqId);
 		RequestStatusLog requestStatusLog = new RequestStatusLog();
@@ -600,46 +621,54 @@ public class UserService {
 		requestDao.updateRequest(request);
 		return "accepted";
 	}
-	
+
 	public Request getRequestById(int id) {
 		return requestDao.getRequestOb(id);
 	}
-	
+
 	public void softDeleteRequestedFile(int fileId) {
 		RequestWiseFile requestWiseFile = this.requestWiseFileDao.getRequestWiseFileOb(fileId);
 		requestWiseFile.setDeleted(true);
 		requestWiseFileDao.deleteRequestedFile(requestWiseFile);
 	}
-	
-	
+
+	public void softDeleteMultipleRequestedFile(String list) {
+		String[] arrOfStr = list.split(",");
+		List<Integer> idList = new ArrayList<Integer>();
+		for (String string : arrOfStr) {
+			idList.add(Integer.parseInt(string));
+		}
+
+		requestWiseFileDao.deleteMultipleRequestedFile(idList);
+	}
+
 	public String sendFilesToPatient(int reqId, String listOfId, HttpServletRequest httpServletRequest) {
 		String[] arrOfStr = listOfId.split(",");
 		List<Integer> list = new ArrayList<Integer>();
 		for (String a : arrOfStr) {
 			list.add(Integer.parseInt(a));
-		} 
+		}
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		Admin admin = aspNetUsers.getAdmin();
-		
-		
+
 		LocalDateTime localDateTime = LocalDateTime.now();
-		
+
 		Request request = requestDao.getRequestOb(reqId);
-		
+
 		String recipientName = request.getRequestClient().getFirstName() + " "
 				+ request.getRequestClient().getLastName();
-		
+
 		List<RequestWiseFile> requestWiseFile = request.getListRequestWiseFiles();
 		List<String> storedfileNames = new ArrayList<String>();
 		List<String> realfileNames = new ArrayList<String>();
-		
-		requestWiseFile.stream().forEach(i->{
-            if(list.contains(i.getRequestWiseFileId())){
-            	storedfileNames.add(i.getStoredFileName());
-            	realfileNames.add(i.getFileName());
-            }
-        });
-		
+
+		requestWiseFile.stream().forEach(i -> {
+			if (list.contains(i.getRequestWiseFileId())) {
+				storedfileNames.add(i.getStoredFileName());
+				realfileNames.add(i.getFileName());
+			}
+		});
+
 		String status = "";
 		EmailLog emailLog = new EmailLog();
 		String subject = "Health Reports/ Documents";
@@ -653,7 +682,7 @@ public class UserService {
 		emailLog.setAction(MessageTypeEnum.SEND_FILES.getMessageTypeId());
 		emailLog.setRecipientName(recipientName);
 		emailLog.setPhysicianId(request.getPhysician().getPhysicianId());
-		
+
 		boolean isSent = false;
 		int sentTries = 1;
 		for (int i = sentTries; i <= 3; i++) {
@@ -661,7 +690,8 @@ public class UserService {
 				continue;
 			}
 			try {
-				this.emailService.sendFilesViaEmail(subject, request, httpServletRequest, storedfileNames, realfileNames);
+				this.emailService.sendFilesViaEmail(subject, request, httpServletRequest, storedfileNames,
+						realfileNames);
 				isSent = true;
 				emailLog.setSentTries(i);
 				emailLog.setEmailSent(isSent);
@@ -677,14 +707,195 @@ public class UserService {
 					return status;
 				}
 			}
-			
+
 		}
 		return status;
-		
-		
-		
+
 	}
 
-}
+	public List<HealthProfessionalTypes> getActiveProfessions() {
 
+		List<HealthProfessionalTypes> list = this.healthProfessionalsDao.getProfessions();
+		return list;
+	}
+
+	public List<VendorDetailsDto> getActiveVendors(int professionTypeId) {
+
+		List<VendorDetailsDto> vendorList = this.healthProfessionalsDao.getVendors(professionTypeId);
+		return vendorList;
+	}
+
+	public OrderVendorDetailsDto getOrderVendorDetails(int vendorId) {
+
+		return this.healthProfessionalsDao.getOrderVendorDetails(vendorId);
+
+	}
+
+	public String sendOrderDetails(OrdersDetailsDto ordersDetailsDto, HttpServletRequest httpServletRequest) {
+
+		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		EmailLog emailLog = new EmailLog();
+		OrderDetails orderDetail = new OrderDetails();
+		LocalDateTime localDateTime = LocalDateTime.now();
+		Request request = requestDao.getRequestOb(ordersDetailsDto.getOrderRequestId());
+		HealthProfessionals healthProfessionals = this.healthProfessionalsDao.getProfessionalOb(ordersDetailsDto.getBusinessTypeId());
+		
+		orderDetail.setBusinessContact(ordersDetailsDto.getBusinessContactNumber());
+		orderDetail.setBusinessEmail(ordersDetailsDto.getBusinessEmailContact());
+		orderDetail.setCreatedBy(admin.getAdminId());
+		orderDetail.setFaxNumber(ordersDetailsDto.getBusinessFaxNumber());
+		orderDetail.setNumberOfRefills(ordersDetailsDto.getRefillsDetails());
+		orderDetail.setRequestId(ordersDetailsDto.getOrderRequestId());
+		orderDetail.setPrescriptions(ordersDetailsDto.getBusinessPrescriptionDetails());
+		orderDetail.setVendorId(ordersDetailsDto.getBusinessTypeId());
+		
+		String subject = "New Order Details";
+		emailLog.setSubjectName(subject);
+		emailLog.setEmailId(request.getRequestClient().getEmail());
+		emailLog.setRequestId(request.getRequestId());
+		emailLog.setConfirmationNumber(request.getConfirmationNumber());
+		emailLog.setAdminId(admin.getAdminId());
+		emailLog.setCreatedDate(localDateTime);
+		emailLog.setSentDate(localDateTime);
+		emailLog.setAction(MessageTypeEnum.SEND_ORDERS.getMessageTypeId());
+		emailLog.setRecipientName(healthProfessionals.getVendorName());
+
+		int id = this.orderDetailsDao.saveOrderDetail(orderDetail);
+		
+		String status = "";
+		boolean isSent = false;
+		int sentTries = 1;
+		for (int i = sentTries; i <= 3; i++) {
+			if (isSent) {
+				continue;
+			}
+			try {
+				this.emailService.sendNewOrder("New Order Details", request, httpServletRequest, ordersDetailsDto, healthProfessionals.getVendorName() );
+				isSent = true;
+				emailLog.setSentTries(i);
+				emailLog.setEmailSent(isSent);
+				this.logsDao.addEmailLogEntry(emailLog);
+				status = status + "mail send";
+
+			} catch (Exception e) {
+				if (i == 3) {
+					emailLog.setSentTries(3);
+					emailLog.setEmailSent(false);
+					this.logsDao.addEmailLogEntry(emailLog);
+					status = status + "failed to send mail";
+
+				}
+			}
+		}
+		
+		return status;
+	}
 	
+	public String updateEncounterFormDetails(EncounterFormDto encounterFormDto, HttpServletRequest httpServletRequest) {
+		
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		Request request = requestDao.getRequestOb(encounterFormDto.getRequestId());
+		EncounterForm  encounterForm;
+		List<EncounterForm> encounterForms = encounterFormDao.getEncounterFormByReqID(encounterFormDto.getRequestId());
+		
+		if(encounterForms.size()>0) {
+			encounterForm = encounterForms.get(0);
+		}else {			
+			encounterForm = new EncounterForm();
+		}
+		
+		encounterForm.setAbd(encounterFormDto.getAbd());
+		encounterForm.setAdminId(admin.getAdminId());
+		encounterForm.setAllergies(encounterFormDto.getAllergies());
+		encounterForm.setBloodPresureneg(encounterFormDto.getBloodPresureneg());
+		encounterForm.setBloodPresurePlus(encounterFormDto.getBloodPresurePlus());
+		encounterForm.setChest(encounterFormDto.getChest());
+		encounterForm.setCv(encounterFormDto.getCv());
+		encounterForm.setDiagnosis(encounterFormDto.getDiagnosis());
+		encounterForm.setExtr(encounterFormDto.getExtr());
+		encounterForm.setFollowUp(encounterFormDto.getFollowUp());
+		encounterForm.setHeent(encounterFormDto.getHeent());
+		encounterForm.setHistoryOfIllness(encounterFormDto.getHistoryOfIllness());
+		encounterForm.setHr(encounterFormDto.getHr());
+		encounterForm.setMedicalHistory(encounterFormDto.getMedicalHistory());
+		encounterForm.setMedications(encounterFormDto.getMedications());
+		encounterForm.setNeuro(encounterFormDto.getNeuro());
+		encounterForm.setO2(encounterFormDto.getO2());
+		encounterForm.setOther(encounterFormDto.getOther());
+		encounterForm.setPain(encounterFormDto.getPain());
+		encounterForm.setProcedures(encounterFormDto.getProcedures());
+		encounterForm.setRequest(request);
+		encounterForm.setRr(encounterFormDto.getRr());
+		encounterForm.setSkin(encounterFormDto.getSkin());
+		encounterForm.setTemp(encounterFormDto.getTemp());
+		encounterForm.setTreatmentPlan(encounterFormDto.getTreatmentPlan());
+		encounterForm.setMedicationsDespensed(encounterFormDto.getMedicationsDespensed());
+
+		if(encounterForms.size()>0) {
+			encounterFormDao.updateEncounterForm(encounterForm);
+			return "updated succesfully";
+		}else {			
+			encounterFormDao.saveEncounterForm(encounterForm);
+			return "saved succesfully";
+		}
+	}
+	
+	public EncounterFormUserDetailsDto getEncounterFormUserDetailsDto(int reqId) {
+		
+		Request request = requestDao.getRequestOb(reqId);
+		EncounterFormUserDetailsDto encounterFormUserDetailsDto = new EncounterFormUserDetailsDto();
+		RequestClient requestClient = request.getRequestClient();
+		encounterFormUserDetailsDto.setDob(requestClient.getDateObject());
+		encounterFormUserDetailsDto.setEmail(requestClient.getEmail());
+		encounterFormUserDetailsDto.setFirstName(requestClient.getFirstName());
+		encounterFormUserDetailsDto.setLastName(requestClient.getLastName());
+		encounterFormUserDetailsDto.setPhoneNumber(requestClient.getPhoneNumber());
+		encounterFormUserDetailsDto.setDos(request.getDateOfServiceObject());
+		encounterFormUserDetailsDto.setLocation(requestClient.getFullAddress());
+		return encounterFormUserDetailsDto;
+	}
+	
+	public EncounterFormDto getEncounterFormDtoOb(int reqId) {
+		List<EncounterForm> encounterForms = encounterFormDao.getEncounterFormByReqID(reqId);
+		EncounterForm encounterForm;
+		EncounterFormDto encounterFormDto = new EncounterFormDto();
+		if(encounterForms.size()>0) {
+			encounterForm = encounterForms.get(0);
+			
+			encounterFormDto.setAbd(encounterForm.getAbd());
+			encounterFormDto.setAllergies(encounterForm.getAllergies());
+			encounterFormDto.setBloodPresureneg(encounterForm.getBloodPresureneg());
+			encounterFormDto.setBloodPresurePlus(encounterForm.getBloodPresurePlus());
+			encounterFormDto.setChest(encounterForm.getChest());
+			encounterFormDto.setCv(encounterForm.getCv());
+			encounterFormDto.setDiagnosis(encounterForm.getDiagnosis());
+			encounterFormDto.setExtr(encounterForm.getExtr());
+			encounterFormDto.setFollowUp(encounterForm.getFollowUp());
+			encounterFormDto.setHeent(encounterForm.getHeent());
+			encounterFormDto.setHistoryOfIllness(encounterForm.getHistoryOfIllness());
+			encounterFormDto.setHr(encounterForm.getHr());
+			encounterFormDto.setMedicalHistory(encounterForm.getMedicalHistory());
+			encounterFormDto.setMedications(encounterForm.getMedications());
+			encounterFormDto.setNeuro(encounterForm.getNeuro());
+			encounterFormDto.setO2(encounterForm.getO2());
+			encounterFormDto.setOther(encounterForm.getOther());
+			encounterFormDto.setPain(encounterForm.getPain());
+			encounterFormDto.setProcedures(encounterForm.getProcedures());
+			encounterFormDto.setRr(encounterForm.getRr());
+			encounterFormDto.setSkin(encounterForm.getSkin());
+			encounterFormDto.setTemp(encounterForm.getTemp());
+			encounterFormDto.setTreatmentPlan(encounterForm.getTreatmentPlan());
+			encounterFormDto.setMedicationsDespensed(encounterForm.getMedicationsDespensed());
+			
+			return encounterFormDto;
+			
+		}else {
+			return encounterFormDto;
+		}
+	}
+	
+	
+
+}

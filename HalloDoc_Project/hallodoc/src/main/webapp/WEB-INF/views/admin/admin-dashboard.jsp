@@ -662,7 +662,7 @@
 								</div>
 
 								<div class="col-6 mb-3 pendings d-none action-class">
-									<a class="accordion-btn-admin orange-background-btn"
+									<a class="accordion-btn-admin orange-background-btn send-agreement-anchor"
 										role="button" data-bs-toggle="modal"
 										data-bs-target="#send-agreement">Send Agreement</a>
 								</div>
@@ -690,7 +690,7 @@
 								<div
 									class="col-6 mb-3 pendings actives concludes to-closes unpaids d-none action-class">
 									<a href="view-uploads-patient-conclude.html"
-										class="accordion-btn-admin green-background-btn" role="button">View
+										class="accordion-btn-admin green-background-btn view-uploads-anchor" role="button">View
 										Uploads</a>
 								</div>
 
@@ -701,7 +701,7 @@
 								</div>
 
 								<div class="col-6 accordion-btns pendings d-none action-class">
-									<a class="accordion-btn-admin blue-background-btn"
+									<a class="accordion-btn-admin blue-background-btn transfer-case-anchor"
 										data-bs-toggle="modal" data-bs-target="#transfer-case"
 										role="button">Transfer</a>
 								</div>
@@ -712,15 +712,10 @@
 										href="<c:url value='' />" role="button">Encounter</a>
 								</div>
 
-								<div
-									class="col-6 mb-3 accordion-btns actives concludes to-closes d-none action-class">
-									<a class="accordion-btn-admin dark-green-background-btn"
-										href="<c:url value='' />" role="button">Doctors Note</a>
-								</div>
 
 								<div class="col-6 mb-3 pendings to-closes d-none action-class">
-									<a class="accordion-btn-admin orange-background-btn"
-										data-bs-toggle="modal" data-bs-target="#clear-case"
+									<a class="accordion-btn-admin orange-background-btn clear-case-anchor"
+										data-bs-toggle="modal" data-bs-target="#clear-case-this"
 										role="button">Clear Case</a>
 								</div>
 

@@ -298,6 +298,9 @@ public class RequestClient {
 		return date;
 	}
 	
+	public String getFullAddress() {
+		return street + " " + city + " " + state + " " + " " + zipcode;
+	}
 	
 	
 }
