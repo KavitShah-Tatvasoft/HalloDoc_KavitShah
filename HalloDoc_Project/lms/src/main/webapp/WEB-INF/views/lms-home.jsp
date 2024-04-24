@@ -127,7 +127,7 @@
 							</div>
 							<div class="col-12 col-md-6">
 								<div class="form-floating mb-3 inp">
-									<select class="form-select form-select-lg mb-3 genere-book">
+									<select class="form-select mb-3 genere-book">
 										<option value="none" hidden>Genere</option>
 										<option value="Science Fiction">Science Fiction</option>
 										<option value="Novel">Novel</option>
@@ -205,7 +205,7 @@
 							</div>
 							<div class="col-12 col-md-6">
 								<div class="form-floating mb-3 inp">
-									<select class="form-select form-select-lg mb-3 genere-book-1">
+									<select class="form-select  mb-3 genere-book-1">
 										<option value="none" hidden>Genere</option>
 										<option value="Science Fiction">Science Fiction</option>
 										<option value="Novel">Novel</option>
