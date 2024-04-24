@@ -48,6 +48,15 @@ public class MainController {
 		System.out.println(addBookRecordDto);
 		this.mainService.addBookRecord(addBookRecordDto);
 		return "done";
+	
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/updateTheRecord", method = RequestMethod.POST )
+	public String updateTheRecord(AddBookRecordDto addBookRecordDto) {
+		this.mainService.updateTheRecord(addBookRecordDto);
+		return "updated";
 	}
 	
 	@ResponseBody

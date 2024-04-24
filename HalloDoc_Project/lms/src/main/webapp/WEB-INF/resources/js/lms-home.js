@@ -138,3 +138,39 @@ function updateRecord(id){
 	})
 	
 }
+
+$("#lms-form-1").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var borrowerName = $(".borrower-name-1").val()
+	var bookName = $(".book-name-1").val()
+	var authorName = $(".author-1").val()
+	var dateOfIssuance = $(".date-of-issuance-1").val()
+	var genere = $(".genere-book-1").val()
+	var city = $(".borrower-city-1").val()
+	var payload = {}
+
+	payload["borrowerName"] = borrowerName
+	payload["bookName"] = bookName
+	payload["authorName"] = authorName
+	payload["dateOfIssuance"] = dateOfIssuance
+	payload["genere"] = genere
+	payload["city"] = city
+
+	$(".cancel-btn").click()
+	$.ajax({
+		url: 'updateTheRecord',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+			console.log("book record updated")
+			console.log(data)
+			$("#lms-form-1").reset()
+
+		},
+		error: function(data) {
+			console.log("failed to add book record not updated data")
+		}
+	})
+
+})

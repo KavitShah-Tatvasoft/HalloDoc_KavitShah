@@ -8,6 +8,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/home.css" />">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
@@ -243,52 +245,5 @@
 </html>
 
 <style>
-.top-strip {
-	background-color: #326c9b;
-	color: white;
-	padding: 10px 10px;
-}
 
-.modal-book-form {
-	background-color: #326c9b;
-	color: white;
-}
-
-.btm-btns-flex {
-	margin-top: 15px;
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	gap: 15px;
-}
-
-.save-btn {
-	flex-basis: 48%;
-	padding: 3px 2px;
-	border: 1px solid rgb(82, 81, 81);
-	border-radius: 4px;
-	background-color: #326c9b;
-	color: white;
-}
-
-.cancel-btn {
-	flex-basis: 48%;
-	padding: 3px 2px;
-	border: 1px solid whitesmoke;
-	border-radius: 4px;
-}
-
-.top-row-flex {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.search-top {
-	flex-basis: 30%;
-}
-
-.table-class{
-	width: 80%;
-}
 </style>
