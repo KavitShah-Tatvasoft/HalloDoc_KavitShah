@@ -223,13 +223,13 @@ public class UserController {
 		return redirectView;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/updateCloseCaseDetails", method = RequestMethod.POST )
-	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto){
-		System.out.println(closeCaseEditDataDto);
-		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
-		return "updated";
-	}
+//	@ResponseBody
+//	@RequestMapping(value="/updateCloseCaseDetails", method = RequestMethod.POST )
+//	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto){
+//		System.out.println(closeCaseEditDataDto);
+//		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
+//		return "updated";
+//	}
 }
 
 	

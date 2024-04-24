@@ -933,23 +933,23 @@ public class UserService {
 		return "status changed!";
 	}
 	
-	public String editCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-
-		String dateInString = closeCaseEditDataDto.getDob();
-		Date dob = formatter.parse(dateInString);
-		
-		Request request = requestDao.getRequestOb(closeCaseEditDataDto.getReqId());
-		RequestClient requestClient = request.getRequestClient();
-		User user = request.getUser();
-		AspNetUsers aspNetUsers = user.getAspNetUsers();
-		
-		request.setFirstName(closeCaseEditDataDto.getfName());
-		request.setLastName(closeCaseEditDataDto.getlName());
-		request.setPhoneNumber(closeCaseEditDataDto.getpNumber());
-		
-	}
+//	public String editCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//
+//		String dateInString = closeCaseEditDataDto.getDob();
+//		Date dob = formatter.parse(dateInString);
+//		
+//		Request request = requestDao.getRequestOb(closeCaseEditDataDto.getReqId());
+//		RequestClient requestClient = request.getRequestClient();
+//		User user = request.getUser();
+//		AspNetUsers aspNetUsers = user.getAspNetUsers();
+//		
+//		request.setFirstName(closeCaseEditDataDto.getfName());
+//		request.setLastName(closeCaseEditDataDto.getlName());
+//		request.setPhoneNumber(closeCaseEditDataDto.getpNumber());
+//		
+//	}
 	
 
 }
