@@ -332,10 +332,11 @@
 
 			<div class="row">
 				<div class="bottom-btns mt-3 mb-3">
-					<button type="submit" class="bottom-btns-submit">Save
+					<button type="button" class="bottom-btns-submit edit-hide-class" onclick="editEncounterForm('edit')">Edit</button>
+					<button type="submit" class="bottom-btns-submit edit-show-class d-none" >Save
 						Changes</button>
-					<button class="bottom-btns-finalize">Finalize</button>
-					<button type="reset" class="bottom-btns-cancel">Cancel</button>
+<!-- 					<button class="bottom-btns-finalize">Finalize</button> -->
+					<button type="reset" class="bottom-btns-cancel edit-show-class d-none" onclick="editEncounterForm('cancel')">Cancel</button>
 				</div>
 			</div>
 
@@ -374,8 +375,8 @@
 		};
 	</script>
 
-	<script src="./js/darktheme.js"></script>
-	<script src="./js/encounter-form.js"></script>
+	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
+	<script src="<c:url value='/resources/js/encounter-form.js' />"></script>
 
 </body>
 </html>

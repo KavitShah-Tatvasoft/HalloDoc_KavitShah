@@ -8,7 +8,7 @@
   padding: 2px 7px 0px 7px;
 }
 .patient-form{
-    width: 60%;
+    width: 60% !important;
 }
 
 #save-btn-close-case, #cancel-btn-close-case{
@@ -70,20 +70,20 @@
 
 @media screen and (max-width:1024px) {
     .patient-form{
-      width: 80%;
+      width: 80% !important;
     }
   }
   
 
   @media screen and (max-width:900px){
     .patient-form{
-      width: 90%;
+      width: 90% !important;
     }
   }
 
   @media screen and (max-width:425px) {
     .patient-form{
-      width: 95%;
+      width: 95% !important;
     }
   }
 
@@ -321,7 +321,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .mobile-cards{
-  display: none;
+  display: none !important;
 }
 
 .single-mobile-card{
@@ -370,11 +370,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @media screen and (max-width:650px) {
   .table{
-    display: none;
+    display: none !important;
   }
 
   .mobile-cards{
-    display: block;
+    display: block !important;
   }
   
   

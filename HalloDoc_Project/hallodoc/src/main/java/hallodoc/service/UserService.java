@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.springframework.http.*;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ import com.password4j.types.Bcrypt;
 
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
+import hallodoc.dto.ClearCaseDto;
+import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
@@ -896,6 +900,56 @@ public class UserService {
 		}
 	}
 	
+	public ClearCaseDto getClearCasePtDetails(Request request) {
+		ClearCaseDto clearCaseDto = new ClearCaseDto();
+		clearCaseDto.setDob(request.getRequestClient().getDateObject());
+		clearCaseDto.setEmail(request.getRequestClient().getEmail());
+		clearCaseDto.setFirstName(request.getRequestClient().getFirstName());
+		clearCaseDto.setLastName(request.getRequestClient().getLastName());
+		clearCaseDto.setPhoneNumber(request.getRequestClient().getPhoneNumber());
+		
+		return clearCaseDto;
+	}
+	
+	public String closeRequestedCase(int reqId, HttpServletRequest httpServletRequest) {
+		Request request = requestDao.getRequestOb(reqId);
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+		Date date = new Date();
+		
+		request.setStatus(9);
+		request.setModifieDate(date);
+		
+		requestStatusLog.setAdmin(admin);
+		requestStatusLog.setCreatedDate(date);
+		requestStatusLog.setNotes("Admin " + admin.getFirstName()+" "+admin.getLastName() + " closed this case on " + date);
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(9);
+
+		requestDao.updateRequest(request);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		
+		return "status changed!";
+	}
+	
+	public String editCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+		String dateInString = closeCaseEditDataDto.getDob();
+		Date dob = formatter.parse(dateInString);
+		
+		Request request = requestDao.getRequestOb(closeCaseEditDataDto.getReqId());
+		RequestClient requestClient = request.getRequestClient();
+		User user = request.getUser();
+		AspNetUsers aspNetUsers = user.getAspNetUsers();
+		
+		request.setFirstName(closeCaseEditDataDto.getfName());
+		request.setLastName(closeCaseEditDataDto.getlName());
+		request.setPhoneNumber(closeCaseEditDataDto.getpNumber());
+		
+	}
 	
 
 }

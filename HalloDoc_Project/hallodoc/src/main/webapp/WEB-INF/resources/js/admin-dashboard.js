@@ -419,7 +419,7 @@ function createOtherReqRow(data, current_state) {
 												src="/hallodoc/resources/images/x-circle-grey.svg"
 												class="dropdown-icons" alt=""> <a
 												class="action-dropdown-text" role="button"
-												href="close-case.html">Close Case</a>
+												href="../user/closeCaseForm	/`+ data.requestId +`">Close Case</a>
 										</div>
 									</li>
 

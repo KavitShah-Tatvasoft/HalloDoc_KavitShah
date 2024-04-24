@@ -49,4 +49,39 @@ function cancelCloseCase(){
     }
 }
 
+function showDocument(path) {
+	window.open(path, "_blank")
+}
+
+$("#closeCaseForm").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var fName = $(".close-case-fName").val()
+	var lName = $(".close-case-lName").val()
+	var pNumber = $(".close-case-pNumber").val()
+	var dob = $(".close-case-dob").val()
+	var reqId = $(".close-case-request-id").val()
+	
+	var payload = {}
+	payload["fName"] = fName
+	payload["lName"] = lName
+	payload["pNumber"] = pNumber
+	payload["dob"] = dob
+	payload["reqId"]= reqId
+	
+		$.ajax({
+		url: '../updateCloseCaseDetails',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+			console.log("updated close case details")
+			console.log(data)
+		},
+		error: function(data) {
+			console.log("failed to update close case details")
+		}
+	})
+})
+
+
 

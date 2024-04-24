@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import hallodoc.dto.ClearCaseDto;
+import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
 import hallodoc.dto.OrderVendorDetailsDto;
@@ -196,6 +198,37 @@ public class UserController {
 //		System.out.println(encounterFormDto);
 		String status = uService.updateEncounterFormDetails(encounterFormDto,httpServletRequest );
 		return new RedirectView("../user/encounterForm/"+ encounterFormDto.getRequestId());
+	}
+	
+	@RequestMapping(value="/closeCaseForm/{reqId}")
+	public String closeCasePage(@PathVariable("reqId") int reqId, Model m) {
+		m.addAttribute("reqId", reqId);
+		Request request = uService.getRequestById(reqId);
+		ClearCaseDto clearCaseDto = uService.getClearCasePtDetails(request);
+		m.addAttribute("userDetails", clearCaseDto);
+		m.addAttribute("ptName",request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
+		m.addAttribute("confNumber", request.getConfirmationNumber() );
+		List<RequestDocumentsDto> requests = pService.getRequestDocuments(reqId);
+		m.addAttribute("docList", requests);
+		return "common/close-case";
+	}
+	
+	
+	@RequestMapping(value="/closeCaseRequest/{reqId}")
+	public RedirectView closeCaseRequest(@PathVariable("reqId") int reqId, HttpServletRequest request) {
+		
+		String changeStatus = uService.closeRequestedCase(reqId, request);
+		
+		RedirectView redirectView = new RedirectView(request.getContextPath()+"/admin/adminDashboard");
+		return redirectView;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateCloseCaseDetails", method = RequestMethod.POST )
+	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto){
+		System.out.println(closeCaseEditDataDto);
+		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
+		return "updated";
 	}
 }
 

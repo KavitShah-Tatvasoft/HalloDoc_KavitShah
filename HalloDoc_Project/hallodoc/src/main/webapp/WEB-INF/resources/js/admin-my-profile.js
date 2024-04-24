@@ -34,7 +34,7 @@ function cancelAdminDetails1(){
 
     z.style.display="none";
     y.style.display="flex";
-
+	
     for(var i=0; i<x.length;i++){
         x[i].disabled=true;
     }
