@@ -36,7 +36,7 @@
 								<li class="nav-item"><a class="nav-link"
 									href="<c:url value='' />">Provider Location</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="<c:url value='' />">My Profile</a></li>
+									href="/adminProfile">My Profile</a></li>
 
 								<li class="nav-item dropdown"><a
 									class="nav-link dropdown-toggle" href="#" role="button"
@@ -129,7 +129,7 @@
 			<li class="nav-item"><a class="nav-link"
 				href="<c:url value='' />">Provider Location</a></li>
 			<li class="nav-item"><a class="nav-link"
-				href="<c:url value='' />">My Profile</a></li>
+				href="/adminProfile">My Profile</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
 				role="button" aria-expanded="false">Provider</a>

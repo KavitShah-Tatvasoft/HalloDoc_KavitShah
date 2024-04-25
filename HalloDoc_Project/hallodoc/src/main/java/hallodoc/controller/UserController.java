@@ -1,5 +1,6 @@
 package hallodoc.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,8 @@ import hallodoc.dto.ClearCaseDto;
 import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
+import hallodoc.dto.HealthProfessionalDataDto;
+import hallodoc.dto.NewBusinessDto;
 import hallodoc.dto.OrderVendorDetailsDto;
 import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.RequestDocumentsDto;
@@ -223,13 +226,44 @@ public class UserController {
 		return redirectView;
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value="/updateCloseCaseDetails", method = RequestMethod.POST )
-//	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto){
-//		System.out.println(closeCaseEditDataDto);
-//		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
-//		return "updated";
-//	}
+	@ResponseBody
+	@RequestMapping(value="/updateCloseCaseDetails", method = RequestMethod.POST )
+	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException{
+		System.out.println(closeCaseEditDataDto);
+		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
+		return "updated";
+	}
+	
+	@RequestMapping(value="/professionMenu")
+	public String showProfessionMenu(Model m) {
+		List<HealthProfessionalTypes> healthProfessionalTypes = this.uService.getActiveProfessions();
+		m.addAttribute("healthProfessionalTypes",healthProfessionalTypes);
+		return "common/profession-menu-vendor";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getProfessionMenuData",method = RequestMethod.POST)
+	public List<HealthProfessionalDataDto> getProfessionMenuData(@RequestParam("name") String name, @RequestParam("typeId") Integer typeId){
+
+		List<HealthProfessionalDataDto> list = this.uService.getHealthProfessionalsData(name,typeId);
+		return list;
+	}
+	
+	@RequestMapping(value="/addNewBusiness")
+	public String showNewBusinessPage(Model m) {
+		List<HealthProfessionalTypes> healthProfessionalTypes = this.uService.getActiveProfessions();
+		m.addAttribute("healthProfessionalTypes",healthProfessionalTypes);
+		return "common/new-business";
+	}
+	
+	@RequestMapping(value="/addNewBusinessRequest", method= RequestMethod.POST)
+	public RedirectView addNewBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
+		System.out.println(newBusinessDto);
+		
+		this.uService.addNewBusiness(newBusinessDto);
+		
+		return new RedirectView(request.getContextPath()+"/user/professionMenu");
+	}
 }
 
 	

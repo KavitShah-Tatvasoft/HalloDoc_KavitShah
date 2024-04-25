@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
+import hallodoc.dto.AdminAddressDto;
+import hallodoc.dto.AdminContactDto;
+import hallodoc.dto.AdminRegions;
 import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
@@ -41,10 +45,12 @@ import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.ViewNotesDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
+import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
 import hallodoc.model.EmailLog;
 import hallodoc.model.Physician;
+import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
 import hallodoc.service.AdminNewPatientRequestService;
@@ -299,7 +305,46 @@ public class AdminController {
 		return status;
 	}
 	
+	@Transactional
+	@RequestMapping(value="/adminProfile")
+	public String viewAdminProfile(HttpServletRequest httpServletRequest, Model m) {
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		Admin admin = aspNetUsers.getAdmin();
+//		List<Region> regions = admin.getRegions();
+		List<AdminRegions> adminRegions = aService.getAdminRegions(admin);
+ 		m.addAttribute("username", aspNetUsers.getUser_name());
+		m.addAttribute("adminEmail",aspNetUsers.getEmail());
+		m.addAttribute("phoneNumber",aspNetUsers.getPhone_number());
+		m.addAttribute("adminOb",admin);
+		m.addAttribute("regions",adminRegions);
+		return "admin/admin-profile";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="/changeAdminPassword", method = RequestMethod.POST)
+	public String changeAdminPassword(@RequestParam("pass") String password, HttpServletRequest httpServletRequest) {
+		
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		
+		return aService.updateAspUserPassword(aspNetUsers,password,httpServletRequest);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeAdminAddress", method = RequestMethod.POST)
+	public String changeAdminAddress(AdminAddressDto adminAddressDto, HttpServletRequest httpServletRequest) {
+		
+		return this.aService.updateAspUserAddress(httpServletRequest,adminAddressDto);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateAdminContactDetails",method = RequestMethod.POST )
+	public String updateAdminContactDetails(AdminContactDto adminContactDto,HttpServletRequest httpServletRequest) {
+		
+		return this.aService.updateAdminContactDetails(adminContactDto,httpServletRequest);
+		
+	}
 	
 
 }

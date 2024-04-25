@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -23,6 +24,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.password4j.BcryptFunction;
@@ -36,6 +38,8 @@ import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
+import hallodoc.dto.HealthProfessionalDataDto;
+import hallodoc.dto.NewBusinessDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.OrderVendorDetailsDto;
 import hallodoc.dto.OrdersDetailsDto;
@@ -49,6 +53,7 @@ import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
 import hallodoc.enumerations.MessageTypeEnum;
 import hallodoc.helper.Constants;
+import hallodoc.helper.DateHelper;
 import hallodoc.helper.ExcelSheetHelper;
 import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.mapper.ViewNotesMapper;
@@ -933,23 +938,103 @@ public class UserService {
 		return "status changed!";
 	}
 	
-//	public String editCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
-//		
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-//
-//		String dateInString = closeCaseEditDataDto.getDob();
-//		Date dob = formatter.parse(dateInString);
-//		
-//		Request request = requestDao.getRequestOb(closeCaseEditDataDto.getReqId());
-//		RequestClient requestClient = request.getRequestClient();
-//		User user = request.getUser();
-//		AspNetUsers aspNetUsers = user.getAspNetUsers();
-//		
-//		request.setFirstName(closeCaseEditDataDto.getfName());
-//		request.setLastName(closeCaseEditDataDto.getlName());
-//		request.setPhoneNumber(closeCaseEditDataDto.getpNumber());
-//		
-//	}
+	@Transactional
+	public String editCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+		String dateInString = closeCaseEditDataDto.getDob();
+		Date dob = formatter.parse(dateInString);
+		
+		Request request = requestDao.getRequestOb(closeCaseEditDataDto.getReqId());
+		RequestClient requestClient = request.getRequestClient();
+		User user = request.getUser();
+		AspNetUsers aspNetUsers = user.getAspNetUsers();
+		
+		if(request.getRequestType().getRequestTypeId() == hallodoc.enumerations.RequestType.PATIENT.getId()) {			
+			request.setFirstName(closeCaseEditDataDto.getfName());
+			request.setLastName(closeCaseEditDataDto.getlName());
+			request.setPhoneNumber(closeCaseEditDataDto.getpNumber());
+		}
+		
+		
+		
+		aspNetUsers.setPhone_number(closeCaseEditDataDto.getpNumber());
+		
+		String[] tokens = closeCaseEditDataDto.getDob().split("-");
+		int year = Integer.parseInt(tokens[0]);
+		int day = Integer.parseInt(tokens[2]);
+		String month = DateHelper.getMonthName(Integer.parseInt(tokens[1]));
+		user.setFirstName(closeCaseEditDataDto.getfName());
+		user.setLastName(closeCaseEditDataDto.getlName());
+		user.setMobile(closeCaseEditDataDto.getpNumber());
+		user.setIntDate(day);
+		user.setIntYear(year);
+		user.setStrMonth(month);
+		
+		aspNetUsers.setUser(user);
+		
+		requestClient.setFirstName(closeCaseEditDataDto.getfName());
+		requestClient.setLastName(closeCaseEditDataDto.getlName());
+		requestClient.setPhoneNumber(closeCaseEditDataDto.getpNumber());
+		requestClient.setNotiMobile(closeCaseEditDataDto.getpNumber());
+		requestClient.setIntDate(day);
+		requestClient.setIntYear(year);
+		requestClient.setStrMonth(month);
+		
+		request.setRequestClient(requestClient);
+		
+		this.requestDao.updateRequest(request);
+		this.apsnetuserdao.updateAspNetUser(aspNetUsers);
+		
+		return "updated";
+		
+	}
+	
+	public List<HealthProfessionalDataDto> getHealthProfessionalsData(String name, Integer typeId){
+		System.out.println("Hello " + name + "  .");
+		System.out.println(typeId);
+		List<HealthProfessionalDataDto> healthProfessionalDataDtos = new ArrayList<HealthProfessionalDataDto>();
+		List<HealthProfessionals> healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalDetails(name,typeId);
+			
+		for (HealthProfessionals healthProf : healthProfessionals) {
+			HealthProfessionalDataDto healthProfessionalDataDto = new HealthProfessionalDataDto();
+			healthProfessionalDataDto.setBusinessContact(healthProf.getBusinessContact());
+			healthProfessionalDataDto.setBusinessName(healthProf.getVendorName());
+			healthProfessionalDataDto.setEmail(healthProf.getEmail());
+			healthProfessionalDataDto.setFaxNumber(healthProf.getFaxNumber());
+			healthProfessionalDataDto.setPhoneNumber(healthProf.getPhoneNumber());
+			healthProfessionalDataDto.setProfession(healthProf.getHealthProfessionalTypes().getProfessionName());
+			
+			healthProfessionalDataDtos.add(healthProfessionalDataDto);
+		}
+		
+		return healthProfessionalDataDtos;
+	}
+	
+	public String addNewBusiness(NewBusinessDto newBusinessDto) {
+		
+		HealthProfessionalTypes healthProfessionalTypes = healthProfessionalsDao.getProfessionTypeById(Integer.parseInt(newBusinessDto.getBusinessProfession()));
+		Region region = regionDao.getRegionById(Integer.parseInt(newBusinessDto.getBusinessState())).get(0);
+		HealthProfessionals healthProfessionals = new HealthProfessionals();
+		healthProfessionals.setAddress(newBusinessDto.getBusinessStreet());
+		healthProfessionals.setBusinessContact(newBusinessDto.getBusinessContact());
+		healthProfessionals.setCity(newBusinessDto.getBusinessCity());
+		healthProfessionals.setEmail(newBusinessDto.getBusinessEmail());
+		healthProfessionals.setFaxNumber(newBusinessDto.getBusinessFaxNumber());
+		healthProfessionals.setHealthProfessionalTypes(healthProfessionalTypes);
+		healthProfessionals.setIsDeleted(false);
+		healthProfessionals.setPhoneNumber(newBusinessDto.getBusinessPhone());
+		healthProfessionals.setRegion(region);
+		healthProfessionals.setState(region.getName());
+		healthProfessionals.setVendorName(newBusinessDto.getBusinessName());
+		healthProfessionals.setZip(newBusinessDto.getBusinessZip());
+		
+		healthProfessionalsDao.saveHealthProfessional(healthProfessionals);
+		
+		return "added health professionals";
+		
+	}
 	
 
 }

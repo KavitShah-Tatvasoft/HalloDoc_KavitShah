@@ -26,29 +26,42 @@ public class Region {
 	@Column(name = "abbreviation")
 	private String abbreviation;
 
-//	@ManyToMany(mappedBy = "regions")
+//	@ManyToMany(mappedBy = "regions", fetch = FetchType.EAGER)
 //    private List<Admin> admins;
 
-	@ManyToMany(mappedBy = "regions", fetch = FetchType.EAGER)
-	private List<Physician> physician;
+//	@ManyToMany(mappedBy = "regions", fetch = FetchType.EAGER)
+//	private List<Physician> physician;
 
-	public Region(int regionId, String name, String abbreviation, List<Physician> physician) {
-		super();
-		this.regionId = regionId;
-		this.name = name;
-		this.abbreviation = abbreviation;
-		this.physician = physician;
-	}
-
-	@Override
-	public String toString() {
-		return "Region [regionId=" + regionId + ", name=" + name + ", abbreviation=" + abbreviation + ", physician="
-				+ physician + "]";
-	}
+//	public Region(int regionId, String name, String abbreviation, List<Physician> physician) {
+//		super();
+//		this.regionId = regionId;
+//		this.name = name;
+//		this.abbreviation = abbreviation;
+//		this.physician = physician;
+//	}
+//
+//	@Override
+//	public String toString() {
+//		return "Region [regionId=" + regionId + ", name=" + name + ", abbreviation=" + abbreviation + ", physician="
+//				+ physician + "]";
+//	}
+	
+	
 
 	public int getRegionId() {
 		return regionId;
 	}
+
+	
+
+	public Region(int regionId, String name, String abbreviation) {
+	super();
+	this.regionId = regionId;
+	this.name = name;
+	this.abbreviation = abbreviation;
+}
+
+
 
 	public void setRegionId(int regionId) {
 		this.regionId = regionId;
@@ -69,14 +82,24 @@ public class Region {
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
+	
+	
 
-	public List<Physician> getPhysician() {
-		return physician;
-	}
+//	public List<Physician> getPhysician() {
+//		return physician;
+//	}
+//
+//	public void setPhysician(List<Physician> physician) {
+//		this.physician = physician;
+//	}
 
-	public void setPhysician(List<Physician> physician) {
-		this.physician = physician;
-	}
+//	public List<Admin> getAdmins() {
+//		return admins;
+//	}
+//
+//	public void setAdmins(List<Admin> admins) {
+//		this.admins = admins;
+//	}
 
 	public Region() {
 		super();

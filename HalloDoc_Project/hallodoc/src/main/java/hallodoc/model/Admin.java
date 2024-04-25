@@ -49,10 +49,10 @@ public class Admin {
 	@Column(name="city")
 	private String city;
 	
-//	@Column(name="region_id")
-//	private int regionId;
+	@Column(name="region_id")
+	private int regionId;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "admin_region", 
         joinColumns = { @JoinColumn(name = "admin_id") }, 
@@ -97,6 +97,16 @@ public class Admin {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="role_id")
 	private Role role;
+	
+	
+
+	public int getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(int regionId) {
+		this.regionId = regionId;
+	}
 
 	public int getAdminId() {
 		return adminId;
@@ -226,18 +236,14 @@ public class Admin {
 		this.role = role;
 	}
 
-	@Override
-	public String toString() {
-		return "Admin [adminId=" + adminId + ", aspNetUsers=" + aspNetUsers + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", addressOne=" + addressOne + ", addressTwo=" + addressTwo + ", city=" + city
-				+ ", regions=" + regions + ", zip=" + zip + ", altPhone=" + altPhone + ", aspNetUsers1=" + aspNetUsers1
-				+ ", createdDate=" + createdDate + ", aspNetUsers2=" + aspNetUsers2 + ", modifiedDate=" + modifiedDate
-				+ ", isDeleted=" + isDeleted + ", role=" + role + "]";
-	}
+	
+
+	
 
 	public Admin(int adminId, AspNetUsers aspNetUsers, String firstName, String lastName, String addressOne,
-			String addressTwo, String city, List<Region> regions, String zip, String altPhone, AspNetUsers aspNetUsers1,
-			Date createdDate, AspNetUsers aspNetUsers2, Date modifiedDate, boolean isDeleted, Role role) {
+			String addressTwo, String city, int regionId, List<Region> regions, String zip, String altPhone,
+			AspNetUsers aspNetUsers1, Date createdDate, AspNetUsers aspNetUsers2, Date modifiedDate, boolean isDeleted,
+			Role role) {
 		super();
 		this.adminId = adminId;
 		this.aspNetUsers = aspNetUsers;
@@ -246,6 +252,7 @@ public class Admin {
 		this.addressOne = addressOne;
 		this.addressTwo = addressTwo;
 		this.city = city;
+		this.regionId = regionId;
 		this.regions = regions;
 		this.zip = zip;
 		this.altPhone = altPhone;

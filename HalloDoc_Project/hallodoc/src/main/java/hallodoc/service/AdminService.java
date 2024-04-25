@@ -9,11 +9,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.password4j.BcryptFunction;
+import com.password4j.Hash;
+import com.password4j.Password;
+import com.password4j.types.Bcrypt;
+
+import hallodoc.dto.AdminAddressDto;
+import hallodoc.dto.AdminContactDto;
+import hallodoc.dto.AdminRegions;
 import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
@@ -27,6 +36,8 @@ import hallodoc.model.Physician;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
+import hallodoc.model.User;
+import hallodoc.repository.AspNetUserDao;
 import hallodoc.repository.LogsDao;
 import hallodoc.repository.PhysicianDao;
 import hallodoc.repository.RegionDao;
@@ -54,6 +65,9 @@ public class AdminService {
 	
 	@Autowired
 	private PhysicianDao physicianDao;
+	
+	@Autowired
+	private AspNetUserDao aspNetUserDao;
 
 	public List<NewRequestDataDto> getStatusCorrespondingRequests(String status) {
 
@@ -271,5 +285,115 @@ public class AdminService {
 		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 		
 	}
-
+	
+	public List<AdminRegions> getAdminRegions(Admin admin){
+		
+		List<Region> regions = admin.getRegions();
+		List<Region> allRegions = regionDao.getAllRegions();
+		List<AdminRegions> adminRegions = new ArrayList<AdminRegions>();
+		
+		for (Region allRegionsList : allRegions) {
+			AdminRegions adminRegionsOb = new AdminRegions();
+			adminRegionsOb.setRegionId(allRegionsList.getRegionId());
+			adminRegionsOb.setRegionName(allRegionsList.getName());
+			adminRegionsOb.setIsSelected(0);
+			adminRegions.add(adminRegionsOb);
+		}
+		
+		for (AdminRegions adRegion : adminRegions) {
+			for (Region selectedRegion : regions) {
+				if(adRegion.getRegionId() == selectedRegion.getRegionId()) {
+					adRegion.setIsSelected(1);
+				}
+					
+			}
+		}
+		
+		return adminRegions;
+	}
+	
+	public String updateAspUserPassword(AspNetUsers aspNetUsers, String password, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		AspNetUsers asp = aspNetUsers;
+		BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
+		Hash hash = Password.hash(password).with(bcrypt);
+		asp.setPassword_hash(hash.getResult());
+		session.setAttribute("aspUser", asp);
+		this.aspNetUserDao.updateAspNetUser(aspNetUsers);
+		
+		return "updated";
+	}
+	
+	
+		
+	public String updateAspUserAddress(HttpServletRequest httpServletRequest, AdminAddressDto adminAddressDto) {
+		
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		User user = aspNetUsers.getUser();
+		Admin admin = aspNetUsers.getAdmin();
+		Region region = regionDao.getRegionById(adminAddressDto.getRegionId()).get(0);
+		
+		admin.setAddressOne(adminAddressDto.getAddress1());
+		admin.setAddressTwo(adminAddressDto.getAddress2());
+		admin.setCity(adminAddressDto.getCity());
+		admin.setZip(adminAddressDto.getZipcode());
+		admin.setRegionId(adminAddressDto.getRegionId());
+		admin.setAltPhone(adminAddressDto.getPhone());
+		
+		user.setStreet(adminAddressDto.getAddress1()+", "+adminAddressDto.getAddress2());
+		user.setCity(adminAddressDto.getCity());
+		user.setState(region.getName());
+		user.setRegion(region);
+		user.setZipcode(adminAddressDto.getZipcode());
+		
+		aspNetUsers.setAdmin(admin);
+		aspNetUsers.setUser(user);
+		
+		aspNetUserDao.updateAspNetUser(aspNetUsers);
+		
+		httpServletRequest.getSession().setAttribute("aspUser", aspNetUsers);
+		return "updated";
+	}
+	
+	public String updateAdminContactDetails(AdminContactDto adminContactDto, HttpServletRequest httpServletRequest) {
+		
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		User user = aspNetUsers.getUser();
+		Admin admin = aspNetUsers.getAdmin();
+		
+		aspNetUsers.setPhone_number(adminContactDto.getPhoneNumber());
+		
+		user.setMobile(adminContactDto.getPhoneNumber());
+		user.setFirstName(adminContactDto.getFirstName());
+		user.setLastName(adminContactDto.getLastName());
+		
+		admin.setFirstName(adminContactDto.getFirstName());
+		admin.setLastName(adminContactDto.getLastName());
+		
+		
+		
+		HttpSession session = httpServletRequest.getSession();
+		session.setAttribute("aspUser",aspNetUsers);
+		regionDao.deleteAdminRegionEntry(admin.getAdminId());
+		
+		String[] regionIds = adminContactDto.getCheckedId().split(",");
+		List<Region> adminRegion = new ArrayList<Region>();
+		List<Region> regions = regionDao.getAllRegions();
+		
+		for (Region region : regions) {
+			for (String regId : regionIds) {
+				if(region.getRegionId() == Integer.parseInt(regId)) {
+					adminRegion.add(region);
+				}
+			}
+		}
+		
+		admin.setRegions(adminRegion);
+		aspNetUsers.setAdmin(admin);
+		aspNetUsers.setUser(user);
+		aspNetUserDao.updateAspNetUser(aspNetUsers);
+		
+		return "updated";
+	}
 }

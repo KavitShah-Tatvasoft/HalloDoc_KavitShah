@@ -2,12 +2,15 @@ package hallodoc.repository;
 
 import java.util.List;
 
+import org.hibernate.Transaction;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import hallodoc.model.Region;
 
@@ -50,6 +53,18 @@ public class RegionDao {
 		List<Region> list = q.list();
 		s.close();
 		return list;
+	}
+	
+	@Transactional
+	public void deleteAdminRegionEntry(int adminId) {
+		Session s = this.sessionFactory.openSession();
+		Transaction tx =s.beginTransaction();
+		String nativeQuery = "DELETE FROM admin_region adr WHERE adr.admin_id=:adminId";
+		Query q = s.createNativeQuery(nativeQuery);
+		q.setParameter("adminId", adminId);
+		q.executeUpdate();
+		tx.commit();
+		s.close();
 	}
 
 }
