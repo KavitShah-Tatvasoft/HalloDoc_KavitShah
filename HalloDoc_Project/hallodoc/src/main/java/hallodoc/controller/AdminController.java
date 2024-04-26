@@ -37,6 +37,7 @@ import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.dto.ExportDataDto;
+import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.RequestFiltersDto;
@@ -53,6 +54,7 @@ import hallodoc.model.Physician;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
+import hallodoc.repository.AspNetUserDao;
 import hallodoc.service.AdminNewPatientRequestService;
 import hallodoc.service.AdminService;
 import hallodoc.service.PatientService;
@@ -74,6 +76,9 @@ public class AdminController {
 
 	@Autowired
 	private SmsService smsService;
+	
+	@Autowired
+	private AspNetUserDao aspNetUserDao;
 
 	@RequestMapping("/errorPage")
 	public String showErrorPage(HttpServletRequest request) {
@@ -346,5 +351,29 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping(value="/physicianMenu")
+	public String showProviderMenu() {
+		return "admin/provider-menu";
+	}
+	
+	@RequestMapping(value="/createProviderAccount")
+	public String createPhysicianAccount(){
+		return "admin/create-provider-account";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkUsername",method = RequestMethod.POST)
+	public String checkUsername(@RequestParam("name") String name) {
+		return this.uService.checkUserNameValidation(name);
+	}
+	
+	@RequestMapping(value="/createNewProviderAccount", method = RequestMethod.POST)
+	public RedirectView createNewProviderAccount(NewProviderAccountDto newProviderAccountDto, HttpServletRequest request) {
+		System.out.println(newProviderAccountDto);
+		String status = this.aService.createNewProvider(newProviderAccountDto, request);
+		
+		
+		return new RedirectView("physicianMenu",true);
+	}
 
 }

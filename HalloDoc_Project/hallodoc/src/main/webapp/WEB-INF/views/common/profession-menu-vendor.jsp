@@ -57,7 +57,7 @@
 					</div>
 				</div>
 
-				<a href="add-business.html" role="button" class="add-business-btn"><img
+				<a href="addNewBusiness" role="button" class="add-business-btn"><img
 					src="<c:url value='/resources/images/plus-lg.svg' />" alt=""><span
 					class="add-business-text">Add Business</span></a>
 			</div>
@@ -84,16 +84,20 @@
 					<td class="profession-fax">(123)456-7890</td>
 					<td class="profession-mobile">(123)456-7890</td>
 					<td class="profession-contact">Derek</td>
-					<td class="contact-flex"><a href="update-business-page.html">
-							<div class="contact-btn edit-btn">
-								<span>Edit</span>
-							</div>
-					</a>
-
-						<button data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-							class="contact-btn">
-							<span>Delete</span>
-						</button></td>
+					<td class="contact-flex">
+					
+					<a href="" class="edit-button-table">
+                            <div class="contact-btn edit-btn">
+                                <span>Edit</span>
+                            </div>
+                     </a>
+    
+                        <a type="button"  class="contact-btn delete-button-table">
+                            <span>Delete</span>
+                        </a>
+				
+						
+						</td>
 				</tr>
 
 				<tbody class="profession-tbody">
@@ -164,8 +168,8 @@
 							</div>
 
 							<div class="accordion-btn-inner-flex">
-								<a href="#" role="button" class="bottom-accordion-row-btn">Edit</a>
-								<a href="#" role="button" class="bottom-accordion-row-btn">Delete</a>
+								<a href="" role="button" class="bottom-accordion-row-btn edit-business-id">Edit</a>
+								<a href="" role="button" class="bottom-accordion-row-btn delete-business-id">Delete</a>
 							</div>
 						</div>
 					</div>

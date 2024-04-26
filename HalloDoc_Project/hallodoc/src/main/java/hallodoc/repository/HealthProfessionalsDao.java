@@ -83,7 +83,7 @@ public class HealthProfessionalsDao {
 		Join<HealthProfessionals, HealthProfessionalTypes> typeJoin = root.join("healthProfessionalTypes");
 		
 
-		Predicate[] predicates = new Predicate[2];
+		Predicate[] predicates = new Predicate[3];
 
 		if (!name.equals("")) {
 			predicates[0] = cb.like(root.get("vendorName"), name + "%");
@@ -97,6 +97,8 @@ public class HealthProfessionalsDao {
 		}else {
 			predicates[1] = cb.equal(typeJoin.get("healthProfessionalId"), typeId);
 		}
+		
+		predicates[2] = cb.equal(root.get("isDeleted"), false);
 
 		cr.select(root).where(predicates);
 
@@ -111,6 +113,15 @@ public class HealthProfessionalsDao {
 	@Transactional
 	public int saveHealthProfessional(HealthProfessionals healthProfessionals) {
 		return (Integer)this.hibernateTemplate.save(healthProfessionals);
+	}
+	
+	public HealthProfessionals getHealthProfessionalById(Integer businessId) {
+		return this.hibernateTemplate.get(HealthProfessionals.class, businessId);
+	}
+	
+	@Transactional
+	public void updateHealthProfessionals(HealthProfessionals healthProfessionals) {
+		this.hibernateTemplate.update(healthProfessionals);
 	}
 
 }

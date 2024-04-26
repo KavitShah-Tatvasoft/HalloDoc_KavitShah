@@ -31,61 +31,69 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
-<title>Add Business</title>
+<title>Update Business</title>
 </head>
 <body>
 	<div
 		class="container-fluid patient-form shadow bg-white rounded relative-position extra-margin">
 
-		<div class="back-btn-top" role="button" onclick="history.go(-1)">
+		<div class="back-btn-top " role="button" onclick="history.go(-1)">
 			<img src="<c:url value='/resources/images/chevron-left.svg' />"
 				alt=""> Back
 		</div>
 
 		<div class="top-patient-view-text">
-			<span class="view-reservation-text">Add Business</span>
+			<span class="view-reservation-text">Update Business</span>
 		</div>
+		<form action="../editBusinessRequest" , method="post">
 
-		<form action="addNewBusinessRequest" method="post">
+			<input type="text" hidden value="${businessId}" name="businessId">
+
 			<div class="row">
 				<div class="col-12 mb-3 mt-3">
 					<!--Patient Information col-->
 					<span class="patient-text">Submit Information</span>
 				</div>
-				
-					
+
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
 						<input type="text" class="form-control input-2"
-							name="businessName" id="floatingInput-5"
-							placeholder="Business Name" autocomplete="off"> <label
-							for="floatingInput-5">Business Name</label>
+							value="${healthProfessional.vendorName }" id="floatingInput-5"
+							name="businessName" placeholder="Business Name"
+							autocomplete="off"> <label for="floatingInput-5">Business
+							Name</label>
 					</div>
 				</div>
-				
-				
-				
+
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<select id="floatingInput-5"
-							name="businessProfession"
+						<select name="businessProfession" id="floatingInput-5"
 							class="form-control form-select input-2">
-							<option value="0" hidden>Select Profession</option>
-
+<!-- 							<option value="0" hidden>Select Profession</option> -->
+							<c:set var="userProfession" value="${healthProfessional.healthProfessionalTypes.healthProfessionalId }" />
 							<c:forEach items="${healthProfessionalTypes }" var="type">
-
-								<option value="${type.healthProfessionalId }">${type.professionName }</option>
+								
+								<c:choose>
+									<c:when test="${type.healthProfessionalId == userProfession}">
+										<option value="${type.healthProfessionalId }" selected>${type.professionName }</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${type.healthProfessionalId }">${type.professionName }</option>
+									</c:otherwise>
+								</c:choose>
+								
+<%-- 								<option value="${type.healthProfessionalId }">${type.professionName }</option> --%>
 
 							</c:forEach>
-
 						</select> <label for="floatingInput-5">Profession</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-2"
-							name="businessFaxNumber" id="floatingInput-5"
+						<input type="text" name="businessFaxNumber"
+							value="${healthProfessional.faxNumber }"
+							class="form-control input-2" id="floatingInput-5"
 							placeholder="Fax Number" autocomplete="off"> <label
 							for="floatingInput-5">Fax Number</label>
 					</div>
@@ -94,23 +102,26 @@
 				<div class="col-12 col-md-6">
 					<!--Phone Number col-->
 					<div class="form-floating mb-3 inp phonecolheight">
-						<input type="tel" class="form-control phoneflags" id="phone"
-							name="businessPhone"/>
+						<input name="businessPhone"
+							value="${healthProfessional.phoneNumber }" type="tel"
+							class="form-control phoneflags" id="phone" />
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 margin-top-mobile-email">
-						<input type="email" class="form-control input-2 " 
-							name="businessEmail" id="floatingInput-5" placeholder="Email"
-							autocomplete="off"> <label for="floatingInput-5">Email</label>
+						<input type="email" value="${healthProfessional.email }"
+							name="businessEmail" class="form-control input-2"
+							id="floatingInput-5" placeholder="Email" autocomplete="off">
+						<label for="floatingInput-5">Email</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-2"
-							name="businessContact" id="floatingInput-5"
+						<input type="text" name="businessContact"
+							value="${healthProfessional.businessContact }"
+							class="form-control input-2" id="floatingInput-5"
 							placeholder="Business Contact" autocomplete="off"> <label
 							for="floatingInput-5">Business Contact</label>
 					</div>
@@ -118,34 +129,43 @@
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-2"
-							name="businessStreet" id="floatingInput-5" placeholder="Street"
-							autocomplete="off"> <label for="floatingInput-5">Street</label>
+						<input name="businessStreet"
+							value="${healthProfessional.address }" type="text"
+							class="form-control input-2" id="floatingInput-5"
+							placeholder="Street" autocomplete="off"> <label
+							for="floatingInput-5">Street</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-2"
-							name="businessCity" id="floatingInput-5" placeholder="City"
-							autocomplete="off"> <label for="floatingInput-5">City</label>
+						<input name="businessCity" type="text"
+							value="${healthProfessional.city }" class="form-control input-2"
+							id="floatingInput-5" placeholder="City" autocomplete="off">
+						<label for="floatingInput-5">City</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-<!-- 						<input type="text" class="form-control input-2" -->
-<!-- 							name="businessState" id="floatingInput-5" placeholder="State" -->
-<!-- 							autocomplete="off"> <label for="floatingInput-5">State</label> -->
+						<!-- 						<input type="text" class="form-control input-2" -->
+						<!-- 							name="businessState" id="floatingInput-5" placeholder="State" -->
+						<!-- 							autocomplete="off"> <label for="floatingInput-5">State</label> -->
 
-							<select id="floatingInput-5"
-							name="businessState"
+						<select id="floatingInput-5" name="businessState"
 							class="form-control form-select input-2">
-							<option value="0" hidden>Select State</option>
-
+							<c:set var="userState" value="${healthProfessional.state }" />
 							<c:forEach items="${regionList }" var="region">
+								<c:choose>
+									<c:when test="${region.name == userState}">
+										<option value="${region.regionId}" selected>${region.name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${region.regionId }">${region.name}</option>
+									</c:otherwise>
+								</c:choose>
 
-								<option value="${region.regionId }">${region.name }</option>
+								<%-- 								<option value="${region.regionId }">${region.name }</option> --%>
 
 							</c:forEach>
 
@@ -156,21 +176,20 @@
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
 						<input type="text" class="form-control input-2"
-							name="businessZip" id="floatingInput-5"
-							placeholder="Zip / Postal" autocomplete="off"> <label
-							for="floatingInput-5">Zip / Postal</label>
+							value="${healthProfessional.zip}" name="businessZip"
+							id="floatingInput-5" placeholder="Zip / Postal"
+							autocomplete="off"> <label for="floatingInput-5">Zip
+							/ Postal</label>
 					</div>
 				</div>
-
 				<div class="common-row-bottom-btn mb-4">
-					<button type="submit" class="edit-btn extra-margin-right-edit">Save</button>
-					<button type="reset" class="reset-pass-btn">Cancel</button>
+					<button type="submit" class="edit-btn extra-margin-right-edit shrink-btns">Save</button>
+					<button type="reset" class="reset-pass-btn shrink-btns">Cancel</button>
 				</div>
+
 			</div>
 		</form>
-
 	</div>
-
 
 	<script>
 		const phoneInputField = document.querySelector("#phone");
@@ -183,6 +202,7 @@
 	</script>
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
+
 
 </body>
 </html>

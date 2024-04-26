@@ -39,4 +39,16 @@ public class PhysicianDao {
 		return phyList;
 		
 	}
+	
+	public List<Physician> getPhysicianByEmail(String email){
+		
+		Session s = this.sessionFactory.openSession();
+		String query = "FROM Physician phy WHERE phy.email =:email";
+		Query sql = s.createQuery(query);
+		sql.setParameter("email", email);
+		List<Physician> phyList = sql.list();
+		s.close();
+		return phyList;
+		
+	}
 }

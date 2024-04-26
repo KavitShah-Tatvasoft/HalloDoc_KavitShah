@@ -30,8 +30,19 @@ public class AspNetUsers {
 	
 	@OneToOne(mappedBy = "aspNetUsers", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Admin admin;
+	
+	@OneToOne(mappedBy = "aspNetUsers", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Physician physician;
+	
+	
 
 	
+	public Physician getPhysician() {
+		return physician;
+	}
+	public void setPhysician(Physician physician) {
+		this.physician = physician;
+	}
 	public Admin getAdmin() {
 		return admin;
 	}
@@ -90,7 +101,7 @@ public class AspNetUsers {
 	
 	
 	public AspNetUsers(int id, String password_hash, String email, String phone_number, Date modified_date,
-			String user_name, Date created_date, User user, Admin admin) {
+			String user_name, Date created_date, User user, Admin admin, Physician physician) {
 		super();
 		this.id = id;
 		this.password_hash = password_hash;
@@ -101,12 +112,13 @@ public class AspNetUsers {
 		this.created_date = created_date;
 		this.user = user;
 		this.admin = admin;
+		this.physician = physician;
 	}
 	@Override
 	public String toString() {
 		return "AspNetUsers [id=" + id + ", password_hash=" + password_hash + ", email=" + email + ", phone_number="
 				+ phone_number + ", modified_date=" + modified_date + ", user_name=" + user_name + ", created_date="
-				+ created_date + ", user=" + user + ", admin=" + admin + "]";
+				+ created_date + ", user=" + user + ", admin=" + admin + ", physician=" + physician + "]";
 	}
 	public AspNetUsers() {
 		super();

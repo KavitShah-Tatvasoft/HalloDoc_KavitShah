@@ -35,6 +35,7 @@ import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EncounterForm;
 import hallodoc.model.HealthProfessionalTypes;
+import hallodoc.model.HealthProfessionals;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
 import hallodoc.model.RequestWiseFile;
@@ -264,6 +265,33 @@ public class UserController {
 		
 		return new RedirectView(request.getContextPath()+"/user/professionMenu");
 	}
+	
+	@RequestMapping(value="/editExsistingBusiness/{businessId}")
+	public String editExsistingBusiness(@PathVariable("businessId") Integer businessId, Model m) {
+		HealthProfessionals healthProfessionals = this.uService.getHealthProfessionalData(businessId);
+		List<HealthProfessionalTypes> healthProfessionalTypes = this.uService.getActiveProfessions();
+		m.addAttribute("healthProfessional",healthProfessionals);
+		m.addAttribute("healthProfessionalTypes",healthProfessionalTypes);
+		m.addAttribute("businessId",businessId);
+		return "common/edit-business";
+	}
+	
+	@RequestMapping(value="/editBusinessRequest", method = RequestMethod.POST)
+	public RedirectView editBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
+		System.out.println(newBusinessDto);
+		this.uService.updateBusiness(newBusinessDto);
+		return new RedirectView(request.getContextPath()+"/user/professionMenu");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteExsistingBusiness", method = RequestMethod.POST )
+	public String deleteExsistingBusiness(@RequestParam("businessId") Integer businessId) {
+		
+		return this.uService.deleteBusinessRequest(businessId);
+		
+	}
+	
+
 }
 
 	

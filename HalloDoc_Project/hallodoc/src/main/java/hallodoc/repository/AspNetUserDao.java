@@ -66,9 +66,26 @@ public class AspNetUserDao {
 		return id;
 	}
 	
+	@Transactional
+	public int createAspnetUser(AspNetUsers user) {
+		int id = (Integer) this.hibernateTemplate.save(user);
+		return id;
+	}
+	
 
 	@Transactional
 	public void updateAspNetUser(AspNetUsers aspNetUsers) {
 		this.hibernateTemplate.update(aspNetUsers);
+	}
+	
+	public List<AspNetUsers> getAspUserByUsername(String name){
+		String trimmedName = name.trim();
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM AspNetUsers where user_name=:name";
+		Query q = s.createQuery(queryString);
+		q.setParameter("name", trimmedName);
+		List<AspNetUsers> list = q.list();
+		s.close();
+		return list;
 	}
 }

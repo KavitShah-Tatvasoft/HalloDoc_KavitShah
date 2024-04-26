@@ -30,6 +30,10 @@ function showTableData(){
 				card.find(".profession-fax").text(data.faxNumber)
 				card.find(".profession-mobile").text(data.phoneNumber)
 				card.find(".profession-contact").text(data.businessContact)
+				card.find(".edit-button-table").attr("href","editExsistingBusiness/"+data.businessId)
+				card.find(".delete-button-table").attr("onclick","deleteBusiness(" + data.businessId + ")")
+//				"deleteExsistingBusiness/"+data.businessId
+				card.append(accordionCard)
 				
 				tbody.append(card)
 				
@@ -41,6 +45,8 @@ function showTableData(){
 				accordionCard.find(".accordion-clone-fax").text(data.faxNumber)
 				accordionCard.find(".accordion-clone-phone").text(data.phoneNumber)
 				accordionCard.find(".accordion-clone-business-contact").text(data.businessContact)
+				accordionBody.find(".edit-business-id").attr("href","editExsistingBusiness/"+data.businessId)
+				accordionBody.find(".delete-business-id").attr("onclick","deleteBusiness(" + data.businessId + ")")
 				
 				accordionBody.append(accordionCard)
 			})
@@ -52,5 +58,24 @@ function showTableData(){
 
 
 	})
+	
+}
+
+function deleteBusiness(businessId){
+	
+	$.ajax({
+		url: 'deleteExsistingBusiness',
+		type: 'POST',
+		data: {
+			businessId : businessId
+		},
+		success : function(data){
+			console.log("deleted business")
+			showTableData()
+		},
+		error : function(data){
+			console.log("unable to delete")
+		}
+		})
 	
 }

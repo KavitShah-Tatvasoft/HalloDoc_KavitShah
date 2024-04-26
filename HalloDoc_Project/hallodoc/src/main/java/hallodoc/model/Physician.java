@@ -70,10 +70,10 @@ public class Physician {
 
 	private String city;
 
-//	@Column(name = "region_id")
-//	private int regionId;
+	@Column(name = "region_id")
+	private int regionId;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "physician_region", joinColumns = { @JoinColumn(name = "physician_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "region_id") })
 	private List<Region> regions;
@@ -126,18 +126,23 @@ public class Physician {
 
 	@Column(name = "is_license_doc")
 	private Boolean isLicenseDoc;
+	
+	@Column(name = "is_hipaa_doc")
+	private Boolean isHipaaDoc;
 
 	private String signature;
 
 	@Column(name = "sync_email_address")
 	private String syncEmailAddress;
-
+	
+	
+	
 	public Physician(int physicianId, AspNetUsers aspNetUsers, String firstName, String lastName, String email,
-			String mobile, String medicalLicense, String photo, String adminNotes, boolean isAgreementDoc,
-			boolean isBackgroundDoc, boolean isNonDisclosureDoc, String addressOne, String addressTwo, String city,
-			List<Region> regions, String zip, String altPhone, AspNetUsers createdBy, Date createdDate,
-			AspNetUsers modifiedBy, Date modifiedDate, int status, String businessName, String businessWebsite,
-			boolean isDeleted, Role role, String npiNumber, boolean isLicenseDoc, String signature,
+			String mobile, String medicalLicense, String photo, String adminNotes, Boolean isAgreementDoc,
+			Boolean isBackgroundDoc, Boolean isNonDisclosureDoc, String addressOne, String addressTwo, String city,
+			int regionId, List<Region> regions, String zip, String altPhone, AspNetUsers createdBy, Date createdDate,
+			AspNetUsers modifiedBy, Date modifiedDate, Integer status, String businessName, String businessWebsite,
+			Boolean isDeleted, Role role, String npiNumber, Boolean isLicenseDoc, Boolean isHipaaDoc, String signature,
 			String syncEmailAddress) {
 		super();
 		this.physicianId = physicianId;
@@ -155,6 +160,7 @@ public class Physician {
 		this.addressOne = addressOne;
 		this.addressTwo = addressTwo;
 		this.city = city;
+		this.regionId = regionId;
 		this.regions = regions;
 		this.zip = zip;
 		this.altPhone = altPhone;
@@ -169,9 +175,19 @@ public class Physician {
 		this.role = role;
 		this.npiNumber = npiNumber;
 		this.isLicenseDoc = isLicenseDoc;
+		this.isHipaaDoc = isHipaaDoc;
 		this.signature = signature;
 		this.syncEmailAddress = syncEmailAddress;
 	}
+
+	public Boolean getIsHipaaDoc() {
+		return isHipaaDoc;
+	}
+
+	public void setIsHipaaDoc(Boolean isHipaaDoc) {
+		this.isHipaaDoc = isHipaaDoc;
+	}
+
 
 	@Override
 	public String toString() {
@@ -179,12 +195,65 @@ public class Physician {
 				+ ", lastName=" + lastName + ", email=" + email + ", mobile=" + mobile + ", medicalLicense="
 				+ medicalLicense + ", photo=" + photo + ", adminNotes=" + adminNotes + ", isAgreementDoc="
 				+ isAgreementDoc + ", isBackgroundDoc=" + isBackgroundDoc + ", isNonDisclosureDoc=" + isNonDisclosureDoc
-				+ ", addressOne=" + addressOne + ", addressTwo=" + addressTwo + ", city=" + city + ", regions="
-				+ regions + ", zip=" + zip + ", altPhone=" + altPhone + ", createdBy=" + createdBy + ", createdDate="
-				+ createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate + ", status=" + status
-				+ ", businessName=" + businessName + ", businessWebsite=" + businessWebsite + ", isDeleted=" + isDeleted
-				+ ", role=" + role + ", npiNumber=" + npiNumber + ", isLicenseDoc=" + isLicenseDoc + ", signature="
-				+ signature + ", syncEmailAddress=" + syncEmailAddress + "]";
+				+ ", addressOne=" + addressOne + ", addressTwo=" + addressTwo + ", city=" + city + ", regionId="
+				+ regionId + ", regions=" + regions + ", zip=" + zip + ", altPhone=" + altPhone + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate="
+				+ modifiedDate + ", status=" + status + ", businessName=" + businessName + ", businessWebsite="
+				+ businessWebsite + ", isDeleted=" + isDeleted + ", role=" + role + ", npiNumber=" + npiNumber
+				+ ", isLicenseDoc=" + isLicenseDoc + ", isHipaaDoc=" + isHipaaDoc + ", signature=" + signature
+				+ ", syncEmailAddress=" + syncEmailAddress + "]";
+	}
+
+	public Boolean getIsAgreementDoc() {
+		return isAgreementDoc;
+	}
+
+	public void setIsAgreementDoc(Boolean isAgreementDoc) {
+		this.isAgreementDoc = isAgreementDoc;
+	}
+
+	public Boolean getIsBackgroundDoc() {
+		return isBackgroundDoc;
+	}
+
+	public void setIsBackgroundDoc(Boolean isBackgroundDoc) {
+		this.isBackgroundDoc = isBackgroundDoc;
+	}
+
+	public Boolean getIsNonDisclosureDoc() {
+		return isNonDisclosureDoc;
+	}
+
+	public void setIsNonDisclosureDoc(Boolean isNonDisclosureDoc) {
+		this.isNonDisclosureDoc = isNonDisclosureDoc;
+	}
+
+	public int getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(int regionId) {
+		this.regionId = regionId;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public Boolean getIsLicenseDoc() {
+		return isLicenseDoc;
+	}
+
+	public void setIsLicenseDoc(Boolean isLicenseDoc) {
+		this.isLicenseDoc = isLicenseDoc;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public int getPhysicianId() {

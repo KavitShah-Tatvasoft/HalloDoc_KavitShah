@@ -21,5 +21,13 @@ public class Constants {
 		
 		return path;
 	}
+	
+	
+	public static final String getProviderUplaodPath(HttpSession session) {
+		String path = session.getServletContext().getRealPath("/") + "WEB-INF" + File.separator + "resources"
+				+ File.separator + "fileuploads" + File.separator + "provider" + File.separator;
+		
+		return path;
+	}
 
 }

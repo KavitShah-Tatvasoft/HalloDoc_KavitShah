@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
@@ -341,6 +342,27 @@ public class EmailService {
 				message.setSubject(subject);
 				String content = "<html> <h2> Hello, " + recipientName + "</h2><br>"
 						+ "<p style=\"\"margin-top:30px;\"\">We would like to place a new order. We have provided the prescription and order refills required below. Try to deliver the medicines on time. For any assistance feel free to contact on our helpline number anytime.</p>" +
+						"<br>Order Details are as follows:" +
+						"<br><br>Prescription : " + ordersDetailsDto.getBusinessPrescriptionDetails() + 
+						"<br><br>No. of Refills Required : " + ordersDetailsDto.getRefillsDetails();
+					
+				message.setText(content, true);
+			}
+		};
+
+		mailSender.send(messagePreparator);
+	}
+	
+	public void sendProviderCredentials(String subject,HttpServletRequest httpServletRequest, NewProviderAccountDto newProviderAccountDto) {
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(newProviderAccountDto.getpEmail());
+				
+				message.setSubject(subject);
+				String content = "<html> <h2> Hello, " + newProviderAccountDto.getpFirstName() + " " + newProviderAccountDto.getpLastName() + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">Congratulation to new begining. Welcome to the team.</p>" +
 						"<br>Order Details are as follows:" +
 						"<br><br>Prescription : " + ordersDetailsDto.getBusinessPrescriptionDetails() + 
 						"<br><br>No. of Refills Required : " + ordersDetailsDto.getRefillsDetails();

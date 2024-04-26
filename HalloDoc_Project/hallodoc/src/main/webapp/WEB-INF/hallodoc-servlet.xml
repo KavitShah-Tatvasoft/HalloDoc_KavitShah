@@ -108,6 +108,7 @@
 				<value>hallodoc.model.HealthProfessionalTypes</value>
 				<value>hallodoc.model.HealthProfessionals</value>
 				<value>hallodoc.model.EncounterForm</value>
+				<value>hallodoc.model.PhysicianNotification</value>
 			</list>
 		</property>
 	</bean>

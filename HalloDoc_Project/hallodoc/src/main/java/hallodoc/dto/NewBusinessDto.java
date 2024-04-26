@@ -11,6 +11,14 @@ public class NewBusinessDto {
 	private String businessCity;
 	private String businessState;
 	private String businessZip;
+	private String businessId;
+	
+	public String getBusinessId() {
+		return businessId;
+	}
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
 	public String getBusinessName() {
 		return businessName;
 	}
@@ -71,17 +79,10 @@ public class NewBusinessDto {
 	public void setBusinessZip(String businessZip) {
 		this.businessZip = businessZip;
 	}
-	@Override
-	public String toString() {
-		return "NewBusinessDto [businessName=" + businessName + ", businessProfession=" + businessProfession
-				+ ", businessFaxNumber=" + businessFaxNumber + ", businessPhone=" + businessPhone + ", businessEmail="
-				+ businessEmail + ", businessContact=" + businessContact + ", businessStreet=" + businessStreet
-				+ ", businessCity=" + businessCity + ", businessState=" + businessState + ", businessZip=" + businessZip
-				+ "]";
-	}
+	
 	public NewBusinessDto(String businessName, String businessProfession, String businessFaxNumber,
 			String businessPhone, String businessEmail, String businessContact, String businessStreet,
-			String businessCity, String businessState, String businessZip) {
+			String businessCity, String businessState, String businessZip, String businessId) {
 		super();
 		this.businessName = businessName;
 		this.businessProfession = businessProfession;
@@ -93,6 +94,15 @@ public class NewBusinessDto {
 		this.businessCity = businessCity;
 		this.businessState = businessState;
 		this.businessZip = businessZip;
+		this.businessId = businessId;
+	}
+	@Override
+	public String toString() {
+		return "NewBusinessDto [businessName=" + businessName + ", businessProfession=" + businessProfession
+				+ ", businessFaxNumber=" + businessFaxNumber + ", businessPhone=" + businessPhone + ", businessEmail="
+				+ businessEmail + ", businessContact=" + businessContact + ", businessStreet=" + businessStreet
+				+ ", businessCity=" + businessCity + ", businessState=" + businessState + ", businessZip=" + businessZip
+				+ ", businessId=" + businessId + "]";
 	}
 	public NewBusinessDto() {
 		super();

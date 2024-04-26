@@ -8,7 +8,16 @@ public class HealthProfessionalDataDto {
 	private String faxNumber;
 	private String phoneNumber;
 	private String businessContact;
+	private Integer businessId;
 	
+	
+	
+	public Integer getBusinessId() {
+		return businessId;
+	}
+	public void setBusinessId(Integer businessId) {
+		this.businessId = businessId;
+	}
 	public String getProfession() {
 		return profession;
 	}
@@ -45,14 +54,10 @@ public class HealthProfessionalDataDto {
 	public void setBusinessContact(String businessContact) {
 		this.businessContact = businessContact;
 	}
-	@Override
-	public String toString() {
-		return "HealthProfessionalDataDto [profession=" + profession + ", businessName=" + businessName + ", email="
-				+ email + ", faxNumber=" + faxNumber + ", phoneNumber=" + phoneNumber + ", businessContact="
-				+ businessContact + "]";
-	}
+	
+	
 	public HealthProfessionalDataDto(String profession, String businessName, String email, String faxNumber,
-			String phoneNumber, String businessContact) {
+			String phoneNumber, String businessContact, Integer businessId) {
 		super();
 		this.profession = profession;
 		this.businessName = businessName;
@@ -60,6 +65,13 @@ public class HealthProfessionalDataDto {
 		this.faxNumber = faxNumber;
 		this.phoneNumber = phoneNumber;
 		this.businessContact = businessContact;
+		this.businessId = businessId;
+	}
+	@Override
+	public String toString() {
+		return "HealthProfessionalDataDto [profession=" + profession + ", businessName=" + businessName + ", email="
+				+ email + ", faxNumber=" + faxNumber + ", phoneNumber=" + phoneNumber + ", businessContact="
+				+ businessContact + ", businessId=" + businessId + "]";
 	}
 	public HealthProfessionalDataDto() {
 		super();

@@ -1005,7 +1005,7 @@ public class UserService {
 			healthProfessionalDataDto.setFaxNumber(healthProf.getFaxNumber());
 			healthProfessionalDataDto.setPhoneNumber(healthProf.getPhoneNumber());
 			healthProfessionalDataDto.setProfession(healthProf.getHealthProfessionalTypes().getProfessionName());
-			
+			healthProfessionalDataDto.setBusinessId(healthProf.getVendorId());
 			healthProfessionalDataDtos.add(healthProfessionalDataDto);
 		}
 		
@@ -1034,6 +1034,51 @@ public class UserService {
 		
 		return "added health professionals";
 		
+	}
+	
+	public HealthProfessionals getHealthProfessionalData(Integer businessId) {
+		return this.healthProfessionalsDao.getHealthProfessionalById(businessId);
+	}
+	
+	public String updateBusiness(NewBusinessDto newBusinessDto) {
+		
+		Region region = regionDao.getRegionById(Integer.parseInt(newBusinessDto.getBusinessState())).get(0);
+		HealthProfessionalTypes healthProfessionalTypes = this.healthProfessionalsDao.getProfessionTypeById(Integer.parseInt(newBusinessDto.getBusinessProfession()));
+		HealthProfessionals healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalById(Integer.parseInt(newBusinessDto.getBusinessId()));
+		healthProfessionals.setAddress(newBusinessDto.getBusinessStreet());
+		healthProfessionals.setBusinessContact(newBusinessDto.getBusinessContact());
+		healthProfessionals.setCity(newBusinessDto.getBusinessCity());
+		healthProfessionals.setEmail(newBusinessDto.getBusinessEmail());
+		healthProfessionals.setFaxNumber(newBusinessDto.getBusinessFaxNumber());
+		healthProfessionals.setHealthProfessionalTypes(healthProfessionalTypes);
+		healthProfessionals.setIsDeleted(false);
+		healthProfessionals.setPhoneNumber(newBusinessDto.getBusinessPhone());
+		healthProfessionals.setRegion(region);
+		healthProfessionals.setState(region.getName());
+		healthProfessionals.setVendorName(newBusinessDto.getBusinessName());
+		healthProfessionals.setZip(newBusinessDto.getBusinessZip());
+		
+		this.healthProfessionalsDao.updateHealthProfessionals(healthProfessionals);
+		return "updated";
+	}
+	
+	public String deleteBusinessRequest(Integer businessId) {
+		
+		HealthProfessionals healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalById(businessId);
+		healthProfessionals.setIsDeleted(true);
+		this.healthProfessionalsDao.updateHealthProfessionals(healthProfessionals);
+		return "deleted business successfully";
+		
+	}
+	
+	public String checkUserNameValidation(String name) {
+		List<AspNetUsers> aspNetUsers = this.apsnetuserdao.getAspUserByUsername(name);
+		if(aspNetUsers.size()>0) {
+			return "false";
+			
+		}else {
+			return "true";
+		}
 	}
 	
 

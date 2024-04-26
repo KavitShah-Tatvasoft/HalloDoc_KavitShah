@@ -48,7 +48,7 @@
 											<!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
 										</div>
 									</ul></li>
-								<li class="nav-item"><a href="profession-menu-vendor.html"
+								<li class="nav-item"><a href="../user/professionMenu"
 									class="nav-link">Partners</a></li>
 								<li class="nav-item dropdown"><a
 									class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -138,7 +138,7 @@
 					<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li>
 					<!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
 				</ul></li>
-			<li class="nav-item"><a href="<c:url value='' />"
+			<li class="nav-item"><a href="../user/professionMenu"
 				class="nav-link">Partners</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
