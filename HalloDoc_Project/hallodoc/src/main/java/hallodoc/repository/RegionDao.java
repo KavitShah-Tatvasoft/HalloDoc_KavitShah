@@ -66,5 +66,29 @@ public class RegionDao {
 		tx.commit();
 		s.close();
 	}
+	
+	@Transactional
+	public void deleteProviderRegionEntry(int providerId) {
+		Session s = this.sessionFactory.openSession();
+		Transaction tx =s.beginTransaction();
+		String nativeQuery = "DELETE FROM physician_region phr WHERE phr.physician_id=:providerId";
+		Query q = s.createNativeQuery(nativeQuery);
+		q.setParameter("providerId", providerId);
+		q.executeUpdate();
+		tx.commit();
+		s.close();
+	}
+	
+	
+	
+	public List<Integer> getPhysicianRegion(Integer phyId){
+		Session s = this.sessionFactory.openSession();
+		String queryString = "SELECT phr.region_id FROM physician_region phr WHERE phr.physician_id=:phyId";
+		Query q = s.createNativeQuery(queryString);
+		q.setParameter("phyId", phyId);
+		List<Integer> list = q.list();
+		s.close();
+		return list;
+	}
 
 }

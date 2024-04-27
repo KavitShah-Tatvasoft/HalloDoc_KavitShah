@@ -1,8 +1,12 @@
-#save-btn-1, #save-btn-2, #cancel-btn-12{
+#save-btn-1, #save-btn-2, #cancel-btn-12, #cancel-btn-2, #mailing-save, #mailing-cancel, #billing-save, #billing-cancel{
   display: none;
 }
 
-
+.bottom-btns-mailing-flex{
+	display: flex;
+	align-items: center;
+	gap : 5px;
+}
 
 .upload-class{
   width: 75%;

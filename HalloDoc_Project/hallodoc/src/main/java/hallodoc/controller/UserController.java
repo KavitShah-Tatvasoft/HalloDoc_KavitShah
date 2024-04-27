@@ -286,7 +286,6 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/deleteExsistingBusiness", method = RequestMethod.POST )
 	public String deleteExsistingBusiness(@RequestParam("businessId") Integer businessId) {
-		
 		return this.uService.deleteBusinessRequest(businessId);
 		
 	}

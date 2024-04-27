@@ -40,9 +40,14 @@ import hallodoc.dto.ExportDataDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
+import hallodoc.dto.ProviderMailingDto;
+import hallodoc.dto.ProviderMenuDto;
+import hallodoc.dto.ProviderUpdatedInfoDto;
+import hallodoc.dto.ProviderUpdatedInfoDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
+import hallodoc.dto.ShowProviderDetailsDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.ViewNotesDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
@@ -352,8 +357,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/physicianMenu")
-	public String showProviderMenu() {
+	public String showProviderMenu() {		
 		return "admin/provider-menu";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getFilteredProviderMenuData", method = RequestMethod.POST)
+	public List<ProviderMenuDto> getProviderMenuData(@RequestParam("region") Integer regionId) {
+		return this.aService.getProviderMenuDetails(regionId);
 	}
 	
 	@RequestMapping(value="/createProviderAccount")
@@ -374,6 +385,50 @@ public class AdminController {
 		
 		
 		return new RedirectView("physicianMenu",true);
+	}
+	
+	@RequestMapping("/updatePhysicianAccount/{physicianId}")
+	public String updatePhysicianAccount(@PathVariable("physicianId") Integer physicianId, Model m) {
+		List<Region> regionList = this.aService.getRegionList();
+		ShowProviderDetailsDto providerData = this.aService.getProviderDetails(physicianId);
+		System.out.println(providerData);
+		m.addAttribute("listRegions",regionList);
+		m.addAttribute("providerData",providerData);
+		return "admin/update-provider-account";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateProviderRoleStatus", method = RequestMethod.POST)
+	public String updateProviderRoleStatus(@RequestParam("id") Integer id, @RequestParam("role") Integer role, @RequestParam("status") Integer status, HttpServletRequest http) {
+		
+		return this.aService.updateProviderRoleStatus(id,role,status,http);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateProviderPassword", method = RequestMethod.POST)
+	public String updateProviderPassword(@RequestParam("id") Integer id, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
+		
+		return this.aService.updatePhysicianPassword(id,password,httpServletRequest);
+			
+		}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateProviderMailingDetails", method = RequestMethod.POST)
+	public String updateProviderMailingDetails(ProviderMailingDto providerMailingDto,HttpServletRequest httpServletRequest) {
+		return this.aService.updateProviderMailingDetails(providerMailingDto,httpServletRequest);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateProviderInfoDetails",method =RequestMethod.POST )
+	public String updateProviderInfoDetails(ProviderUpdatedInfoDto providerUpdatedInfoDto, HttpServletRequest httpServletRequest ) {
+		return this.aService.updateProviderInfo(providerUpdatedInfoDto, httpServletRequest);
+	}
+	
+	@RequestMapping("/deleteProviderAccount/{phyId}")
+	public RedirectView deleteProviderAccount(@PathVariable("phyId") Integer phyId) {
+		this.aService.deleteProviderAccount(phyId);
+		return new RedirectView("../physicianMenu",true);
 	}
 
 }

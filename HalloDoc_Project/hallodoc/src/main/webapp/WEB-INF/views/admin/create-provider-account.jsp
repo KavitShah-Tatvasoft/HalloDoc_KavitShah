@@ -314,10 +314,10 @@
 					</div>
 				</div>
 
-				<div class="signatur-flex">
-					<img src="<c:url value='/resources/images/signature-mock.png' />"
-						alt="signature" class="signature-img">
-				</div>
+<!-- 				<div class="signatur-flex"> -->
+<%-- 					<img src="<c:url value='/resources/images/signature-mock.png' />" --%>
+<!-- 						alt="signature" class="signature-img"> -->
+<!-- 				</div> -->
 
 				<div class="col-12 inc-height">
 					<div class="form-floating mb-4 ">

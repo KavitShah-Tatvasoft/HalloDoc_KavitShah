@@ -13,6 +13,7 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
@@ -21,7 +22,7 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/pop-ups.css' />">
 <title>Provider Menu</title>
 </head>
-<body>
+<body onload="showProviderMenuData()">
 	<div
 		class="container-fluid footer-container main-container relative-pos-class">
 		<div class="main-container-top-text">Provider Information</div>
@@ -30,11 +31,15 @@
 			<div class="col-12 flex-create-account-search">
 
 				<div class="select-parent">
-					<select name="physician" id="" class="form-select select-physician">
-						<option value="">Physician 1</option>
-						<option value="">Physician 2</option>
-						<option value="">Physician 3</option>
-						<option value="">Physician 4</option>
+					<select name="regions" id="" class="form-select select-physician select-physician-region-dropdown">
+						<option value="0">All</option>
+						
+						<c:forEach items="${regionList}" var="region">
+						
+						<option value="${region.regionId }">${region.name }</option>
+						
+						</c:forEach>
+						
 					</select> <img src="<c:url value='/resources/images/search.svg' />"
 						class="select-search-img" alt="">
 				</div>
@@ -189,6 +194,7 @@
 	</div>
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
+	<script src="<c:url value='/resources/js/provider-menu.js' />"></script>
 </body>
 </html>
 <%@include file="footer-black.jsp"%>

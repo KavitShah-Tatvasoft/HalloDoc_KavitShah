@@ -135,73 +135,27 @@ public class Physician {
 	@Column(name = "sync_email_address")
 	private String syncEmailAddress;
 	
+	@OneToOne(mappedBy = "physician", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private PhysicianNotification physicianNotification;
 	
 	
-	public Physician(int physicianId, AspNetUsers aspNetUsers, String firstName, String lastName, String email,
-			String mobile, String medicalLicense, String photo, String adminNotes, Boolean isAgreementDoc,
-			Boolean isBackgroundDoc, Boolean isNonDisclosureDoc, String addressOne, String addressTwo, String city,
-			int regionId, List<Region> regions, String zip, String altPhone, AspNetUsers createdBy, Date createdDate,
-			AspNetUsers modifiedBy, Date modifiedDate, Integer status, String businessName, String businessWebsite,
-			Boolean isDeleted, Role role, String npiNumber, Boolean isLicenseDoc, Boolean isHipaaDoc, String signature,
-			String syncEmailAddress) {
-		super();
-		this.physicianId = physicianId;
-		this.aspNetUsers = aspNetUsers;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.mobile = mobile;
-		this.medicalLicense = medicalLicense;
-		this.photo = photo;
-		this.adminNotes = adminNotes;
-		this.isAgreementDoc = isAgreementDoc;
-		this.isBackgroundDoc = isBackgroundDoc;
-		this.isNonDisclosureDoc = isNonDisclosureDoc;
-		this.addressOne = addressOne;
-		this.addressTwo = addressTwo;
-		this.city = city;
-		this.regionId = regionId;
-		this.regions = regions;
-		this.zip = zip;
-		this.altPhone = altPhone;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.modifiedBy = modifiedBy;
-		this.modifiedDate = modifiedDate;
-		this.status = status;
-		this.businessName = businessName;
-		this.businessWebsite = businessWebsite;
-		this.isDeleted = isDeleted;
-		this.role = role;
-		this.npiNumber = npiNumber;
-		this.isLicenseDoc = isLicenseDoc;
-		this.isHipaaDoc = isHipaaDoc;
-		this.signature = signature;
-		this.syncEmailAddress = syncEmailAddress;
+	
+	
+	public PhysicianNotification getPhysicianNotification() {
+		return physicianNotification;
 	}
 
+	public void setPhysicianNotification(PhysicianNotification physicianNotification) {
+		this.physicianNotification = physicianNotification;
+	}
+
+	
 	public Boolean getIsHipaaDoc() {
 		return isHipaaDoc;
 	}
 
 	public void setIsHipaaDoc(Boolean isHipaaDoc) {
 		this.isHipaaDoc = isHipaaDoc;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Physician [physicianId=" + physicianId + ", aspNetUsers=" + aspNetUsers + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", mobile=" + mobile + ", medicalLicense="
-				+ medicalLicense + ", photo=" + photo + ", adminNotes=" + adminNotes + ", isAgreementDoc="
-				+ isAgreementDoc + ", isBackgroundDoc=" + isBackgroundDoc + ", isNonDisclosureDoc=" + isNonDisclosureDoc
-				+ ", addressOne=" + addressOne + ", addressTwo=" + addressTwo + ", city=" + city + ", regionId="
-				+ regionId + ", regions=" + regions + ", zip=" + zip + ", altPhone=" + altPhone + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate="
-				+ modifiedDate + ", status=" + status + ", businessName=" + businessName + ", businessWebsite="
-				+ businessWebsite + ", isDeleted=" + isDeleted + ", role=" + role + ", npiNumber=" + npiNumber
-				+ ", isLicenseDoc=" + isLicenseDoc + ", isHipaaDoc=" + isHipaaDoc + ", signature=" + signature
-				+ ", syncEmailAddress=" + syncEmailAddress + "]";
 	}
 
 	public Boolean getIsAgreementDoc() {
@@ -502,6 +456,52 @@ public class Physician {
 
 	public void setSyncEmailAddress(String syncEmailAddress) {
 		this.syncEmailAddress = syncEmailAddress;
+	}
+	
+	
+
+	public Physician(int physicianId, AspNetUsers aspNetUsers, String firstName, String lastName, String email,
+			String mobile, String medicalLicense, String photo, String adminNotes, Boolean isAgreementDoc,
+			Boolean isBackgroundDoc, Boolean isNonDisclosureDoc, String addressOne, String addressTwo, String city,
+			int regionId, List<Region> regions, String zip, String altPhone, AspNetUsers createdBy, Date createdDate,
+			AspNetUsers modifiedBy, Date modifiedDate, Integer status, String businessName, String businessWebsite,
+			Boolean isDeleted, Role role, String npiNumber, Boolean isLicenseDoc, Boolean isHipaaDoc, String signature,
+			String syncEmailAddress, PhysicianNotification physicianNotification) {
+		super();
+		this.physicianId = physicianId;
+		this.aspNetUsers = aspNetUsers;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.mobile = mobile;
+		this.medicalLicense = medicalLicense;
+		this.photo = photo;
+		this.adminNotes = adminNotes;
+		this.isAgreementDoc = isAgreementDoc;
+		this.isBackgroundDoc = isBackgroundDoc;
+		this.isNonDisclosureDoc = isNonDisclosureDoc;
+		this.addressOne = addressOne;
+		this.addressTwo = addressTwo;
+		this.city = city;
+		this.regionId = regionId;
+		this.regions = regions;
+		this.zip = zip;
+		this.altPhone = altPhone;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.modifiedBy = modifiedBy;
+		this.modifiedDate = modifiedDate;
+		this.status = status;
+		this.businessName = businessName;
+		this.businessWebsite = businessWebsite;
+		this.isDeleted = isDeleted;
+		this.role = role;
+		this.npiNumber = npiNumber;
+		this.isLicenseDoc = isLicenseDoc;
+		this.isHipaaDoc = isHipaaDoc;
+		this.signature = signature;
+		this.syncEmailAddress = syncEmailAddress;
+		this.physicianNotification = physicianNotification;
 	}
 
 	public Physician() {

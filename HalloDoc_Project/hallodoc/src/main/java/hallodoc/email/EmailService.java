@@ -32,6 +32,7 @@ import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.SomeoneElseRequestDto;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailToken;
+import hallodoc.model.Physician;
 import hallodoc.model.Request;
 import hallodoc.model.User;
 import hallodoc.repository.EmailTokenDao;
@@ -363,9 +364,33 @@ public class EmailService {
 				message.setSubject(subject);
 				String content = "<html> <h2> Hello, " + newProviderAccountDto.getpFirstName() + " " + newProviderAccountDto.getpLastName() + "</h2><br>"
 						+ "<p style=\"\"margin-top:30px;\"\">Congratulation to new begining. Welcome to the team.</p>" +
-						"<br>Order Details are as follows:" +
-						"<br><br>Prescription : " + ordersDetailsDto.getBusinessPrescriptionDetails() + 
-						"<br><br>No. of Refills Required : " + ordersDetailsDto.getRefillsDetails();
+						"<br>Your login credentials are as follows:" +
+						"<br><br>Username : " + newProviderAccountDto.getpUsername() + 
+						"<br>Password : " + newProviderAccountDto.getpPassword() +
+						"<br><br><strong>Make sure you keep your credentials safe for saftey of your own accout.</strong>";
+						
+					
+				message.setText(content, true);
+			}
+		};
+
+		mailSender.send(messagePreparator);
+	}
+	
+	public void sendProviderResetCredentials(String subject,HttpServletRequest httpServletRequest, String password, Physician physician) {
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(physician.getEmail());
+				
+				message.setSubject(subject);
+				String content = "<html> <h2> Hello, " + physician.getFirstName() + " " + physician.getLastName() + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">As per your request we reseted your password. Find your new password as below</p>" +
+						"<br>Your login credentials are as follows:" +
+						"<br><br>Password : " + password +
+						"<br><br><strong>Make sure you keep your credentials safe for saftey of your own accout.</strong>";
+						
 					
 				message.setText(content, true);
 			}

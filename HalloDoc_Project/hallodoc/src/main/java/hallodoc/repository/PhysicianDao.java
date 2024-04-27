@@ -2,14 +2,24 @@ package hallodoc.repository;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import hallodoc.dto.PhysicianAssignCaseDto;
+import hallodoc.model.HealthProfessionalTypes;
+import hallodoc.model.HealthProfessionals;
 import hallodoc.model.Physician;
 import hallodoc.model.Request;
 
@@ -40,6 +50,29 @@ public class PhysicianDao {
 		
 	}
 	
+	public List<Physician> getPhysicianObByRegion(int regionId){
+		
+		Session s = this.sessionFactory.openSession();
+		String query = "SELECT * FROM physician phy INNER JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId AND phy.is_deleted = false";
+		Query sql = s.createNativeQuery(query);
+		sql.setParameter("regionId", regionId);
+		List<Physician> phyList = sql.list();
+		s.close();
+		return phyList;
+		
+	}
+	
+	public List<Physician> getAllActivePhysician(){
+		
+		Session s = this.sessionFactory.openSession();
+		String query = "FROM Physician phy WHERE phy.isDeleted = false";
+		Query sql = s.createQuery(query);
+		List<Physician> phyList = sql.list();
+		s.close();
+		return phyList;
+		
+	}
+	
 	public List<Physician> getPhysicianByEmail(String email){
 		
 		Session s = this.sessionFactory.openSession();
@@ -50,5 +83,22 @@ public class PhysicianDao {
 		s.close();
 		return phyList;
 		
+	}
+	
+	@Transactional
+	public void updatePhysician(Physician physician) {
+		this.hibernateTemplate.update(physician);
+	}
+	
+	@Transactional
+	public void deleteProviderAccount(Integer phyId) {
+		Session s = this.sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		String query = "UPDATE Physician phy SET phy.isDeleted = true WHERE phy.physicianId =:phyId";
+		Query sql = s.createQuery(query);
+		sql.setParameter("phyId", phyId);
+		sql.executeUpdate();
+		tx.commit();
+		s.close();
 	}
 }
