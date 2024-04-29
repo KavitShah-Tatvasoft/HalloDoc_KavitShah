@@ -398,5 +398,24 @@ public class EmailService {
 
 		mailSender.send(messagePreparator);
 	}
+	
+	
+	public void communicationEmail(String subject, String message, Physician physician) {
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(physician.getEmail());
+				
+				message.setSubject(subject);
+				String content = "<html> <h2> Hello, " + physician.getFirstName() + " " + physician.getLastName() + "</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">message</p>" ;
+						
+				message.setText(content, true);
+			}
+		};
+
+		mailSender.send(messagePreparator);
+	}
 
 }

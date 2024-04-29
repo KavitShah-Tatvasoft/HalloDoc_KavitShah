@@ -1,5 +1,8 @@
 package hallodoc.enumerations;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum RequestStatus {
 
 	UNASSIGNED(1, "Unassigned"),
@@ -17,6 +20,22 @@ public enum RequestStatus {
 	private int requestId;
 	private String requestStatus;
 
+	private static Map<Integer, String> idToTextMapping;
+	
+	public static String getStatusTypeText(int i) {
+		if (idToTextMapping == null) {
+			initMapping();
+		}
+		return idToTextMapping.get(i);
+	}
+
+	private static void initMapping() {
+		idToTextMapping = new HashMap<>();
+		for (RequestStatus rse : values()) {
+			idToTextMapping.put(rse.getRequestId(), rse.getRequestStatus());
+		}
+	}
+	
 	RequestStatus(int requestId, String requestStatus) {
 		this.requestId = requestId;
 		this.requestStatus = requestStatus;

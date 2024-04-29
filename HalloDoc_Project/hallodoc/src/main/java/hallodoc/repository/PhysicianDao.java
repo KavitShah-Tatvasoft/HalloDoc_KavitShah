@@ -50,13 +50,14 @@ public class PhysicianDao {
 		
 	}
 	
-	public List<Physician> getPhysicianObByRegion(int regionId){
+	public List<Integer> getPhysicianObByRegion(int regionId){
 		
 		Session s = this.sessionFactory.openSession();
-		String query = "SELECT * FROM physician phy INNER JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId AND phy.is_deleted = false";
+//		String query = "SELECT * FROM physician phy LEFT JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId AND phy.is_deleted = false";
+		String query = "SELECT phy.physician_id FROM physician phy LEFT JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId AND phy.is_deleted = false";
 		Query sql = s.createNativeQuery(query);
 		sql.setParameter("regionId", regionId);
-		List<Physician> phyList = sql.list();
+		List<Integer> phyList = sql.list();
 		s.close();
 		return phyList;
 		
@@ -100,5 +101,15 @@ public class PhysicianDao {
 		sql.executeUpdate();
 		tx.commit();
 		s.close();
+	}
+	
+	public List<Physician> getPhysicianByRegionList(List<Integer> list){
+		
+		Session s = this.sessionFactory.openSession();
+		Query query = s.createQuery("FROM Physician phy WHERE phy.physicianId IN (:list)");
+		query.setParameter("list", list);
+		List<Physician> listPhysician = query.list();
+		s.close();
+		return listPhysician;
 	}
 }

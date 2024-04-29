@@ -3,7 +3,7 @@
 }
 
 .patient-form{
-    width: 95%;
+    width: 95% !important;
     background-color: white;
 }
 
@@ -190,7 +190,7 @@ a{
 }
 
 .accordion-button::after{
-    content: none;
+    content: none !important;
 }
 
 .accordion-button:focus, .accordion-button{

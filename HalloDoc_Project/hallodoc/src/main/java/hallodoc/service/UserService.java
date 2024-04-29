@@ -32,10 +32,14 @@ import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
 import hallodoc.dto.BlockCaseDto;
+import hallodoc.dto.BlockHistoryFilterData;
+import hallodoc.dto.BlockRequestsTableData;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.ClearCaseDto;
 import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.CommonRequestDto;
+import hallodoc.dto.EmailLogDashboardDto;
+import hallodoc.dto.EmailLogFiltersDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
 import hallodoc.dto.HealthProfessionalDataDto;
@@ -43,7 +47,12 @@ import hallodoc.dto.NewBusinessDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.OrderVendorDetailsDto;
 import hallodoc.dto.OrdersDetailsDto;
+import hallodoc.dto.PatientHistoryDto;
+import hallodoc.dto.PatientRecordsDto;
 import hallodoc.dto.RequestFiltersDto;
+import hallodoc.dto.SMSLogDashboardDataDto;
+import hallodoc.dto.SearchRecordsDashboardData;
+import hallodoc.dto.SearchRecordsFilter;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserProfileDto;
@@ -88,6 +97,7 @@ import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestNotesDao;
 import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.repository.RequestWiseFileDao;
+import hallodoc.repository.UserDao;
 import hallodoc.sms.SmsService;
 
 @Service
@@ -134,12 +144,15 @@ public class UserService {
 
 	@Autowired
 	private HealthProfessionalsDao healthProfessionalsDao;
-	
+
 	@Autowired
 	private OrderDetailsDao orderDetailsDao;
-	
+
 	@Autowired
 	private EncounterFormDao encounterFormDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	private String resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest) {
 
@@ -530,7 +543,7 @@ public class UserService {
 		emailLog.setSentDate(localDateTime);
 		emailLog.setAction(MessageTypeEnum.SEND_AGREEMENT.getMessageTypeId());
 		emailLog.setRecipientName(recipientName);
-
+		emailLog.setRoleId(3);
 		smsLog.setMobileNumber(sendAgreementDto.getPhoneNumber());
 		smsLog.setRequestId(request.getRequestId());
 		smsLog.setConfirmationNumber(request.getConfirmationNumber());
@@ -539,7 +552,7 @@ public class UserService {
 		smsLog.setSentDate(localDateTime);
 		smsLog.setAction(MessageTypeEnum.SEND_AGREEMENT.getMessageTypeId());
 		smsLog.setRecipientName(recipientName);
-
+		smsLog.setRoleId(3);
 		boolean isSent = false;
 		int sentTries = 1;
 		for (int i = sentTries; i <= 3; i++) {
@@ -691,7 +704,7 @@ public class UserService {
 		emailLog.setAction(MessageTypeEnum.SEND_FILES.getMessageTypeId());
 		emailLog.setRecipientName(recipientName);
 		emailLog.setPhysicianId(request.getPhysician().getPhysicianId());
-
+		emailLog.setRoleId(3);
 		boolean isSent = false;
 		int sentTries = 1;
 		for (int i = sentTries; i <= 3; i++) {
@@ -748,8 +761,9 @@ public class UserService {
 		OrderDetails orderDetail = new OrderDetails();
 		LocalDateTime localDateTime = LocalDateTime.now();
 		Request request = requestDao.getRequestOb(ordersDetailsDto.getOrderRequestId());
-		HealthProfessionals healthProfessionals = this.healthProfessionalsDao.getProfessionalOb(ordersDetailsDto.getBusinessTypeId());
-		
+		HealthProfessionals healthProfessionals = this.healthProfessionalsDao
+				.getProfessionalOb(ordersDetailsDto.getBusinessTypeId());
+
 		orderDetail.setBusinessContact(ordersDetailsDto.getBusinessContactNumber());
 		orderDetail.setBusinessEmail(ordersDetailsDto.getBusinessEmailContact());
 		orderDetail.setCreatedBy(admin.getAdminId());
@@ -758,7 +772,7 @@ public class UserService {
 		orderDetail.setRequestId(ordersDetailsDto.getOrderRequestId());
 		orderDetail.setPrescriptions(ordersDetailsDto.getBusinessPrescriptionDetails());
 		orderDetail.setVendorId(ordersDetailsDto.getBusinessTypeId());
-		
+
 		String subject = "New Order Details";
 		emailLog.setSubjectName(subject);
 		emailLog.setEmailId(request.getRequestClient().getEmail());
@@ -769,9 +783,9 @@ public class UserService {
 		emailLog.setSentDate(localDateTime);
 		emailLog.setAction(MessageTypeEnum.SEND_ORDERS.getMessageTypeId());
 		emailLog.setRecipientName(healthProfessionals.getVendorName());
-
+		emailLog.setRoleId(4);
 		int id = this.orderDetailsDao.saveOrderDetail(orderDetail);
-		
+
 		String status = "";
 		boolean isSent = false;
 		int sentTries = 1;
@@ -780,7 +794,8 @@ public class UserService {
 				continue;
 			}
 			try {
-				this.emailService.sendNewOrder("New Order Details", request, httpServletRequest, ordersDetailsDto, healthProfessionals.getVendorName() );
+				this.emailService.sendNewOrder("New Order Details", request, httpServletRequest, ordersDetailsDto,
+						healthProfessionals.getVendorName());
 				isSent = true;
 				emailLog.setSentTries(i);
 				emailLog.setEmailSent(isSent);
@@ -797,24 +812,24 @@ public class UserService {
 				}
 			}
 		}
-		
+
 		return status;
 	}
-	
+
 	public String updateEncounterFormDetails(EncounterFormDto encounterFormDto, HttpServletRequest httpServletRequest) {
-		
-		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+
+		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		Admin admin = aspNetUsers.getAdmin();
 		Request request = requestDao.getRequestOb(encounterFormDto.getRequestId());
-		EncounterForm  encounterForm;
+		EncounterForm encounterForm;
 		List<EncounterForm> encounterForms = encounterFormDao.getEncounterFormByReqID(encounterFormDto.getRequestId());
-		
-		if(encounterForms.size()>0) {
+
+		if (encounterForms.size() > 0) {
 			encounterForm = encounterForms.get(0);
-		}else {			
+		} else {
 			encounterForm = new EncounterForm();
 		}
-		
+
 		encounterForm.setAbd(encounterFormDto.getAbd());
 		encounterForm.setAdminId(admin.getAdminId());
 		encounterForm.setAllergies(encounterFormDto.getAllergies());
@@ -842,17 +857,17 @@ public class UserService {
 		encounterForm.setTreatmentPlan(encounterFormDto.getTreatmentPlan());
 		encounterForm.setMedicationsDespensed(encounterFormDto.getMedicationsDespensed());
 
-		if(encounterForms.size()>0) {
+		if (encounterForms.size() > 0) {
 			encounterFormDao.updateEncounterForm(encounterForm);
 			return "updated succesfully";
-		}else {			
+		} else {
 			encounterFormDao.saveEncounterForm(encounterForm);
 			return "saved succesfully";
 		}
 	}
-	
+
 	public EncounterFormUserDetailsDto getEncounterFormUserDetailsDto(int reqId) {
-		
+
 		Request request = requestDao.getRequestOb(reqId);
 		EncounterFormUserDetailsDto encounterFormUserDetailsDto = new EncounterFormUserDetailsDto();
 		RequestClient requestClient = request.getRequestClient();
@@ -865,14 +880,14 @@ public class UserService {
 		encounterFormUserDetailsDto.setLocation(requestClient.getFullAddress());
 		return encounterFormUserDetailsDto;
 	}
-	
+
 	public EncounterFormDto getEncounterFormDtoOb(int reqId) {
 		List<EncounterForm> encounterForms = encounterFormDao.getEncounterFormByReqID(reqId);
 		EncounterForm encounterForm;
 		EncounterFormDto encounterFormDto = new EncounterFormDto();
-		if(encounterForms.size()>0) {
+		if (encounterForms.size() > 0) {
 			encounterForm = encounterForms.get(0);
-			
+
 			encounterFormDto.setAbd(encounterForm.getAbd());
 			encounterFormDto.setAllergies(encounterForm.getAllergies());
 			encounterFormDto.setBloodPresureneg(encounterForm.getBloodPresureneg());
@@ -897,14 +912,14 @@ public class UserService {
 			encounterFormDto.setTemp(encounterForm.getTemp());
 			encounterFormDto.setTreatmentPlan(encounterForm.getTreatmentPlan());
 			encounterFormDto.setMedicationsDespensed(encounterForm.getMedicationsDespensed());
-			
+
 			return encounterFormDto;
-			
-		}else {
+
+		} else {
 			return encounterFormDto;
 		}
 	}
-	
+
 	public ClearCaseDto getClearCasePtDetails(Request request) {
 		ClearCaseDto clearCaseDto = new ClearCaseDto();
 		clearCaseDto.setDob(request.getRequestClient().getDateObject());
@@ -912,55 +927,54 @@ public class UserService {
 		clearCaseDto.setFirstName(request.getRequestClient().getFirstName());
 		clearCaseDto.setLastName(request.getRequestClient().getLastName());
 		clearCaseDto.setPhoneNumber(request.getRequestClient().getPhoneNumber());
-		
+
 		return clearCaseDto;
 	}
-	
+
 	public String closeRequestedCase(int reqId, HttpServletRequest httpServletRequest) {
 		Request request = requestDao.getRequestOb(reqId);
 		RequestStatusLog requestStatusLog = new RequestStatusLog();
-		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		Admin admin = aspNetUsers.getAdmin();
 		Date date = new Date();
-		
+
 		request.setStatus(9);
 		request.setModifieDate(date);
-		
+
 		requestStatusLog.setAdmin(admin);
 		requestStatusLog.setCreatedDate(date);
-		requestStatusLog.setNotes("Admin " + admin.getFirstName()+" "+admin.getLastName() + " closed this case on " + date);
+		requestStatusLog
+				.setNotes("Admin " + admin.getFirstName() + " " + admin.getLastName() + " closed this case on " + date);
 		requestStatusLog.setRequest(request);
 		requestStatusLog.setStatus(9);
 
 		requestDao.updateRequest(request);
 		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
-		
+
 		return "status changed!";
 	}
-	
+
 	@Transactional
 	public String editCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
 		String dateInString = closeCaseEditDataDto.getDob();
 		Date dob = formatter.parse(dateInString);
-		
+
 		Request request = requestDao.getRequestOb(closeCaseEditDataDto.getReqId());
 		RequestClient requestClient = request.getRequestClient();
 		User user = request.getUser();
 		AspNetUsers aspNetUsers = user.getAspNetUsers();
-		
-		if(request.getRequestType().getRequestTypeId() == hallodoc.enumerations.RequestType.PATIENT.getId()) {			
+
+		if (request.getRequestType().getRequestTypeId() == hallodoc.enumerations.RequestType.PATIENT.getId()) {
 			request.setFirstName(closeCaseEditDataDto.getfName());
 			request.setLastName(closeCaseEditDataDto.getlName());
 			request.setPhoneNumber(closeCaseEditDataDto.getpNumber());
 		}
-		
-		
-		
+
 		aspNetUsers.setPhone_number(closeCaseEditDataDto.getpNumber());
-		
+
 		String[] tokens = closeCaseEditDataDto.getDob().split("-");
 		int year = Integer.parseInt(tokens[0]);
 		int day = Integer.parseInt(tokens[2]);
@@ -971,9 +985,9 @@ public class UserService {
 		user.setIntDate(day);
 		user.setIntYear(year);
 		user.setStrMonth(month);
-		
+
 		aspNetUsers.setUser(user);
-		
+
 		requestClient.setFirstName(closeCaseEditDataDto.getfName());
 		requestClient.setLastName(closeCaseEditDataDto.getlName());
 		requestClient.setPhoneNumber(closeCaseEditDataDto.getpNumber());
@@ -981,22 +995,23 @@ public class UserService {
 		requestClient.setIntDate(day);
 		requestClient.setIntYear(year);
 		requestClient.setStrMonth(month);
-		
+
 		request.setRequestClient(requestClient);
-		
+
 		this.requestDao.updateRequest(request);
 		this.apsnetuserdao.updateAspNetUser(aspNetUsers);
-		
+
 		return "updated";
-		
+
 	}
-	
-	public List<HealthProfessionalDataDto> getHealthProfessionalsData(String name, Integer typeId){
+
+	public List<HealthProfessionalDataDto> getHealthProfessionalsData(String name, Integer typeId) {
 		System.out.println("Hello " + name + "  .");
 		System.out.println(typeId);
 		List<HealthProfessionalDataDto> healthProfessionalDataDtos = new ArrayList<HealthProfessionalDataDto>();
-		List<HealthProfessionals> healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalDetails(name,typeId);
-			
+		List<HealthProfessionals> healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalDetails(name,
+				typeId);
+
 		for (HealthProfessionals healthProf : healthProfessionals) {
 			HealthProfessionalDataDto healthProfessionalDataDto = new HealthProfessionalDataDto();
 			healthProfessionalDataDto.setBusinessContact(healthProf.getBusinessContact());
@@ -1008,13 +1023,14 @@ public class UserService {
 			healthProfessionalDataDto.setBusinessId(healthProf.getVendorId());
 			healthProfessionalDataDtos.add(healthProfessionalDataDto);
 		}
-		
+
 		return healthProfessionalDataDtos;
 	}
-	
+
 	public String addNewBusiness(NewBusinessDto newBusinessDto) {
-		
-		HealthProfessionalTypes healthProfessionalTypes = healthProfessionalsDao.getProfessionTypeById(Integer.parseInt(newBusinessDto.getBusinessProfession()));
+
+		HealthProfessionalTypes healthProfessionalTypes = healthProfessionalsDao
+				.getProfessionTypeById(Integer.parseInt(newBusinessDto.getBusinessProfession()));
 		Region region = regionDao.getRegionById(Integer.parseInt(newBusinessDto.getBusinessState())).get(0);
 		HealthProfessionals healthProfessionals = new HealthProfessionals();
 		healthProfessionals.setAddress(newBusinessDto.getBusinessStreet());
@@ -1029,22 +1045,24 @@ public class UserService {
 		healthProfessionals.setState(region.getName());
 		healthProfessionals.setVendorName(newBusinessDto.getBusinessName());
 		healthProfessionals.setZip(newBusinessDto.getBusinessZip());
-		
+
 		healthProfessionalsDao.saveHealthProfessional(healthProfessionals);
-		
+
 		return "added health professionals";
-		
+
 	}
-	
+
 	public HealthProfessionals getHealthProfessionalData(Integer businessId) {
 		return this.healthProfessionalsDao.getHealthProfessionalById(businessId);
 	}
-	
+
 	public String updateBusiness(NewBusinessDto newBusinessDto) {
-		
+
 		Region region = regionDao.getRegionById(Integer.parseInt(newBusinessDto.getBusinessState())).get(0);
-		HealthProfessionalTypes healthProfessionalTypes = this.healthProfessionalsDao.getProfessionTypeById(Integer.parseInt(newBusinessDto.getBusinessProfession()));
-		HealthProfessionals healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalById(Integer.parseInt(newBusinessDto.getBusinessId()));
+		HealthProfessionalTypes healthProfessionalTypes = this.healthProfessionalsDao
+				.getProfessionTypeById(Integer.parseInt(newBusinessDto.getBusinessProfession()));
+		HealthProfessionals healthProfessionals = this.healthProfessionalsDao
+				.getHealthProfessionalById(Integer.parseInt(newBusinessDto.getBusinessId()));
 		healthProfessionals.setAddress(newBusinessDto.getBusinessStreet());
 		healthProfessionals.setBusinessContact(newBusinessDto.getBusinessContact());
 		healthProfessionals.setCity(newBusinessDto.getBusinessCity());
@@ -1057,29 +1075,320 @@ public class UserService {
 		healthProfessionals.setState(region.getName());
 		healthProfessionals.setVendorName(newBusinessDto.getBusinessName());
 		healthProfessionals.setZip(newBusinessDto.getBusinessZip());
-		
+
 		this.healthProfessionalsDao.updateHealthProfessionals(healthProfessionals);
 		return "updated";
 	}
-	
+
 	public String deleteBusinessRequest(Integer businessId) {
-		
+
 		HealthProfessionals healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalById(businessId);
 		healthProfessionals.setIsDeleted(true);
 		this.healthProfessionalsDao.updateHealthProfessionals(healthProfessionals);
 		return "deleted business successfully";
-		
+
 	}
-	
+
 	public String checkUserNameValidation(String name) {
 		List<AspNetUsers> aspNetUsers = this.apsnetuserdao.getAspUserByUsername(name);
-		if(aspNetUsers.size()>0) {
+		if (aspNetUsers.size() > 0) {
 			return "false";
-			
-		}else {
+
+		} else {
 			return "true";
 		}
 	}
+
+	public List<SMSLogDashboardDataDto> getSmsLogFilteredData(EmailLogFiltersDto emailLogFiltersDto) {
+		List<SMSLogDashboardDataDto> smsDashboard = new ArrayList<SMSLogDashboardDataDto>();
+		List<SmsLog> logs = this.logsDao.getFilteredSMSLogData(emailLogFiltersDto);
+
+		for (SmsLog smsLog : logs) {
+
+			MessageTypeEnum[] enumValues = MessageTypeEnum.values(); // get an array of all enum values
+			SMSLogDashboardDataDto smsLogDashboardDataDto = new SMSLogDashboardDataDto();
+
+			for (int i = 0; i < enumValues.length; i++) {
+				MessageTypeEnum value = enumValues[i];
+				if (value.getMessageTypeId() == smsLog.getAction()) {
+					smsLogDashboardDataDto.setAction(value.getMessageType());
+				}
+			}
+			if (smsLog.getConfirmationNumber() == null || smsLog.getConfirmationNumber().isBlank()) {
+				smsLogDashboardDataDto.setConfNumber("-");
+			} else {
+				smsLogDashboardDataDto.setConfNumber(smsLog.getConfirmationNumber());
+			}
+
+			switch (smsLog.getRoleId()) {
+			case 1:
+				smsLogDashboardDataDto.setRoleName("Admin");
+				break;
+			case 2:
+				smsLogDashboardDataDto.setRoleName("Provider");
+				break;
+			case 3:
+				smsLogDashboardDataDto.setRoleName("Patient");
+				break;
+			case 4:
+				smsLogDashboardDataDto.setRoleName("Vendor");
+				break;
+			default:
+				smsLogDashboardDataDto.setRoleName("-");
+			}
+
+			String sendStatus = smsLog.isSmsSent() ? "Yes" : "No";
+			smsLogDashboardDataDto.setCreatedDate(smsLog.getOnlyCreatedDate());
+			smsLogDashboardDataDto.setSendDate(smsLog.getOnlySentDate());
+			smsLogDashboardDataDto.setMobileNumber(smsLog.getMobileNumber());
+			smsLogDashboardDataDto.setSmsLogId(smsLog.getSmsLogId());
+			smsLogDashboardDataDto.setIsEmailSent(sendStatus);
+			smsLogDashboardDataDto.setRecipientName(smsLog.getRecipientName());
+			smsLogDashboardDataDto.setSentTries(smsLog.getSentTries());
+			smsDashboard.add(smsLogDashboardDataDto);
+		}
+
+		return smsDashboard;
+
+	}
+
+	public List<EmailLogDashboardDto> getEmailLogFilteredDate(EmailLogFiltersDto emailLogFiltersDto) {
+		List<EmailLogDashboardDto> emailDashboard = new ArrayList<EmailLogDashboardDto>();
+		List<EmailLog> logs = this.logsDao.getFilteredEmailLogData(emailLogFiltersDto);
+
+		for (EmailLog emailLog : logs) {
+
+			MessageTypeEnum[] enumValues = MessageTypeEnum.values(); // get an array of all enum values
+			EmailLogDashboardDto emailLogDashboardDto = new EmailLogDashboardDto();
+
+			for (int i = 0; i < enumValues.length; i++) {
+				MessageTypeEnum value = enumValues[i];
+				if (value.getMessageTypeId() == emailLog.getAction()) {
+					emailLogDashboardDto.setAction(value.getMessageType());
+				}
+			}
+			if (emailLog.getConfirmationNumber() == null || emailLog.getConfirmationNumber().isBlank()) {
+				emailLogDashboardDto.setConfNumber("-");
+			} else {
+				emailLogDashboardDto.setConfNumber(emailLog.getConfirmationNumber());
+			}
+
+			switch (emailLog.getRoleId()) {
+			case 1:
+				emailLogDashboardDto.setRoleName("Admin");
+				break;
+			case 2:
+				emailLogDashboardDto.setRoleName("Provider");
+				break;
+			case 3:
+				emailLogDashboardDto.setRoleName("Patient");
+				break;
+			case 4:
+				emailLogDashboardDto.setRoleName("Vendor");
+				break;
+			default:
+				emailLogDashboardDto.setRoleName("-");
+			}
+
+			emailLogDashboardDto.setCreatedDate(emailLog.getOnlyCreatedDate());
+			emailLogDashboardDto.setSendDate(emailLog.getOnlySentDate());
+			emailLogDashboardDto.setEmailId(emailLog.getEmailId());
+			emailLogDashboardDto.setEmailLogId(emailLog.getEmailLogId());
+			emailLogDashboardDto.setIsEmailSent(emailLog.isEmailSent());
+			emailLogDashboardDto.setRecipientName(emailLog.getRecipientName());
+			emailLogDashboardDto.setSentTries(emailLog.getSentTries());
+			emailDashboard.add(emailLogDashboardDto);
+		}
+
+		return emailDashboard;
+	}
+
+	public List<PatientHistoryDto> getPatientHistory(PatientHistoryDto patientHistoryDtoData) {
+		List<PatientHistoryDto> patientHistoryDtos = new ArrayList<PatientHistoryDto>();
+		List<User> userList = this.userDao.getUserDetails(patientHistoryDtoData);
+
+		for (User user : userList) {
+			PatientHistoryDto patientHistoryDto = new PatientHistoryDto();
+			patientHistoryDto.setUserId(user.getUserID());
+			patientHistoryDto.setPhoneNumber(user.getMobile());
+			patientHistoryDto.setLastName(user.getLastName());
+			patientHistoryDto.setFirstName(user.getFirstName());
+			patientHistoryDto.setEmail(user.getEmail());
+			if (user.getStreet() == null || user.getCity() == null || user.getState() == null) {
+				patientHistoryDto.setAddress("-");
+			} else {
+				patientHistoryDto.setAddress(
+						user.getStreet() + ", " + user.getCity() + ", " + user.getState() + ", " + user.getZipcode());
+			}
+			patientHistoryDtos.add(patientHistoryDto);
+		}
+
+		return patientHistoryDtos;
+
+	}
+
+	public List<PatientRecordsDto> getRequestByUserId(Integer userId) {
+		List<PatientRecordsDto> ptRecords = new ArrayList<PatientRecordsDto>();
+		List<Request> reqList = this.requestDao.getRequestByUser(userId);
+
+		for (Request request : reqList) {
+			PatientRecordsDto ptRecordDto = new PatientRecordsDto();
+			ptRecordDto.setConcludeDate(null);
+			ptRecordDto.setConfNumber(request.getConfirmationNumber());
+
+			String[] createdDate = request.getCreatedDate().toString().split(" ")[0].split("-");
+			String year = createdDate[0];
+			String day = createdDate[2];
+			String month = DateHelper.getMonthName(Integer.parseInt(createdDate[1]));
+
+			ptRecordDto.setCreatedDate(month + " " + day + ", " + year);
+			ptRecordDto.setDocCount(request.getListRequestWiseFiles().size());
+			if (request.getPhysician() != null) {
+
+				ptRecordDto.setProviderName(
+						"Dr. " + request.getPhysician().getFirstName() + " " + request.getPhysician().getLastName());
+			} else {
+				ptRecordDto.setProviderName("Not Assigned");
+			}
+			ptRecordDto.setRequestClient(
+					request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
+			ptRecordDto.setRequestId(request.getRequestId());
+
+			for (hallodoc.enumerations.RequestStatus status : hallodoc.enumerations.RequestStatus.values()) {
+				if (status.getRequestId() == request.getStatus()) {
+					ptRecordDto.setStatus(status.getRequestStatus());
+				}
+			}
+
+			ptRecords.add(ptRecordDto);
+
+		}
+
+		return ptRecords;
+
+	}
+
+	public List<BlockRequestsTableData> getBlockRequestData(BlockHistoryFilterData blockHistoryFilterData) {
+		List<BlockRequestsTableData> list = new ArrayList<BlockRequestsTableData>();
+		List<BlockRequests> requests = this.blockRequestsDao.getBlockRequestData(blockHistoryFilterData);
+		for (BlockRequests blockRequests : requests) {
+			String name = blockRequests.getRequest().getRequestClient().getFirstName() + " "
+					+ blockRequests.getRequest().getRequestClient().getLastName();
+			BlockRequestsTableData ob = new BlockRequestsTableData();
+			ob.setCreatedDate(blockRequests.getFormattedCreatedDate());
+			ob.setEmail(blockRequests.getEmail());
+			ob.setIsActive(blockRequests.isActive());
+			ob.setNotes(blockRequests.getReason());
+			ob.setPatientName(name);
+			ob.setPhoneNumber(blockRequests.getPhoneNumber());
+			ob.setRequestId(blockRequests.getBlockRequestId());
+			list.add(ob);
+		}
+
+		return list;
+	}
+
+	public String unblockRequestedCase(Integer blockId, HttpServletRequest httpServletRequest) {
+		AspNetUsers adminAsp = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		Admin adminOb = adminAsp.getAdmin();
+		Date date = new Date();
+
+		BlockRequests blockRequests = this.blockRequestsDao.getBlockRequestOb(blockId);
+		blockRequests.setActive(true);
+
+		Request request = blockRequests.getRequest();
+		request.setStatus(hallodoc.enumerations.RequestStatus.UNASSIGNED.getRequestId());
+		request.setModifieDate(date);
+
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		requestStatusLog.setAdmin(adminOb);
+		requestStatusLog.setCreatedDate(date);
+		requestStatusLog.setNotes(
+				"Case Unblocked by Admin on " + date.getDate() + "-" + date.getMonth() + "-" + date.getYear());
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(hallodoc.enumerations.RequestStatus.UNASSIGNED.getRequestId());
+
+		requestDao.updateRequest(request);
+		blockRequestsDao.updateBlockRequest(blockRequests);
+		requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+
+		return "Unblocked the Requested Case";
+	}
+
+	public List<SearchRecordsDashboardData> getFilteredSearchRecords(SearchRecordsFilter searchRecordsFilter) {
+		List<SearchRecordsDashboardData> returnList = new ArrayList<SearchRecordsDashboardData>();
+		List<Request> list = this.requestDao.getFilteredRequest(searchRecordsFilter);
+
+		for (Request request : list) {
+			List<RequestStatusLog> closeCaseLogs = this.requestStatusLogDao.getStatusSpecificLogs(
+					hallodoc.enumerations.RequestStatus.UNPAID.getRequestId(), request.getRequestId());
+			SearchRecordsDashboardData searchData = new SearchRecordsDashboardData();
+			RequestStatusLog requestStatusLog;
+			if (closeCaseLogs.size() > 0) {
+				requestStatusLog = closeCaseLogs.get(0);
+
+				searchData.setCloseCaseDate(DateHelper.getDateStrigSepratedBySpace(requestStatusLog.getCreatedDate()));
+			}else {
+				searchData.setCloseCaseDate("-");
+			}
+			searchData.setRequestId(request.getRequestId());
+			searchData.setAddress(request.getRequestClient().getNoZipAddress());
+			if (request.getRequestNotes() != null) {
+				searchData.setAdminNotes(request.getRequestNotes().getAdminNotes() == null ? "-" : request.getRequestNotes().getAdminNotes());
+				searchData.setPhysicianNote(request.getRequestNotes().getPhysicanNotes() == null ? "-" : request.getRequestNotes().getPhysicanNotes() );
+			} else {
+				searchData.setAdminNotes("-");
+				searchData.setPhysicianNote("-");
+			}
+			searchData.setPatientNotes(request.getRequestClient().getNotes() == null ? "-" : request.getRequestClient().getNotes());
+			searchData.setDateOfService(DateHelper.getDateStrigSepratedBySpace(request.getAcceptedDate()));
+			searchData.setEmail(request.getRequestClient().getEmail());
+			searchData.setPatientName(
+					request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
+			searchData.setPhoneNumber(request.getRequestClient().getPhoneNumber());
+			
+			if(request.getPhysician() == null) {
+				searchData.setPhysicianName("-");
+			}else {
+				searchData.setPhysicianName(
+						request.getPhysician().getFirstName() + " " + request.getPhysician().getLastName());
+			}
 	
+		
+			for (hallodoc.enumerations.RequestType type : hallodoc.enumerations.RequestType.values()) {
+				if(type.getId() == request.getRequestType().getRequestTypeId()) {
+					searchData.setRequestorName(type.getRequestType());
+				}
+			}
+
+			String status = hallodoc.enumerations.RequestStatus.getStatusTypeText(request.getStatus());
+
+			searchData.setRequestStatus(status);
+			searchData.setZip(request.getRequestClient().getZipcode());
+			returnList.add(searchData);
+		}
+
+		return returnList;
+	}
+	
+	public ResponseEntity<Resource> exportSearchRecord(List<SearchRecordsDashboardData> list)
+			throws IOException {
+		String fileName = "SearchRecordsData.xlsx";
+
+		ByteArrayInputStream byteArrayInputStream = ExcelSheetHelper.downlaodSearchRecordData(list);
+		InputStreamResource file = new InputStreamResource(byteArrayInputStream);
+
+		ResponseEntity<Resource> body = ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+				.contentType(MediaType.parseMediaType("application/vnd.ms-excel")).body(file);
+
+		return body;
+		
+	}
+	
+	public String deleteRequest(Integer requestId) {
+		this.requestDao.deleteRequest(requestId);
+		return "Soft Deleted Request";
+	}
 
 }

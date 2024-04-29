@@ -22,7 +22,7 @@
 }
 
 .patient-form{
-    width: 95%;
+    width: 95% !important;
     background-color: white;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .form-control:focus, .form-select:focus{
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .form-floating>.form-control:focus~label{
@@ -108,7 +108,7 @@ td{
 }
 
 a{
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .accordion{
@@ -185,7 +185,7 @@ a{
 }
 
 .accordion-button::after{
-    content: none;
+    content: none !important;
 }
 
 .accordion-button:focus, .accordion-button{
@@ -193,7 +193,7 @@ a{
 }
 
 .accordion-button:not(.collapsed), .accordion-button,.accordion-body{
-    background-color: #e2ebf9;
+    background-color: #e2ebf9 !important;
 }
 
 .row-1-clear-search-btn-flex{

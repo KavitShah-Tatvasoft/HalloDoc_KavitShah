@@ -6,7 +6,8 @@ public enum MessageTypeEnum {
 		SEND_AGREEMENT(2, "Send Agreement"),
 		SEND_FILES(3,"Send Files"),
 		SEND_ORDERS(4,"Send New Order"),
-		SEND_CREDENTIALS_PROVIDER(5,"Send Provider Credentials");
+		SEND_CREDENTIALS_PROVIDER(5,"Send Provider Credentials"),
+		COMMUNICTION_MESSAGE(6,"Communication with Provider");
 		private int messageTypeId;
 		private String messageType;
 		

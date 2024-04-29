@@ -1,5 +1,6 @@
 package hallodoc.dto;
 
+
 public class ProviderMenuDto {
 
 	private boolean stopNotification;
@@ -8,7 +9,16 @@ public class ProviderMenuDto {
 	private String onCallStatus;
 	private String status;
 	private int physicianStatus;
+	private Integer physicianId;
 	
+	
+	
+	public Integer getPhysicianId() {
+		return physicianId;
+	}
+	public void setPhysicianId(Integer physicianId) {
+		this.physicianId = physicianId;
+	}
 	public boolean isStopNotification() {
 		return stopNotification;
 	}
@@ -51,8 +61,9 @@ public class ProviderMenuDto {
 				+ role + ", onCallStatus=" + onCallStatus + ", status=" + status + ", physicianStatus="
 				+ physicianStatus + "]";
 	}
+	
 	public ProviderMenuDto(boolean stopNotification, String providerName, String role, String onCallStatus,
-			String status, int physicianStatus) {
+			String status, int physicianStatus, Integer physicianId) {
 		super();
 		this.stopNotification = stopNotification;
 		this.providerName = providerName;
@@ -60,6 +71,7 @@ public class ProviderMenuDto {
 		this.onCallStatus = onCallStatus;
 		this.status = status;
 		this.physicianStatus = physicianStatus;
+		this.physicianId = physicianId;
 	}
 	public ProviderMenuDto() {
 		super();

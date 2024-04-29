@@ -48,6 +48,7 @@ import hallodoc.model.PhysicianNotification;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
+import hallodoc.model.SmsLog;
 import hallodoc.model.User;
 import hallodoc.repository.AspNetRolesDao;
 import hallodoc.repository.AspNetUserDao;
@@ -57,12 +58,11 @@ import hallodoc.repository.PhysicianNotificationDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestStatusLogDao;
+import hallodoc.sms.SmsService;
 import hallodoc.email.*;
 import hallodoc.enumerations.AspNetRolesEnum;
 import hallodoc.enumerations.MessageTypeEnum;
 import hallodoc.helper.Constants;
-
-
 
 @Service
 public class AdminService {
@@ -94,6 +94,8 @@ public class AdminService {
 	@Autowired
 	private PhysicianNotificationDao physicianNotificationDao;
 	
+	@Autowired
+	private SmsService smsService;
 
 	public List<NewRequestDataDto> getStatusCorrespondingRequests(String status) {
 
@@ -200,6 +202,7 @@ public class AdminService {
 		emailLog.setAction(1);
 		emailLog.setRecipientName(sendLinkDto.getFirstName() + " " + sendLinkDto.getLastName());
 		emailLog.setAdminId(admin.getAdminId());
+		emailLog.setRoleId(3);
 		boolean isSent = false;
 		int sentTries = 1;
 		for (int i = sentTries; i <= 3; i++) {
@@ -426,13 +429,14 @@ public class AdminService {
 		}
 	}
 
-	private String uploadFile(CommonsMultipartFile file, int physicianId, String filename, String path, boolean isNameChange) {
+	private String uploadFile(CommonsMultipartFile file, int physicianId, String filename, String path,
+			boolean isNameChange) {
 		try {
 			String fileExtension = file.getOriginalFilename()
 					.substring(file.getOriginalFilename().lastIndexOf('.') + 1);
 			String fullPath = path + File.separator + physicianId + File.separator + filename;
-			if(isNameChange ) {
-				fullPath +=  "." + fileExtension;
+			if (isNameChange) {
+				fullPath += "." + fileExtension;
 			}
 			byte[] data = file.getBytes();
 			FileOutputStream fos = new FileOutputStream(fullPath);
@@ -583,38 +587,37 @@ public class AdminService {
 		physicianNotificationDao.savePhysicianNotificationOb(physicianNotification);
 
 		int physicianId = updatedPhysician.getPhysicianId();
-		
+
 		String createDirectoryPath = path + File.separator + physicianId;
 		File f1 = new File(createDirectoryPath);
 		f1.mkdir();
-		
 
 		if (isFileEmpty(photo)) {
-			uploadFile(photo, physicianId, photo.getOriginalFilename(), path,false);
+			uploadFile(photo, physicianId, photo.getOriginalFilename(), path, false);
 		}
 
 		if (isFileEmpty(agreementDoc)) {
-			uploadFile(agreementDoc, physicianId, "Agreement_Document", path,true);
+			uploadFile(agreementDoc, physicianId, "Agreement_Document", path, true);
 		}
 
 		if (isFileEmpty(backgroundDoc)) {
-			uploadFile(backgroundDoc, physicianId, "Background_Check_Document", path,true);
+			uploadFile(backgroundDoc, physicianId, "Background_Check_Document", path, true);
 		}
 
 		if (isFileEmpty(ndsDoc)) {
-			uploadFile(ndsDoc, physicianId, "NDS_Document", path,true);
+			uploadFile(ndsDoc, physicianId, "NDS_Document", path, true);
 		}
 
 		if (isFileEmpty(licenseDoc)) {
-			uploadFile(licenseDoc, physicianId, "License_Document", path,true);
+			uploadFile(licenseDoc, physicianId, "License_Document", path, true);
 		}
 
 		if (isFileEmpty(signatureDoc)) {
-			uploadFile(signatureDoc, physicianId, signatureDoc.getOriginalFilename(), path,false);
+			uploadFile(signatureDoc, physicianId, signatureDoc.getOriginalFilename(), path, false);
 		}
 
 		if (isFileEmpty(hipaaDoc)) {
-			uploadFile(hipaaDoc, physicianId, "HIPAA_Document", path,true);
+			uploadFile(hipaaDoc, physicianId, "HIPAA_Document", path, true);
 		}
 		LocalDateTime localDateTime = LocalDateTime.now();
 		EmailLog emailLog = new EmailLog();
@@ -627,8 +630,7 @@ public class AdminService {
 		emailLog.setAction(MessageTypeEnum.SEND_CREDENTIALS_PROVIDER.getMessageTypeId());
 		emailLog.setPhysicianId(physicianId);
 		emailLog.setRecipientName(newProviderAccountDto.getpFirstName() + " " + newProviderAccountDto.getpLastName());
-		
-		
+		emailLog.setRoleId(2);
 		String status = "";
 		boolean isSent = false;
 		int sentTries = 1;
@@ -637,7 +639,7 @@ public class AdminService {
 				continue;
 			}
 			try {
-				this.emailService.sendProviderCredentials(subject, httpServletRequest, newProviderAccountDto );
+				this.emailService.sendProviderCredentials(subject, httpServletRequest, newProviderAccountDto);
 				isSent = true;
 				emailLog.setSentTries(i);
 				emailLog.setEmailSent(isSent);
@@ -658,12 +660,11 @@ public class AdminService {
 		this.logsDao.addEmailLogEntry(emailLog);
 		return "created";
 	}
-	
-	public List<Region> getRegionList(){
+
+	public List<Region> getRegionList() {
 		return this.regionDao.getAllRegions();
 	}
-	
-	
+
 	public ShowProviderDetailsDto getProviderDetails(Integer phyId) {
 		Physician physician = this.physicianDao.getPhysicianById(phyId);
 		AspNetUsers aspNetUsers = physician.getAspNetUsers();
@@ -671,15 +672,15 @@ public class AdminService {
 		List<Integer> phyRegions = this.regionDao.getPhysicianRegion(phyId);
 		List<Region> regions = this.regionDao.getAllRegions();
 		List<Region> providerRegion = new ArrayList<Region>();
-				
+
 		for (Region region : regions) {
 			for (Integer regionId : phyRegions) {
-				if(regionId == region.getRegionId()) {
+				if (regionId == region.getRegionId()) {
 					providerRegion.add(region);
 				}
 			}
 		}
-		
+
 		showDetails.setpUsername(aspNetUsers.getUser_name());
 		showDetails.setpStatus(physician.getStatus());
 		showDetails.setpRole(0);
@@ -709,10 +710,11 @@ public class AdminService {
 		showDetails.setpId(physician.getPhysicianId());
 		return showDetails;
 	}
-	
-	public String updateProviderRoleStatus(Integer id, Integer role, Integer status, HttpServletRequest httpServletRequest) {
+
+	public String updateProviderRoleStatus(Integer id, Integer role, Integer status,
+			HttpServletRequest httpServletRequest) {
 		Physician physician = this.physicianDao.getPhysicianById(id);
-		AspNetUsers adminOb = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		physician.setRole(null);
 		physician.setStatus(status);
 		physician.setModifiedDate(new Date());
@@ -720,19 +722,19 @@ public class AdminService {
 		this.physicianDao.updatePhysician(physician);
 		return "updated physician role and status";
 	}
-	
+
 	public String updatePhysicianPassword(Integer id, String password, HttpServletRequest httpServletRequest) {
 		Physician physician = this.physicianDao.getPhysicianById(id);
 		AspNetUsers aspNetUsers = physician.getAspNetUsers();
 		BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
 		Hash hash = Password.hash(password).with(bcrypt);
-		AspNetUsers adminOb = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
-		
+		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+
 		aspNetUsers.setPassword_hash(hash.getResult());
 		aspNetUsers.setModified_date(new Date());
-		
+
 		this.aspNetUserDao.updateAspNetUser(aspNetUsers);
-		
+
 		LocalDateTime localDateTime = LocalDateTime.now();
 		EmailLog emailLog = new EmailLog();
 		String subject = "Reset Credentials";
@@ -744,8 +746,7 @@ public class AdminService {
 		emailLog.setAction(MessageTypeEnum.SEND_CREDENTIALS_PROVIDER.getMessageTypeId());
 		emailLog.setPhysicianId(physician.getPhysicianId());
 		emailLog.setRecipientName(physician.getFirstName() + " " + physician.getLastName());
-		
-		
+		emailLog.setRoleId(2);
 		String status = "";
 		boolean isSent = false;
 		int sentTries = 1;
@@ -754,7 +755,7 @@ public class AdminService {
 				continue;
 			}
 			try {
-				this.emailService.sendProviderResetCredentials(subject, httpServletRequest, password, physician );
+				this.emailService.sendProviderResetCredentials(subject, httpServletRequest, password, physician);
 				isSent = true;
 				emailLog.setSentTries(i);
 				emailLog.setEmailSent(isSent);
@@ -773,19 +774,20 @@ public class AdminService {
 		}
 
 		this.logsDao.addEmailLogEntry(emailLog);
-		
+
 		return "updated password";
 	}
-	
-	public String updateProviderMailingDetails(ProviderMailingDto providerMailingDto, HttpServletRequest httpServletRequest) {
-		
+
+	public String updateProviderMailingDetails(ProviderMailingDto providerMailingDto,
+			HttpServletRequest httpServletRequest) {
+
 		Physician physician = this.physicianDao.getPhysicianById(providerMailingDto.getId());
-		AspNetUsers adminOb = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		Region region = this.regionDao.getRegionById(Integer.parseInt(providerMailingDto.getState())).get(0);
 		Date date = new Date();
 		AspNetUsers phyAspUser = physician.getAspNetUsers();
 		User user = phyAspUser.getUser();
-		
+
 		physician.setAddressOne(providerMailingDto.getAddress1());
 		physician.setAddressTwo(providerMailingDto.getAddress2());
 		physician.setCity(providerMailingDto.getCity());
@@ -794,8 +796,7 @@ public class AdminService {
 		physician.setAltPhone(providerMailingDto.getPhone());
 		physician.setModifiedBy(adminOb);
 		physician.setModifiedDate(date);
-		
-		
+
 		user.setStreet(providerMailingDto.getAddress1() + ", " + providerMailingDto.getAddress2());
 		user.setCity(providerMailingDto.getCity());
 		user.setState(region.getName());
@@ -803,18 +804,19 @@ public class AdminService {
 		user.setModifiedBy(adminOb);
 		user.setModifiedDate(date);
 		user.setRegion(region);
-		
+
 		phyAspUser.setUser(user);
 		phyAspUser.setPhysician(physician);
-		
+
 		aspNetUserDao.updateAspNetUser(phyAspUser);
-		
+
 		return "Updated mailinf information";
 	}
-	
-	public String updateProviderInfo(ProviderUpdatedInfoDto providerUpdatedInfoDto, HttpServletRequest httpServletRequest) {
-		
-		AspNetUsers adminOb = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+
+	public String updateProviderInfo(ProviderUpdatedInfoDto providerUpdatedInfoDto,
+			HttpServletRequest httpServletRequest) {
+
+		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		Physician physician = this.physicianDao.getPhysicianById(providerUpdatedInfoDto.getId());
 		this.regionDao.deleteProviderRegionEntry(physician.getPhysicianId());
 		AspNetUsers phyAspUser = physician.getAspNetUsers();
@@ -823,24 +825,24 @@ public class AdminService {
 		String[] regionTokens = providerUpdatedInfoDto.getRegions().split(",");
 		List<Region> phyRegions = new ArrayList<Region>();
 		List<Region> allRegions = regionDao.getAllRegions();
-		
+
 		for (Region region : allRegions) {
 			for (String strRegion : regionTokens) {
-				if(region.getRegionId() == Integer.parseInt(strRegion)) {
+				if (region.getRegionId() == Integer.parseInt(strRegion)) {
 					phyRegions.add(region);
 				}
 			}
 		}
-		
+
 		phyAspUser.setPhone_number(providerUpdatedInfoDto.getPhone());
 		phyAspUser.setModified_date(date);
-		
+
 		phyUser.setFirstName(providerUpdatedInfoDto.getfName());
 		phyUser.setLastName(providerUpdatedInfoDto.getlName());
 		phyUser.setMobile(providerUpdatedInfoDto.getPhone());
 		phyUser.setModifiedBy(adminOb);
 		phyUser.setModifiedDate(date);
-		
+
 		physician.setFirstName(providerUpdatedInfoDto.getfName());
 		physician.setLastName(providerUpdatedInfoDto.getlName());
 		physician.setMobile(providerUpdatedInfoDto.getPhone());
@@ -850,50 +852,157 @@ public class AdminService {
 		physician.setRegions(phyRegions);
 		physician.setModifiedDate(date);
 		physician.setModifiedBy(adminOb);
-		
+
 		phyAspUser.setUser(phyUser);
 		phyAspUser.setPhysician(physician);
-		
+
 		this.aspNetUserDao.updateAspNetUser(phyAspUser);
-		
+
 		return "Updated Physician Information";
-		
+
 	}
-	
+
 	public String deleteProviderAccount(Integer phyId) {
 		this.physicianDao.deleteProviderAccount(phyId);
 		return "Soft Deleted";
 	}
-	
-	public List<ProviderMenuDto> getProviderMenuDetails(Integer regionId){
-		List<Physician> physicians ;
+
+	public List<ProviderMenuDto> getProviderMenuDetails(Integer regionId) {
+		List<Physician> physicians;
 		List<ProviderMenuDto> providerMenuDtos = new ArrayList<ProviderMenuDto>();
 		
-		
-		
-		if(regionId == 0) {
+		if (regionId == 0) {
 			physicians = this.physicianDao.getAllActivePhysician();
-		}else {
-			physicians = this.physicianDao.getPhysicianObByRegion(regionId);
+		} else {
+			List<Integer> phyIdList = this.physicianDao.getPhysicianObByRegion(regionId);
+			physicians = this.physicianDao.getPhysicianByRegionList(phyIdList);
 		}
-		
+
 		for (Physician phy : physicians) {
-			String physicianStatus = phy.getStatus() == 1 ? "Active" : "Inactive"; 
+			String physicianStatus = phy.getStatus() == 1 ? "Active" : "Inactive";
 			ProviderMenuDto providerMenuDto = new ProviderMenuDto();
 			providerMenuDto.setOnCallStatus("Available");
 			providerMenuDto.setPhysicianStatus(phy.getStatus());
-			providerMenuDto.setProviderName(phy.getFirstName()+" "+phy.getLastName());
+			providerMenuDto.setProviderName(phy.getFirstName() + " " + phy.getLastName());
 			providerMenuDto.setRole("Provider");
 			providerMenuDto.setPhysicianStatus(phy.getStatus());
 			providerMenuDto.setStatus(physicianStatus);
 			providerMenuDto.setStopNotification(phy.getPhysicianNotification().getIsNotificationStopped());
+			providerMenuDto.setPhysicianId(phy.getPhysicianId());
 			providerMenuDtos.add(providerMenuDto);
 		}
-		
+
 		return providerMenuDtos;
-		
+
+	}
+
+	public String changeProviderNotification(Integer id) {
+
+		return this.physicianNotificationDao.toggleNotification(id);
+
+	}
+	
+	private String sendSMSPhysician(Physician physician, String message, HttpServletRequest httpServletRequest) {
+		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		SmsLog smsLog = new SmsLog();
+		smsLog.setMobileNumber(physician.getMobile());
+		smsLog.setAdminId(adminOb.getAdmin().getAdminId());
+		smsLog.setPhysicianId(physician.getPhysicianId());
+		smsLog.setCreatedDate(localDateTime);
+		smsLog.setSentDate(localDateTime);
+		smsLog.setAction(MessageTypeEnum.COMMUNICTION_MESSAGE.getMessageTypeId());
+		smsLog.setRecipientName(physician.getFirstName() + " " + physician.getLastName());
+		smsLog.setRoleId(2);
+		String status = "";
+		boolean isSmsSent = false;
+		int smsSentTries = 1;
+		for (int i = smsSentTries; i <= 3; i++) {
+			if (isSmsSent) {
+				continue;
+			}
+			try {
+				this.smsService.sendCommunicationSms("Communication SMS", message, physician);
+				isSmsSent = true;
+				smsLog.setSentTries(i);
+				smsLog.setSmsSent(isSmsSent);
+				this.logsDao.addSmsLogEntry(smsLog);
+				status = status + "sms send";
+
+			} catch (Exception e) {
+				if (i == 3) {
+					smsLog.setSentTries(3);
+					smsLog.setSmsSent(isSmsSent);
+					this.logsDao.addSmsLogEntry(smsLog);
+					status = status + " failed to send send";
+
+				}
+			}
+		}
+
+		return status;
 		
 	}
 	
+	private String sendEmailPhysician(Physician physician, String message, HttpServletRequest httpServletRequest) {
+		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		EmailLog emailLog = new EmailLog();
+		String subject = "Communication Email";
+		emailLog.setSubjectName(subject);
+		emailLog.setEmailId(physician.getEmail());
+		emailLog.setAdminId(adminOb.getAdmin().getAdminId());
+		emailLog.setCreatedDate(localDateTime);
+		emailLog.setSentDate(localDateTime);
+		emailLog.setAction(MessageTypeEnum.COMMUNICTION_MESSAGE.getMessageTypeId());
+		emailLog.setPhysicianId(physician.getPhysicianId());
+		emailLog.setRecipientName(physician.getFirstName() + " " + physician.getLastName());
+		emailLog.setRoleId(2);
+		String status = "";
+		boolean isSent = false;
+		int sentTries = 1;
+		for (int i = sentTries; i <= 3; i++) {
+			if (isSent) {
+				continue;
+			}
+			try {
+				this.emailService.communicationEmail(subject, message, physician);
+				isSent = true;
+				emailLog.setSentTries(i);
+				emailLog.setEmailSent(isSent);
+				this.logsDao.addEmailLogEntry(emailLog);
+				status = status + "mail send";
+
+			} catch (Exception e) {
+				if (i == 3) {
+					emailLog.setSentTries(3);
+					emailLog.setEmailSent(false);
+					this.logsDao.addEmailLogEntry(emailLog);
+					status = status + "failed to send mail";
+
+				}
+			}
+		}
+
+		this.logsDao.addEmailLogEntry(emailLog);
+		return status;
+	}
+
+	public String contactProvider(Integer id, String method, String message, HttpServletRequest httpServletRequest) {
+		Physician physician = this.physicianDao.getPhysicianById(id);
+
+		switch (method) {
+		case "EMAIL":
+				return sendEmailPhysician(physician,message, httpServletRequest);
+		case "SMS":
+			return sendSMSPhysician(physician,message, httpServletRequest);
+
+		default:
+			String status = "";
+			status += sendEmailPhysician(physician,message,httpServletRequest);
+			status = status + " " + sendSMSPhysician(physician,message,httpServletRequest);
+			return status;	
+		}
+	}
 
 }

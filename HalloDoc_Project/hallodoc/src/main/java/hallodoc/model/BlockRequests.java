@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import hallodoc.helper.DateHelper;
+
 @Entity
 @Table(name="block_requests")
 public class BlockRequests {
@@ -49,6 +51,17 @@ public class BlockRequests {
 	@UpdateTimestamp
 	@Column(name="modified_date")
 	private LocalDateTime modifiedDate;
+	
+	
+	public String getFormattedCreatedDate() {
+		String[] date = this.createdDate.toString().split("T")[0].split("-");
+		String year = date[0];
+		String day = date[2];
+		String month = DateHelper.getMonthName(Integer.parseInt(date[1]));
+		
+		return month + " " + day + ", " + year;
+	}
+	
 
 	public int getBlockRequestId() {
 		return blockRequestId;

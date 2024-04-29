@@ -219,5 +219,15 @@ public class SmsLog {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public String getOnlyCreatedDate() {
+		String[] tokens = this.createdDate.toString().split("T");
+		return tokens[0];
+	}
+	
+	public String getOnlySentDate() {
+		String[] tokens = this.sentDate.toString().split("T");
+		return tokens[0];
+	}
+	
 	
 }

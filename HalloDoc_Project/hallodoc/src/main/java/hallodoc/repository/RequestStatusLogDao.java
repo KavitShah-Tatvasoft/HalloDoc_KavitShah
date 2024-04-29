@@ -18,7 +18,6 @@ import hallodoc.model.RequestStatusLog;
 @Repository
 public class RequestStatusLogDao {
 
-
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -30,15 +29,29 @@ public class RequestStatusLogDao {
 		int id = (Integer) this.hibernateTemplate.save(requestStatusLog);
 		return id;
 	}
-	
-	public List<RequestStatusLog> getAllRequestSpecificLogs(int reqId){
+
+	public List<RequestStatusLog> getAllRequestSpecificLogs(int reqId) {
 		Session s = this.sessionFactory.openSession();
-		
+
 //		String queryString = "select new hallodoc.dto.ViewNotesDto(rsl.request_status_log_id,rsl.status,rsl.notes,rsl.createdDate,rn.adminNotes,rn.physicanNotes) from RequestStatusLog rsl right join RequestNotes rn on rsl.request.requestId = rn.request.requestId where rsl.request.requestId=: reqId ";
 		String queryString = "FROM RequestStatusLog where request.requestId=: reqId";
-		
+
 		Query q = s.createQuery(queryString);
 		q.setParameter("reqId", reqId);
+		List<RequestStatusLog> requestStatusLogs = q.list();
+		s.close();
+
+		return requestStatusLogs;
+	}
+
+	public List<RequestStatusLog> getStatusSpecificLogs(int status, int requestId) {
+		Session s = this.sessionFactory.openSession();
+		
+		String queryString = "FROM RequestStatusLog rsl WHERE rsl.request.requestId=: requestId AND rsl.status =: status";
+		
+		Query q = s.createQuery(queryString);
+		q.setParameter("requestId", requestId);
+		q.setParameter("status",status);
 		List<RequestStatusLog> requestStatusLogs = q.list();
 		s.close();
 

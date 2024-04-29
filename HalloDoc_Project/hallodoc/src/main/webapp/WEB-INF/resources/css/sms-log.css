@@ -3,7 +3,7 @@
 }
 
 .patient-form{
-    width: 95%;
+    width: 95% !important;
     background-color: white;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .form-control:focus, .form-select:focus{
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .form-floating>.form-control:focus~label{
@@ -103,7 +103,7 @@ td{
 }
 
 a{
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .calendar-resize-search{

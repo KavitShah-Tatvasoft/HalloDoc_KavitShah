@@ -16,6 +16,7 @@ import com.twilio.sdk.resource.instance.Message;
 
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.helper.*;
+import hallodoc.model.Physician;
 import hallodoc.model.Request;
 
 @Service
@@ -53,4 +54,32 @@ public class SmsService {
 		 
 		 return "SMS Send";
 	}
+	
+	
+	public String sendCommunicationSms(String smsSubject, String messages, Physician physician) {
+
+		 try {
+		        TwilioRestClient client = new TwilioRestClient(Constants.ACCOUNT_SID, Constants.AUTH_TOKEN);
+		    
+		        String messageBody = "Greeting from Admin. Hi " + capitalize(physician.getFirstName()) + " " + capitalize(physician.getLastName()) 
+		        		+ ",hope you are fine. "
+		        		+ messages ;
+		        		
+		        // Build a filter for the MessageList 
+		        List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("Body", messageBody));
+		        params.add(new BasicNameValuePair("To", "+916351627219")); //Add real number here
+		        params.add(new BasicNameValuePair("From", Constants.TWILIO_NUMBER));
+
+		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
+		        Message message = messageFactory.create(params);
+		        System.out.println(message.getSid());
+		    } 
+		    catch (TwilioRestException e) {
+		        System.out.println(e.getErrorMessage());
+		    }
+		 
+		 return "SMS Send";
+	}
+	
 }

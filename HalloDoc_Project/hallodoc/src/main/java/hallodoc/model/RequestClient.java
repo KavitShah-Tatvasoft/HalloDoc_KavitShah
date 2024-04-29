@@ -299,8 +299,11 @@ public class RequestClient {
 	}
 	
 	public String getFullAddress() {
-		return street + " " + city + " " + state + " " + " " + zipcode;
+		return street + ", " + city + ", " + state + " " + zipcode;
 	}
 	
+	public String getNoZipAddress() {
+		return street + ", " + city + ", " + state;
+	}
 	
 }

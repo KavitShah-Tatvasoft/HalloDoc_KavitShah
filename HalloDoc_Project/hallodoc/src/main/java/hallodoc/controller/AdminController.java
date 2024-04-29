@@ -430,5 +430,17 @@ public class AdminController {
 		this.aService.deleteProviderAccount(phyId);
 		return new RedirectView("../physicianMenu",true);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/toggleNotification",method =RequestMethod.POST)
+	public String toggleNotification(@RequestParam("id") Integer id) {
+		return this.aService.changeProviderNotification(id);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/contactProvider", method = RequestMethod.POST )
+	public String contactProvider(@RequestParam("id") Integer id, @RequestParam("method") String method, @RequestParam("message") String message, HttpServletRequest httpServletRequest) {
+		return this.aService.contactProvider(id,method,message,httpServletRequest);
+	}
 
 }

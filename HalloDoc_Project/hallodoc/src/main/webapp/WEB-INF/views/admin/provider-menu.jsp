@@ -31,7 +31,7 @@
 			<div class="col-12 flex-create-account-search">
 
 				<div class="select-parent">
-					<select name="regions" id="" class="form-select select-physician select-physician-region-dropdown">
+					<select name="regions" id="" onchange="showProviderMenuData()" class="form-select select-physician select-physician-region-dropdown">
 						<option value="0">All</option>
 						
 						<c:forEach items="${regionList}" var="region">
@@ -65,48 +65,50 @@
 					<th scope="col" class="thead width-col6 text-center">Action</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td class="extra-padding-td stop-checkbox-flex"><input
+			
+			<tr class="tr-clone d-none">
+					<td class="extra-padding-td stop-checkbox-flex"><input class="noti-checkbox"
 						type="checkbox" class="stop-checkbox" name="" id=""></td>
-					<td>Derek Shah</td>
-					<td>Main Admin</td>
-					<td>Available</td>
-					<td>Active</td>
+					<td class="name-td">Derek Shah</td>
+					<td class="role-td">Main Admin</td>
+					<td class="on-call-status-td">Available</td>
+					<td class="active-td">Active</td>
 					<td class="contact-flex">
-						<button data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-							class="contact-btn">
+						<button class="contact-btn contact-btn-menu" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+							>
 							<span>Contact</span>
-						</button> <a href="edit-physician-account.html">
+						</button> <a href="edit-physician-account.html" class="edit-btn-menu">
 							<div class="contact-btn edit-btn">
 								<span>Edit</span>
 							</div>
 					</a>
 					</td>
 				</tr>
+				
+				
+			<tbody class="empty-tbody-provider-menu">
+				
 			</tbody>
 		</table>
-
-		<div class="row accordion-top">
-			<div class="accordion" id="accordionPanelsStayOpenExample">
-				<div class="accordion-item">
+		
+		<div class="accordion-item clone-accordion d-none" >
 					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-						<button class="accordion-button accordian-btn-flex" type="button"
+						<button class="accordion-button accordian-btn-flex accordion-target" type="button"
 							data-bs-toggle="collapse"
 							data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
 							aria-controls="panelsStayOpen-collapseOne">
 							<div class="extra-padding-td stop-checkbox-flex">
-								<input type="checkbox" class="stop-checkbox" name="" id="">
-								<span class="accordion-row-name">Derek Shah</span>
+								<input type="checkbox" class="stop-checkbox accordion-checkbox-menu" name="" id=""/>
+								<span class="accordion-row-name accordion-row-name-menu">Derek Shah</span>
 							</div>
 							<div class="oncall-status-col">
 								<span class="oncall-status-text">On Call Status : </span><strong
-									class="status-text">Available</strong>
+									class="status-text status-text-menu">Available</strong>
 							</div>
 						</button>
 					</h2>
 					<div id="panelsStayOpen-collapseOne"
-						class="accordion-collapse collapse show"
+						class="accordion-collapse collapse accordion-main-id"
 						aria-labelledby="panelsStayOpen-headingOne">
 						<div class="accordion-body accordion-rows-flex">
 							<div class="accordion-body-row-flex">
@@ -115,7 +117,7 @@
 										class="accordion-row-img" alt="">
 								</div>
 								<span class="role-text-accordion">Role:</span> <span
-									class="role-accordion">Master Admin</span>
+									class="role-accordion role-accordion-menu">Master Admin</span>
 							</div>
 
 							<div class="accordion-body-row-flex">
@@ -124,16 +126,16 @@
 										class="accordion-row-img" alt="">
 								</div>
 								<span class="role-text-accordion">Status:</span> <span
-									class="role-accordion">Available</span>
+									class="role-accordion status-accordion-menu">Available</span>
 							</div>
 
 							<div class="accordion-bottom-btn-flex">
-								<button data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-									class="contact-btn shrink-btns">
+								<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" 
+									class="contact-btn shrink-btns contact-btn-accordion">
 									<span>Contact</span>
 								</button>
 
-								<a href="edit-physician-account.html">
+								<a href="edit-physician-account.html " class="edit-link-accordion">
 									<div class="accordion-bottom-btn edit-btn">Edit</div>
 								</a>
 							</div>
@@ -142,7 +144,11 @@
 						</div>
 					</div>
 				</div>
-			</div>
+		
+
+		<div class="row accordion-top">
+			<div class="accordion empty-accordion" id="accordionPanelsStayOpenExample">
+							</div>
 		</div>
 
 
@@ -162,33 +168,32 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div class="font-clr-light">Choose communication to send
-						message</div>
-					<br>
-
-					<form action="">
+				<form id="communication-method-form" method="post">
+					<div class="modal-body">
+						<div class="font-clr-light">Choose communication to send
+							message</div>
+						<br> <input type="text" hidden class="hiddden-phy-id">
 						<div class="radio-flex">
-							<input type="radio" class="inp-radio-margin" name="method"
+							<input type="radio" class="inp-radio-margin" name="method-communication"
 								id="sms" value="SMS"> <label for="sms">SMS</label><br>
 						</div>
 						<div class="radio-flex">
-							<input type="radio" class="inp-radio-margin" name="method"
-								id="email" value="Email"> <label for="email">Email</label><br>
+							<input type="radio" class="inp-radio-margin" name="method-communication"
+								id="email" value="EMAIL"> <label for="email">Email</label><br>
 						</div>
 						<div class="radio-flex">
-							<input type="radio" class="inp-radio-margin" name="method"
-								id="both" value="Both"> <label for="both">Both</label><br>
+							<input type="radio" class="inp-radio-margin" name="method-communication"
+								id="both" value="BOTH"> <label for="both">Both</label><br>
 						</div>
-						<textarea name="message" class="form-control" id="" cols="10"
+						<textarea name="message" class="form-control communication-description" id="" cols="10"
 							rows="5" placeholder="Message"></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="send-btn">Send</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="send-btn">Send</button>
+						<button type="reset" class="cancel-btn close-pop-up" data-bs-dismiss="modal">Cancel</button>
 
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
