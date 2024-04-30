@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.event.MenuDragMouseEvent;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,27 +31,35 @@ import hallodoc.dto.AdminAddressDto;
 import hallodoc.dto.AdminContactDto;
 import hallodoc.dto.AdminRegions;
 import hallodoc.dto.AssignCaseDto;
+import hallodoc.dto.CreateRoleDataDto;
+import hallodoc.dto.EditRoleDto;
+import hallodoc.dto.MenusDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
+import hallodoc.dto.RolesDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.ShowProviderDetailsDto;
 import hallodoc.dto.StatusWiseCountDto;
+import hallodoc.dto.UserAccessDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.model.Admin;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.EmailLog;
+import hallodoc.model.Menu;
 import hallodoc.model.Physician;
 import hallodoc.model.PhysicianNotification;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
+import hallodoc.model.Role;
 import hallodoc.model.SmsLog;
 import hallodoc.model.User;
+import hallodoc.repository.AdminDao;
 import hallodoc.repository.AspNetRolesDao;
 import hallodoc.repository.AspNetUserDao;
 import hallodoc.repository.LogsDao;
@@ -58,6 +68,7 @@ import hallodoc.repository.PhysicianNotificationDao;
 import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestStatusLogDao;
+import hallodoc.repository.RoleAccessDao;
 import hallodoc.sms.SmsService;
 import hallodoc.email.*;
 import hallodoc.enumerations.AspNetRolesEnum;
@@ -93,9 +104,15 @@ public class AdminService {
 
 	@Autowired
 	private PhysicianNotificationDao physicianNotificationDao;
-	
+
 	@Autowired
 	private SmsService smsService;
+
+	@Autowired
+	private RoleAccessDao roleAccessDao;
+
+	@Autowired
+	private AdminDao adminDao;
 
 	public List<NewRequestDataDto> getStatusCorrespondingRequests(String status) {
 
@@ -870,7 +887,7 @@ public class AdminService {
 	public List<ProviderMenuDto> getProviderMenuDetails(Integer regionId) {
 		List<Physician> physicians;
 		List<ProviderMenuDto> providerMenuDtos = new ArrayList<ProviderMenuDto>();
-		
+
 		if (regionId == 0) {
 			physicians = this.physicianDao.getAllActivePhysician();
 		} else {
@@ -901,7 +918,7 @@ public class AdminService {
 		return this.physicianNotificationDao.toggleNotification(id);
 
 	}
-	
+
 	private String sendSMSPhysician(Physician physician, String message, HttpServletRequest httpServletRequest) {
 		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -941,9 +958,9 @@ public class AdminService {
 		}
 
 		return status;
-		
+
 	}
-	
+
 	private String sendEmailPhysician(Physician physician, String message, HttpServletRequest httpServletRequest) {
 		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -993,16 +1010,221 @@ public class AdminService {
 
 		switch (method) {
 		case "EMAIL":
-				return sendEmailPhysician(physician,message, httpServletRequest);
+			return sendEmailPhysician(physician, message, httpServletRequest);
 		case "SMS":
-			return sendSMSPhysician(physician,message, httpServletRequest);
+			return sendSMSPhysician(physician, message, httpServletRequest);
 
 		default:
 			String status = "";
-			status += sendEmailPhysician(physician,message,httpServletRequest);
-			status = status + " " + sendSMSPhysician(physician,message,httpServletRequest);
-			return status;	
+			status += sendEmailPhysician(physician, message, httpServletRequest);
+			status = status + " " + sendSMSPhysician(physician, message, httpServletRequest);
+			return status;
 		}
+	}
+
+	public List<MenusDto> getRoleMenus(Integer roleId) {
+		List<MenusDto> menuDtoList = new ArrayList<MenusDto>();
+		List<Menu> menus = this.roleAccessDao.getRoleRelatedMenus(roleId);
+
+		for (Menu menu : menus) {
+			MenusDto menusDto = new MenusDto();
+			menusDto.setAccountType(menu.getAccountType());
+			menusDto.setMenuId(menu.getMenuId());
+			menusDto.setName(menu.getName());
+			menuDtoList.add(menusDto);
+		}
+
+		return menuDtoList;
+	}
+
+	public void createNewRoleAccess(CreateRoleDataDto createRoleDataDto, HttpServletRequest httpServletRequest) {
+		AspNetUsers adminAsp = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		List<Integer> menuIds = new ArrayList<Integer>();
+		String[] menus = createRoleDataDto.getSelectedMenu().split(",");
+
+		for (String string : menus) {
+			menuIds.add(Integer.parseInt(string));
+		}
+
+		List<Menu> menuList = this.roleAccessDao.getMenuObList(menuIds);
+
+		Role role = new Role();
+		role.setCreatedBy(adminAsp);
+		role.setModifiedBy(adminAsp);
+		role.setDeleted(false);
+		role.setMenus(menuList);
+		role.setName(createRoleDataDto.getRoleName());
+		role.setAccountType(createRoleDataDto.getRoleType());
+
+		this.roleAccessDao.saveRole(role);
+	}
+
+	public List<RolesDto> getRolesDataForAccountAccess() {
+		List<RolesDto> rolesDtos = new ArrayList<RolesDto>();
+		List<Role> roles = this.roleAccessDao.getAllActiveRoles();
+
+		for (Role role : roles) {
+			RolesDto rolesDto = new RolesDto();
+			rolesDto.setAccountType(role.getAccountType());
+			rolesDto.setRoleId(role.getRoleId());
+			rolesDto.setRoleName(role.getName());
+			rolesDtos.add(rolesDto);
+		}
+
+		return rolesDtos;
+	}
+
+	@Transactional
+	public EditRoleDto getEditRolesDetails(Integer roleId) {
+
+		EditRoleDto editRoleDto = new EditRoleDto();
+
+		Role role = this.roleAccessDao.getRoleOb(roleId);
+		List<MenusDto> listMenu = new ArrayList<MenusDto>();
+		List<MenusDto> roleTypeAllMenus = new ArrayList<MenusDto>();
+
+		List<Menu> menus = role.getMenus();
+		List<Menu> roleTypeMenus = this.roleAccessDao.getAllMenuForRoleType(role.getAccountType());
+
+		for (Menu menu : menus) {
+			MenusDto menusDto = new MenusDto();
+			menusDto.setAccountType(menu.getAccountType());
+			menusDto.setMenuId(menu.getMenuId());
+			menusDto.setName(menu.getName());
+			listMenu.add(menusDto);
+		}
+
+		for (Menu menu : roleTypeMenus) {
+			MenusDto menusDto = new MenusDto();
+			menusDto.setAccountType(menu.getAccountType());
+			menusDto.setMenuId(menu.getMenuId());
+			menusDto.setName(menu.getName());
+			roleTypeAllMenus.add(menusDto);
+		}
+
+		editRoleDto.setRoleName(role.getName());
+		editRoleDto.setRoleType(role.getAccountType());
+		editRoleDto.setAllRoleTypeMenuList(roleTypeAllMenus);
+		editRoleDto.setMenuList(listMenu);
+
+		return editRoleDto;
+
+	}
+
+	public void updateRoleDetails(String menusString, Integer roleId) {
+
+		Role role = this.roleAccessDao.getRoleOb(roleId);
+
+		List<Integer> menuIds = new ArrayList<Integer>();
+		String[] menus = menusString.split(",");
+
+		for (String string : menus) {
+			menuIds.add(Integer.parseInt(string));
+		}
+
+		this.roleAccessDao.deleteAllRoleMenuById(roleId);
+
+		List<Menu> menuList = this.roleAccessDao.getMenuObList(menuIds);
+		role.setMenus(menuList);
+		this.roleAccessDao.updateRole(role);
+	}
+
+	public void deleteRole(Integer roleId) {
+		this.roleAccessDao.deleteRoleById(roleId);
+	}
+	
+	
+	private List<UserAccessDto> getPhysicianList(List<Physician> phyList){
+		List<UserAccessDto> userAccessDtos = new ArrayList<UserAccessDto>();
+		for (Physician physician : phyList) {
+			UserAccessDto userAccessDto = new UserAccessDto();
+			userAccessDto.setAccountType("Provider");
+			userAccessDto.setName(physician.getFirstName() + " " + physician.getLastName());
+			
+			List<Request> physicianRequests = this.requestDao.getPhysicianRequests(physician.getPhysicianId());
+			
+			userAccessDto.setOpenRequests(physicianRequests.size());
+			String status = physician.getStatus() == 1 ? "Active" : "Inactive";
+			userAccessDto.setStatus(status);
+			userAccessDto.setUserId(physician.getPhysicianId());
+			userAccessDto.setPhoneNumber(physician.getMobile());
+			userAccessDtos.add(userAccessDto);
+
+		}
+		return userAccessDtos;
+		
+		
+	}
+	
+	private List<UserAccessDto> getAdminList(List<Admin> adminList, Integer noRequest){
+		
+		List<UserAccessDto> userAccessDtos = new ArrayList<UserAccessDto>();
+		for (Admin admin : adminList) {
+			UserAccessDto userAccessDto = new UserAccessDto();
+			userAccessDto.setAccountType("Admin");
+			userAccessDto.setName(admin.getFirstName() + " " + admin.getLastName());
+			userAccessDto.setOpenRequests(noRequest);
+			userAccessDto.setStatus("Active");
+			userAccessDto.setUserId(admin.getAdminId());
+			userAccessDto.setPhoneNumber(admin.getAltPhone());
+			userAccessDtos.add(userAccessDto);
+
+		}
+		
+		return userAccessDtos;
+		
+	}
+	
+
+	@Transactional
+	public List<UserAccessDto> getUserAccessData(Integer typeId) {
+		
+		Integer noRequest = this.requestDao.getOpenReqeustCount();
+		List<Admin> adminList = this.adminDao.getAdminData();
+//		List<UserAccessDto> userAccessDtos = new ArrayList<UserAccessDto>();
+		List<Physician> phyList = this.physicianDao.getAllActivePhysician();
+		
+		if(typeId == 0) {
+			List<UserAccessDto> physicianLists = getPhysicianList(phyList);
+			List<UserAccessDto> adminLists = getAdminList(adminList,noRequest);
+			List<UserAccessDto> commonList = Stream.concat(physicianLists.stream(), adminLists.stream()).toList();
+			return commonList;
+		}else if (typeId == 1) {
+			return  getAdminList(adminList,noRequest);
+		}else {
+			return getPhysicianList(phyList);
+		}
+		
+//		for (Physician physician : phyList) {
+//			UserAccessDto userAccessDto = new UserAccessDto();
+//			userAccessDto.setAccountType("Provider");
+//			userAccessDto.setName(physician.getFirstName() + " " + physician.getLastName());
+//			
+//			List<Request> physicianRequests = this.requestDao.getPhysicianRequests(physician.getPhysicianId());
+//			
+//			userAccessDto.setOpenRequests(physicianRequests.size());
+//			String status = physician.getStatus() == 1 ? "Active" : "Inactive";
+//			userAccessDto.setStatus(status);
+//			userAccessDto.setUserId(physician.getPhysicianId());
+//			userAccessDto.setPhoneNumber(physician.getMobile());
+//			userAccessDtos.add(userAccessDto);
+//
+//		}
+//
+//		for (Admin admin : adminList) {
+//			UserAccessDto userAccessDto = new UserAccessDto();
+//			userAccessDto.setAccountType("Admin");
+//			userAccessDto.setName(admin.getFirstName() + " " + admin.getLastName());
+//			userAccessDto.setOpenRequests(63);
+//			userAccessDto.setStatus("Active");
+//			userAccessDto.setUserId(admin.getAdminId());
+//			userAccessDto.setPhoneNumber(admin.getAltPhone());
+//			userAccessDtos.add(userAccessDto);
+//
+//		}
+
+//		return userAccessDtos;
+
 	}
 
 }

@@ -1,20 +1,29 @@
-function deleteRequest(reqId){
-	
+function deleteRequest(reqId) {
+
 	$.ajax({
-		url: 'getSearchRecordFilteredData',
+		url: 'deleteRequest',
 		type: 'POST',
-		data: payload,
-		success: function(res) {},
-		error: function(res){}
-		
-		})
-		
-	
+		data: {
+
+			reqId: reqId
+
+		},
+		success: function(res) {
+			console.log(res)
+			getSearchRecordsData()
+		},
+		error: function(res) {
+			console.log("failed to delete data")
+		}
+
+	})
+
+
 }
 
 
-function clearFilters(){
-	
+function clearFilters() {
+
 	$(".filter-request-status").prop('selectedIndex', 0);
 	$(".filter-name").val("")
 	$(".filter-request-type").prop('selectedIndex', 0);
@@ -23,7 +32,7 @@ function clearFilters(){
 	$(".filter-provider-name").val("")
 	$(".filter-email").val("")
 	$(".filter-phone").val("")
-	
+
 	getSearchRecordsData()
 }
 
@@ -78,7 +87,7 @@ function getSearchRecordsData() {
 				rowCard.find(".phy-nt-td").text(data.physicianNote)
 				rowCard.find(".admin-nt-td").text(data.adminNotes)
 				rowCard.find(".patient-nt-td").text(data.patientNotes)
-				rowCard.find(".delete-td").attr("onclick","deleteRequest("+ data.requestId +")")
+				rowCard.find(".delete-td").attr("onclick", "deleteRequest(" + data.requestId + ")")
 				tbody.append(rowCard)
 
 
@@ -99,7 +108,7 @@ function getSearchRecordsData() {
 				accordionCard.find(".acc-provider-notes-td").text(data.physicianNote)
 				accordionCard.find(".acc-admin-notes-td").text(data.adminNotes)
 				accordionCard.find(".acc-pt-notes").text(data.patientNotes)
-				accordionCard.find(".delete-td").attr("onclick","deleteRequest("+ data.requestId +")")
+				accordionCard.find(".delete-td").attr("onclick", "deleteRequest(" + data.requestId + ")")
 				accordionBody.append(accordionCard)
 			})
 
@@ -114,8 +123,8 @@ function getSearchRecordsData() {
 }
 
 
-function downloadFilteredData(){
-	
+function downloadFilteredData() {
+
 	var requestStatus = $(".filter-request-status").val()
 	var firstName = $(".filter-name").val()
 	var requestType = $(".filter-request-type").val()

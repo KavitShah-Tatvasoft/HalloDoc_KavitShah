@@ -344,5 +344,28 @@ public class RequestDao {
 		s.close();
 		
 	}
+	
+	
+	public List<Request> getPhysicianRequests(Integer phyId) {
+		Session s = this.sessionFactory.openSession();
+		String query = "FROM Request re WHERE re.physician.physicianId =: phyId";
+		Query hql = s.createQuery(query);
+		hql.setParameter("phyId", phyId);
+		List<Request> lists = hql.list();
+		s.close();
+		return lists;
+		
+	}
+	
+	public Integer getOpenReqeustCount() {
+		
+		Session s = this.sessionFactory.openSession();
+		String query = "SELECT COUNT(*) FROM request re WHERE re.status <> 11";
+		Query hql = s.createNativeQuery(query);
+		Integer count = hql.getFirstResult();
+		s.close();
+		return count;
+		
+	}
 
 }

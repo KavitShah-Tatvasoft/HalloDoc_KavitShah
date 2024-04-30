@@ -36,7 +36,10 @@ import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CreatePatientRequestDto;
+import hallodoc.dto.CreateRoleDataDto;
+import hallodoc.dto.EditRoleDto;
 import hallodoc.dto.ExportDataDto;
+import hallodoc.dto.MenusDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
@@ -45,16 +48,19 @@ import hallodoc.dto.ProviderMenuDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
 import hallodoc.dto.RequestFiltersDto;
+import hallodoc.dto.RolesDto;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.ShowProviderDetailsDto;
 import hallodoc.dto.UpdateCaseDto;
+import hallodoc.dto.UserAccessDto;
 import hallodoc.dto.ViewNotesDto;
 import hallodoc.mapper.RequestNewDataDtoMapper;
 import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
 import hallodoc.model.EmailLog;
+import hallodoc.model.Menu;
 import hallodoc.model.Physician;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
@@ -442,5 +448,81 @@ public class AdminController {
 	public String contactProvider(@RequestParam("id") Integer id, @RequestParam("method") String method, @RequestParam("message") String message, HttpServletRequest httpServletRequest) {
 		return this.aService.contactProvider(id,method,message,httpServletRequest);
 	}
-
+	
+	@RequestMapping(value = "/createRoleAccess", method = RequestMethod.GET)
+	public String createRoleAccess() {
+		
+		return "admin/create-role";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getMenus",  method = RequestMethod.POST )
+	public List<MenusDto> getMenus(@RequestParam("role") Integer role){
+		return this.aService.getRoleMenus(role);
+	}
+	
+	@RequestMapping(value = "/createNewRole", method = RequestMethod.POST)
+	public RedirectView createNewRole(CreateRoleDataDto createRoleDataDto, HttpServletRequest httpServletRequest) {
+		
+		this.aService.createNewRoleAccess(createRoleDataDto, httpServletRequest);
+		
+		return new RedirectView("accountAccess",true);
+	}
+	
+	@RequestMapping(value="/accountAccess", method = RequestMethod.GET)
+	public String viewAccountAccess() {
+		return "admin/account-access";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getRoleDetails", method = RequestMethod.GET)
+	public List<RolesDto> getRoleDetails(){
+		return this.aService.getRolesDataForAccountAccess();
+	}
+	
+	@RequestMapping(value = "/editRoleAccess/{roleId}", method = RequestMethod.GET)
+	public String editRoleAccess(@PathVariable("roleId") Integer roleId, Model m) {
+		
+		EditRoleDto editRoleDto = this.aService.getEditRolesDetails(roleId);
+		m.addAttribute("editDetails",editRoleDto);
+		m.addAttribute("roleId",roleId);
+		
+//		List<MenusDto> menus = this.aService.getEditMenuDetails(roleId);
+//		List<MenusDto> allMenus = this.aService.getAllMenuDetials(roleId);
+//
+//		m.addAttribute("tickMenus",menus);
+//		m.addAttribute("allMenus",allMenus);
+		
+		return "admin/edit-role";
+	}
+	
+	@RequestMapping(value="/updateRole", method=RequestMethod.POST)
+	public RedirectView updateRole(@RequestParam("selectedMenu") String menuString, @RequestParam("roleId") Integer roleId) {
+		
+		this.aService.updateRoleDetails(menuString,roleId);
+		
+		return new RedirectView("accountAccess",true);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/deleteRole")
+	public String deleteRole(@RequestParam("roleId") Integer roleId){
+		
+		this.aService.deleteRole(roleId);
+		return "Deleted Role";
+	}
+	
+	@RequestMapping(value="/user-access", method = RequestMethod.GET)
+	public String accountAccess() {
+		return "admin/user-access";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/get-user-access-data", method = RequestMethod.POST)
+	public List<UserAccessDto> getUserAccessData(@RequestParam("typeId") Integer typeId){
+		List<UserAccessDto> list = this.aService.getUserAccessData(typeId);
+		return list;
+	}
+	
 }

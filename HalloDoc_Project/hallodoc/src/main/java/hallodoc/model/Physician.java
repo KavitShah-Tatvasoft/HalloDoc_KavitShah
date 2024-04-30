@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.criteria.CriteriaBuilder.In;
@@ -139,8 +140,22 @@ public class Physician {
 	private PhysicianNotification physicianNotification;
 	
 	
+	@OneToMany(mappedBy = "physician" ,fetch = FetchType.LAZY)
+	private List<Request> request;
 	
 	
+	
+	
+	
+
+	public List<Request> getRequest() {
+		return request;
+	}
+
+	public void setRequest(List<Request> request) {
+		this.request = request;
+	}
+
 	public PhysicianNotification getPhysicianNotification() {
 		return physicianNotification;
 	}
@@ -458,7 +473,8 @@ public class Physician {
 		this.syncEmailAddress = syncEmailAddress;
 	}
 	
-	
+
+
 
 	public Physician(int physicianId, AspNetUsers aspNetUsers, String firstName, String lastName, String email,
 			String mobile, String medicalLicense, String photo, String adminNotes, Boolean isAgreementDoc,
@@ -466,7 +482,7 @@ public class Physician {
 			int regionId, List<Region> regions, String zip, String altPhone, AspNetUsers createdBy, Date createdDate,
 			AspNetUsers modifiedBy, Date modifiedDate, Integer status, String businessName, String businessWebsite,
 			Boolean isDeleted, Role role, String npiNumber, Boolean isLicenseDoc, Boolean isHipaaDoc, String signature,
-			String syncEmailAddress, PhysicianNotification physicianNotification) {
+			String syncEmailAddress, PhysicianNotification physicianNotification, List<Request> request) {
 		super();
 		this.physicianId = physicianId;
 		this.aspNetUsers = aspNetUsers;
@@ -502,6 +518,7 @@ public class Physician {
 		this.signature = signature;
 		this.syncEmailAddress = syncEmailAddress;
 		this.physicianNotification = physicianNotification;
+		this.request = request;
 	}
 
 	public Physician() {
