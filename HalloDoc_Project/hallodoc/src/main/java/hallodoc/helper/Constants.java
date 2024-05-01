@@ -11,7 +11,7 @@ public class Constants {
 	
 	public static final String ACCOUNT_SID = "ACe8a35d6938d4380a6b3ec5fe8f6a74e4";
 	
-	public static final String AUTH_TOKEN = "b463e1cb1a86a81087cd3765fd4dafde";
+	public static final String AUTH_TOKEN = "9e7a66ac4be72d0f5a4d9cc4cfff878d";
 	
 	public static final String TWILIO_NUMBER = "+16562269725";
 	

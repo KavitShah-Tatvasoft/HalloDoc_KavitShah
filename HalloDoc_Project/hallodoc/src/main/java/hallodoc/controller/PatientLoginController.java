@@ -99,8 +99,6 @@ public class PatientLoginController {
 	@RequestMapping(value = "/createPatientValidator", method = RequestMethod.POST)
 	public String createPatientValidator(
 			@ModelAttribute("createPatientAccount") CreateNewPasswordDto createNewPasswordDto, Model m) {
-//		 ;
-		 ;
 
 		String email = createNewPasswordDto.getEmail();
 		String pass = createNewPasswordDto.getPassword();
@@ -110,8 +108,7 @@ public class PatientLoginController {
 		if (pass.equals(pass1)) {
 			String status = pService.updateAspNetUserPassword(email, pass1);
 			String status2 = emailService.updateIsResetWithMail(token);
-			 ;
-			 ;
+
 			return "patient/patient-login";
 		} else {
 			return ""; // error page
@@ -191,40 +188,6 @@ public class PatientLoginController {
 		return "/patient/patient-profile";
 	}
 
-//	@RequestMapping("/patientDashboard")
-//	public String PatientDashboard() {
-//		return "patient/patient-dashboard";
-//	}
-
-//	@RequestMapping("/patient_login")
-//	public String RegisteredPatientLogin() {
-//		return "patient/patient-login";
-//	}
-
-//	@RequestMapping(value = "/loginValidator", method = RequestMethod.POST)
-//	public String LoginValidator(@RequestParam("username") String username, @RequestParam("password") String password,
-//			Model m) {
-//		int roleId = this.uService.validateUser(username, password);
-//		if (roleId == -1) {
-//			m.addAttribute("Error", "Login Failed! No such user found");
-//			return "patient/patient-login";
-//		}
-//		else if(roleId == -2) {
-//			m.addAttribute("Error", "Login Failed! Password not created! Please check the registered mail to create password");
-//			return "patient/patient-login";
-//		}
-//		else if(roleId == -3) {
-//			m.addAttribute("Error", "Login Failed! Username or password dosen't match");
-//			return "patient/patient-login";
-//		}
-//		
-//		else if(roleId == 3) {
-//			return "patient/patient-dashboard";
-//		}
-//		else {
-//			return "patient/patient-dashboard";
-//		}
-//	}
 
 	@RequestMapping(value = "/loginValidator", method = RequestMethod.POST)
 	public RedirectView LoginValidator(@RequestParam("username") String username,
@@ -259,7 +222,7 @@ public class PatientLoginController {
 		else {
 			attributes.addFlashAttribute("message", "Logged in Succesfully");
 			attributes.addFlashAttribute("alertType", "success");
-			return new RedirectView("patientDashboard");
+			return new RedirectView("physician/physician-dashboard");
 		}
 	}
 
