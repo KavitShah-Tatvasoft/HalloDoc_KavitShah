@@ -117,7 +117,7 @@ public class AdminNewPatientRequestService {
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		System.out.println(confirmationNumber);
+		 ;
 
 		return confirmationNumber;
 	}
@@ -212,7 +212,7 @@ public class AdminNewPatientRequestService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		System.out.println(createdToken);
+		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(createPatientRequestDto.getEmail());
@@ -229,7 +229,7 @@ public class AdminNewPatientRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			System.out.println(emailChange);
+			 ;
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);

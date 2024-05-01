@@ -23,8 +23,8 @@ function getMenus(){
 
 		},
 		success: function(res) {
-			console.log(res)
-			console.log("menues obtaines")
+			  
+			  
 			menuFlex.empty()
 			
 			res.forEach(function(data){
@@ -36,7 +36,7 @@ function getMenus(){
 			})
 		},
 		error: function(res) {
-			console.log("failed to obtain menu data")
+			  
 		}
 
 	})

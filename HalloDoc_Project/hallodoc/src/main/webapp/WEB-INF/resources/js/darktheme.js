@@ -3,7 +3,7 @@ function changeThemeDarkBright(element){
        var moon = document.getElementById("moon-id");
        var sun = document.getElementById("sun-id");
 
-       console.log(x);
+         ;
        if(x=="moon-btn"){
         moon.style.display="none";
         sun.style.display="block";

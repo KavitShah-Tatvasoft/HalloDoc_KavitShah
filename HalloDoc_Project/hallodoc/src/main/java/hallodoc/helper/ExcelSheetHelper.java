@@ -124,7 +124,7 @@ public class ExcelSheetHelper {
 
 		catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Failed to export data");
+			 ;
 			return null;
 		} finally {
 			workbook.close();
@@ -185,7 +185,7 @@ public class ExcelSheetHelper {
 
 		catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Failed to export data");
+			 ;
 			return null;
 		} finally {
 			workbook.close();

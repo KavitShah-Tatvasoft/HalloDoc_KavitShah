@@ -7,11 +7,11 @@ function deleteFile(fileId) {
 			fileId: fileId
 		},
 		success: function(data) {
-			console.log("file deleted")
+			  
 			location.reload()
 		},
 		error: function(data) {
-			console.log("failed to delete file")
+			  
 		}
 	})
 
@@ -77,11 +77,11 @@ function deleteAll() {
 			type: 'POST',
 			data: { data: deleteList.join(',') },
 			success: function(data) {
-				console.log("file deleted")
+				  
 				location.reload()
 			},
 			error: function(data) {
-				console.log("failed to delete file")
+				  
 			}
 		})
 
@@ -119,11 +119,11 @@ function sendMailToPatient(reqId) {
 			type: 'POST',
 			data: payload,
 			success: function(data) {
-				console.log("file deleted")
+				  
 				location.reload()
 			},
 			error: function(data) {
-				console.log("failed to delete file")
+				  
 			}
 		})
 

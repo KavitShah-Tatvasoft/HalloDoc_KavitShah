@@ -168,6 +168,12 @@
 
 	<script src="<c:url value='/resources/js/patient-history.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
+	<script type="text/javascript">
+		
+		$(".common-link-class").removeClass("active")
+		$(".records-link-class").addClass("active")
+	
+	</script>
 </body>
 </html>
 <%-- <%@include file="footer-black.jsp"%> --%>

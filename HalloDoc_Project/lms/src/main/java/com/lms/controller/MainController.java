@@ -45,7 +45,7 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping(value="/addBookRecord", method = RequestMethod.POST)
 	public String addBookRecord(AddBookRecordDto addBookRecordDto) {
-		System.out.println(addBookRecordDto);
+		 ;
 		this.mainService.addBookRecord(addBookRecordDto);
 		return "done";
 	

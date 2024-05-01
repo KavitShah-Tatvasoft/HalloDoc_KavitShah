@@ -32,7 +32,7 @@ public class EmailSMSService {
 		}
 		else {
 //			mailer.sendCreatePasswordMail(email);
-			System.out.println("Mail Sent");
+			 ;
 			return 0;
 			//send email logic 
 		}

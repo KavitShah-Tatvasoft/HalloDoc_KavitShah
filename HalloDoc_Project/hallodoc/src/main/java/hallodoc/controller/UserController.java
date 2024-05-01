@@ -130,14 +130,14 @@ public class UserController {
 	public RedirectView uploadRequestDocument(@RequestParam("documentFile") CommonsMultipartFile document,
 			@RequestParam("uploaderName") String name, @RequestParam("requestId") int requestId,
 			HttpServletRequest request) {
-		System.out.println("in upload");
+		 ;
 		Date date = new Date();
 		Request requestOb = uService.getRequestObject(requestId);
 		try {
 			HttpSession session = request.getSession(false);
 			uService.uploadRequestDocument(document, name, requestOb, session, date);
 		} catch (Exception e) {
-			System.out.println("Http Session not found");
+			 ;
 		}
 		RedirectView redirectView = new RedirectView("/user/viewRequestUploads/" + requestId, true);
 		return redirectView;
@@ -170,7 +170,7 @@ public class UserController {
 
 	@RequestMapping(value = "/sendOrderDetails/{reqId}")
 	public String sendOrderDetails(@PathVariable("reqId") int reqId, Model model) {
-		System.out.println(reqId);
+		 ;
 
 		List<HealthProfessionalTypes> professionList = uService.getActiveProfessions();
 
@@ -183,7 +183,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getVendorDetails", method = RequestMethod.POST)
 	public List<VendorDetailsDto> getVendorDetails(@RequestParam("professionTypeId") int professionTypeId) {
-		System.out.println(professionTypeId + "hello");
+		 ;
 		List<VendorDetailsDto> vendorList = uService.getActiveVendors(professionTypeId);
 		return vendorList;
 	}
@@ -216,7 +216,7 @@ public class UserController {
 	@RequestMapping(value = "/editEncounterForm", method = RequestMethod.POST)
 	public RedirectView editEncounterFormDetails(@ModelAttribute("editEncounterForm") EncounterFormDto encounterFormDto,
 			HttpServletRequest httpServletRequest) {
-//		System.out.println(encounterFormDto);
+//		 ;
 		String status = uService.updateEncounterFormDetails(encounterFormDto, httpServletRequest);
 		return new RedirectView("../user/encounterForm/" + encounterFormDto.getRequestId());
 	}
@@ -247,7 +247,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/updateCloseCaseDetails", method = RequestMethod.POST)
 	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
-		System.out.println(closeCaseEditDataDto);
+		 ;
 		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
 		return "updated";
 	}
@@ -277,7 +277,7 @@ public class UserController {
 
 	@RequestMapping(value = "/addNewBusinessRequest", method = RequestMethod.POST)
 	public RedirectView addNewBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
-		System.out.println(newBusinessDto);
+		 ;
 
 		this.uService.addNewBusiness(newBusinessDto);
 
@@ -296,7 +296,7 @@ public class UserController {
 
 	@RequestMapping(value = "/editBusinessRequest", method = RequestMethod.POST)
 	public RedirectView editBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
-		System.out.println(newBusinessDto);
+		 ;
 		this.uService.updateBusiness(newBusinessDto);
 		return new RedirectView(request.getContextPath() + "/user/professionMenu");
 	}
@@ -321,14 +321,14 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getFilteredEmailLogData", method = RequestMethod.POST)
 	public List<EmailLogDashboardDto> getFilteredEmailLogData(EmailLogFiltersDto emailLogFiltersDto) {
-		System.out.println(emailLogFiltersDto);
+		 ;
 		return this.uService.getEmailLogFilteredDate(emailLogFiltersDto);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/getFilteredSMSLogData", method = RequestMethod.POST)
 	public List<SMSLogDashboardDataDto> getFilteredSMSLogData(EmailLogFiltersDto emailLogFiltersDto) {
-		System.out.println(emailLogFiltersDto);
+		 ;
 		return this.uService.getSmsLogFilteredData(emailLogFiltersDto);
 	}
 
@@ -347,7 +347,7 @@ public class UserController {
 	public String showUserCaseDetails(@PathVariable("userId") Integer userId, Model m) {
 		List<PatientRecordsDto> reqLists = this.uService.getRequestByUserId(userId);
 		m.addAttribute("dataLists", reqLists);
-		System.out.println(reqLists.get(0));
+		 ;
 		return "common/patient-explore";
 	}
 

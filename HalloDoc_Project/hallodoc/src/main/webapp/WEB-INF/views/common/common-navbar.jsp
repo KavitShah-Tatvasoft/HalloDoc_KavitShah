@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<%-- <link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />"> --%>
+<link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
 </head>
 <body>
 	<!-- ---------------------------------------------------------------NAV BAR START------------------------------------------------------ -->
@@ -32,32 +32,32 @@
 							</div>
 							<ul class="nav sidebar-list-flex">
 								<li class="nav-item"><a class="nav-link"
-									aria-current="page" href="<c:url value='' />">Dashboard</a></li>
+									aria-current="page" href="${pageContext.request.contextPath}/admin/adminDashboard">Dashboard</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="<c:url value='' />">Provider Location</a></li>
+									href="${pageContext.request.contextPath}/admin/provider-location">Provider Location</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="/adminProfile">My Profile</a></li>
+									href="${pageContext.request.contextPath}/admin/adminProfile">My Profile</a></li>
 
 								<li class="nav-item dropdown"><a
 									class="nav-link dropdown-toggle" href="#" role="button"
 									data-bs-toggle="dropdown" aria-expanded="false"> Provider </a>
 									<ul class="dropdown-menu">
 										<div class="disc-align">
-											<li><a class="dropdown-item" href="<c:url value='' />">Provider</a></li>
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/physicianMenu">Provider</a></li>
 											<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li>
 											<!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
 										</div>
 									</ul></li>
-								<li class="nav-item"><a href="../user/professionMenu"
+								<li class="nav-item"><a href="${pageContext.request.contextPath}/user/professionMenu"
 									class="nav-link">Partners</a></li>
 								<li class="nav-item dropdown"><a
 									class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 									href="#" role="button" aria-expanded="false">Access</a>
 									<ul class="dropdown-menu">
 										<div class="disc-align">
-											<li><a class="dropdown-item" href="<c:url value='' />">Account
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/accountAccess">Account
 													Access</a></li>
-											<li><a class="dropdown-item" href="<c:url value='' />">User
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/user-access">User
 													Access</a></li>
 										</div>
 									</ul></li>
@@ -66,15 +66,15 @@
 									href="#" role="button" aria-expanded="false">Records</a>
 									<ul class="dropdown-menu">
 										<div class="disc-align">
-											<li><a class="dropdown-item" href="<c:url value='' />">Search
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/searchRecords">Search
 													Records</a></li>
-											<li><a class="dropdown-item" href="<c:url value='' />">Email
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/emailLogs">Email
 													Logs</a></li>
-											<li><a class="dropdown-item" href="<c:url value='' />">SMS
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/smsLogs">SMS
 													Logs</a></li>
-											<li><a class="dropdown-item" href="<c:url value='' />">Patient
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/patientHistory">Patient
 													History</a></li>
-											<li><a class="dropdown-item" href="<c:url value='' />">Block
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/blockHistory">Block
 													History</a></li>
 										</div>
 									</ul></li>
@@ -93,9 +93,8 @@
 					class="mx-1 profile-name"> <strong>${aspUser.user.firstName} ${aspUser.user.lastName}</strong>
 				</span>
 				<div>
-					<a href="login.html">
-						<div class="logout-btn"> 
-<!-- 						removed logout-btn-admin -->
+					<a href="${pageContext.request.contextPath}/admin/logout">
+						<div class="logout-btn-admin">
 							<img
 								src="<c:url value='/resources/images/box-arrow-right.svg' />"
 								class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span>
@@ -124,46 +123,46 @@
 		<hr>
 		<!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
 		<ul class="nav nav-underline cm-margin ms-3 inner-nav">
-			<li class="nav-item"><a class="nav-link" aria-current="page"
-				href="<c:url value='' />">Dashboard</a></li>
-			<li class="nav-item"><a class="nav-link"
-				href="<c:url value='' />">Provider Location</a></li>
-			<li class="nav-item"><a class="nav-link"
-				href="/adminProfile">My Profile</a></li>
+			<li class="nav-item"><a class="nav-link common-link-class dashboard-link-class" aria-current="page"
+				href="${pageContext.request.contextPath}/admin/adminDashboard">Dashboard</a></li>
+			<li class="nav-item"><a class="nav-link common-link-class provider-location-class"
+				href="${pageContext.request.contextPath}/admin/provider-location">Provider Location</a></li>
+			<li class="nav-item"><a class="nav-link common-link-class my-profile-link-class"
+				href="${pageContext.request.contextPath}/admin/adminProfile">My Profile</a></li>
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+				class="nav-link dropdown-toggle common-link-class provider-link-class" data-bs-toggle="dropdown" href="#"
 				role="button" aria-expanded="false">Provider</a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="<c:url value='' />">Provider</a></li>
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/physicianMenu">Provider</a></li>
 					<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li>
 					<!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
 				</ul></li>
-			<li class="nav-item"><a href="../user/professionMenu"
-				class="nav-link">Partners</a></li>
+			<li class="nav-item"><a href="${pageContext.request.contextPath}/user/professionMenu"
+				class="nav-link common-link-class partners-link-class">Partners</a></li>
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+				class="nav-link dropdown-toggle common-link-class access-link-class" data-bs-toggle="dropdown" href="#"
 				role="button" aria-expanded="false">Access</a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="<c:url value='' />">Account
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/accountAccess">Account
 							Access</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">User
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/user-access">User
 							Access</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">Create
-							Admin Account</a></li>
+<%-- 					<li><a class="dropdown-item" href="<c:url value='' />">Create --%>
+<!-- 							Admin Account</a></li> -->
 				</ul></li>
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+				class="nav-link dropdown-toggle common-link-class records-link-class" data-bs-toggle="dropdown" href="#"
 				role="button" aria-expanded="false">Records</a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="<c:url value='' />">Search
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/searchRecords">Search
 							Records</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">Email
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/emailLogs">Email
 							Logs</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">SMS
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/smsLogs">SMS
 							Logs</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">Patient
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/patientHistory">Patient
 							History</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">Block
+					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/blockHistory">Block
 							History</a></li>
 				</ul></li>
 		</ul>

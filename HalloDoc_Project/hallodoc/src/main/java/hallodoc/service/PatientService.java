@@ -98,7 +98,7 @@ public class PatientService {
 		Hash hash = Password.hash(password).with(bcrypt);
 
 		aspNetUsers.setPassword_hash(hash.getResult());
-		System.out.println(hash.getResult());
+		 ;
 		aspNetUsers.setModified_date(new Date());
 
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
@@ -111,7 +111,7 @@ public class PatientService {
 		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 
 		if (list.isEmpty()) {
-			System.out.println("False");
+			 ;
 			return false;
 		}
 
@@ -136,8 +136,8 @@ public class PatientService {
 		String pass1 = user.getPassword_hash();
 		String pass2 = user.getConfirmPassword();
 
-		System.out.println(pass1);
-		System.out.println(pass2);
+		 ;
+		 ;
 		String username = user.getEmail();
 		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 
@@ -179,14 +179,14 @@ public class PatientService {
 
 		Date modDate = new Date();
 		AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
-		System.out.println("Hello");
+		 ;
 		User user = aspNetUsers.getUser();
-		System.out.println(userProfileDto);
-		System.out.println(userProfileDto.getUserDOB());
+		 ;
+		 ;
 
 //			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 //			LocalDate date = LocalDate.parse(userProfileDto.getUserDOB(), format);
-//			System.out.println(date);
+//			 ;
 //			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
 		String[] monthArray = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
@@ -218,7 +218,7 @@ public class PatientService {
 			Region region = regionList.get(0);
 			user.setRegion(region);
 		} catch (Exception e) {
-			System.out.println("Region not found");
+			 ;
 		}
 
 		user.setStreet(userProfileDto.getUserStreet());
@@ -231,7 +231,7 @@ public class PatientService {
 		aspNetUsers.setUser(user);
 		
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
-		System.out.println("updated aspuser");
+		 ;
 		
 		//updating request table
 		RequestType requestTypePatient = requestTypeDao.getRequestTypeObject("Patient");

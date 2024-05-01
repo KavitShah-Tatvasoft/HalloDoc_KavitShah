@@ -27,6 +27,14 @@
 			 <mvc:exclude-mapping path="/admin/errorPage"/>
 			<bean class="hallodoc.interceptor.AdminInterceptor" />
 		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/user/*" />
+			 <mvc:exclude-mapping path="/admin/errorPage"/>
+			<bean class="hallodoc.interceptor.AdminInterceptor" />
+		</mvc:interceptor>
+		
+		
 	</mvc:interceptors>
 
 

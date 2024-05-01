@@ -23,6 +23,8 @@
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
 <link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
+<link rel="stylesheet"
 	href="<c:url value='/resources/css/admin-dashboard.css' />">
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/FamilyFriend-request.css' />">
@@ -42,7 +44,12 @@
 
 <title>Admin Dashboard</title>
 </head>
-<body onload="showToast(${showalert}) ">
+<body onload="showToast(${showalert})">
+
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>	
+
 	<div class="container-fluid  footer-container mt-5">
 		<div class="row">
 			<div class="col-lg-2 col-md-4 col-4 mb-2">
@@ -222,12 +229,7 @@
 
 							<div class="admin-table-filter">
 								<div class="d-flex align-items-center">
-									<!-- <button
-                                                    class="btn btn-secondary dropdown-toggle d-flex align-items-center"
-                                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Dropdown button
-                                                </button> -->
-
+							
 									<div class="admin-table-filter-by-select">
 										<select class="form-select on-select" id="region-name-search"
 											onchange="filterRequest()"
@@ -662,7 +664,8 @@
 								</div>
 
 								<div class="col-6 mb-3 pendings d-none action-class">
-									<a class="accordion-btn-admin orange-background-btn send-agreement-anchor"
+									<a
+										class="accordion-btn-admin orange-background-btn send-agreement-anchor"
 										role="button" data-bs-toggle="modal"
 										data-bs-target="#send-agreement">Send Agreement</a>
 								</div>
@@ -690,8 +693,8 @@
 								<div
 									class="col-6 mb-3 pendings actives concludes to-closes unpaids d-none action-class">
 									<a href="view-uploads-patient-conclude.html"
-										class="accordion-btn-admin green-background-btn view-uploads-anchor" role="button">View
-										Uploads</a>
+										class="accordion-btn-admin green-background-btn view-uploads-anchor"
+										role="button">View Uploads</a>
 								</div>
 
 								<div class="col-6 mb-3 actives to-closes d-none action-class">
@@ -701,7 +704,8 @@
 								</div>
 
 								<div class="col-6 accordion-btns pendings d-none action-class">
-									<a class="accordion-btn-admin blue-background-btn transfer-case-anchor"
+									<a
+										class="accordion-btn-admin blue-background-btn transfer-case-anchor"
 										data-bs-toggle="modal" data-bs-target="#transfer-case"
 										role="button">Transfer</a>
 								</div>
@@ -714,14 +718,10 @@
 
 
 								<div class="col-6 mb-3 pendings to-closes d-none action-class">
-									<a class="accordion-btn-admin orange-background-btn clear-case-anchor"
+									<a
+										class="accordion-btn-admin orange-background-btn clear-case-anchor"
 										data-bs-toggle="modal" data-bs-target="#clear-case-this"
 										role="button">Clear Case</a>
-								</div>
-
-								<div class="col-6 mb-3 accordion-btns">
-									<a class="accordion-btn-admin green-background-btn"
-										role="button">Email</a>
 								</div>
 
 								<div
@@ -769,30 +769,35 @@
 						<form action="">
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp agreement-phone" disabled
-										id="send-agreement-phone-no" placeholder="Phone Number"
-										autocomplete="off"> <label for="send-agreement-phone-no"
-										class="agreement-label">Phone Number</label>
+									<input type="text"
+										class="form-control input-1 agreement-inp agreement-phone"
+										disabled id="send-agreement-phone-no"
+										placeholder="Phone Number" autocomplete="off"> <label
+										for="send-agreement-phone-no" class="agreement-label">Phone
+										Number</label>
 								</div>
 							</div>
 
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
-									<input type="email" class="form-control input-1 agreement-inp agreement-email"
-										id="send-agreement-email" placeholder="Email" autocomplete="off" disabled>
-									<label for="send-agreement-email" class="agreement-label">Email</label>
+									<input type="email"
+										class="form-control input-1 agreement-inp agreement-email"
+										id="send-agreement-email" placeholder="Email"
+										autocomplete="off" disabled> <label
+										for="send-agreement-email" class="agreement-label">Email</label>
 								</div>
 								<span id="error-send-agreement"></span>
 							</div>
 						</form>
 					</div>
 					<form method="post" id="sendAgreementForm">
-					<input type="text" hidden id="send-agreement-req-id">
-					<div class="modal-footer">
-						<button type="submit" class="send-btn">Confirm</button>
-						<button type="button" class="cancel-btn send-agreement-reset"  data-bs-dismiss="modal">Cancel</button>
-					</div>
-					
+						<input type="text" hidden id="send-agreement-req-id">
+						<div class="modal-footer">
+							<button type="submit" class="send-btn">Confirm</button>
+							<button type="button" class="cancel-btn send-agreement-reset"
+								data-bs-dismiss="modal">Cancel</button>
+						</div>
+
 					</form>
 				</div>
 			</div>
@@ -1022,8 +1027,8 @@
 				<div class="modal-header">
 					<h3 class="modal-title fs-5" id="staticBackdropLabel">Transfer
 						Request</h3>
-					<button type="button" class="btn-close transfer-pop-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close transfer-pop-close"
+						data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form method="post" id="transfer-request-form">
 					<div class="modal-body">
@@ -1031,39 +1036,42 @@
 							<span class="font-clr-light">To assign this request,
 								search and select another Physician.</span><br>
 						</div>
-						
+
 						<div class="col-12 mt-3">
 							<div class="form-floating mb-3 inp">
 								<select name="Number_Type" id="region-select-option"
-									class="form-control form-select input-2 region-name-class-transfer" onchange="getTransferCaseRegion()">
+									class="form-control form-select input-2 region-name-class-transfer"
+									onchange="getTransferCaseRegion()">
 									<option value="0" selected hidden>Select a Region</option>
 									<c:forEach items="${regionList}" var="region">
 										<option value="${region.regionId }">${region.name }</option>
 									</c:forEach>
-								</select> <label for="region-select-option">Narrow Search by Region</label>
-								<span id="region-select-transfer-error"></span>
+								</select> <label for="region-select-option">Narrow Search by
+									Region</label> <span id="region-select-transfer-error"></span>
 							</div>
 						</div>
 
 						<div class="container">
-						
+
 							<div class="row assign-case-select-height assign-case-margin-top">
 
-								<select name="Number_Type" id="floatingInput-5" onchange="removePhysicianError()"
+								<select name="Number_Type" id="floatingInput-5"
+									onchange="removePhysicianError()"
 									class="form-control form-select assign-case-text-clr physician-name-class-1 physician-name-class">
 									<option value="0" hidden selected>Select Physician</option>
-								</select>
-								<span id="select-physician-error-transfer"></span>
+								</select> <span id="select-physician-error-transfer"></span>
 							</div>
 						</div>
 						<textarea name="message"
-							class="form-control assign-case-margin-top" id="transfer-case-description-text" cols="12"
-							rows="5" placeholder="Description"></textarea>
+							class="form-control assign-case-margin-top"
+							id="transfer-case-description-text" cols="12" rows="5"
+							placeholder="Description"></textarea>
 						<input type="text" hidden id="transfer-case-request-id">
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="send-btn" >Confirm</button>
-						<button type="reset" class="cancel-btn transfer-case-cancel-btn" data-bs-dismiss="modal">Cancel</button>
+						<button type="submit" class="send-btn">Confirm</button>
+						<button type="reset" class="cancel-btn transfer-case-cancel-btn"
+							data-bs-dismiss="modal">Cancel</button>
 					</div>
 				</form>
 			</div>
@@ -1189,10 +1197,17 @@
 						});
 	</script>
 
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script src="<c:url value='/resources/js/toasters.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/admin-dashboard.js' />"></script>
 	<script
 		src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' />"></script>
+	<script type="text/javascript">
+		
+		$(".common-link-class").removeClass("active")
+		$(".dashboard-link-class").addClass("active")
+	
+	</script>
 </body>
 </html>

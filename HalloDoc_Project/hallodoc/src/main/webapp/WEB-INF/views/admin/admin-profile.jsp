@@ -307,6 +307,11 @@
 	</script>
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
-
+	<script type="text/javascript">
+		
+		$(".common-link-class").removeClass("active")
+		$(".my-profile-link-class").addClass("active")
+	
+	</script>
 </body>
 </html>

@@ -67,7 +67,7 @@
 						<td class="number-td">+91 3615262791</td>
 						<td class="status-td">Active</td>
 						<td class="request-td">7890</td>
-						<td><a href="#" class="edit-td">
+						<td><a href="#" class="edit-link-td">
 								<div class="edit-btn">
 									<span>Edit</span>
 								</div>
@@ -79,23 +79,22 @@
 				</tbody>
 			</table>
 		</div>
-
-		<div class="accordion mt-4" id="accordionPanelsStayOpenExample">
-			<div class="accordion-item">
+		
+		<div class="accordion-item accordion-clone-class d-none">
 				<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-					<button class="accordion-button" type="button"
+					<button class="accordion-button change-data-target" type="button"
 						data-bs-toggle="collapse"
 						data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
 						aria-controls="panelsStayOpen-collapseOne">
 						<div class="accordion-button-flex">
-							<span class="accordion-row-name">Testing Business</span> <small
-								class="acount-type-btn-text">Account Type: Admin</small>
+							<span class="accordion-row-name name-td">Testing Business</span> <small
+								class="acount-type-btn-text type-td">Account Type: Admin</small>
 						</div>
 
 					</button>
 				</h2>
 				<div id="panelsStayOpen-collapseOne"
-					class="accordion-collapse collapse "
+					class="accordion-collapse collapse change-id-target"
 					aria-labelledby="panelsStayOpen-headingOne">
 					<div class="accordion-body">
 						<div class="accordion-rows-main-flex">
@@ -106,7 +105,7 @@
 								</div>
 								<div>
 									<span class="email-label">Phone: </span> <span
-										class="email-text">1234567890</span>
+										class="email-text number-td">1234567890</span>
 								</div>
 							</div>
 
@@ -117,7 +116,7 @@
 								</div>
 								<div>
 									<span class="email-label">Status: </span> <span
-										class="email-text">Active</span>
+										class="email-text status-td">Active</span>
 								</div>
 							</div>
 
@@ -127,19 +126,22 @@
 								</div>
 								<div>
 									<span class="email-label">Open Request: </span> <span
-										class="email-text">3066</span>
+										class="email-text request-td">3066</span>
 								</div>
 							</div>
 
 							<div class="accordion-btn-inner-flex">
 								<a href="#" role="button"
-									class="bottom-accordion-row-btn shrink-btns">Edit</a>
+									class="bottom-accordion-row-btn shrink-btns edit-link-td">Edit</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		
 
+		<div class="accordion accordion-body-empty mt-4" id="accordionPanelsStayOpenExample" >
+			
 
 		</div>
 
@@ -154,5 +156,13 @@
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/user-access.js' />"></script>
+	
+	<script type="text/javascript">
+		
+		$(".common-link-class").removeClass("active")
+		$(".access-link-class").addClass("active")
+	
+	</script>
+	
 </body>
 </html>

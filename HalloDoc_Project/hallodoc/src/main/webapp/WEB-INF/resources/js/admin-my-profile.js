@@ -137,10 +137,10 @@ function changePasswordAdmin() {
 			pass: pass
 		},
 		success: function(data) {
-			console.log("password updated")
+			  
 
 		}, error: function(data) {
-			console.log("update failed")
+			  
 		}
 
 
@@ -172,10 +172,10 @@ function updateAdminAdress() {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log("address updated")
+			  
 
 		}, error: function(data) {
-			console.log("address update failed")
+			  
 		}
 
 
@@ -210,10 +210,10 @@ function updateAdminContactDetails() {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log("contact updated")
+			  
 
 		}, error: function(data) {
-			console.log("contact update failed")
+			  
 		}
 
 

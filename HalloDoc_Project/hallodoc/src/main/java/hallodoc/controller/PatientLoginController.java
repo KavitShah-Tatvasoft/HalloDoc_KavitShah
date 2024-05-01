@@ -60,16 +60,16 @@ public class PatientLoginController {
 
 	@RequestMapping("/createPatient/{token}")
 	public String createPatientAccount(@PathVariable("token") String token, Model model) {
-//		System.out.println("In  condition");
+//		 ;
 		boolean isExpired = emailService.isTokenExpired(token);
-		System.out.println("In condition 1");
+		 ;
 		if (isExpired) {
-//			System.out.println("In expired condition");
+//			 ;
 			return "patient/link-expired";
 		} else {
-//			System.out.println("In alive condition");
+//			 ;
 			String email = emailService.getTokenCorrespondingEmail(token);
-			System.out.println("In alive condition 1");
+			 ;
 			model.addAttribute("email", email);
 			model.addAttribute("token", token);
 			return "patient/create-patient-account";
@@ -79,16 +79,16 @@ public class PatientLoginController {
 
 	@RequestMapping("/resetPasswordScreen/{token}")
 	public String resetAccountPass(@PathVariable("token") String token, Model model) {
-//		System.out.println("In  condition");
+//		 ;
 		boolean isExpired = emailService.isForgetPassTokenExpired(token);
-//		System.out.println("In condition 1");
+//		 ;
 		if (isExpired) {
-//			System.out.println("In expired condition");
+//			 ;
 			return "patient/link-expired";
 		} else {
-//			System.out.println("In alive condition");
+//			 ;
 			String email = emailService.getTokenCorrespondingEmail(token);
-			System.out.println("In alive condition 1");
+			 ;
 			model.addAttribute("email", email);
 			model.addAttribute("token", token);
 			return "patient/account-password-reset-page";
@@ -99,8 +99,8 @@ public class PatientLoginController {
 	@RequestMapping(value = "/createPatientValidator", method = RequestMethod.POST)
 	public String createPatientValidator(
 			@ModelAttribute("createPatientAccount") CreateNewPasswordDto createNewPasswordDto, Model m) {
-//		System.out.println("Hello");
-		System.out.println(createNewPasswordDto);
+//		 ;
+		 ;
 
 		String email = createNewPasswordDto.getEmail();
 		String pass = createNewPasswordDto.getPassword();
@@ -110,8 +110,8 @@ public class PatientLoginController {
 		if (pass.equals(pass1)) {
 			String status = pService.updateAspNetUserPassword(email, pass1);
 			String status2 = emailService.updateIsResetWithMail(token);
-			System.out.println("Update Password: " + status);
-			System.out.println("Update isRestEmail flag: " + status2);
+			 ;
+			 ;
 			return "patient/patient-login";
 		} else {
 			return ""; // error page
@@ -123,7 +123,7 @@ public class PatientLoginController {
 	public RedirectView resetPasswordRequest(@RequestParam("email") String email, HttpServletRequest httpServletRequest,
 			RedirectAttributes attributes) {
 		String emailStatus = emailService.sendForgetPasswordMail(httpServletRequest, email);
-		System.out.println(emailStatus);
+		 ;
 		attributes.addFlashAttribute("message", "Reset Email sent Successfully");
 		attributes.addFlashAttribute("alertType", "success");
 		return new RedirectView("patient_login");
@@ -156,14 +156,14 @@ public class PatientLoginController {
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		ModelAndView modelAndView = new ModelAndView("patient/patient-dashboard");
 		if (inputFlashMap != null) {
-			System.out.println("Not null");
+			 ;
 			String message = (String) inputFlashMap.get("message");
 			String showAlertType = (String) inputFlashMap.get("alertType");
 			modelAndView.addObject("msg", message);
 			modelAndView.addObject("showalert", true);
 			modelAndView.addObject("showAlertTypeJsp", showAlertType);
 		} else {
-			System.out.println("null");
+			 ;
 			modelAndView.addObject("showalert", false);
 		}
 
@@ -183,7 +183,7 @@ public class PatientLoginController {
 			m.addAttribute("userOb", user);
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Session not found");
+			 ;
 		}
 
 		List<Region> regionList = pService.getAllRegions();
@@ -265,7 +265,7 @@ public class PatientLoginController {
 
 	@RequestMapping("/patientViewRequestDocuments/{reqId}")
 	public String LoginValidator(@PathVariable("reqId") int id, HttpServletRequest request, Model m) {
-		System.out.println("in show doc");
+		 ;
 		m.addAttribute("reqId", id);
 		List<RequestDocumentsDto> requests = pService.getRequestDocuments(id);
 		m.addAttribute("docList", requests);
@@ -273,7 +273,7 @@ public class PatientLoginController {
 		User userOb = aspNetUsersOb.getUser();
 
 		m.addAttribute("userOb", userOb);
-		System.out.println(requests.get(0));
+		 ;
 		return "patient/patient-view-documents";
 	}
 
@@ -281,14 +281,14 @@ public class PatientLoginController {
 	public RedirectView uploadRequestDocument(@RequestParam("documentFile") CommonsMultipartFile document,
 			@RequestParam("uploaderName") String name, @RequestParam("requestId") int requestId,
 			HttpServletRequest request) {
-		System.out.println("in upload");
+		 ;
 		Date date = new Date();
 		Request requestOb = uService.getRequestObject(requestId);
 		try {
 			HttpSession session = request.getSession(false);
 			uService.uploadRequestDocument(document, name, requestOb, session, date);
 		} catch (Exception e) {
-			System.out.println("Http Session not found");
+			 ;
 		}
 		RedirectView redirectView = new RedirectView("/patientViewRequestDocuments/" + requestId, true);
 		return redirectView;
@@ -297,9 +297,9 @@ public class PatientLoginController {
 	@PostMapping(value = "/updateUserProfile")
 	public RedirectView updateUserProfile(@ModelAttribute("updateUserProfile") UserProfileDto userProfileDto,
 			HttpServletRequest request) {
-		System.out.println("in update profile service");
+		 ;
 		pService.updateUserProfile(userProfileDto, request);
-		System.out.println("in update profile service1");
+		 ;
 		RedirectView redirectView = new RedirectView("/patientProfile", true);
 		return redirectView;
 	}
@@ -309,7 +309,7 @@ public class PatientLoginController {
 
 		HttpSession session = request.getSession();
 		session.invalidate();
-		System.out.println("Session invalidated");
+		 ;
 		RedirectView redirectView = new RedirectView("/patient_login", true);
 		attributes.addFlashAttribute("message", "Logged out successfully!");
 		attributes.addFlashAttribute("alertType", "success");

@@ -33,6 +33,7 @@ import hallodoc.dto.AdminRegions;
 import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.CreateRoleDataDto;
 import hallodoc.dto.EditRoleDto;
+import hallodoc.dto.GetRolesDto;
 import hallodoc.dto.MenusDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
@@ -459,17 +460,19 @@ public class AdminService {
 			FileOutputStream fos = new FileOutputStream(fullPath);
 			fos.write(data);
 			fos.close();
-			System.out.println("file uploaded");
+			 ;
 			return "File Uploaded";
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Uploading Error");
+			 ;
 			return "File Upload Failed";
 		}
 	}
 
 	public String createNewProvider(NewProviderAccountDto newProviderAccountDto,
 			HttpServletRequest httpServletRequest) {
+		
+		Role role = this.roleAccessDao.getRoleOb(newProviderAccountDto.getpRole());
 		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		AspNetUsers aspNetUsers = new AspNetUsers();
 		Physician physician = new Physician();
@@ -540,7 +543,7 @@ public class AdminService {
 		physician.setBusinessName(newProviderAccountDto.getpBusinessName());
 		physician.setBusinessWebsite(newProviderAccountDto.getpBusinessWebsite());
 		physician.setIsDeleted(false);
-		physician.setRole(null);
+		physician.setRole(role);
 		physician.setNpiNumber(newProviderAccountDto.getpNPI());
 		physician.setSyncEmailAddress(newProviderAccountDto.getpSyncEmail());
 		physician.setRegions(physicianRegion);
@@ -730,9 +733,10 @@ public class AdminService {
 
 	public String updateProviderRoleStatus(Integer id, Integer role, Integer status,
 			HttpServletRequest httpServletRequest) {
+		Role roleOb = this.roleAccessDao.getRoleOb(role);
 		Physician physician = this.physicianDao.getPhysicianById(id);
 		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
-		physician.setRole(null);
+		physician.setRole(roleOb);
 		physician.setStatus(status);
 		physician.setModifiedDate(new Date());
 		physician.setModifiedBy(adminOb);
@@ -1181,7 +1185,6 @@ public class AdminService {
 		
 		Integer noRequest = this.requestDao.getOpenReqeustCount();
 		List<Admin> adminList = this.adminDao.getAdminData();
-//		List<UserAccessDto> userAccessDtos = new ArrayList<UserAccessDto>();
 		List<Physician> phyList = this.physicianDao.getAllActivePhysician();
 		
 		if(typeId == 0) {
@@ -1195,36 +1198,20 @@ public class AdminService {
 			return getPhysicianList(phyList);
 		}
 		
-//		for (Physician physician : phyList) {
-//			UserAccessDto userAccessDto = new UserAccessDto();
-//			userAccessDto.setAccountType("Provider");
-//			userAccessDto.setName(physician.getFirstName() + " " + physician.getLastName());
-//			
-//			List<Request> physicianRequests = this.requestDao.getPhysicianRequests(physician.getPhysicianId());
-//			
-//			userAccessDto.setOpenRequests(physicianRequests.size());
-//			String status = physician.getStatus() == 1 ? "Active" : "Inactive";
-//			userAccessDto.setStatus(status);
-//			userAccessDto.setUserId(physician.getPhysicianId());
-//			userAccessDto.setPhoneNumber(physician.getMobile());
-//			userAccessDtos.add(userAccessDto);
-//
-//		}
-//
-//		for (Admin admin : adminList) {
-//			UserAccessDto userAccessDto = new UserAccessDto();
-//			userAccessDto.setAccountType("Admin");
-//			userAccessDto.setName(admin.getFirstName() + " " + admin.getLastName());
-//			userAccessDto.setOpenRequests(63);
-//			userAccessDto.setStatus("Active");
-//			userAccessDto.setUserId(admin.getAdminId());
-//			userAccessDto.setPhoneNumber(admin.getAltPhone());
-//			userAccessDtos.add(userAccessDto);
-//
-//		}
-
-//		return userAccessDtos;
-
+		
+	}
+	
+	public List<GetRolesDto> getPhysicianRoles(){
+		List<Role> rolesList = this.roleAccessDao.getPhysicianRoles();
+		List<GetRolesDto> list = new ArrayList<GetRolesDto>();
+		for (Role role : rolesList) {
+			GetRolesDto getRolesDto = new GetRolesDto();
+			getRolesDto.setRoleId(role.getRoleId());
+			getRolesDto.setRoleName(role.getName());
+			list.add(getRolesDto);
+		}
+		
+		return list;
 	}
 
 }

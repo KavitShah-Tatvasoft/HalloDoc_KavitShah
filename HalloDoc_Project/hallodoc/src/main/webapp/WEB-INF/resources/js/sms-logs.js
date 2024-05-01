@@ -32,8 +32,8 @@ function filterSMSRecords(){
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log(res)
-			console.log("Email Log data obtained")
+			  
+			  
 			tbody.empty()
 			accordionBody.empty()
 			var count = 121;
@@ -68,7 +68,7 @@ function filterSMSRecords(){
 			
 		},
 		error: function(data) {
-			console.log("Email Log data not obtained")
+			  
 		}
 	})	
 	

@@ -16,7 +16,7 @@ public class AdminInterceptor extends  HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		try {
-			System.out.println("In interceptor----------------------------------");
+			 ;
 			AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
 			if (aspNetUsers == null) {
 				throw new FailedAuthorizationException("Session expired! Please log in again to continue");
@@ -26,7 +26,7 @@ public class AdminInterceptor extends  HandlerInterceptorAdapter {
 			}
 			
 		} catch (FailedAuthorizationException e) {
-			System.out.println("In catch of interceptor----------------------------------");
+			 ;
 			response.sendRedirect(request.getContextPath()+"/admin/errorPage");
 			return false;
 		}

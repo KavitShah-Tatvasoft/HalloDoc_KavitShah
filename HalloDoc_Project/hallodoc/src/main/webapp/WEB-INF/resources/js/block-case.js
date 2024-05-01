@@ -18,11 +18,11 @@ function unblockCase(blockId) {
 
 		},
 		success: function(res) {
-			console.log(res)
+			  
 			getFilteredBlockData()
 		},
 		error: function(res) {
-			console.log("Failed to unblock case")
+			  
 		}
 	})
 }
@@ -48,8 +48,8 @@ function getFilteredBlockData() {
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log(res)
-			console.log("data obtained")
+			  
+			  
 
 			tbody.empty()
 			accordionBody.empty()
@@ -91,7 +91,7 @@ function getFilteredBlockData() {
 		},
 		error: function(res) {
 
-			console.log("failed to obtain data")
+			  
 
 		}
 

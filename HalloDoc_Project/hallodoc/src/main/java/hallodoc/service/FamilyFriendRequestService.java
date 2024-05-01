@@ -137,7 +137,7 @@ public class FamilyFriendRequestService {
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		System.out.println(confirmationNumber);
+		 ;
 
 		return confirmationNumber;
 	}
@@ -248,16 +248,16 @@ public class FamilyFriendRequestService {
 		byte[] data = file.getBytes();
 
 		
-		System.out.println(path);
+		 ;
 
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
 			fos.write(data);
 			fos.close();
-			System.out.println("file uploaded");
+			 ;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Uploading Error");
+			 ;
 		}
 
 		requestWiseFile.setRequest(request);
@@ -306,7 +306,7 @@ public class FamilyFriendRequestService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		System.out.println(createdToken);
+		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(commonRequestDto.getPtEmail());
@@ -323,7 +323,7 @@ public class FamilyFriendRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			System.out.println(emailChange);
+			 ;
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
@@ -335,7 +335,7 @@ public class FamilyFriendRequestService {
 
 	private boolean createNewUserFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
-		System.out.println("New");
+		 ;
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;
@@ -405,13 +405,13 @@ public class FamilyFriendRequestService {
 		int requestId = requestDao.addNewRequest(request);
 		String isExsist = "new";
 		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest,isExsist);
-		System.out.println(mailSentStatus);
+		 ;
 		return true;
 	}
 
 	private boolean createOldUserFamilyFriendRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
-		System.out.println("Old Family");
+		 ;
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;

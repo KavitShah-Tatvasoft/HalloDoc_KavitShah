@@ -25,19 +25,20 @@ function filterEmailLog(){
 	payload["sentDate"] = sentDate
 	
 	tbody = $(".email-log-tbody")
-	accordionBody = $(".accordion-clone-class") 
+	accordionBody = $(".enpty-accordion-class") 
 	
 	$.ajax({
 		url: 'getFilteredEmailLogData',
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log(res)
-			console.log("Email Log data obtained")
+			  
+			  
 			tbody.empty()
 			accordionBody.empty()
+			var count = 120
 			res.forEach(function(data) {
-				
+				count++
 				var card = $(".email-log-tr-clone").clone().removeClass("d-none").removeClass("email-log-tr-clone")
 				card.find(".name-td").text(data.recipientName)
 				card.find(".action-td").text(data.action)
@@ -50,27 +51,28 @@ function filterEmailLog(){
 				card.find(".conf-td").text(data.confNumber)
 				tbody.append(card)
 				
-//				var accordionCard = $(".accordion-clone-class").clone().removeClass("d-none").removeClass("accordion-clone-class")
-//				accordionCard.find(".acc-name").text(data.recipientName)
-//				accordionCard.find(".acc-action").text(data.action)
-//				accordionCard.find(".acc-role").text(data.roleName)
-//				accordionCard.find(".acc-email").text(data.emailId)
-//				accordionCard.find(".acc-created").text(data.createdDate)
-//				accordionCard.find(".acc-sent").text(data.sendDate)
-//				
-//				accordionCard.find(".acc-sent-tries").text(data.sentTries)
-//				if(data.isEmailSent == true){
-//					accordionCard.find(".acc-sent-bool").text("True")
-//				}else{
-//					accordionCard.find(".acc-sent-bool").text("False")
-//				}
-//				accordionCard.find(".acc-conf").text(data.confNumber)
-//				accordionBody.append(accordionCard)
+				var accordionCard = $(".accordion-clone-class").clone().removeClass("d-none").removeClass("accordion-clone-class")
+				accordionCard.find(".acc-name").text(data.recipientName)
+				accordionCard.find(".acc-action").text(data.action)
+				accordionCard.find(".acc-role").text(data.roleName)
+				accordionCard.find(".acc-email").text(data.emailId)
+				accordionCard.find(".acc-created").text(data.createdDate)
+				accordionCard.find(".acc-sent").text(data.sendDate)
+				accordionCard.find(".acc-target").attr("data-bs-target","#accordion"+count)
+				accordionCard.find(".acc-id").attr("id","accordion"+count)
+				accordionCard.find(".acc-sent-tries").text(data.sentTries)
+				if(data.isEmailSent == true){
+					accordionCard.find(".acc-sent-bool").text("True")
+				}else{
+					accordionCard.find(".acc-sent-bool").text("False")
+				}
+				accordionCard.find(".acc-conf").text(data.confNumber)
+				accordionBody.append(accordionCard)
 			})
 			
 		},
 		error: function(data) {
-			console.log("Email Log data not obtained")
+			  
 		}
 	})	
 	

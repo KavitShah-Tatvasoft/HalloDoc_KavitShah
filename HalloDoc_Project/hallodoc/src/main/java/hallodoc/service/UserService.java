@@ -161,7 +161,7 @@ public class UserService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		System.out.println(createdToken);
+		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(user.getEmail());
@@ -177,7 +177,7 @@ public class UserService {
 		}
 
 		String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-		System.out.println(emailChange);
+		 ;
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
 
@@ -191,7 +191,7 @@ public class UserService {
 		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 
 		if (list.isEmpty()) {
-			System.out.println("No such user found");
+			 ;
 			return -1;
 		}
 
@@ -200,7 +200,7 @@ public class UserService {
 			String passwordHash = user.getPassword_hash();
 
 			if (passwordHash == null) {
-				System.out.println("password not set");
+				 ;
 				String status = resendCreatePasswordMail(user.getUser(), request);
 				return -2;
 			} else {
@@ -212,13 +212,13 @@ public class UserService {
 
 					List<Region> regionList = regionDao.getAllRegions();
 
-					System.out.println("verified" + role);
+					 ;
 					HttpSession session = request.getSession();
 					session.setAttribute("aspUser", user);
 					session.setAttribute("regionList", regionList);
 					return role;
 				} else {
-					System.out.println("password not match");
+					 ;
 					return -3;
 				}
 
@@ -245,18 +245,18 @@ public class UserService {
 		String fileExtension = document.getOriginalFilename()
 				.substring(document.getOriginalFilename().lastIndexOf('.') + 1);
 		String storedFileName = "patient" + formattedDate + "-" + fileName;
-		System.out.println(storedFileName);
+		 ;
 		String path = Constants.getUplaodPath(session) + storedFileName;
-		System.out.println(path);
+		 ;
 
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
 			fos.write(data);
 			fos.close();
-			System.out.println("file uploaded");
+			 ;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Uploading Error");
+			 ;
 		}
 
 		requestWiseFile.setRequest(request);
@@ -313,7 +313,7 @@ public class UserService {
 //			String phone = updateCaseDto.getPhoneNumber();
 ////			String tokens[2] = phone.split("");
 //		}
-		System.out.println(updateCaseDto.getDateOfBirth());
+		 ;
 		String[] tokens = updateCaseDto.getDateOfBirth().split("-");
 		int day = Integer.parseInt(tokens[2]);
 		int monthInt = Integer.parseInt(tokens[1]) - 1;
@@ -1006,8 +1006,8 @@ public class UserService {
 	}
 
 	public List<HealthProfessionalDataDto> getHealthProfessionalsData(String name, Integer typeId) {
-		System.out.println("Hello " + name + "  .");
-		System.out.println(typeId);
+		 ;
+		 ;
 		List<HealthProfessionalDataDto> healthProfessionalDataDtos = new ArrayList<HealthProfessionalDataDto>();
 		List<HealthProfessionals> healthProfessionals = this.healthProfessionalsDao.getHealthProfessionalDetails(name,
 				typeId);

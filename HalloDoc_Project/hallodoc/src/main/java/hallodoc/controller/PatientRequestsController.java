@@ -70,18 +70,18 @@ public class PatientRequestsController {
 	public RedirectView addPatientRequest(
 			@ModelAttribute("createPatientRequest") CreatePatientRequestDto createPatientRequestDto,
 			HttpSession session, HttpServletRequest httpServletRequest) throws Exception {
-		System.out.println(createPatientRequestDto.toString());
+		 ;
 		String isExistingPatient = createPatientRequestDto.getIsExsistingPatient();
-		System.out.println(isExistingPatient);
+		 ;
 
 		if (isExistingPatient.equals("true")) {
 
 			boolean status = patientRequestsService.addRequestForExsitingPatient(createPatientRequestDto, session);
-			System.out.println("In existing patient");
+			 ;
 		} else {
-			System.out.println("In new patient");
+			 ;
 			boolean status = patientRequestsService.addRequestForNewPatient(createPatientRequestDto, session);
-			System.out.println(status);
+			 ;
 		}
 
 		RedirectView redirectView = new RedirectView("/patientHome", true);
@@ -113,10 +113,10 @@ public class PatientRequestsController {
 	@RequestMapping(value = "/createNewFamilyRequest", method = RequestMethod.POST)
 	public RedirectView createNewFamilyRequest(@ModelAttribute("createFamilyRequest") CommonRequestDto commonRequestDto,
 			HttpSession session, HttpServletRequest httpServletRequest) throws Exception {
-		System.out.println(commonRequestDto);
+		 ;
 		boolean status = familyFriendRequestService.createNewFamilyFriendRequest(commonRequestDto, session,
 				httpServletRequest);
-		System.out.println(status);
+		 ;
 		RedirectView redirectView = new RedirectView("/patientHome", true);
 		return redirectView;
 	}
@@ -131,9 +131,9 @@ public class PatientRequestsController {
 	public RedirectView addNewConciergeRequest(
 			@ModelAttribute("createConciergeRequest") CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws Exception {
-		System.out.println(commonRequestDto);
+		 ;
 		boolean status = conciergeRequestService.createConciregeRequest(commonRequestDto, session, httpServletRequest);
-		System.out.println(status);
+		 ;
 		RedirectView redirectView = new RedirectView("/patientHome", true);
 		return redirectView;
 	}
@@ -147,9 +147,9 @@ public class PatientRequestsController {
 	public RedirectView addNewBusinessRequest(
 			@ModelAttribute("createConciergeRequest") CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws Exception {
-		System.out.println(commonRequestDto);
+		 ;
 		boolean status = businessRequestService.createBusinessRequest(commonRequestDto, session, httpServletRequest);
-		System.out.println(status);
+		 ;
 		RedirectView redirectView = new RedirectView("/patientHome", true);
 		return redirectView;
 	}
@@ -164,7 +164,7 @@ public class PatientRequestsController {
 			User user = aspNetUsers.getUser();
 			m.addAttribute("userOb", user);
 		} catch (Exception e) {
-			System.out.println("User object in patient request service not found");
+			 ;
 		}
 
 		return "/patient/submit-information-me";
@@ -174,10 +174,10 @@ public class PatientRequestsController {
 	public RedirectView createReqisteredPatientRequestForMe(RedirectAttributes attributes,
 			@ModelAttribute("creteRequestMe") CreatePatientRequestDto createPatientRequestDto,
 			HttpServletRequest request, Model m) throws ParseException {
-		System.out.println(createPatientRequestDto);
+		 ;
 		String createStatus = registeredPatientSelfRequestService.createNewSelfRequest(createPatientRequestDto,
 				request);
-		System.out.println(createStatus);
+		 ;
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		RedirectView redirectView = new RedirectView("/patientDashboard", true);
 
@@ -197,7 +197,7 @@ public class PatientRequestsController {
 			User user = aspNetUsers.getUser();
 			m.addAttribute("userOb", user);
 		} catch (Exception e) {
-			System.out.println("User object in patient request service not found");
+			 ;
 		}
 
 		return "/patient/submit-information-others";
@@ -207,9 +207,9 @@ public class PatientRequestsController {
 	public RedirectView createReqisteredPatientRequestForMe(RedirectAttributes attributes,
 			@ModelAttribute("creteRequestOthers") SomeoneElseRequestDto someoneElseRequestDto,
 			HttpServletRequest request, Model m) throws ParseException {
-		System.out.println(someoneElseRequestDto);
+		 ;
 		String createStatus = registeredPatientOthersRequestService.createOthersRequest(someoneElseRequestDto, request);
-		System.out.println(createStatus);
+		 ;
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		RedirectView redirectView = new RedirectView("/patientDashboard", true);
 		attributes.addFlashAttribute("message", "Request Succesfully Created");

@@ -139,7 +139,7 @@ public class PatientRequestsService {
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		System.out.println(confirmationNumber);
+		 ;
 
 		return confirmationNumber;
 	}
@@ -258,16 +258,16 @@ public class PatientRequestsService {
 		byte[] data = file.getBytes();
 		String name = createPatientRequestDto.getFirstName()+" "+createPatientRequestDto.getLastName();
 		String path = Constants.getUplaodPath(session) + storedFileName;
-		System.out.println(path);
+		 ;
 
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
 			fos.write(data);
 			fos.close();
-			System.out.println("file uploaded");
+			 ;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Uploading Error");
+			 ;
 		}
 
 		requestWiseFile.setRequest(request);

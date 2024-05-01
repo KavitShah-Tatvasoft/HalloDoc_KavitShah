@@ -10,8 +10,8 @@ function showProviderMenuData(){
 			region : region
 		},
 		success: function(res) {
-			console.log("Data obtained")
-			console.log(res)
+			  
+			  
 			var tbody = $(".empty-tbody-provider-menu")
 			var accordionBody = $(".empty-accordion")
 			tbody.empty()
@@ -50,7 +50,7 @@ function showProviderMenuData(){
 			
 		},
 		error: function(res) {
-			console.log("Failed to obtain data")
+			  
 		}
 
 	});
@@ -74,10 +74,10 @@ function changeNotification(id){
 			
 		},
 		success: function(data) {
-			console.log(data)
+			  
 		},
 		error: function(data) {
-			console.log("failed to toggle")
+			  
 		}
 	})
 	
@@ -96,17 +96,19 @@ $("#communication-method-form").submit(function(event) {
 	payload["id"] = id
 	payload["method"] = method
 	payload["message"] = message
-	
+	showLoader()
 	$.ajax({
 		url: 'contactProvider',
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log(data)
+			  
 			$(".close-pop-up").click()
+			hideLoader()
 		},
 		error: function(data) {
-			console.log("failed to contact")
+			hideLoader()
+			  
 		}
 	})
 	

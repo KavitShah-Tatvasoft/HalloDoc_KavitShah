@@ -20,7 +20,7 @@ public class EmailSMSController {
 	
 	@RequestMapping(value = "/patientSendResetEmail", method = RequestMethod.POST)
 	public String resetPasswordEmail(@ModelAttribute ResetPasswordDto resetpassdto, Model m) {
-		System.out.println(resetpassdto);
+		 ;
 		String email = resetpassdto.getEmail();
 		int response = emailsmsservice.resetPassword(email);
 		if(response == -1) {

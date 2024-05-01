@@ -15,8 +15,8 @@ function fillData(reqId) {
 			reqId: reqId
 		},
 		success: function(res) {
-			console.log(res)
-			console.log("Data Obtained")
+			  
+			  
 
 			res.forEach(function(data) {
 
@@ -82,7 +82,7 @@ function fillData(reqId) {
 			});
 
 		}, error: function(res) {
-			console.log("Failed to obtain data")
+			  
 		}
 
 	});
@@ -108,7 +108,7 @@ $("#adminNoteUpdateForm").submit(function(event) {
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log("updated successfully")
+			  
 			fillData(reqId)
 		},
 		error: function(res) { }

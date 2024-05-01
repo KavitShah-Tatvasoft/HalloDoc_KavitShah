@@ -23,10 +23,10 @@ public class temp {
 //                .addPepper("shared-secret")
 //                .with(bcrypt);
 
-		System.out.println(hash.getResult());
-//		System.out.println(hash1.getResult());
-		System.out.println(verified);
-//		System.out.println(verified1);
+		 ;
+//		 ;
+		 ;
+//		 ;
 		
 		// $2b$12$.z6oEtf4KGlPk9y4uzEsKuF.4MfAv9NQCrqXQevjYy0DMvVXZWcK2
 

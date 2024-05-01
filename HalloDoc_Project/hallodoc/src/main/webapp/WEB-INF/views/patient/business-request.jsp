@@ -8,6 +8,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -39,7 +42,10 @@
 
 <title>Business Request</title>
 </head>
-<body>
+<body onload="hideLoader()">
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>	
 	<div
 		class="container-fluid footer-container patient-form shadow p-3 bg-white rounded relative-position extra-margin">
 
@@ -47,7 +53,7 @@
 			<img src="<c:url value='/resources/images/chevron-left.svg' />"
 				alt=""> Back
 		</div>
-		<form action="addBusinessRequest" method="post">
+		<form action="addBusinessRequest" method="post" onsubmit="showLoader()">
 			<div class="row">
 				<!--Row 1-->
 
@@ -260,7 +266,7 @@
 
 		</form>
 	</div>
-
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script>
 		const phoneInputField = document.getElementsByClassName("phone");
 		for (let i = 0; i < phoneInputField.length; ++i) {

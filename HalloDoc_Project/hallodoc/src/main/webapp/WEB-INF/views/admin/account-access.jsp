@@ -111,5 +111,11 @@
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/account-access.js' />"></script>
+	<script type="text/javascript">
+		
+		$(".common-link-class").removeClass("active")
+		$(".access-link-class").addClass("active")
+	
+	</script>
 </body>
 </html>

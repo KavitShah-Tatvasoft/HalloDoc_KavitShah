@@ -66,7 +66,7 @@ public class RequestDao {
 		query.setParameter("ceilDate", edate);
 
 		List<Request> result = query.list();
-		System.out.println(result.size());
+		 ;
 		s.close();
 		return result.size();
 	}
@@ -93,7 +93,7 @@ public class RequestDao {
 
 		List<Request> results = hql.list();
 
-		System.out.println("Query result obtained");
+		 ;
 		s.close();
 		return results;
 	}
@@ -127,7 +127,7 @@ public class RequestDao {
 
 	public List<Request> getRequstStatusData(List<Integer> status) {
 		Session s = this.sessionFactory.openSession();
-		String hql = "from Request as req where req.status IN :status";
+		String hql = "FROM Request as req WHERE req.status IN :status AND req.isDeleted = false";
 		Query query = s.createQuery(hql);
 		query.setParameter("status", status);
 		List<Request> requestsList = query.list();
@@ -138,7 +138,7 @@ public class RequestDao {
 	public List<StatusWiseCountDto> getStatusWiseRequestCount() {
 		Session s = this.sessionFactory.openSession();
 
-		String hql = "select new hallodoc.dto.StatusWiseCountDto(re.status,COUNT(re.requestId)) from Request re group by re.status";
+		String hql = "select new hallodoc.dto.StatusWiseCountDto(re.status,COUNT(re.requestId)) from Request re WHERE re.isDeleted = false group by re.status";
 		Query query = s.createQuery(hql);
 		List<StatusWiseCountDto> list = query.list();
 		s.close();
@@ -360,11 +360,11 @@ public class RequestDao {
 	public Integer getOpenReqeustCount() {
 		
 		Session s = this.sessionFactory.openSession();
-		String query = "SELECT COUNT(*) FROM request re WHERE re.status <> 11";
-		Query hql = s.createNativeQuery(query);
-		Integer count = hql.getFirstResult();
+		String query = "FROM Request re WHERE re.status <> 11";
+		Query hql = s.createQuery(query);
+		List<Request> reqList = hql.list();
 		s.close();
-		return count;
+		return reqList.size();
 		
 	}
 

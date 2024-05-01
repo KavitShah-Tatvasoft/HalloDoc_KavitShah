@@ -46,7 +46,7 @@ const changeStatus = (element) => {
 	const states = document.getElementsByClassName("row-cards")
 	const current_state = element.classList[1]
 	const capitalizedState = current_state.charAt(0).toUpperCase() + current_state.slice(1);
-	console.log(current_state)
+	  
 	stateName.innerHTML = "(" + capitalizedState + ")"
 	$(".state-type-class-name").attr("data-state", current_state)
 
@@ -72,74 +72,7 @@ const changeStatus = (element) => {
 		}
 	}
 
-	//	const obj = {};
-	//	const columns = document.getElementsByClassName("table-columns");
-	//	const th_states_key = ['new', 'pending', 'active', 'conclude', 'to-close', 'unpaid'];
-	//	const th_states_values = ['s1', 's2', 's3', 's4', 's5', 's6'];
-	//
-	//	for (let i = 0; i < th_states_key.length; i++) {
-	//		obj[th_states_key[i]] = th_states_values[i];
-	//	}
-	//
-	//	for (let i = 0; i < columns.length; ++i) {
-	//		columns[i].classList.add('d-none');
-	//	}
-	//
-	//	for (let i = 0; i < columns.length; ++i) {
-	//		if (columns[i].classList.contains(obj[current_state])) {
-	//			columns[i].classList.remove('d-none');
-	//		}
-	//	}
-	//
-	//
-	//	$.ajax({
-	//		url: 'getRequestData',
-	//		type: 'POST',
-	//		dataType: 'json',
-	//		data: {
-	//			status: current_state
-	//		},
-	//
-	//		success: function(res) {
-	//			console.log("Success")
-	//			console.log(res)
-	//			let tbody = $("#admin-table tbody")
-	//			let accordionBody = $(".empty-accordion")
-	//			tbody.empty()
-	//			accordionBody.empty()
-	//			var count = 120;
-	//			res.forEach(function(data) {
-	//
-	//				count = count + 1
-	//
-	//				if (current_state == "new" && !(data.deleted)) {
-	//					var card = createNewReqRow(data);
-	//					tbody.append(card)
-	//				}
-	//
-	//				if (current_state != "new" && !(data.deleted)) {
-	//					var card = createOtherReqRow(data, current_state);
-	//					tbody.append(card)
-	//				}
-	//
-	//
-	//				var accordionCard = poplulateAccordions(data, current_state, count)
-	//				console.log(accordionCard);
-	//				accordionBody.append(accordionCard)
-	//
-	//			})
-	//
-	//			const currentActions = document.getElementsByClassName(current_state + "s")
-	//			for (let i = 0; i < currentActions.length; i++) {
-	//				currentActions[i].classList.remove('d-none')
-	//			}
-	//
-	//		},
-	//		error: function() {
-	//			console.log("error fetching request data")
-	//		}
-	//
-	//	})
+
 
 	loadData(current_state)
 	loadCount()
@@ -177,8 +110,8 @@ function loadData(current_state) {
 		},
 
 		success: function(res) {
-			console.log("Success")
-			console.log(res)
+			  
+			  
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
 			tbody.empty()
@@ -200,7 +133,7 @@ function loadData(current_state) {
 
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
-				console.log(accordionCard);
+				  ;
 				accordionBody.append(accordionCard)
 
 			})
@@ -212,7 +145,7 @@ function loadData(current_state) {
 
 		},
 		error: function() {
-			console.log("error fetching request data")
+			  
 		}
 
 	})
@@ -231,7 +164,7 @@ function loadCount() {
 			var countConclude = document.getElementById("conclude-request-count");
 			var countToClose = document.getElementById("to-close-request-count");
 			var countUnpaid = document.getElementById("unpaid-request-count");
-			console.log(res)
+			  
 
 			countNew.innerHTML = res[0];
 			countPending.innerHTML = res[1];
@@ -242,7 +175,7 @@ function loadCount() {
 
 		},
 		error: function() {
-			console.log("Error 2")
+			  
 		}
 	})
 
@@ -456,7 +389,7 @@ function createOtherReqRow(data, current_state) {
 									<li class="pendings d-none">
 										<div class="action-dropdown-flex dropdown-item" id=send-agreement">
 											<img src="/hallodoc/resources/images/document.png"
-												class="dropdown-icons" alt=""> <a =onclick"sendAgreement(`+ data.requestId + `)"
+												class="dropdown-icons" alt=""> <a onclick="sendAgreement(`+ data.requestId + `)"
 												class="action-dropdown-text" data-bs-toggle="modal"
 												data-bs-target="#send-agreement" type="button">Send
 												Agreement</a>
@@ -482,14 +415,7 @@ function createOtherReqRow(data, current_state) {
 										</div>
 									</li>
 									
-									<li class="concludes d-none">
-										<div class="action-dropdown-flex dropdown-item" id="encounter">
-											<img src="/hallodoc/resources/images/document.png"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" type="button"
-												href="<c:url value='' />">Conclude Care</a>
-										</div>
-									</li>
+									
 
 								</ul>
 							</div>
@@ -517,8 +443,8 @@ $(document).ready(function() {
 		},
 
 		success: function(res) {
-			console.log("Success")
-			console.log(res)
+			  
+			  
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
 			tbody.empty()
@@ -564,7 +490,7 @@ $(document).ready(function() {
 
 		},
 		error: function() {
-			console.log("error fetching initial request data")
+			  
 		}
 	})
 })
@@ -576,7 +502,7 @@ function poplulateAccordions(data, current_state, count) {
 	card.find(".action-class").addClass("d-none")
 
 	var button = card.find(".accordion-button")
-	button.attr("data-bs-target", "#p" + data.zipcode + data.ptPhoneNumber + count)
+	button.attr("data-bs-target", "#p" + count)
 
 	var ptName = card.find("#accordion-patient-name-id")
 	ptName.text(data.name)
@@ -602,7 +528,7 @@ function poplulateAccordions(data, current_state, count) {
 
 	card.find(".patient_card_address_admin").text(data.street + ", " + data.city + ", " + data.state + ", " + data.zipcode)
 
-	card.find(".change-id").attr("id", "p" + data.zipcode + data.ptPhoneNumber + count)
+	card.find(".change-id").attr("id", "p" + count)
 
 	card.find(".dateOfBirth").text(data.month + " " + data.day + ", " + data.year)
 
@@ -656,19 +582,20 @@ $("#sendLinkForm").submit(function(event) {
 		payloadData[value.name] = value.value
 	})
 
-	console.log(payloadData);
-
+	showLoader()
 	$.ajax({
 		url: 'sendLinkByEmail',
 		type: 'POST',
 		data: payloadData,
 		success: function(data) {
-			console.log(data)
-			console.log("Form Submitted")
+			  
+			  
+			hideLoader() 
 		},
 		error: function(data) {
-			console.log(data)
-			console.log("Error while send link ajax call")
+			hideLoader() 
+			  
+			  
 		}
 
 
@@ -679,7 +606,7 @@ $("#sendLinkForm").submit(function(event) {
 });
 
 function changeActiveBtn(element) {
-	console.log("change me")
+	  
 	$(".button-class").removeClass("active-btn")
 	$(".commom-label-class").removeClass("show-active-button-class")
 	$(element).addClass("active-btn")
@@ -725,14 +652,14 @@ function filterRequest() {
 	payLoadData["requestType"] = requestType
 	payLoadData["statusType"] = statusType
 
-	console.log(payLoadData)
+	  
 
 	$.ajax({
 		url: 'searchRequestFilter',
 		type: 'POST',
 		data: payLoadData,
 		success: function(res) {
-			console.log("Filter Successfully Applied")
+			  
 
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
@@ -755,7 +682,7 @@ function filterRequest() {
 
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
-				console.log(accordionCard);
+				  ;
 				accordionBody.append(accordionCard)
 
 
@@ -769,7 +696,7 @@ function filterRequest() {
 
 		},
 		error: function(res) {
-			console.log("Filter Failed to be Applied")
+			  
 		}
 	});
 
@@ -789,7 +716,7 @@ $("#cancelCaseForm").submit(function(event) {
 	payLoadData["additionalNotes"] = additionalNotes
 	payLoadData["requestId"] = requestId
 
-	console.log(payLoadData)
+	  
 
 	$.ajax({
 		url: 'cancelRequestedCase',
@@ -798,10 +725,10 @@ $("#cancelCaseForm").submit(function(event) {
 		success: function(res) {
 			loadCount()
 			loadData(current_state)
-			console.log("Request Cancelled")
+			  
 		},
 		error: function(res) {
-			console.log("Request Failed to be Cancelled")
+			  
 		}
 
 	});
@@ -822,7 +749,7 @@ $("#blockPatientForm").submit(function(event) {
 	payLoadData["blockReason"] = blockReason
 	payLoadData["requestId"] = requestId
 
-	console.log(payLoadData)
+	  
 
 	$.ajax({
 		url: 'blockRequestedCase',
@@ -831,10 +758,10 @@ $("#blockPatientForm").submit(function(event) {
 		success: function(res) {
 			loadCount()
 			loadData(current_state)
-			console.log("Request Blocked")
+			  
 		},
 		error: function(res) {
-			console.log("Failed to block request")
+			  
 		}
 
 	});
@@ -863,7 +790,7 @@ function getPhysiciansByRegion(region) {
 
 
 	debugger
-	console.log(region)
+	  
 	$.ajax({
 		url: 'getPhysiciansByRegion',
 		type: 'POST',
@@ -871,8 +798,8 @@ function getPhysiciansByRegion(region) {
 			regionId: region
 		},
 		success: function(res) {
-			console.log(res)
-			console.log("Physician List Obtained")
+			  
+			  
 
 			$(".physician-name-class").empty()
 			$(".physician-name-class").append("<option value='0' hidden selected>Select Physician</option>")
@@ -883,7 +810,7 @@ function getPhysiciansByRegion(region) {
 
 		},
 		error: function(res) {
-			console.log("Failed to Obtain Physician List ")
+			  
 		}
 
 	});
@@ -913,10 +840,10 @@ $("#assign-case-form").submit(function(event) {
 			type: 'POST',
 			data: payload,
 			success: function(data) {
-				console.log("assigned sucessfully")
+				  
 			},
 			error: function(data) {
-				console.log("failed to assign provider")
+				  
 			}
 		})
 
@@ -925,9 +852,6 @@ $("#assign-case-form").submit(function(event) {
 })
 
 function exportData(current_status) {
-
-	console.log(current_status)
-	debugger
 
 	if (current_status != "ALL") {
 
@@ -976,6 +900,7 @@ function exportData(current_status) {
 		payload["statusType"] = 7
 		payload["currentStatus"] = current_status
 	}
+	showLoader()
 	$.ajax({
 		url: 'exportStatusWiseData',
 		type: 'POST',
@@ -984,7 +909,8 @@ function exportData(current_status) {
 		},
 		data: payload,
 		success: function(data) {
-			console.log("export succesful")
+			hideLoader() 
+			  
 			var blob = new Blob([data]);
 			var link = document.createElement("a");
 			link.href = window.URL.createObjectURL(blob);
@@ -993,7 +919,8 @@ function exportData(current_status) {
 			link.click();
 			document.body.removeChild(link);
 		}, error: function(data) {
-			console.log("export failed")
+			hideLoader() 
+			  
 		}
 
 
@@ -1019,11 +946,11 @@ $("#clear-case-form").submit(function(event) {
 			$(".cancel-case-btn-class").click()
 			loadCount()
 			loadData(current_state)
-			console.log("Case Cleared Succesfully")
+			  
 
 		},
 		error: function(data) {
-			console.log("failed to assign provider")
+			  
 			error.innerHTML = "Failed to clear the case"
 		}
 	})
@@ -1060,12 +987,12 @@ $("#transfer-request-form").submit(function(event) {
 			type: 'POST',
 			data: payload,
 			success: function(data) {
-				console.log("transferred physician sucessfully")
+				  
 				loadCount()
 				loadData(current_state)
 			},
 			error: function(data) {
-				console.log("failed to transfer provider")
+				  
 			}
 		})
 
@@ -1075,6 +1002,7 @@ $("#transfer-request-form").submit(function(event) {
 
 
 function sendAgreement(reqId) {
+	debugger
 	$("#send-agreement-req-id").val(reqId)
 
 	$.ajax({
@@ -1084,15 +1012,15 @@ function sendAgreement(reqId) {
 			reqId: reqId
 		},
 		success: function(data) {
-			console.log("data obtianed of email and phone")
-			console.log(data)
+			  
+			  
 
 			$(".agreement-phone").val(data.phoneNumber)
 			$(".agreement-email").val(data.email)
 
 		},
 		error: function(data) {
-			console.log("failed to obtian data of email and phone")
+			  
 		}
 	})
 }
@@ -1108,18 +1036,20 @@ $("#sendAgreementForm").submit(function(event) {
 	payload["reqId"] = reqId
 	payload["phoneNumber"] = phoneNumber
 	payload["email"] = email
-
+	showLoader()
 	$.ajax({
 		url: 'sendAgreementToPatient',
 		type: 'POST',
 		data: payload,
 		success: function(data) {
 			$(".send-agreement-reset").click()
-			console.log("send agreement")
-			console.log(data)
+			hideLoader() 
+			  
+			  
 		},
 		error: function(data) {
-			console.log("failed to send agreement")
+			hideLoader() 
+			  
 			var error = document.getElementById("error-send-agreement")
 			error.innerHTML = "Error sending agreement! Please try again!"
 		}

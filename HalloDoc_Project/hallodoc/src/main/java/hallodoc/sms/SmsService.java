@@ -46,10 +46,10 @@ public class SmsService {
 
 		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
 		        Message message = messageFactory.create(params);
-		        System.out.println(message.getSid());
+		         ;
 		    } 
 		    catch (TwilioRestException e) {
-		        System.out.println(e.getErrorMessage());
+		         ;
 		    }
 		 
 		 return "SMS Send";
@@ -73,10 +73,10 @@ public class SmsService {
 
 		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
 		        Message message = messageFactory.create(params);
-		        System.out.println(message.getSid());
+		         ;
 		    } 
 		    catch (TwilioRestException e) {
-		        System.out.println(e.getErrorMessage());
+		         ;
 		    }
 		 
 		 return "SMS Send";

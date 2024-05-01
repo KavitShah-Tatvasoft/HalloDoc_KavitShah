@@ -117,4 +117,14 @@ public class RoleAccessDao {
 		tx.commit();
 		s.close();
 	}
+	
+	public List<Role> getPhysicianRoles() {
+		
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM Role rl WHERE rl.accountType = 2" ;
+		Query q = s.createQuery(queryString);
+		List<Role> roles = q.list();
+		s.close();
+		return roles;
+	}
 }

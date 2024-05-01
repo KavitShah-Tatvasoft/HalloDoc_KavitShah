@@ -7,12 +7,12 @@ function deleteRole(roleId){
 			roleId : roleId
 		},
 		success: function(res) {
-		console.log(res)
+		  
 		getRoles()
 			
 		},
 		error: function(res){
-		console.log("failed to delete")
+		  
 		}
 		
 		})
@@ -27,8 +27,8 @@ function getRoles() {
 		url: 'getRoleDetails',
 		type: 'GET',
 		success: function(res) {
-			console.log(res)
-			console.log("roles obtained")
+			  
+			  
 			tbody.empty()
 			accordionBody.empty()
 			
@@ -65,7 +65,7 @@ function getRoles() {
 			})
 		},
 		error: function(res) {
-			console.log("failed to obtain roles data")
+			  
 		}
 
 	})

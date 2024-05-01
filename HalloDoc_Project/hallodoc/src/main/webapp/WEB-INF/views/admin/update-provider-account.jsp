@@ -102,17 +102,19 @@
 					<select name="pRole" id="floatingInput-5"
 						class="form-control pRole form-select input-2 provider-details-1"
 						disabled>
-						<option value="1">Admin</option>
-						<option value="3">Patient</option>
-						<option value="2" selected>Provider</option>
+						<c:forEach items="${rolesDto }" var="role">
+							<option value="${role.roleId }">${role.roleName }</option>
+						</c:forEach>
 					</select> <label for="floatingInput-5">Role</label>
 				</div>
 			</div>
 
 			<div class="common-row-bottom-btn">
-				<button type="button" id="save-btn-1" onclick="saveChange1(),saveRoleStatus()"
+				<button type="button" id="save-btn-1"
+					onclick="saveChange1(),saveRoleStatus()"
 					class="edit-btn extra-margin-right-edit">Save</button>
-				<button type="button" id="save-btn-2" onclick="savePassword(),persistPassword()"
+				<button type="button" id="save-btn-2"
+					onclick="savePassword(),persistPassword()"
 					class="edit-btn extra-margin-right-edit">Save</button>
 				<button type="reset" id="cancel-btn-2" onclick="savePassword()"
 					class="cancel-btn extra-margin-right-edit">Cancel</button>
@@ -120,8 +122,8 @@
 					class="cancel-btn extra-margin-right-edit">Cancel</button>
 				<button class="edit-btn extra-margin-right-edit"
 					onclick="editDetails1()" id="edit-btn-1">Edit</button>
-				<button class="reset-pass-btn" id="password-btn-12" onclick="resetPassword()">Reset
-					Password</button>
+				<button class="reset-pass-btn" id="password-btn-12"
+					onclick="resetPassword()">Reset Password</button>
 			</div>
 
 
@@ -136,8 +138,9 @@
 			<div class="col-12 col-md-6">
 				<!--First Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-2 pFirstName common-class-info " disabled
-						name="pFirstName" value="${providerData.pFirstName }"
+					<input type="text"
+						class="form-control input-2 pFirstName common-class-info "
+						disabled name="pFirstName" value="${providerData.pFirstName }"
 						id="floatingInput-2" placeholder="First Name" autocomplete="off">
 					<label for="floatingInput-2">First Name</label>
 				</div>
@@ -146,7 +149,8 @@
 			<div class="col-12 col-md-6">
 				<!--Last Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-1 pLastName common-class-info" disabled
+					<input type="text"
+						class="form-control input-1 pLastName common-class-info" disabled
 						name="pLastName" value="${providerData.pLastName }"
 						id="floatingInput-3" placeholder="Last Name" autocomplete="off">
 					<label for="floatingInput-3">Last Name</label>
@@ -167,7 +171,8 @@
 				<!--Phone Number col-->
 				<div class="form-floating mb-3  phonecolheight-1">
 					<input type="tel" name="pPhone" value="${providerData.pPhone }"
-						class="pPhone form-control phoneflags phone common-class-info" disabled />
+						class="pPhone form-control phoneflags phone common-class-info"
+						disabled />
 				</div>
 			</div>
 
@@ -175,17 +180,19 @@
 				<!--Last Name col-->
 				<div class="form-floating mb-3 inp">
 					<input type="text" name="pLicense" value="${providerData.pLicense}"
-						class="pLicense form-control input-1 common-class-info " disabled id="floatingInput-3"
-						placeholder="Medical License #" autocomplete="off"> <label
-						for="floatingInput-3">Medical License #</label>
+						class="pLicense form-control input-1 common-class-info " disabled
+						id="floatingInput-3" placeholder="Medical License #"
+						autocomplete="off"> <label for="floatingInput-3">Medical
+						License #</label>
 				</div>
 			</div>
 
 			<div class="col-12 col-md-6">
 				<!--Last Name col-->
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-1 pNPI common-class-info" disabled name="pNPI"
-						value="${providerData.pNPI}" id="floatingInput-3"
+					<input type="text"
+						class="form-control input-1 pNPI common-class-info" disabled
+						name="pNPI" value="${providerData.pNPI}" id="floatingInput-3"
 						placeholder="NPI Number" autocomplete="off"> <label
 						for="floatingInput-3">NPI Number</label>
 				</div>
@@ -193,8 +200,9 @@
 
 			<div class="col-12 col-md-6">
 				<!--Email col-->
-				<div class="form-floating mb-3 inp"> 
-					<input type="email" class="form-control input-2 pSyncEmail common-class-info" disabled
+				<div class="form-floating mb-3 inp">
+					<input type="email"
+						class="form-control input-2 pSyncEmail common-class-info" disabled
 						name="pSyncEmail" id="floatingInput-5"
 						value="${providerData.pSyncEmail}"
 						placeholder="Synchronization Email Address" autocomplete="off">
@@ -208,7 +216,8 @@
 
 					<c:forEach items="${listRegions}" var="region">
 						<div class="single-checkbox-flex">
-							<input type="checkbox" value="${region.regionId }" name="region" class="common-class-info" disabled
+							<input type="checkbox" value="${region.regionId }" name="region"
+								class="common-class-info" disabled
 								<c:forEach items="${providerData.pRegions}" var="adRegion">
 											<c:if test = "${adRegion.regionId == region.regionId}">checked</c:if>
 								</c:forEach>
@@ -222,9 +231,13 @@
 			<input type="text" name="pRegions" class="pRegions" hidden>
 
 			<div class="common-row-bottom-btn bottom-btns-mailing-flex">
-				<button class="edit-btn shrink-btns" onclick="editInformationDetails()" id = "mailing-edit">Edit</button>
-				<button class="edit-btn shrink-btns" onclick="saveInformationDetails(),editProviderInformation()" id = "mailing-save">Save</button>
-				<button class="cancel-btn shrink-btns" onclick="saveInformationDetails()" id = "mailing-cancel">Cancel</button>
+				<button class="edit-btn shrink-btns"
+					onclick="editInformationDetails()" id="mailing-edit">Edit</button>
+				<button class="edit-btn shrink-btns"
+					onclick="saveInformationDetails(),editProviderInformation()"
+					id="mailing-save">Save</button>
+				<button class="cancel-btn shrink-btns"
+					onclick="saveInformationDetails()" id="mailing-cancel">Cancel</button>
 			</div>
 
 		</div>
@@ -238,11 +251,12 @@
 
 			<div class="col-12 col-md-6">
 				<div class="form-floating mb-3 inp">
-					<input type="text" name="pAddressOne" 
+					<input type="text" name="pAddressOne"
 						value="${providerData.pAddressOne}"
-						class="form-control input-2 pAddressOne common-class-mailing" disabled id="floatingInput-2"
-						placeholder="Address 1" autocomplete="off"> <label
-						for="floatingInput-2">Address 1</label>
+						class="form-control input-2 pAddressOne common-class-mailing"
+						disabled id="floatingInput-2" placeholder="Address 1"
+						autocomplete="off"> <label for="floatingInput-2">Address
+						1</label>
 				</div>
 			</div>
 
@@ -250,15 +264,17 @@
 				<div class="form-floating mb-3 inp">
 					<input type="text" name="pAddressTwo"
 						value="${providerData.pAddressTwo}"
-						class="pAddressTwo form-control input-1 common-class-mailing" disabled id="floatingInput-3"
-						placeholder="Address 2" autocomplete="off"> <label
-						for="floatingInput-3">Address 2</label>
+						class="pAddressTwo form-control input-1 common-class-mailing"
+						disabled id="floatingInput-3" placeholder="Address 2"
+						autocomplete="off"> <label for="floatingInput-3">Address
+						2</label>
 				</div>
 			</div>
 
 			<div class="col-12 col-md-6">
 				<div class="form-floating mb-3 inp">
-					<input type="text" name="pCity" class=" pCity form-control input-1 common-class-mailing" disabled
+					<input type="text" name="pCity"
+						class=" pCity form-control input-1 common-class-mailing" disabled
 						value="${providerData.pCity}" id="floatingInput-3"
 						placeholder="City" autocomplete="off"> <label
 						for="floatingInput-3">City</label>
@@ -269,7 +285,8 @@
 				<div class="form-floating mb-3 inp">
 					<c:set var="userState" value="${providerData.pState}" />
 					<select name="pState" id="floatingInput-5 "
-						class="pState form-control form-select input-2 common-class-mailing" disabled>
+						class="pState form-control form-select input-2 common-class-mailing"
+						disabled>
 
 						<c:forEach items="${listRegions}" var="region">
 
@@ -289,7 +306,8 @@
 
 			<div class="col-12 col-md-6">
 				<div class="form-floating mb-3 inp">
-					<input type="text" name="pZip" class="form-control input-1 pZip common-class-mailing" disabled
+					<input type="text" name="pZip"
+						class="form-control input-1 pZip common-class-mailing" disabled
 						value="${providerData.pZip}" id="floatingInput-3"
 						placeholder="Zip" autocomplete="off"> <label
 						for="floatingInput-3">Zip</label>
@@ -300,14 +318,19 @@
 				<!--Phone Number col-->
 				<div class="form-floating  mb-3 phonecolheight phonecolheight-1">
 					<input type="tel" name="pMPhone" value="${providerData.pMPhone}"
-						class="pMPhone form-control phoneflags phone common-class-mailing" disabled />
+						class="pMPhone form-control phoneflags phone common-class-mailing"
+						disabled />
 				</div>
 			</div>
 
 			<div class="common-row-bottom-btn bottom-btns-mailing-flex mb-4">
-				<button class="edit-btn shrink-btns " onclick="editMailingDetails()" id="billing-edit">Edit</button>
-				<button class="edit-btn shrink-btns" onclick="saveMailingDetails(),editMailingInformation()" id = "billing-save">Save</button>
-				<button class="cancel-btn shrink-btns" onclick="saveMailingDetails()" id = "billing-cancel">Cancel</button>
+				<button class="edit-btn shrink-btns " onclick="editMailingDetails()"
+					id="billing-edit">Edit</button>
+				<button class="edit-btn shrink-btns"
+					onclick="saveMailingDetails(),editMailingInformation()"
+					id="billing-save">Save</button>
+				<button class="cancel-btn shrink-btns"
+					onclick="saveMailingDetails()" id="billing-cancel">Cancel</button>
 			</div>
 		</div>
 
@@ -434,7 +457,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">Upload</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 							</button>
@@ -442,7 +465,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">View</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 						</div>
@@ -457,7 +480,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">Upload</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 							</button>
@@ -465,7 +488,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">View</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 						</div>
@@ -480,7 +503,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">Upload</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 							</button>
@@ -488,7 +511,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">View</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 						</div>
@@ -504,7 +527,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">Upload</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 							</button>
@@ -520,7 +543,7 @@
 						<div>
 							<button class="common-btn-onboarding">
 								<span class="toggle-text">Upload</span><img
-									src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+									src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 									class="toggle-img-btn" alt="">
 							</button>
 							</button>
@@ -534,7 +557,8 @@
 			</div>
 
 			<div class="common-row-bottom-btn mb-4">
-				<a href="../deleteProviderAccount/${providerData.pId }" class="delete-btn shrink-btns">Delete Account</a>
+				<a href="../deleteProviderAccount/${providerData.pId }"
+					class="delete-btn shrink-btns">Delete Account</a>
 			</div>
 
 

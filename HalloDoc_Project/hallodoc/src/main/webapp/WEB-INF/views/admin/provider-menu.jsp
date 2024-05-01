@@ -8,6 +8,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -23,6 +26,11 @@
 <title>Provider Menu</title>
 </head>
 <body onload="showProviderMenuData()">
+
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>	
+
 	<div
 		class="container-fluid footer-container main-container relative-pos-class">
 		<div class="main-container-top-text">Provider Information</div>
@@ -44,7 +52,7 @@
 						class="select-search-img" alt="">
 				</div>
 
-				<a class="account-btn" href="create-provider-account.html"> <span
+				<a class="account-btn" href="createProviderAccount"> <span
 					class="new-req-text">Create Provider Account</span>
 				</a>
 			</div>
@@ -197,9 +205,16 @@
 			</div>
 		</div>
 	</div>
-
+	
+		<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/provider-menu.js' />"></script>
+		<script type="text/javascript">
+		
+		$(".common-link-class").removeClass("active")
+		$(".provider-link-class").addClass("active")
+	
+	</script>
 </body>
 </html>
 <%@include file="footer-black.jsp"%>

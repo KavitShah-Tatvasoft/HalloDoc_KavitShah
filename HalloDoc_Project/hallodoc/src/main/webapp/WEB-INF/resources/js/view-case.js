@@ -15,7 +15,7 @@ function editDetails() {
 
 function saveDetails(reqId) {
 	debugger
-	console.log("in ajax of update case")
+	  
 	var x = document.getElementsByClassName("patient-details");
 	var y = document.getElementById("save-cancel-details-btn-id");
 	var z = document.getElementById("edit-details-id");
@@ -46,10 +46,10 @@ function saveDetails(reqId) {
 		type: 'POST',
 		data: payLoadData,
 		success: function(res) {
-			console.log(res)
+			  
 		},
 		error: function(res) {
-			console.log("Error")
+			  
 		}
 	})
 
@@ -86,7 +86,7 @@ function getPhysiciansByRegion() {
 	if (region == "none") {
 		showRegionError.innerHTML = "Please select a region."
 	}
-	console.log(region)
+	  
 	$.ajax({
 		url: '../getPhysiciansByRegion',
 		type: 'POST',
@@ -94,8 +94,8 @@ function getPhysiciansByRegion() {
 			regionId: region
 		},
 		success: function(res) {
-			console.log(res)
-			console.log("Physician List Obtained")
+			  
+			  
 
 			$(".physician-name-class").empty()
 			$(".physician-name-class").append("<option value='0' hidden selected>Select Physician</option>")
@@ -106,7 +106,7 @@ function getPhysiciansByRegion() {
 
 		},
 		error: function(res) {
-			console.log("Failed to Obtain Physician List ")
+			  
 		}
 
 	});
@@ -137,11 +137,11 @@ $("#assign-case-form").submit(function(event) {
 			type: 'POST',
 			data: payload,
 			success: function(data) {
-				console.log("assigned sucessfully")
+				  
 				
 			},
 			error: function(data) {
-				console.log("failed to assign provider")
+				  
 			}
 		})
 

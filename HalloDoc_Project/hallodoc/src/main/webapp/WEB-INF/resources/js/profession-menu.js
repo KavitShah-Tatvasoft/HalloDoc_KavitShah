@@ -13,8 +13,8 @@ function showTableData(){
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log("data obtaines")
-			console.log(res)
+			  
+			  
 			var tbody = $(".profession-tbody")
 			var accordionBody = $(".empty-accordion")
 			tbody.empty()
@@ -53,7 +53,7 @@ function showTableData(){
 			
 
 		}, error: function(data) {
-			console.log("failed")
+			  
 		}
 
 
@@ -70,11 +70,11 @@ function deleteBusiness(businessId){
 			businessId : businessId
 		},
 		success : function(data){
-			console.log("deleted business")
+			  
 			showTableData()
 		},
 		error : function(data){
-			console.log("unable to delete")
+			  
 		}
 		})
 	

@@ -130,7 +130,7 @@ public class BusinessRequestService {
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		System.out.println(confirmationNumber);
+		 ;
 
 		return confirmationNumber;
 	}
@@ -276,7 +276,7 @@ public class BusinessRequestService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		System.out.println(createdToken);
+		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(commonRequestDto.getPtEmail());
@@ -293,7 +293,7 @@ public class BusinessRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			System.out.println(emailChange);
+			 ;
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
@@ -325,7 +325,7 @@ public class BusinessRequestService {
 	private boolean createNewUserBusinessRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
 
-		System.out.println("New Business");
+		 ;
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;
@@ -375,15 +375,15 @@ public class BusinessRequestService {
 		String businessEmail = commonRequestDto.getReqEmail();
 		List<Business> businessList = businessDao.getExistingBusinessByEmail(businessEmail);
 
-		System.out.println("Here1");
+		 ;
 		if (businessList.size() > 0) {
 			businessObj = businessList.get(0);
 
 			String updateBusiness = updateBusiness(commonRequestDto, businessObj, currentLocalDate, region);
 			String updated = businessDao.updateBusiness(businessObj);
-			System.out.println(updated);
+			 ;
 		} else {
-			System.out.println("Here2");
+			 ;
 			businessObj = createNewBusiness(commonRequestDto, currentLocalDate, region);
 			int businessId = businessDao.addBusiness(businessObj);
 		}
@@ -405,7 +405,7 @@ public class BusinessRequestService {
 
 		String isExsist = "new";
 		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest, isExsist);
-		System.out.println(mailSentStatus);
+		 ;
 
 		return true;
 
@@ -414,7 +414,7 @@ public class BusinessRequestService {
 	private boolean createOldUserBusinessRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
 
-		System.out.println("Old Business");
+		 ;
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;
@@ -466,7 +466,7 @@ public class BusinessRequestService {
 
 			String updateBusiness = updateBusiness(commonRequestDto, businessObj, currentLocalDate, region);
 			String updated = businessDao.updateBusiness(businessObj);
-			System.out.println(updated);
+			 ;
 		} else {
 			businessObj = createNewBusiness(commonRequestDto, currentLocalDate,region);
 			int businessId = businessDao.addBusiness(businessObj);

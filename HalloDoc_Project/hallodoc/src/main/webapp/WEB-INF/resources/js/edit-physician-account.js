@@ -66,10 +66,10 @@ function saveRoleStatus() {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log(data)
+			  
 		},
 		error: function(data) {
-			console.log("failed to update status data")
+			  
 		}
 	})
 }
@@ -87,10 +87,10 @@ function persistPassword(){
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log(data)
+			  
 		},
 		error: function(data) {
-			console.log("failed to update password")
+			  
 		}
 	})
 	
@@ -119,10 +119,10 @@ function editMailingInformation(){
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log(data)
+			  
 		},
 		error: function(data) {
-			console.log("failed to update mailing details")
+			  
 		}
 	})
 }
@@ -161,10 +161,10 @@ function editProviderInformation(){
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log(data)
+			  
 		},
 		error: function(data) {
-			console.log("failed to update info details")
+			  
 		}
 	})
 	

@@ -8,6 +8,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -39,41 +41,10 @@
 
 <title>Concierge Request</title>
 </head>
-<body>
-	<!-- Modal -->
-	<!-- 	<div class="container-fluid shadow p-2 bg-white rounded"> -->
-	<!-- 		<div class="nav nav-flex"> -->
-	<!-- 			<div class="nav-left"> -->
-	<!-- 				<span class="ms-2"> <img -->
-	<%-- 					src="<c:url value='/resources/images/logo-halloDoc.png' />" --%>
-	<!-- 					alt="HelloDoc Logo" class="halloDoc-img"> -->
-	<!-- 				</span> -->
-	<!-- 			</div> -->
-
-	<!-- 			<div class="nav-right"> -->
-	<!-- 				<div> -->
-	<!-- 					<button type="button" class="theme-btn" id="moon-btn" -->
-	<!-- 						onclick="changeThemeDarkBright(this)"></button> -->
-	<!-- 					<label for="moon-btn"> <img -->
-	<%-- 						src="<c:url value="/resources/images/moon-blue.svg" />" alt="moon" --%>
-	<!-- 						class="moon" id="moon-id"> -->
-	<!-- 					</label> -->
-
-	<!-- 					<button type="button" class="theme-btn" id="sun-btn" -->
-	<!-- 						onclick="changeThemeDarkBright(this)"></button> -->
-	<!-- 					<label for="sun-btn"> <img -->
-	<%-- 						src="<c:url value="/resources/images/sun-blue.svg" />" alt="sun" --%>
-	<!-- 						class="sun" id="sun-id"> -->
-	<!-- 					</label> -->
-	<!-- 				</div> -->
-
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
-
-
-
-
+<body onload="hideLoader()">
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>
 	<div
 		class="container-fluid footer-container patient-form shadow p-3 bg-white rounded relative-position extra-margin">
 
@@ -83,7 +54,7 @@
 				alt=""> Back
 		</div>
 		<!-- 		</a> -->
-		<form action="addNewConciergeRequest" method="post">
+		<form action="addNewConciergeRequest" method="post" onsubmit="showLoader()">
 			<div class="row">
 				<!--Row 1-->
 
@@ -170,9 +141,10 @@
 				<div class="col-12 col-md-6">
 					<!--State col-->
 					<div class="form-floating mb-3 inp">
-						<input type="text" name="reqState" onblur="validatePatientState()" class="form-control input-2"
-							id="state" placeholder="State" autocomplete="off"> <label
-							for="state">State</label> <span id="stateErrorField"></span>
+						<input type="text" name="reqState" onblur="validatePatientState()"
+							class="form-control input-2" id="state" placeholder="State"
+							autocomplete="off"> <label for="state">State</label> <span
+							id="stateErrorField"></span>
 					</div>
 				</div>
 
@@ -288,7 +260,8 @@
 
 
 				<div class="bottom-btns mt-3">
-					<button type="submit" id="submit-btn-id" class="bottom-btns-submit shrink-btns">Submit</button>
+					<button type="submit" id="submit-btn-id"
+						class="bottom-btns-submit shrink-btns">Submit</button>
 					<button type="reset" class="bottom-btns-cancel shrink-btns">Cancel</button>
 				</div>
 			</div>
@@ -315,10 +288,8 @@
 								utilsScript : "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 							});
 		}
-
-		
 	</script>
-
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script src="<c:url value="/resources/js/darktheme.js" />"></script>
 	<script src="<c:url value="/resources/js/concierge-request.js" />"></script>
 </body>

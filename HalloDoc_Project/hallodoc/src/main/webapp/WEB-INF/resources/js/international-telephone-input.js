@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var phoneLabel = document.querySelector('.phone-label');
         var isValidNumber = numberValidation(phone);
         console.clear();
-        console.log(isValidNumber);
+          ;
 
         if(isValidNumber.valid) {
             phoneLabel.style.cssText = "color: blue; font-size: 30px;";

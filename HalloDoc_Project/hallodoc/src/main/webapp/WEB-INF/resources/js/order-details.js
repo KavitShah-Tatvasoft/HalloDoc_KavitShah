@@ -10,8 +10,8 @@ function getVendors() {
 			professionTypeId: id
 		},
 		success: function(res) {
-			console.log("vendor data obtained")
-			console.log(res)
+			  
+			  
 
 			$(".business-type-select-class").empty()
 			$(".business-type-select-class").append("<option value='0' hidden >Select Business</option>")
@@ -25,7 +25,7 @@ function getVendors() {
 
 		},
 		error: function(data) {
-			console.log("failed to obtian vendor data")
+			  
 		}
 	})
 }
@@ -41,8 +41,8 @@ function getSelectedVendorDetails() {
 			vendorId: id
 		},
 		success: function(res) {
-			console.log("vendor details obtained")
-			console.log(res)
+			  
+			  
 
 			$("#business-contact-orders").attr("value", res.businessContact)
 			$("#business-email-orders").attr("value", res.businessEmail)
@@ -51,7 +51,7 @@ function getSelectedVendorDetails() {
 
 		},
 		error: function(data) {
-			console.log("failed to obtian vendor details")
+			  
 		}
 	})
 

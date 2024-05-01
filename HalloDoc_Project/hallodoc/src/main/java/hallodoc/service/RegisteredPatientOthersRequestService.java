@@ -125,7 +125,7 @@ public class RegisteredPatientOthersRequestService {
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		System.out.println(confirmationNumber);
+		 ;
 
 		return confirmationNumber;
 	}
@@ -231,16 +231,16 @@ public class RegisteredPatientOthersRequestService {
 		String path = Constants.getUplaodPath(session) + storedFileName;
 		byte[] data = file.getBytes();
 
-		System.out.println(path);
+		 ;
 
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
 			fos.write(data);
 			fos.close();
-			System.out.println("file uploaded");
+			 ;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Uploading Error");
+			 ;
 		}
 
 		requestWiseFile.setRequest(request);
@@ -264,7 +264,7 @@ public class RegisteredPatientOthersRequestService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		System.out.println(createdToken);
+		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(someoneElseRequestDto.getEmail());
@@ -281,7 +281,7 @@ public class RegisteredPatientOthersRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			System.out.println(emailChange);
+			 ;
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
@@ -332,7 +332,7 @@ public class RegisteredPatientOthersRequestService {
 
 		if (requestorAspNetUsers == null) {
 //				throw new Exception("No Session obj found in new other request");
-			System.out.println("No Session obj found in new other request");
+			 ;
 		}
 
 		requestorUser = requestorAspNetUsers.getUser();
@@ -414,7 +414,7 @@ public class RegisteredPatientOthersRequestService {
 		requestorAspNetUsers = (AspNetUsers) httpRequest.getSession().getAttribute("aspUser");
 		if (requestorAspNetUsers == null) {
 //				throw new Exception("No Session obj found in new other request");
-			System.out.println("No Session obj found in new other request");
+			 ;
 		}
 
 		requestorUser = requestorAspNetUsers.getUser();
@@ -439,7 +439,7 @@ public class RegisteredPatientOthersRequestService {
 		requestType = requestTypeDao.getRequestTypeObject(hallodoc.enumerations.RequestType.FAMILY.getRequestType());
 
 		// method for new user
-		System.out.println("New");
+		 ;
 		aspNetUsers = createAspNetUsers(someoneElseRequestDto, currentDate);
 
 		user = createUser(someoneElseRequestDto, currentDate, aspNetUsers, region, day, year, monthName, role);
@@ -466,7 +466,7 @@ public class RegisteredPatientOthersRequestService {
 		int requestId = requestDao.addNewRequest(request);
 		String isExsist = "new";
 		String mailSentStatus = sendCreatePasswordMail(someoneElseRequestDto, httpRequest, isExsist);
-		System.out.println(mailSentStatus);
+		 ;
 
 		return "created new";
 	}
@@ -486,7 +486,7 @@ public class RegisteredPatientOthersRequestService {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("phone number dosen't match");
+			 ;
 		}
 
 		List<AspNetUsers> list = apsnetuserdao.getUserByEmail(someoneElseRequestDto.getEmail());

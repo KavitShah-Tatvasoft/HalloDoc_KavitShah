@@ -9,6 +9,9 @@
 <meta charset="ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -31,8 +34,10 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <title>Create Patient Request</title>
 </head>
-<body>
-
+<body onload="hideLoader()">
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>
 	<div
 		class="container-fluid patient-form footer-container shadow p-3 bg-white rounded relative-position extra-margin">
 
@@ -43,7 +48,8 @@
 
 		<div class="submit-info-txt">Submit Information</div>
 
-		<form action="adminCreatePtRequest" method="post">
+		<form action="adminCreatePtRequest" method="post"
+			onsubmit="showLoader()">
 
 			<div class="row">
 				<!--Row 1-->
@@ -74,7 +80,8 @@
 				<div class="col-12 col-md-6">
 					<!--Phone Number col-->
 					<div class="form-floating mb-3 inp phonecolheight">
-						<input type="tel" class="form-control phoneflags" id="phone" name="mobileNumber" />
+						<input type="tel" class="form-control phoneflags" id="phone"
+							name="mobileNumber" />
 					</div>
 				</div>
 
@@ -90,7 +97,7 @@
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp custom-date-input">
 						<!--Date Picker col-->
-						<input type="date" name="dob"  class="form-control input-1"
+						<input type="date" name="dob" class="form-control input-1"
 							id="floatingInput-4" placeholder="Date Of Birth"
 							autocomplete="off"> <label for="floatingInput-4">Date
 							of Birth</label> <img
@@ -114,8 +121,8 @@
 					<!--Street col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="street" class="form-control input-2"
-							id="street" placeholder="Street" autocomplete="off">
-						<label for="street">Street</label> <span id="street_error"></span>
+							id="street" placeholder="Street" autocomplete="off"> <label
+							for="street">Street</label> <span id="street_error"></span>
 					</div>
 				</div>
 
@@ -123,8 +130,8 @@
 					<!--City col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="city" class="form-control input-2"
-							id="city" placeholder="City" autocomplete="off">
-						<label for="city">City</label> <span id="city_error"></span>
+							id="city" placeholder="City" autocomplete="off"> <label
+							for="city">City</label> <span id="city_error"></span>
 					</div>
 				</div>
 
@@ -132,8 +139,8 @@
 					<!--State col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="state" class="form-control input-2"
-							id="state" placeholder="State" autocomplete="off">
-						<label for="state">State</label> <span id="state_error"></span>
+							id="state" placeholder="State" autocomplete="off"> <label
+							for="state">State</label> <span id="state_error"></span>
 					</div>
 				</div>
 
@@ -141,8 +148,8 @@
 					<!--Zip Code col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="zipcode" class="form-control input-2"
-							id="zipcode" placeholder="Zip Code" autocomplete="off">
-						<label for="zipcode">Zip Code</label> <span id="zipcode_error"></span>
+							id="zipcode" placeholder="Zip Code" autocomplete="off"> <label
+							for="zipcode">Zip Code</label> <span id="zipcode_error"></span>
 					</div>
 				</div>
 
@@ -179,8 +186,8 @@
 				<div class="col-12 inc-height">
 					<!--System Information col-->
 					<div class="form-floating mb-4 ">
-						<textarea name="symptoms" class="form-control input-1 inc-inp-height"
-							id="floatingInput-1"
+						<textarea name="symptoms"
+							class="form-control input-1 inc-inp-height" id="floatingInput-1"
 							placeholder="Enter Brief Details Of Symptoms(Optional)"></textarea>
 						<label for="floatingInput-1" class="username-clr">Admin
 							Notes <span class="optional-toggle">(Optional)</span>
@@ -221,9 +228,9 @@
 			</div>
 		</div>
 	</div>
-	
 
 
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script>
 		const phoneInputField = document.querySelector("#phone");
 		const phoneInput = window

@@ -10,7 +10,7 @@ function checkUsername() {
 			name: x
 		},
 		success: function(data) {
-			console.log(data)
+			  
 			if (data == "false") {
 				document.getElementById("create-provider-btn").disabled = true
 

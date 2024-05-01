@@ -8,6 +8,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -36,9 +38,11 @@
 
 <title>Patient Request</title>
 </head>
-<body>
+<body onload="hideLoader()">
 
-
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>	
 
 	<div
 		class="container-fluid patient-form footer-container shadow p-3 bg-white rounded relative-position extra-margin">
@@ -50,7 +54,7 @@
 		</div>
 		<!--         </a> -->
 
-		<form action="addPatientRequest" method="post" enctype="multipart/form-data">
+		<form action="addPatientRequest" method="post" enctype="multipart/form-data" onsubmit="showLoader()">
 			<div class="row">
 				<!--Row 1-->
 
@@ -263,7 +267,7 @@
 	</div>
 
 	<%@include file="footer-black.jsp"%>
-
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script>
 		const phoneInputField = document.querySelector("#phone");
 		const phoneInput = window

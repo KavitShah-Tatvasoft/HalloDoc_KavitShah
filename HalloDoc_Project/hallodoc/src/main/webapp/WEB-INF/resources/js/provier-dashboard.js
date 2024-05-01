@@ -5,7 +5,7 @@ const phoneInputField = document.querySelector("#phone");
               });
 
 function changeCss(element){
-    console.log(element.id)
+      
     var x = document.getElementById("housecall");
     var y = document.getElementById("consult");
 

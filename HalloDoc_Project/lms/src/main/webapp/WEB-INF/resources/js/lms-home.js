@@ -9,8 +9,8 @@ function checkBook() {
 			bookName: book
 		},
 		success: function(data) {
-			console.log("data obtianed of book")
-			console.log(data)
+			  
+			  
 			if (data == "false") {
 				$(".book-name-error").text = "No such book available."
 			} else {
@@ -21,7 +21,7 @@ function checkBook() {
 
 		},
 		error: function(data) {
-			console.log("failed to obtian data of book")
+			  
 
 		}
 	})
@@ -39,13 +39,13 @@ function checkBorrower() {
 			name: name
 		},
 		success: function(data) {
-			console.log("data obtianed of borowwer")
-			console.log(data)
+			  
+			  
 			$(".hidden-borrower-id").val(data)
 
 		},
 		error: function(data) {
-			console.log("failed to obtian data of borowwer")
+			  
 		}
 	})
 }
@@ -76,13 +76,13 @@ $("#lms-form").submit(function(event) {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log("book record added")
-			console.log(data)
+			  
+			  
 			$("#lms-form").reset()
 
 		},
 		error: function(data) {
-			console.log("failed to add book record data")
+			  
 		}
 	})
 
@@ -95,8 +95,8 @@ $("#lms-form").submit(function(event) {
 //		url: 'getBookRecordData',
 //		type: 'POST',
 //		success: function(res) {
-//			console.log("initial data")
-//			console.log(data)
+//			  
+//			  
 //		$(".tbody-empty").empty()
 //		var tbody = $(".tbody-empty")
 //		res.forEach(function(data){
@@ -106,7 +106,7 @@ $("#lms-form").submit(function(event) {
 //	
 //		},
 //		error: function(data) {
-//			console.log("failed to get initial data")
+//			  
 //		}
 //	})
 //	
@@ -133,7 +133,7 @@ function updateRecord(id){
 	
 		},
 		error: function(data) {
-			console.log("failed to get initial data")
+			  
 		}
 	})
 	
@@ -163,13 +163,13 @@ $("#lms-form-1").submit(function(event) {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log("book record updated")
-			console.log(data)
+			  
+			  
 			$("#lms-form-1").reset()
 
 		},
 		error: function(data) {
-			console.log("failed to add book record not updated data")
+			  
 		}
 	})
 

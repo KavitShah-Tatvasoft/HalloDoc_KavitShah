@@ -29,8 +29,8 @@ function filterPatientHistory(){
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log(res)
-			console.log("data obtained")
+			  
+			  
 			tbody.empty()
 			accordionBody.empty()
 			var count = 121
@@ -57,6 +57,6 @@ function filterPatientHistory(){
 			} )
 		},
 		error : function(res){
-			console.log("failed to obtain data")
+			  
 		} })
 }

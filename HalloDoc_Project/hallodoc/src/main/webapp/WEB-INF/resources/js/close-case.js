@@ -74,11 +74,11 @@ $("#closeCaseForm").submit(function(event) {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			console.log("updated close case details")
-			console.log(data)
+			  
+			  
 		},
 		error: function(data) {
-			console.log("failed to update close case details")
+			  
 		}
 	})
 })

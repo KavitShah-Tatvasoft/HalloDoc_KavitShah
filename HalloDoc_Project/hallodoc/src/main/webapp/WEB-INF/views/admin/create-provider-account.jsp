@@ -78,9 +78,11 @@
 					<div class="form-floating mb-3 inp">
 						<select name="pRole" id="floatingInput-5"
 							class="form-control form-select input-2 pRole">
-							<option value="1">Admin</option>
-							<option value="3">Patient</option>
-							<option value="2">Provider</option>
+							
+							<c:forEach items="${rolesDto }" var="role">
+								<option value="${role.roleId }">${role.roleName }</option>								
+							</c:forEach>
+						
 						</select> <label for="floatingInput-5">Role</label>
 					</div>
 				</div>
@@ -347,11 +349,11 @@
 									name="pAgreement" id="upload-1"> <label for="upload-1">
 									<a class="view-doc-btn view-doc-btn-upload" role="button">
 										<span class="view-txt">Upload</span><img
-										src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
 								</label> <a class="view-doc-btn "><span class="view-txt">View</span><img
-									src="./SRS Screen Shorts/password-eye-white.svg"
+									src="<c:url value='/resources/images/password-eye-white.svg' />"
 									class="view-img" alt=""></a>
 							</div>
 						</td>
@@ -364,11 +366,11 @@
 									name="pHipaa" id="upload-2"> <label for="upload-2">
 									<a class="view-doc-btn view-doc-btn-upload" role="button">
 										<span class="view-txt">Upload</span><img
-										src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
 								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
-									src="./SRS Screen Shorts/password-eye-white.svg"
+									src="<c:url value='/resources/images/password-eye-white.svg' />"
 									class="view-img" alt=""></a>
 							</div>
 						</td>
@@ -383,11 +385,11 @@
 									for="upload-3"> <a
 									class="view-doc-btn view-doc-btn-upload" role="button"> <span
 										class="view-txt">Upload</span><img
-										src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
 								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
-									src="./SRS Screen Shorts/password-eye-white.svg"
+									src="<c:url value='/resources/images/password-eye-white.svg' />"
 									class="view-img" alt=""></a>
 							</div>
 						</td>
@@ -402,11 +404,11 @@
 									id="upload-4"> <label for="upload-4"> <a
 									class="view-doc-btn view-doc-btn-upload" role="button"> <span
 										class="view-txt">Upload</span><img
-										src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
 								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
-									src="./SRS Screen Shorts/password-eye-white.svg"
+									src="<c:url value='/resources/images/password-eye-white.svg' />"
 									class="view-img" alt=""></a>
 							</div>
 						</td>
@@ -420,11 +422,11 @@
 									name="pLicenseDoc" id="upload-5"> <label for="upload-5">
 									<a class="view-doc-btn view-doc-btn-upload" role="button">
 										<span class="view-txt">Upload</span><img
-										src="./SRS Screen Shorts/cloud-arrow-up-white.svg"
+										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
 								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
-									src="./SRS Screen Shorts/password-eye-white.svg"
+									src="<c:url value='/resources/images/password-eye-white.svg' />"
 									class="view-img" alt=""></a>
 							</div>
 						</td>
@@ -457,20 +459,20 @@
     const fileInput = document.getElementById('patietent-file-input');
         const fileNameField = document.getElementById('selected-file-by-patietent');
 
-        // Listen for the change event on the file input element
+
         fileInput.addEventListener('change', (event) => {
-            // Get the selected file(s)
+ 
             const files = event.target.files;
 
-            // If one or more files are selected
+       
             if (files.length > 0) {
-                // Get the name of the first file
+              
                 const fileName = files[0].name;
 
-                // Update the value of the input field with the file name
+               
                 fileNameField.value = fileName;
             } else {
-                // If no files are selected, clear the input field
+                
                 fileNameField.value = '';
             }
         });
@@ -478,20 +480,20 @@
         const fileInput_1 = document.getElementById('patietent-file-input-1');
         const fileNameField_1 = document.getElementById('selected-file-by-patietent-1');
 
-        // Listen for the change event on the file input element
+        
         fileInput_1.addEventListener('change', (event) => {
-            // Get the selected file(s)
+            
             const files = event.target.files;
 
-            // If one or more files are selected
+           
             if (files.length > 0) {
-                // Get the name of the first file
+                
                 const fileName = files[0].name;
 
-                // Update the value of the input field with the file name
+                
                 fileNameField_1.value = fileName;
             } else {
-                // If no files are selected, clear the input field
+              
                 fileNameField_1.value = '';
             }
         });

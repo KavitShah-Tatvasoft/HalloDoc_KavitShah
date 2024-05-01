@@ -8,6 +8,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
@@ -36,7 +39,11 @@
 
 <title>Send Order</title>
 </head>
-<body>
+<body onload="hideLoader()">
+
+	<div class="loader-container">
+		<div class="loader"></div>
+	</div>
 	<div
 		class="container-fluid footer-container patient-form shadow p-3 bg-white rounded relative-position extra-margin">
 
@@ -48,7 +55,7 @@
 		<div class="top-patient-view-text">
 			<span class="view-reservation-text">Send Orders</span>
 		</div>
-		<form method="post" id="sendOrderForm" action="../sendOrderDetails">
+		<form method="post" id="sendOrderForm" action="../sendOrderDetails" onsubmit="showLoader()">
 			<div class="row">
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
@@ -137,7 +144,7 @@
 			</div>
 		</form>
 	</div>
-
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/order-details.js' />"></script>
 </body>

@@ -175,7 +175,7 @@ public class EmailService {
 
 			int id = emailTokenDao.createNewEmail(emailToken);
 
-			System.out.println("EmailToken created id: " + id);
+			 ;
 
 			User user = userList.get(0);
 			String name = capitalize(user.getFirstName()) + " " + capitalize(user.getLastName());

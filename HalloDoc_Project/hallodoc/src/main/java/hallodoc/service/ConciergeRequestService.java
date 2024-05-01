@@ -127,7 +127,7 @@ public class ConciergeRequestService {
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		System.out.println(confirmationNumber);
+		 ;
 
 		return confirmationNumber;
 	}
@@ -227,7 +227,7 @@ public class ConciergeRequestService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		System.out.println(createdToken);
+		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(commonRequestDto.getPtEmail());
@@ -244,7 +244,7 @@ public class ConciergeRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			System.out.println(emailChange);
+			 ;
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
@@ -314,7 +314,7 @@ public class ConciergeRequestService {
 	private boolean createOldUserConciergeRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
 
-		System.out.println("Old Concierge");
+		 ;
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;
@@ -370,7 +370,7 @@ public class ConciergeRequestService {
 
 			String updateConcierge = updateConcierge(commonRequestDto, conciergeObj, currentLocalDate, region);
 			String updated = conciergeDao.updateConcierge(conciergeObj);
-			System.out.println(updated);
+			 ;
 		} else {
 			conciergeObj = createNewConcierge(commonRequestDto, currentLocalDate, region);
 			int conciergeId = conciergeDao.addConcierge(conciergeObj);
@@ -397,7 +397,7 @@ public class ConciergeRequestService {
 	private boolean createNewUserConciergeRequest(CommonRequestDto commonRequestDto, HttpSession session,
 			HttpServletRequest httpServletRequest) throws ParseException {
 
-		System.out.println("New Concierge");
+		 ;
 
 		// Creating required objects
 		AspNetUsers aspNetUsers;
@@ -454,7 +454,7 @@ public class ConciergeRequestService {
 
 			String updateConcierge = updateConcierge(commonRequestDto, conciergeObj, currentLocalDate, region);
 			String updated = conciergeDao.updateConcierge(conciergeObj);
-			System.out.println(updated);
+			 ;
 		} else {
 			conciergeObj = createNewConcierge(commonRequestDto, currentLocalDate, region);
 			int conciergeId = conciergeDao.addConcierge(conciergeObj);
@@ -477,7 +477,7 @@ public class ConciergeRequestService {
 
 		String isExsist = "new";
 		String mailSentStatus = sendCreatePasswordMail(commonRequestDto, httpServletRequest, isExsist);
-		System.out.println(mailSentStatus);
+		 ;
 
 		return true;
 

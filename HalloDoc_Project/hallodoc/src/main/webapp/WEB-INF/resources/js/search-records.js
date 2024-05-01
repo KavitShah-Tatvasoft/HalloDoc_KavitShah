@@ -9,11 +9,11 @@ function deleteRequest(reqId) {
 
 		},
 		success: function(res) {
-			console.log(res)
+
 			getSearchRecordsData()
 		},
 		error: function(res) {
-			console.log("failed to delete data")
+
 		}
 
 	})
@@ -66,8 +66,8 @@ function getSearchRecordsData() {
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			console.log(res)
-			console.log("Data Obtained")
+
+
 			tbody.empty()
 			accordionBody.empty()
 			count = 120
@@ -116,7 +116,7 @@ function getSearchRecordsData() {
 
 		},
 		error: function(res) {
-			console.log("Failed to obtain data")
+
 		}
 
 	})
@@ -144,7 +144,7 @@ function downloadFilteredData() {
 	payload["providerName"] = providerName
 	payload["email"] = email
 	payload["phoneNumber"] = phoneNumber
-
+	showLoader()
 	$.ajax({
 		url: 'exportSearchRecordsToExcel',
 		type: 'POST',
@@ -153,7 +153,7 @@ function downloadFilteredData() {
 		},
 		data: payload,
 		success: function(data) {
-			console.log("export succesful")
+
 			var blob = new Blob([data]);
 			var link = document.createElement("a");
 			link.href = window.URL.createObjectURL(blob);
@@ -161,8 +161,9 @@ function downloadFilteredData() {
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
+			hideLoader()
 		}, error: function(data) {
-			console.log("export failed")
+			hideLoader()
 		}
 
 
