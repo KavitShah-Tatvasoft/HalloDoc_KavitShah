@@ -161,8 +161,6 @@ public class UserService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		 ;
-
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(user.getEmail());
 		emailToken.setResetCompleted(false);
@@ -177,7 +175,6 @@ public class UserService {
 		}
 
 		String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-		 ;
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
 
@@ -191,7 +188,6 @@ public class UserService {
 		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 
 		if (list.isEmpty()) {
-			 ;
 			return -1;
 		}
 
@@ -200,7 +196,7 @@ public class UserService {
 			String passwordHash = user.getPassword_hash();
 
 			if (passwordHash == null) {
-				 ;
+				
 				String status = resendCreatePasswordMail(user.getUser(), request);
 				return -2;
 			} else {
@@ -212,13 +208,12 @@ public class UserService {
 
 					List<Region> regionList = regionDao.getAllRegions();
 
-					 ;
+					 
 					HttpSession session = request.getSession();
 					session.setAttribute("aspUser", user);
 					session.setAttribute("regionList", regionList);
 					return role;
 				} else {
-					 ;
 					return -3;
 				}
 

@@ -113,11 +113,9 @@ public class AdminNewPatientRequestService {
 		endDate.setMinutes(59);
 		endDate.setSeconds(59);
 
-//		String currentNewRequests = String.format("%04d", patientNewRequestDao.getNewRequestsNo(new Date()));
 		String currentNewRequests = String.format("%04d", requestDao.getNewRequestsNo(startDate, endDate));
 
 		String confirmationNumber = regAbbrevation + req_date + lastNameAbbr + firstNameAbbr + currentNewRequests;
-		 ;
 
 		return confirmationNumber;
 	}
@@ -212,7 +210,6 @@ public class AdminNewPatientRequestService {
 		UUID newToken = UUID.randomUUID();
 		String createdToken = newToken.toString();
 
-		 ;
 
 		emailToken.setToken(createdToken);
 		emailToken.setEmail(createPatientRequestDto.getEmail());
@@ -229,7 +226,7 @@ public class AdminNewPatientRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			 ;
+			 
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);
@@ -249,7 +246,7 @@ public class AdminNewPatientRequestService {
 		requestNotes.setRequest(request);
 		requestNotes.setCreatedBy(aspNetUsers);
 		requestNotes.setAdminNotes(createPatientRequestDto.getSymptoms());
-
+		
 		return requestNotes;
 	}
 

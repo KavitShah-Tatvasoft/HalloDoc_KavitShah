@@ -29,6 +29,11 @@
 		</mvc:interceptor>
 		
 		<mvc:interceptor>
+			<mvc:mapping path="/provider/*" />
+			<bean class="hallodoc.interceptor.PhysicianInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
 			<mvc:mapping path="/user/*" />
 			 <mvc:exclude-mapping path="/admin/errorPage"/>
 			<bean class="hallodoc.interceptor.AdminInterceptor" />

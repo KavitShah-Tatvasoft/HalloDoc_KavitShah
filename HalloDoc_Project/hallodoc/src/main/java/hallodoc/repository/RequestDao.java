@@ -25,6 +25,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import hallodoc.dto.DashboardDataDto;
+import hallodoc.dto.PhysicianRequestDataDto;
 import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SearchRecordsFilter;
@@ -366,6 +367,17 @@ public class RequestDao {
 		s.close();
 		return reqList.size();
 		
+	}
+	
+	public List<PhysicianRequestDataDto> getRequestByPhysicianId(List<Integer> status, int physicianId){
+		Session s = this.sessionFactory.openSession();
+		String query = "SELECT new hallodoc.dto.PhysicianRequestDataDto(re.requestClient.firstName,re.requestClient.lastName, re.requestClient.phoneNumber, re.phoneNumber, re.requestClient.street, re.requestClient.city,  re.requestClient.state,  re.requestClient.zipcode, re.requestId , re.requestType.name )  FROM Request re WHERE re.physician.physicianId =:physicianId AND re.status IN (:status) AND re.isDeleted = false";
+		Query hql = s.createQuery(query);
+		hql.setParameter("physicianId", physicianId);
+		hql.setParameter("status", status);
+		List<PhysicianRequestDataDto> reqList = hql.list();
+		s.close();
+		return reqList;
 	}
 
 }

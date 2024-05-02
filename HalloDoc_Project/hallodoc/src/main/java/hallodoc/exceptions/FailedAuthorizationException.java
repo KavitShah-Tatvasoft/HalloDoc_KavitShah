@@ -1,6 +1,6 @@
 package hallodoc.exceptions;
 
-public class FailedAuthorizationException extends Exception{
+public class FailedAuthorizationException extends RuntimeException{
 
 	public FailedAuthorizationException(String message) {
 		super(message);

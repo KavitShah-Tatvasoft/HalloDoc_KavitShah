@@ -32,7 +32,7 @@ public class Physician {
 //	@Column(name = "aspnet_user_id")
 //	private int aspnetUserId;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "aspnet_user_id")
 	private AspNetUsers aspNetUsers;
 

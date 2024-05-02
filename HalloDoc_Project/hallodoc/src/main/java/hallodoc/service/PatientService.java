@@ -98,7 +98,7 @@ public class PatientService {
 		Hash hash = Password.hash(password).with(bcrypt);
 
 		aspNetUsers.setPassword_hash(hash.getResult());
-		 ;
+
 		aspNetUsers.setModified_date(new Date());
 
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
@@ -136,8 +136,6 @@ public class PatientService {
 		String pass1 = user.getPassword_hash();
 		String pass2 = user.getConfirmPassword();
 
-		 ;
-		 ;
 		String username = user.getEmail();
 		List<AspNetUsers> list = apsnetuserdao.getUserByUsername(username);
 
@@ -179,15 +177,8 @@ public class PatientService {
 
 		Date modDate = new Date();
 		AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
-		 ;
-		User user = aspNetUsers.getUser();
-		 ;
-		 ;
 
-//			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-//			LocalDate date = LocalDate.parse(userProfileDto.getUserDOB(), format);
-//			 ;
-//			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		User user = aspNetUsers.getUser();
 
 		String[] monthArray = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
 				"October", "November", "December" };
@@ -231,7 +222,6 @@ public class PatientService {
 		aspNetUsers.setUser(user);
 		
 		apsnetuserdao.updateAspNetUser(aspNetUsers);
-		 ;
 		
 		//updating request table
 		RequestType requestTypePatient = requestTypeDao.getRequestTypeObject("Patient");

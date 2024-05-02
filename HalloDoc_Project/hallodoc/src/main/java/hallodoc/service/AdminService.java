@@ -210,16 +210,26 @@ public class AdminService {
 	public boolean sendRequestLink(HttpServletRequest request, SendLinkDto sendLinkDto) {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
-		Admin admin = aspNetUsers.getAdmin();
-		LocalDateTime date = LocalDateTime.now();
+		Admin admin ;
+		Physician physician;
 		EmailLog emailLog = new EmailLog();
+
+		if(aspNetUsers.getAdmin() != null) {
+			admin = aspNetUsers.getAdmin();
+			emailLog.setAdminId(admin.getAdminId());
+		}else {
+			physician = aspNetUsers.getPhysician();
+			emailLog.setPhysicianId(physician.getPhysicianId());
+		}
+		
+		LocalDateTime date = LocalDateTime.now();
 		emailLog.setSubjectName(sendLinkDto.getEmailSubject());
 		emailLog.setEmailId(sendLinkDto.getEmail());
 		emailLog.setCreatedDate(date);
 		emailLog.setSentDate(date);
 		emailLog.setAction(1);
 		emailLog.setRecipientName(sendLinkDto.getFirstName() + " " + sendLinkDto.getLastName());
-		emailLog.setAdminId(admin.getAdminId());
+		
 		emailLog.setRoleId(3);
 		boolean isSent = false;
 		int sentTries = 1;

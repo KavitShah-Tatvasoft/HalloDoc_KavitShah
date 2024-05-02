@@ -60,16 +60,16 @@ public class PatientLoginController {
 
 	@RequestMapping("/createPatient/{token}")
 	public String createPatientAccount(@PathVariable("token") String token, Model model) {
-//		 ;
+
 		boolean isExpired = emailService.isTokenExpired(token);
-		 ;
+
 		if (isExpired) {
-//			 ;
+
 			return "patient/link-expired";
 		} else {
-//			 ;
+
 			String email = emailService.getTokenCorrespondingEmail(token);
-			 ;
+	
 			model.addAttribute("email", email);
 			model.addAttribute("token", token);
 			return "patient/create-patient-account";
@@ -79,16 +79,16 @@ public class PatientLoginController {
 
 	@RequestMapping("/resetPasswordScreen/{token}")
 	public String resetAccountPass(@PathVariable("token") String token, Model model) {
-//		 ;
+
 		boolean isExpired = emailService.isForgetPassTokenExpired(token);
-//		 ;
+
 		if (isExpired) {
-//			 ;
+
 			return "patient/link-expired";
 		} else {
-//			 ;
+
 			String email = emailService.getTokenCorrespondingEmail(token);
-			 ;
+
 			model.addAttribute("email", email);
 			model.addAttribute("token", token);
 			return "patient/account-password-reset-page";
@@ -120,7 +120,7 @@ public class PatientLoginController {
 	public RedirectView resetPasswordRequest(@RequestParam("email") String email, HttpServletRequest httpServletRequest,
 			RedirectAttributes attributes) {
 		String emailStatus = emailService.sendForgetPasswordMail(httpServletRequest, email);
-		 ;
+
 		attributes.addFlashAttribute("message", "Reset Email sent Successfully");
 		attributes.addFlashAttribute("alertType", "success");
 		return new RedirectView("patient_login");
@@ -160,7 +160,6 @@ public class PatientLoginController {
 			modelAndView.addObject("showalert", true);
 			modelAndView.addObject("showAlertTypeJsp", showAlertType);
 		} else {
-			 ;
 			modelAndView.addObject("showalert", false);
 		}
 
@@ -222,7 +221,7 @@ public class PatientLoginController {
 		else {
 			attributes.addFlashAttribute("message", "Logged in Succesfully");
 			attributes.addFlashAttribute("alertType", "success");
-			return new RedirectView("physician/physician-dashboard");
+			return new RedirectView("provider/provider-dashboard");
 		}
 	}
 

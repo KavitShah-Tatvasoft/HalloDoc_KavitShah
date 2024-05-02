@@ -124,8 +124,7 @@ public class AdminController {
 	@RequestMapping(value = "/getRequestData", method = RequestMethod.POST)
 	@ResponseBody
 	public List<NewRequestDataDto> getNewRequestData(@RequestParam("status") String status) {
-		 ;
-
+		 
 		List<NewRequestDataDto> requestsList = aService.getStatusCorrespondingRequests(status);
 
 		return requestsList;

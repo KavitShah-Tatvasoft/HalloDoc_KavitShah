@@ -42,6 +42,7 @@ function removePhysicianError() {
 
 
 const changeStatus = (element) => {
+	debugger
 	const stateName = document.getElementById("type-text")
 	const states = document.getElementsByClassName("row-cards")
 	const current_state = element.classList[1]
@@ -614,7 +615,7 @@ function changeActiveBtn(element) {
 }
 
 function filterRequest() {
-	debugger
+
 	//	var requestType = $(".button-class.active-btn").html()
 	var patientName = document.getElementById("patient-name-search").value
 	var stateName = document.getElementById("region-name-search").value

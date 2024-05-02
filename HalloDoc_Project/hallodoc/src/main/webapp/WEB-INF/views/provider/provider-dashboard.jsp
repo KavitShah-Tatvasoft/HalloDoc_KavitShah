@@ -8,22 +8,40 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="<c:url value='/resources/css/provider-dashboard.css' />">
-    <link rel="stylesheet" href="<c:url value='/resources/css/pop-ups.css' />">
-    <link rel="stylesheet" href="<c:url value='/resources/css/FamilyFriend-request.css' />">
-    <link rel="stylesheet" href="<c:url value='/resources/css/footer.css' />">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <title>Provider Dashboard </title>
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/loader.css' />">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous" />
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/provider-dashboard.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/pop-ups.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/FamilyFriend-request.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
+<title>Provider Dashboard</title>
 </head>
-<body>
+<body onload="loadData('new')">
 	<div class="container-fluid mt-5 footer-containerF">
+		<div class="loader-container">
+			<div class="loader"></div>
+		</div>
 		<div class="row">
-			<div class="col-lg-2 col-md-4 col-4 mb-2">
 
+			<div class="col-lg-2 col-md-4 col-4 mb-2">
 				<div class="row-cards new new-active" id="card1"
 					onclick="changeStatus(this)">
 					<div class="inner-row-cards">
@@ -33,10 +51,11 @@
 							class="row-card-img new-icon-resize" id="new-active"> <span
 							class="row-card-text">NEW</span>
 					</div>
-					<h4 class="type_no_txt">1449</h4>
+					<h4 class="type_no_txt" id="new-request-count">1</h4>
 					<div id="new-img" class="absolutivity">
-						<img src="<c:url value='/resources/images/down-arrow-card1.svg' />" alt=""
-							class="arrow-width">
+						<img
+							src="<c:url value='/resources/images/down-arrow-card1.svg' />"
+							alt="" class="arrow-width">
 					</div>
 				</div>
 			</div>
@@ -47,14 +66,15 @@
 					<div>
 						<img src="<c:url value='/resources/images/pending.svg' />" alt=""
 							class="row-card-img new-icon-resize" id="pending"> <img
-							src="<c:url value='/resources/images/pending_active.png' />" alt=""
-							class="row-card-img hidden new-icon-resize" id="pending-active">
-						<span class="row-card-text">PENDING</span>
+							src="<c:url value='/resources/images/pending_active.png' />"
+							alt="" class="row-card-img hidden new-icon-resize"
+							id="pending-active"> <span class="row-card-text">PENDING</span>
 					</div>
-					<h4 class="type_no_txt">271</h4>
+					<h4 class="type_no_txt" id="pending-request-count">1</h4>
 					<div id="pending-img" class="absolutivity hidden">
-						<img src="<c:url value='/resources/images/down-arrow-card2.svg' />" alt=""
-							class="arrow-width">
+						<img
+							src="<c:url value='/resources/images/down-arrow-card2.svg' />"
+							alt="" class="arrow-width">
 					</div>
 				</div>
 			</div>
@@ -65,14 +85,15 @@
 					<div>
 						<img src="<c:url value='/resources/images/active.svg' />" alt=""
 							class="row-card-img" id="active"> <img
-							src="<c:url value='/resources/images/active_active.png' />" alt=""
-							class="row-card-img hidden" id="active-active"> <span
+							src="<c:url value='/resources/images/active_active.png' />"
+							alt="" class="row-card-img hidden" id="active-active"> <span
 							class="row-card-text">ACTIVE</span>
 					</div>
-					<h4 class="type_no_txt">22</h4>
+					<h4 class="type_no_txt" id="active-request-count">1</h4>
 					<div id="active-img" class="absolutivity hidden">
-						<img src="<c:url value='/resources/images/down-arrow-card3.svg' />" alt=""
-							class="arrow-width">
+						<img
+							src="<c:url value='/resources/images/down-arrow-card3.svg' />"
+							alt="" class="arrow-width">
 					</div>
 				</div>
 			</div>
@@ -83,18 +104,18 @@
 					<div>
 						<img src="<c:url value='/resources/images/conclude.svg' />" alt=""
 							class="row-card-img new-icon-resize" id="conclude"> <img
-							src="<c:url value='/resources/images/conclude_active.png' />" alt=""
-							class="row-card-img hidden new-icon-resize" id="conclude-active">
-						<span class="row-card-text">CONCLUDE</span>
+							src="<c:url value='/resources/images/conclude_active.png' />"
+							alt="" class="row-card-img hidden new-icon-resize"
+							id="conclude-active"> <span class="row-card-text">CONCLUDE</span>
 					</div>
-					<h4 class="type_no_txt">1079</h4>
+					<h4 class="type_no_txt" id="conclude-request-count">1</h4>
 					<div id="conclude-img" class="absolutivity hidden">
-						<img src="<c:url value='/resources/images/down-arrow-card4.svg' />" alt=""
-							class="arrow-width">
+						<img
+							src="<c:url value='/resources/images/down-arrow-card4.svg' />"
+							alt="" class="arrow-width">
 					</div>
 				</div>
 			</div>
-
 
 		</div>
 
@@ -103,20 +124,23 @@
 				<div class="patient-btns-flex mt-4">
 					<div class="d-flex align-items-center">
 						<h4 id="remove-extra-margin">Patients</h4>
-						<span id="type-text">(New)</span>
+						<span id="type-text" data-state="new"
+							class="state-type-class-name">(New)</span>
 					</div>
 					<div>
 						<a class="btn btn-info mx-1" role="button" data-bs-toggle="modal"
 							data-bs-target="#send-link"> <img
-							src="<c:url value='/resources/images/send.svg' />" class="btn-info-img"> <span
-							class="btns-text">Send Link</span>
+							src="<c:url value='/resources/images/send.svg' />"
+							class="btn-info-img"> <span class="btns-text">Send
+								Link</span>
 						</a> <a href="admin-create-request.html" class="btn btn-info mx-1"
 							role="button"> <img
-							src="<c:url value='/resources/images/pencil-square.svg' />" class="btn-info-img">
-							<span class="btns-text">Create Request</span>
+							src="<c:url value='/resources/images/pencil-square.svg' />"
+							class="btn-info-img"> <span class="btns-text">Create
+								Request</span>
 						</a>
 
-		
+
 					</div>
 				</div>
 			</div>
@@ -131,24 +155,28 @@
 							<div class="relativity search-1">
 								<input class="form-control search-btn" type="text"
 									placeholder="Search Patients"> <img
-									src="<c:url value='/resources/images/search.svg' />" alt="" class="search-img">
+									src="<c:url value='/resources/images/search.svg' />" alt=""
+									class="search-img">
 							</div>
 
 							<div class="relativity ms-2 search-2">
 								<select class="form-select select-dropdown-admin" type="button">
-									<option value=""><a class="dropdown-item" href="#">All
+									<option value="0"><a class="dropdown-item" href="#">All
 											Regions</a></option>
-									<option><a class="dropdown-item" href="#">Newyork</a></option>
-									<option><a class="dropdown-item" href="#">Maryland</a></option>
-									<option><a class="dropdown-item" href="#">London</a></option>
-								</select> <img src="<c:url value='/resources/images/search.svg' />" alt=""
-									class="search-img">
+									<c:forEach items="${regionList}" var="region">
+
+										<option value="${region.regionId }"><a
+												class="dropdown-item" href="#">${region.name }</a></option>
+									</c:forEach>
+
+								</select> <img src="<c:url value='/resources/images/search.svg' />"
+									alt="" class="search-img">
 
 							</div>
 
 						</div>
 
-									<div
+						<div
 							class="inner-table-top-flex-right inner-table-top-flex-right-top gap-2 me-2">
 							<!-- provided flex to all child using class > * {}  -->
 							<div>
@@ -226,172 +254,169 @@
 						<th></th>
 						<th>Phone</th>
 						<th>Address</th>
-						<th>Status</th>
+						<th class="status-class-tr d-none">Status</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody class="align-middle">
-					<tr class="tr-clr">
-						<th colspan="2"><span class="text-nowrap">Brown,
-								Ernest</span></th>
-						<td>
-							<button type="button" class="theme-btn" id="message-btn"></button>
-							<label for="message-btn"> <img
-								src="<c:url value='/resources/images/envelope.svg' />" alt="message"
-								class="envelope">
-						</label>
-						</td>
-						<td>
-							<div class="phone-number-type-flex">
-								<div>
-									<a role="button" class="phone-number-provider-flex"> <img
-										src="<c:url value='/resources/images/telephone.svg' />" alt=""><span
-										class="number-provider-row">+1(202)456 7890</span>
-									</a>
-								</div>
 
-								<div class="type-patient">(Patient)</div>
-							</div>
-						</td>
-						<td class="text-nowrap">1331, Maryland Ave SW Washington, DC
-							20024</td>
-						<td>
-							<div role="button" class="house-call-status"
-								data-bs-toggle="modal" data-bs-target="#house-call"
-								id="housecall-consult-text">House Call</div>
-						</td>
-						<td class="contact-flex-row">
+				<tr class="tr-clr color-class phy-dash-tr-clone d-none">
+					<th colspan="2"><span class="text-nowrap name-tr">Brown,
+							Ernest</span></th>
+					<td>
+						<button type="button" class="theme-btn" id="message-btn"></button>
+						<label for="message-btn"> <img
+							src="<c:url value='/resources/images/envelope.svg' />"
+							alt="message" class="envelope">
+					</label>
+					</td>
+					<td>
+						<div class="phone-number-type-flex">
 							<div>
-								<a role="button" class="theme-btn" id="patient-btn"
-									onclick="switchBlack()"></a> <label for="patient-btn"
-									class="patient-label"> <img
-									src="<c:url value='/resources/images/person-white.svg' />" alt="message"
-									class="patient-logo"> <span>Patient</span>
-								</label>
+								<a role="button" class="phone-number-provider-flex"> <img
+									src="<c:url value='/resources/images/telephone.svg' />" alt=""><span
+									class="number-provider-row number-tr">+1(202)456 7890</span>
+								</a>
 							</div>
 
-							<div>
-								<a role="button" class="theme-btn" id="patient-btn"
-									onclick="switchBlack()"></a> <label for="patient-btn"
-									class="patient-label"> <img
-									src="<c:url value='/resources/images/person-add-white.svg' />" alt="message"
-									class="patient-logo"> <span>Provider</span>
-								</label>
+							<div class="type-patient">(Patient)</div>
+
+							<div class="hide-number-div">
+								<a role="button" class="phone-number-provider-flex"> <img
+									src="<c:url value='/resources/images/telephone.svg' />" alt=""><span
+									class="number-provider-row number-req-tr">+1(202)456
+										7890</span>
+								</a>
 							</div>
-						</td>
+
+							<div class="type-patient req-type hide-number-div">(Patient)</div>
+						</div>
+					</td>
+					<td class="text-nowrap address-tr">1331, Maryland Ave SW
+						Washington, DC 20024</td>
+					<td class="status-class-tr d-none">
+						<div role="button" class="house-call-status"
+							data-bs-toggle="modal" data-bs-target="#house-call"
+							id="housecall-consult-text">House Call</div>
+					</td>
 
 
-						<td>
-							<div class="patient-records-document-action-button">
-								<button type="button"
-									class="btn dashboard-dropdown-btn dropdown-toggle"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									Actions</button>
-								<ul class="dropdown-menu dropdown-menu-end">
-
-
-
-
-
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/view-case.png' />"
-												class="dropdown-icons" alt=""> <a
-												href="view-case.html" class=" action-dropdown-text"
-												type="button">View Case</a>
-										</div>
-									</li>
+					<td>
+						<div class="patient-records-document-action-button">
+							<button type="button"
+								class="btn dashboard-dropdown-btn dropdown-toggle"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Actions</button>
+							<ul class="dropdown-menu dropdown-menu-end">
 
 
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/journal-text.svg' />"
-												class="dropdown-icons" alt=""> <a
-												href="view-notes.html" class="action-dropdown-text"
-												type="button">View Notes</a>
-										</div>
-									</li>
+
+
+								<li>
+									<div class=" action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/view-case.png' />"
+											class="dropdown-icons" alt=""> <a href="view-case.html"
+											class=" action-dropdown-text" type="button">View Case</a>
+									</div>
+								</li>
 
 
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/view-upload.png' />"
-												class="dropdown-icons" alt=""> <a
-												href="view-uploads-patient-conclude.html"
-												class="action-dropdown-text " type="button">View Uploads</a>
-										</div>
-									</li>
+								<li>
+									<div class=" action-dropdown-flex dropdown-item ">
+										<img
+											src="<c:url value='/resources/images/journal-text.svg' />"
+											class="dropdown-icons" alt=""> <a
+											href="view-notes.html" class="action-dropdown-text"
+											type="button">View Notes</a>
+									</div>
+								</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/journal-check-grey.svg' />"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" data-bs-toggle="modal"
-												data-bs-target="#transfer-case" type="button">Transfer</a>
-										</div>
-									</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/document.png' />"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" data-bs-toggle="modal"
-												data-bs-target="#send-agreement" type="button">Send
-												Agreement</a>
-										</div>
-									</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/order-delivery.png' />"
-												class="dropdown-icons" alt=""> <a
-												href="send-order.html" class="action-dropdown-text"
-												type="button">Orders</a>
-										</div>
-									</li>
+								<li
+									class="common-action-class pendings actives concludes d-none">
+									<div class="action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/view-upload.png' />"
+											class="dropdown-icons" alt=""> <a
+											href="view-uploads-patient-conclude.html"
+											class="action-dropdown-text " type="button">View Uploads</a>
+									</div>
+								</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/document.png' />"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" type="button"
-												href="view-notes.html">Doctor Notes</a>
-										</div>
-									</li>
+								<li class="common-action-class pendings news">
+									<div class="action-dropdown-flex dropdown-item">
+										<img
+											src="<c:url value='/resources/images/journal-check-grey.svg' />"
+											class="dropdown-icons" alt=""> <a
+											class="action-dropdown-text" data-bs-toggle="modal"
+											data-bs-target="#transfer-case" type="button">Transfer</a>
+									</div>
+								</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/document.png' />"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" type="button"
-												href="encounter-form.html">Encounter</a>
-										</div>
-									</li>
+								<li class="common-action-class pendings  d-none">
+									<div class="action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/document.png' />"
+											class="dropdown-icons" alt=""> <a
+											class="action-dropdown-text" data-bs-toggle="modal"
+											data-bs-target="#send-agreement" type="button">Send
+											Agreement</a>
+									</div>
+								</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/accept.png' />"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" role="button"
-												data-bs-toggle="modal" data-bs-target="#accept-case">Accept</a>
-										</div>
-									</li>
+								<li class="common-action-class actives concludes d-none">
+									<div class="action-dropdown-flex dropdown-item">
+										<img
+											src="<c:url value='/resources/images/order-delivery.png' />"
+											class="dropdown-icons" alt=""> <a
+											href="send-order.html" class="action-dropdown-text"
+											type="button">Orders</a>
+									</div>
+								</li>
 
-									<li>
-										<div class="action-dropdown-flex dropdown-item">
-											<img src="<c:url value='/resources/images/heart-rate.png' />"
-												class="dropdown-icons" alt=""> <a
-												class="action-dropdown-text" type="button"
-												href="conclude-care.html">Conclude Care</a>
-										</div>
-									</li>
+								<li class="common-action-class actives concludes d-none">
+									<div class="action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/document.png' />"
+											class="dropdown-icons" alt=""> <a
+											class="action-dropdown-text" type="button"
+											href="view-notes.html">Doctor Notes</a>
+									</div>
+								</li>
 
-								</ul>
-							</div>
-						</td>
-					</tr>
+								<li class="common-action-class actives concludes d-none">
+									<div class="action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/document.png' />"
+											class="dropdown-icons" alt=""> <a
+											class="action-dropdown-text" type="button"
+											href="encounter-form.html">Encounter</a>
+									</div>
+								</li>
+
+								<li class="common-action-class news ">
+									<div class="action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/accept.png' />"
+											class="dropdown-icons" alt=""> <a
+											class="action-dropdown-text" role="button"
+											data-bs-toggle="modal" data-bs-target="#accept-case">Accept</a>
+									</div>
+								</li>
+
+								<li class="common-action-class concludes d-none">
+									<div class="action-dropdown-flex dropdown-item">
+										<img src="<c:url value='/resources/images/heart-rate.png' />"
+											class="dropdown-icons" alt=""> <a
+											class="action-dropdown-text" type="button"
+											href="conclude-care.html">Conclude Care</a>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+					</td>
+				</tr>
+
+
+				<tbody class="align-middle tbody-empty">
 
 
 				</tbody>
@@ -437,47 +462,47 @@
 								View Case </a>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/calendar4-week-blue.svg' />" alt="D.O.B" /></span>
-								<span class="extended-label">Date of Birth:</span> <span
-									class="extended-text">15-01-2003 (21)</span>
+									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
+									alt="D.O.B" /></span> <span class="extended-label">Date of
+									Birth:</span> <span class="extended-text">15-01-2003 (21)</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/envelope-blue.svg' />" alt="Email" /></span>
-								<span class="extended-label">Email:</span> <span
+									src="<c:url value='/resources/images/envelope-blue.svg' />"
+									alt="Email" /></span> <span class="extended-label">Email:</span> <span
 									class="extended-text">kavit.shah@etatvasoft.com</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/telephone-blue.svg' />" alt="Number" /></span>
-								<span class="extended-label">Patient:</span> <span
+									src="<c:url value='/resources/images/telephone-blue.svg' />"
+									alt="Number" /></span> <span class="extended-label">Patient:</span> <span
 									class="extended-text">6351627219</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/journal-text.svg' />" alt="Note" /></span>
-								<span class="extended-label">Transfer<br />Note:
-								</span> <span class="extended-text">Lorem
-									ipsum dolor sit amet consectetur adipisicing elit.</span>
+									src="<c:url value='/resources/images/journal-text.svg' />"
+									alt="Note" /></span> <span class="extended-label">Transfer<br />Note:
+								</span> <span class="extended-text">Lorem ipsum dolor sit amet
+									consectetur adipisicing elit.</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/calendar4-week-blue.svg' />" alt="D.O.S" /></span>
-								<span class="extended-label">Date of Service:</span> <span
-									class="extended-text">Jan 31,2023 8:30 AM</span>
+									src="<c:url value='/resources/images/calendar4-week-blue.svg' />"
+									alt="D.O.S" /></span> <span class="extended-label">Date of
+									Service:</span> <span class="extended-text">Jan 31,2023 8:30 AM</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/person-add.svg' />" alt="Physician" /></span>
-								<span class="extended-label">Physician:</span> <span
-									class="extended-text">Dr. AGOLA</span>
+									src="<c:url value='/resources/images/person-add.svg' />"
+									alt="Physician" /></span> <span class="extended-label">Physician:</span>
+								<span class="extended-text">Dr. AGOLA</span>
 							</div>
 							<div class="extended-flex">
 								<span class="circular_border"><img
-									src="<c:url value='/resources/images/person.svg' />" alt="Requestor" /></span>
-								<span class="extended-label">Requestor:</span> <span
-									class="extended-text">Patient
-									Agola Three, BhoomiOne</span>
+									src="<c:url value='/resources/images/person.svg' />"
+									alt="Requestor" /></span> <span class="extended-label">Requestor:</span>
+								<span class="extended-text">Patient Agola Three,
+									BhoomiOne</span>
 							</div>
 
 							<div class="row p-3 text-center">
@@ -680,13 +705,14 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div>
+				<form id="sendLinkForm">
+					<div class="modal-body">
+						<div>
 
-						<form action="">
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp"
+									<input type="text" name="firstName"
+										class="form-control input-1 agreement-inp"
 										id="floatingInput-2" placeholder="First Name"
 										autocomplete="off"> <label for="floatingInput-2"
 										class="agreement-label">First Name</label>
@@ -695,7 +721,8 @@
 
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp"
+									<input type="text" name="lastName"
+										class="form-control input-1 agreement-inp"
 										id="floatingInput-2" placeholder="Last Name"
 										autocomplete="off"> <label for="floatingInput-2"
 										class="agreement-label">Last Name</label>
@@ -705,28 +732,29 @@
 							<div class="col-12 col-md-6 ">
 								<!--Phone Number col-->
 								<div class="form-floating inp send-link-pop-up-only">
-									<input type="tel"
+									<input type="tel" name="phoneNumber"
 										class="form-control phoneflags phonecolheight" id="phone" />
 								</div>
 							</div>
 
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
-									<input type="email" class="form-control input-1 agreement-inp"
+									<input type="email" name="email"
+										class="form-control input-1 agreement-inp"
 										id="floatingInput-2" placeholder="Email" autocomplete="off">
 									<label for="floatingInput-2" class="agreement-label">Email</label>
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="send-btn">Send</button>
-						<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="send-btn">Send</button>
+							<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
 
-					</div>
-				</div>
+						</div>
+				</form>
 			</div>
 		</div>
+	</div>
 	</div>
 	<!-- send link -->
 
@@ -813,8 +841,7 @@
 
 								<select name="Number_Type" id="floatingInput-5"
 									class="form-control form-select assign-case-text-clr">
-									<option value="check" hidden selected>Select
-										Physician</option>
+									<option value="check" hidden selected>Select Physician</option>
 									<option value="Mobile">Person 1</option>
 									<option value="Home">Person 2</option>
 								</select>
@@ -906,8 +933,7 @@
 
 								<select name="Number_Type" id="floatingInput-5"
 									class="form-control form-select assign-case-text-clr">
-									<option value="check" hidden selected>Select
-										Physician</option>
+									<option value="check" hidden selected>Select Physician</option>
 									<option value="Mobile">Person 1</option>
 									<option value="Home">Person 2</option>
 								</select>
@@ -1022,66 +1048,54 @@
 
 	<!-- house-call-status -->
 
-	<script>
-        const phoneInputField = document.querySelector("#phone");
-              const phoneInput = window.intlTelInput(phoneInputField, {
-                  utilsScript:
-                      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-              });
 
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+		crossorigin="anonymous"></script>
+	<script src="<c:url value='/resources/js/provider-dashboard.js' />"></script>
+	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 
-              function changeCss(element){
-                console.log(element.id)
-                var x = document.getElementById("Housecall");
-                var y = document.getElementById("Consult");
-                var z = document.getElementById("housecall-consult-text");
-            
-                if(element.id=="Housecall"){
-                  x.style.backgroundColor = "#01bce9";
-                  x.style.color = "white";
-            
-                  y.style.color = "#01bce9";
-                  y.style.backgroundColor = "white";
+	<script type="text/javascript">
+		const phoneInputField = document.querySelector("#phone");
+		const phoneInput = window
+				.intlTelInput(
+						phoneInputField,
+						{
+							utilsScript : "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+						});
 
-                  z.innerHTML=element.id;
-            
-                }
-            
-                else{
-                  y.style.backgroundColor = "#01bce9";
-                  y.style.color = "white";
-            
-                  x.style.color = "#01bce9";
-                  x.style.backgroundColor = "white";
+		function changeCss(element) {
+			console.log(element.id)
+			var x = document.getElementById("Housecall");
+			var y = document.getElementById("Consult");
+			var z = document.getElementById("housecall-consult-text");
 
-                  z.innerHTML=element.id;
-            
-                }
-              }
+			if (element.id == "Housecall") {
+				x.style.backgroundColor = "#01bce9";
+				x.style.color = "white";
 
-              const  changeStatus = (element) => {
-                const states = document.getElementsByClassName("row-cards")
-                const current_state = element.classList[1]
-                for(let i=0;i<states.length;++i){
-                    if(states[i].classList.length == 3){
-                        states[i].classList.remove(`${states[i].classList[1]}-active`)
-                        document.getElementById(`${states[i].classList[1]}-active`).classList.add('hidden')
-                        document.getElementById(`${states[i].classList[1]}`).classList.remove('hidden')
-                        document.getElementById(`${states[i].classList[1]}-img`).classList.add('hidden')
-                    }
-                    else if(states[i].classList[1] == current_state){
-                        states[i].classList.add(`${states[i].classList[1]}-active`)
-                        document.getElementById(`${states[i].classList[1]}-active`).classList.remove('hidden')
-                        document.getElementById(`${states[i].classList[1]}`).classList.add('hidden')
-                        document.getElementById(`${states[i].classList[1]}-img`).classList.remove('hidden')
-                    }
-                }
-            }
+				y.style.color = "#01bce9";
+				y.style.backgroundColor = "white";
 
-      </script>
+				z.innerHTML = element.id;
 
-	<script src="./js/darktheme.js"></script>
+			}
 
+			else {
+				y.style.backgroundColor = "#01bce9";
+				y.style.color = "white";
 
+				x.style.color = "#01bce9";
+				x.style.backgroundColor = "white";
+
+				z.innerHTML = element.id;
+
+			}
+		}
+	</script>
+	<script src="<c:url value='/resources/js/loader.js' />"></script>
+	<script type="text/javascript">
+		
+	</script>
 </body>
 </html>

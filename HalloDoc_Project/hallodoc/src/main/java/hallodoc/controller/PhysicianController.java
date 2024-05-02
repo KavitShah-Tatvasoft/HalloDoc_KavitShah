@@ -8,10 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import hallodoc.dto.PhysicianRequestDataDto;
 import hallodoc.model.CaseTag;
+import hallodoc.service.PhysicianService;
 import hallodoc.service.UserService;
 
 @Controller
@@ -19,13 +24,16 @@ import hallodoc.service.UserService;
 public class PhysicianController {
 	
 	@Autowired
-	UserService uService;
+	UserService userService;
+	
+	@Autowired
+	PhysicianService physicianService;
 
 	@RequestMapping("/provider-dashboard")
 	public ModelAndView adminDashboard(HttpServletRequest request) {
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		ModelAndView modelAndView = new ModelAndView("provider/provider-dashboard");
-		List<CaseTag> caseTags = uService.getAllCancellationReasons();
+		List<CaseTag> caseTags = userService.getAllCancellationReasons();
 		modelAndView.addObject("cancelReasons", caseTags);
 
 		if (inputFlashMap != null) {
@@ -42,6 +50,17 @@ public class PhysicianController {
 
 		return modelAndView;
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value = "/get-request-by-physician", method = RequestMethod.POST)
+	public List<PhysicianRequestDataDto> getRequestByPhysician(@RequestParam("status") String status, HttpServletRequest httpServletRequest) {
+		return this.physicianService.getPhysicianRequests(status,httpServletRequest);
+	}
+	
+	@RequestMapping(value="/create-provider-new-request")
+	public String createNewRequestByProvider() {
+		return "provider/provider-create-new-request";
+	}
+	
 	
 }
