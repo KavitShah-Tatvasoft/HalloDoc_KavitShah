@@ -10,15 +10,13 @@ public class ViewNotesDto {
 	private Date createdDate;
 	private String adminNotes;
 	private String providerNotes;
+	private boolean transToPhysician;
 
-	@Override
-	public String toString() {
-		return "ViewNotesDto [logId=" + logId + ", status=" + status + ", notes=" + notes + ", createdDate="
-				+ createdDate + ", adminNotes=" + adminNotes + ", providerNotes=" + providerNotes + "]";
-	}
+	
 
-	public ViewNotesDto(int logId, int status, String notes, Date createdDate, String adminNotes,
-			String providerNotes) {
+	
+	public ViewNotesDto(int logId, int status, String notes, Date createdDate, String adminNotes, String providerNotes,
+			boolean transToPhysician) {
 		super();
 		this.logId = logId;
 		this.status = status;
@@ -26,6 +24,15 @@ public class ViewNotesDto {
 		this.createdDate = createdDate;
 		this.adminNotes = adminNotes;
 		this.providerNotes = providerNotes;
+		this.transToPhysician = transToPhysician;
+	}
+
+	public boolean isTransToPhysician() {
+		return transToPhysician;
+	}
+
+	public void setTransToPhysician(boolean transToPhysician) {
+		this.transToPhysician = transToPhysician;
 	}
 
 	public int getLogId() {

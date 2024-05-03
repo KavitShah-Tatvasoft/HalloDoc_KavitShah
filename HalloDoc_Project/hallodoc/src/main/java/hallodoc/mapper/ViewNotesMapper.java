@@ -15,7 +15,7 @@ public class ViewNotesMapper {
 		viewNotesDto.setStatus(requestStatusLog.getStatus());
 		viewNotesDto.setCreatedDate(requestStatusLog.getCreatedDate());
 		viewNotesDto.setNotes(requestStatusLog.getNotes());
-		
+		viewNotesDto.setTransToPhysician(requestStatusLog.isTransToAdmin());
 		return viewNotesDto;
 	}
 }

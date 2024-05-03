@@ -23,6 +23,7 @@ import com.password4j.types.Bcrypt;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.email.EmailService;
+import hallodoc.enumerations.AspNetRolesEnum;
 import hallodoc.enumerations.RequestStatus;
 import hallodoc.model.AspNetRoles;
 import hallodoc.model.AspNetUsers;
@@ -158,9 +159,11 @@ public class AdminNewPatientRequestService {
 	}
 
 	private Request createRequest(CreatePatientRequestDto createPatientRequestDto, Date currentDate,
-			RequestType requestType, User user, Region region) {
+			RequestType requestType, User user, Region region, HttpServletRequest httpServletRequest) {
 		Request request = new Request();
-
+		AspNetUsers aspNetUsers = (AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser");
+		int role = aspNetUsers.getUser().getAspNetRoles().getId();
+		
 		// Setters of Request Entity
 		request.setRequestType(requestType);
 		request.setUser(user);
@@ -173,7 +176,15 @@ public class AdminNewPatientRequestService {
 		request.setDeleted(false);
 		request.setCompletedByPhysician(false);
 		request.setConfirmationNumber(getNewConfirmationNumber(createPatientRequestDto, region, currentDate));
-		request.setStatus(RequestStatus.UNASSIGNED.getRequestId());
+		
+		if(role == AspNetRolesEnum.ADMIN.getAspNetRolesId()) {
+			request.setStatus(RequestStatus.UNASSIGNED.getRequestId());			
+		}else {
+			request.setAcceptedDate(currentDate);
+			request.setStatus(RequestStatus.ACCEPTED.getRequestId());
+			request.setPhysician(aspNetUsers.getPhysician());
+		}
+		
 
 		return request;
 	}
@@ -241,11 +252,17 @@ public class AdminNewPatientRequestService {
 			HttpServletRequest httpServletRequest) {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
-
+		int role = aspNetUsers.getUser().getAspNetRoles().getId();
 		RequestNotes requestNotes = new RequestNotes();
 		requestNotes.setRequest(request);
 		requestNotes.setCreatedBy(aspNetUsers);
-		requestNotes.setAdminNotes(createPatientRequestDto.getSymptoms());
+		
+		if(role == AspNetRolesEnum.ADMIN.getAspNetRolesId()) {			
+			requestNotes.setAdminNotes(createPatientRequestDto.getSymptoms());
+		}else {
+			requestNotes.setPhysicanNotes(createPatientRequestDto.getSymptoms());
+		}
+		
 		
 		return requestNotes;
 	}
@@ -305,7 +322,7 @@ public class AdminNewPatientRequestService {
 
 		requestType = requestTypeDao.getRequestTypeObject("Patient");
 
-		request = createRequest(createPatientRequestDto, currentDate, requestType, user, region);
+		request = createRequest(createPatientRequestDto, currentDate, requestType, user, region,httpRequest);
 
 		requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,
 				monthName);
@@ -363,7 +380,7 @@ public class AdminNewPatientRequestService {
 		requestType = requestTypeDao.getRequestTypeObject("Patient");
 
 
-		request = createRequest(createPatientRequestDto, currentDate, requestType, user, region);
+		request = createRequest(createPatientRequestDto, currentDate, requestType, user, region,httpRequest);
 
 
 		requestClient = createRequestClient(createPatientRequestDto, currentDate, request, region, day, year,

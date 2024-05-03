@@ -76,6 +76,7 @@ import hallodoc.model.EncounterForm;
 import hallodoc.model.HealthProfessionalTypes;
 import hallodoc.model.HealthProfessionals;
 import hallodoc.model.OrderDetails;
+import hallodoc.model.Physician;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
@@ -447,14 +448,22 @@ public class UserService {
 		List<RequestNotes> requestNotes = requestNotesDao.getRequestSpecificNote(reqId);
 		if (requestNotes.size() > 0) {
 			RequestNotes requestNote = requestNotes.get(0);
-			requestNote.setAdminNotes(adminNote);
+			if(user.getUser().getAspNetRoles().getId() == 1) {				
+				requestNote.setAdminNotes(adminNote);
+			}else {
+				requestNote.setPhysicanNotes(adminNote);
+			}
 			requestNote.setModifiedBy(user);
 
 			requestNotesDao.updateRequestNotes(requestNote);
 		} else {
 			RequestNotes requestNote = new RequestNotes();
 			Request request = requestDao.getRequestOb(reqId);
-			requestNote.setAdminNotes(adminNote);
+			if(user.getUser().getAspNetRoles().getId() == 1) {				
+				requestNote.setAdminNotes(adminNote);
+			}else {
+				requestNote.setPhysicanNotes(adminNote);
+			}
 			requestNote.setCreatedBy(user);
 			requestNote.setModifiedBy(user);
 			requestNote.setRequest(request);
@@ -520,11 +529,22 @@ public class UserService {
 	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto, HttpServletRequest httpServletRequest) {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
-		Admin admin = aspNetUsers.getAdmin();
-		Request request = requestDao.getRequestOb(sendAgreementDto.getReqId());
+		Admin admin;
+		Physician physician;	
 		EmailLog emailLog = new EmailLog();
+		Request request = requestDao.getRequestOb(sendAgreementDto.getReqId());
 		SmsLog smsLog = new SmsLog();
 		LocalDateTime localDateTime = LocalDateTime.now();
+
+		if(aspNetUsers.getUser().getAspNetRoles().getId() == 1) {			
+			admin = aspNetUsers.getAdmin();
+			emailLog.setAdminId(admin.getAdminId());
+			smsLog.setAdminId(admin.getAdminId());
+		}else {
+			physician = aspNetUsers.getPhysician();
+			emailLog.setPhysicianId(physician.getPhysicianId());
+			smsLog.setPhysicianId(physician.getPhysicianId());
+		}
 		String recipientName = request.getRequestClient().getFirstName() + " "
 				+ request.getRequestClient().getLastName();
 		String status = "";
@@ -533,7 +553,6 @@ public class UserService {
 		emailLog.setEmailId(sendAgreementDto.getEmail());
 		emailLog.setRequestId(request.getRequestId());
 		emailLog.setConfirmationNumber(request.getConfirmationNumber());
-		emailLog.setAdminId(admin.getAdminId());
 		emailLog.setCreatedDate(localDateTime);
 		emailLog.setSentDate(localDateTime);
 		emailLog.setAction(MessageTypeEnum.SEND_AGREEMENT.getMessageTypeId());
@@ -542,7 +561,6 @@ public class UserService {
 		smsLog.setMobileNumber(sendAgreementDto.getPhoneNumber());
 		smsLog.setRequestId(request.getRequestId());
 		smsLog.setConfirmationNumber(request.getConfirmationNumber());
-		smsLog.setAdminId(admin.getAdminId());
 		smsLog.setCreatedDate(localDateTime);
 		smsLog.setSentDate(localDateTime);
 		smsLog.setAction(MessageTypeEnum.SEND_AGREEMENT.getMessageTypeId());

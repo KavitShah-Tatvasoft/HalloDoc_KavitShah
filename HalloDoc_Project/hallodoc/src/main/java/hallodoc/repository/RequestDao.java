@@ -145,6 +145,17 @@ public class RequestDao {
 		s.close();
 		return list;
 	}
+	
+	public List<StatusWiseCountDto> getStatusWisePhysicianRequestCount(int physicianId){
+		Session s = this.sessionFactory.openSession();
+
+		String hql = "select new hallodoc.dto.StatusWiseCountDto(re.status,COUNT(re.requestId)) from Request re WHERE re.isDeleted = false AND re.physician.physicianId=:phyId group by re.status";
+		Query query = s.createQuery(hql);
+		query.setParameter("phyId", physicianId);
+		List<StatusWiseCountDto> list = query.list();
+		s.close();
+		return list;
+	}
 
 	public List<Request> getFilteredRequests(RequestFiltersDto requestFiltersDto) {
 

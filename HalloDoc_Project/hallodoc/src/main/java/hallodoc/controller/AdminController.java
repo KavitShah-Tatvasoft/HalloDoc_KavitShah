@@ -53,6 +53,7 @@ import hallodoc.dto.ShowProviderDetailsDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserAccessDto;
 import hallodoc.dto.ViewNotesDto;
+import hallodoc.enumerations.AspNetRolesEnum;
 import hallodoc.model.Admin;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
@@ -88,7 +89,7 @@ public class AdminController {
 	@RequestMapping("/errorPage")
 	public String showErrorPage(HttpServletRequest request) {
 		request.setAttribute("errorMessage", "Session expired! Please login again to continue.");
-		
+
 		return "admin/authorization-error";
 	}
 
@@ -124,7 +125,7 @@ public class AdminController {
 	@RequestMapping(value = "/getRequestData", method = RequestMethod.POST)
 	@ResponseBody
 	public List<NewRequestDataDto> getNewRequestData(@RequestParam("status") String status) {
-		 
+
 		List<NewRequestDataDto> requestsList = aService.getStatusCorrespondingRequests(status);
 
 		return requestsList;
@@ -135,9 +136,7 @@ public class AdminController {
 	@ResponseBody
 	public List<Integer> getStatusRequestCount() {
 
-		List<Integer> countLists = aService.getStatusWiseRequestCount();
-
-		return countLists;
+		return this.aService.getStatusWiseRequestCount();
 
 	}
 
@@ -170,10 +169,10 @@ public class AdminController {
 	public RedirectView adminCreatePtRequest(RedirectAttributes attributes,
 			@ModelAttribute("createPatientRequestAdmin") CreatePatientRequestDto createPatientRequestDto,
 			HttpServletRequest request) throws ParseException {
-
+		int roleId = ((AspNetUsers) request.getSession().getAttribute("aspUser")).getUser().getAspNetRoles().getId();
 		String status = adminRequestService.createNewRequest(request, createPatientRequestDto);
-		RedirectView redirectView = new RedirectView("adminDashboard", true);
-
+		RedirectView adminDashboard = new RedirectView("adminDashboard", true);
+		RedirectView providerDashboard = new RedirectView("../provider/provider-dashboard", true);
 		if (status.equalsIgnoreCase("UserExsist")) {
 			attributes.addFlashAttribute("message", "User already exisits");
 			attributes.addFlashAttribute("alertType", "faliure");
@@ -181,8 +180,11 @@ public class AdminController {
 			attributes.addFlashAttribute("message", "Request Created");
 			attributes.addFlashAttribute("alertType", "success");
 		}
-
-		return redirectView;
+		if (roleId == AspNetRolesEnum.ADMIN.getAspNetRolesId()) {
+			return adminDashboard;
+		} else {
+			return providerDashboard;
+		}
 	}
 
 	@RequestMapping("/viewCase/{requestId}")
@@ -303,7 +305,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/sendAgreementToPatient", method = RequestMethod.POST)
 	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto, HttpServletRequest httpServletRequest) {
-		 ;
+		
 		String status = uService.sendAgreementToPatient(sendAgreementDto, httpServletRequest);
 		return status;
 	}
@@ -363,7 +365,7 @@ public class AdminController {
 	@RequestMapping(value = "/createProviderAccount")
 	public String createPhysicianAccount(Model m) {
 		List<GetRolesDto> rolesDto = this.aService.getPhysicianRoles();
-		m.addAttribute("rolesDto",rolesDto);
+		m.addAttribute("rolesDto", rolesDto);
 		return "admin/create-provider-account";
 	}
 
@@ -376,7 +378,7 @@ public class AdminController {
 	@RequestMapping(value = "/createNewProviderAccount", method = RequestMethod.POST)
 	public RedirectView createNewProviderAccount(NewProviderAccountDto newProviderAccountDto,
 			HttpServletRequest request) {
-		 ;
+		;
 		String status = this.aService.createNewProvider(newProviderAccountDto, request);
 
 		return new RedirectView("physicianMenu", true);
@@ -387,7 +389,7 @@ public class AdminController {
 		List<Region> regionList = this.aService.getRegionList();
 		ShowProviderDetailsDto providerData = this.aService.getProviderDetails(physicianId);
 		List<GetRolesDto> rolesDto = this.aService.getPhysicianRoles();
-		m.addAttribute("rolesDto",rolesDto);
+		m.addAttribute("rolesDto", rolesDto);
 		m.addAttribute("listRegions", regionList);
 		m.addAttribute("providerData", providerData);
 		return "admin/update-provider-account";
@@ -524,7 +526,7 @@ public class AdminController {
 
 		HttpSession session = request.getSession();
 		session.invalidate();
-		 ;
+		;
 		RedirectView redirectView = new RedirectView(request.getServletContext().getContextPath() + "/patient_login",
 				false);
 		return redirectView;

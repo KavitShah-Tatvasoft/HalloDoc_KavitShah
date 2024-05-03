@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import hallodoc.dto.CreatePatientDto;
 import hallodoc.dto.DashboardDataDto;
 import hallodoc.dto.RequestDocumentsDto;
+import hallodoc.dto.StatusWiseCountDto;
 import hallodoc.dto.UserProfileDto;
 import hallodoc.mapper.RequestToDashboardDataMapper;
 import hallodoc.model.AspNetUsers;
@@ -280,5 +281,6 @@ public class PatientService {
 		request.getSession(false).setAttribute("aspUser", aspNetUsers);
 
 	}
-
+	
+	
 }

@@ -2,7 +2,15 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="common-navbar.jsp"%>
+<c:choose>
+	<c:when test="${sessionScope.aspUser.user.aspNetRoles.id == 1}">
+		<%@include file="common-navbar.jsp"%>
+	</c:when>
+	<c:otherwise>
+
+	</c:otherwise>
+</c:choose>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,8 +142,16 @@
 								<textarea class="form-control admin-notes-textarea"
 									placeholder="Leave a comment here" id="admin-note-textarea-id"
 									style="height: 115px">-</textarea>
-								<label for="admin-note-textarea-id">Admin Notes</label> <input
-									type="text" class="view-notes-request-id" id="viewnotes-id" hidden>
+								<label for="admin-note-textarea-id"><c:choose>
+										<c:when
+											test="${sessionScope.aspUser.user.aspNetRoles.id == 1}">
+											Admin Notes 
+										</c:when>
+										<c:otherwise>
+											Provider Notes
+										</c:otherwise>
+									</c:choose> </label> <input type="text" value="${reqId }"
+									class="view-notes-request-id" id="viewnotes-id" hidden>
 							</div>
 
 							<div class="submit-btn-flex mt-4">

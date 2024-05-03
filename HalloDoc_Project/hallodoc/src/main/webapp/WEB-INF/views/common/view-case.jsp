@@ -2,7 +2,17 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="common-navbar.jsp"%>
+
+<c:choose>
+	<c:when test="${sessionScope.aspUser.user.aspNetRoles.id == 1}">
+		<%@include file="common-navbar.jsp"%>
+	</c:when>
+	<c:otherwise>
+		
+	</c:otherwise>
+</c:choose>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +49,7 @@
 <title>View Case</title>
 </head>
 <body>
+
 
 	<div
 		class="container-fluid footer-container patient-form shadow p-3 bg-white rounded relative-position extra-margin">
@@ -251,16 +262,17 @@
 			</div>
 
 			<div class="bottom-btns mt-3">
-			
-			<c:choose>
-				<c:when test="${requestOb.status == 1}">
-					<button type="button" class="bottom-btns-submit shrink-btns" onclick="assignCase(${requestOb.requestId})"
-					data-bs-toggle="modal" data-bs-target="#assign-case">Assign</button>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-			
+
+				<c:choose>
+					<c:when test="${requestOb.status == 1 and sessionScope.aspUser.user.aspNetRoles.id == 1}">
+						<button type="button" class="bottom-btns-submit shrink-btns"
+							onclick="assignCase(${requestOb.requestId})"
+							data-bs-toggle="modal" data-bs-target="#assign-case">Assign</button>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+
 				<a role="button" href="../viewNotes/${requestOb.requestId}"
 					class="bottom-btns-submit shrink-btns">View Notes</a>
 				<button type="reset" class="bottom-btns-cancel shrink-btns">Cancel</button>
@@ -279,8 +291,8 @@
 				<div class="modal-header">
 					<h3 class="modal-title fs-5" id="staticBackdropLabel">Assign
 						Request</h3>
-					<button type="button" class="btn-close close-assign-case" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close close-assign-case"
+						data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<div>

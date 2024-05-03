@@ -48,7 +48,7 @@
 
 		<div class="submit-info-txt">Submit Information</div>
 
-		<form action="adminCreatePtRequest" method="post"
+		<form action="../admin/adminCreatePtRequest" method="post"
 			onsubmit="showLoader()">
 
 			<div class="row">

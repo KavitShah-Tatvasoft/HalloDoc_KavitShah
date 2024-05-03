@@ -34,7 +34,7 @@
 	crossorigin="anonymous"></script>
 <title>Provider Dashboard</title>
 </head>
-<body onload="loadData('new')">
+<body onload="loadData('new'), loadCount()">
 	<div class="container-fluid mt-5 footer-containerF">
 		<div class="loader-container">
 			<div class="loader"></div>
@@ -133,7 +133,7 @@
 							src="<c:url value='/resources/images/send.svg' />"
 							class="btn-info-img"> <span class="btns-text">Send
 								Link</span>
-						</a> <a href="admin-create-request.html" class="btn btn-info mx-1"
+						</a> <a href="create-provider-new-request" class="btn btn-info mx-1"
 							role="button"> <img
 							src="<c:url value='/resources/images/pencil-square.svg' />"
 							class="btn-info-img"> <span class="btns-text">Create
@@ -316,7 +316,7 @@
 									<div class=" action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/view-case.png' />"
 											class="dropdown-icons" alt=""> <a href="view-case.html"
-											class=" action-dropdown-text" type="button">View Case</a>
+											class=" action-dropdown-text view-case-set-link" type="button">View Case</a>
 									</div>
 								</li>
 
@@ -327,7 +327,7 @@
 										<img
 											src="<c:url value='/resources/images/journal-text.svg' />"
 											class="dropdown-icons" alt=""> <a
-											href="view-notes.html" class="action-dropdown-text"
+											href="view-notes.html" class="action-dropdown-text view-notes-send-link"
 											type="button">View Notes</a>
 									</div>
 								</li>
@@ -349,7 +349,7 @@
 										<img
 											src="<c:url value='/resources/images/journal-check-grey.svg' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text" data-bs-toggle="modal"
+											class="action-dropdown-text transfer-case-button-class" data-bs-toggle="modal"
 											data-bs-target="#transfer-case" type="button">Transfer</a>
 									</div>
 								</li>
@@ -358,7 +358,7 @@
 									<div class="action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/document.png' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text" data-bs-toggle="modal"
+											class="action-dropdown-text send-agreement-btn" data-bs-toggle="modal"
 											data-bs-target="#send-agreement" type="button">Send
 											Agreement</a>
 									</div>
@@ -396,8 +396,9 @@
 									<div class="action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/accept.png' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text" role="button"
-											data-bs-toggle="modal" data-bs-target="#accept-case">Accept</a>
+											class="action-dropdown-text accept-case-button-class"
+											role="button" data-bs-toggle="modal"
+											data-bs-target="#accept-case">Accept</a>
 									</div>
 								</li>
 
@@ -519,8 +520,8 @@
 								</div>
 
 								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin orange-background-btn"
-										role="button" data-bs-toggle="modal"
+									<a class="accordion-btn-admin orange-background-btn send-agreement-btn"
+										role="button" data-bs-toggle="modal" 
 										data-bs-target="#send-agreement">Send Agreement</a>
 								</div>
 
@@ -555,7 +556,7 @@
 								</div>
 
 								<div class="col-6 accordion-btns">
-									<a class="accordion-btn-admin blue-background-btn"
+									<a class="accordion-btn-admin blue-background-btn transfer-case-button-class"
 										data-bs-toggle="modal" data-bs-target="#transfer-case"
 										role="button">Transfer</a>
 								</div>
@@ -632,7 +633,7 @@
 						<form action="">
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" class="form-control input-1 agreement-inp"
+									<input type="text" disabled class="form-control input-1 agreement-inp agreement-phone"
 										id="floatingInput-2" placeholder="Phone Number"
 										autocomplete="off"> <label for="floatingInput-2"
 										class="agreement-label">Phone Number</label>
@@ -641,10 +642,11 @@
 
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
-									<input type="email" class="form-control input-1 agreement-inp"
+									<input type="email" disabled class="form-control input-1 agreement-inp agreement-email"
 										id="floatingInput-2" placeholder="Email" autocomplete="off">
 									<label for="floatingInput-2" class="agreement-label">Email</label>
 								</div>
+								<input type="text" hidden id="send-agreement-req-id">
 							</div>
 						</form>
 					</div>
@@ -898,64 +900,6 @@
 
 	<!-- block-case -->
 
-	<div class="modal fade" id="transfer-case" data-bs-backdrop="static"
-		data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content assign-scale">
-				<div class="modal-header">
-					<h3 class="modal-title fs-5" id="staticBackdropLabel">Transfer
-						Request</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div>
-						<span class="font-clr-light">To assign this request, search
-							and select another Physician.</span><br>
-					</div>
-
-					<form action="">
-
-						<div class="col-12 mt-3">
-							<div class="form-floating mb-3 inp">
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select input-2">
-									<option value="Mobile" selected>Newyork</option>
-									<option value="Home">London</option>
-									<option value="Home">Germany</option>
-								</select> <label for="floatingInput-5">Narrow Search by Region</label>
-							</div>
-						</div>
-
-						<div class="container">
-							<div class="row assign-case-select-height assign-case-margin-top">
-
-								<select name="Number_Type" id="floatingInput-5"
-									class="form-control form-select assign-case-text-clr">
-									<option value="check" hidden selected>Select Physician</option>
-									<option value="Mobile">Person 1</option>
-									<option value="Home">Person 2</option>
-								</select>
-
-							</div>
-						</div>
-						<textarea name="message"
-							class="form-control assign-case-margin-top" id="" cols="12"
-							rows="5" placeholder="Description"></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="send-btn">Confirm</button>
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- transfer-case -->
-
 	<div class="modal fade" id="clear-case" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -985,9 +929,9 @@
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content agreement-scale">
-				<div class="modal-body modal-body-accept-case">
-					<div>
-						<form action="">
+				<form id="acceptCaseForm">
+					<div class="modal-body modal-body-accept-case">
+						<div>
 							<h3 class="text-center mb-3">Accept Case</h3>
 
 							<ul style="list-style-type: none;"
@@ -997,18 +941,54 @@
 								<li>Once you accept this request then you are not able to
 									Decline this request.</li>
 							</ul>
-						</form>
+						</div>
+						<input type="text" hidden id="reqId-accept-case">
+						<div
+							class="modal-footer accpet-case-btn-flex grow-accpet-case-btn">
+							<button type="submit" class="send-btn " data-bs-dismiss="modal">Accept</button>
+							<button type="reset" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+						</div>
 					</div>
-					<div class="modal-footer accpet-case-btn-flex grow-accpet-case-btn">
-						<button type="button" class="send-btn ">Accept</button>
-						<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
-					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
 
 	<!-- accept-case -->
+
+	<div class="modal fade" id="transfer-case" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title fs-5" id="staticBackdropLabel-1">Transfer
+						Request</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<form id="transferCaseForm">
+					<div class="modal-body">
+						<div class="font-clr-light">This request will be transferred
+							to admin.</div>
+						<br>
+						
+						<input type="text" hidden id="reqId-transfer-case">
+
+						<textarea name="message" class="form-control transfer-reason" id="" cols="10"
+							rows="5" placeholder="Description"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="send-btn" data-bs-dismiss="modal">Send</button>
+						<button type="assign" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- transfer case to admin  -->
 
 	<div class="modal fade" id="house-call" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
