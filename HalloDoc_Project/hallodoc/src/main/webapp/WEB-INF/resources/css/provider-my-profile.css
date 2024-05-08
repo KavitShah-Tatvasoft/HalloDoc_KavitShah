@@ -3,6 +3,39 @@ a{
 
 }
 
+.provider-password-flex{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap : 10px;
+}
+
+.save-reset-btns-flex, .reset-pass-cancel-flex{
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.reset-pass-cancel-flex #save-reset-btns-id, .reset-pass-cancel-flex #reset-pass-cancel-id{
+  display: none;
+}
+
+#cancel-password-change-flex{
+	display : none;
+}
+
+
+.edit-btn{
+    background-color: #01bce9;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 5px;
+    border: 1px solid #01bce9;
+    margin-top: 20px;
+}
+
+
 .back-btn-top:hover, .request-admin-btn:hover, .reset-pass-btn:hover{
   background-color: #01bce9;
   color: white;

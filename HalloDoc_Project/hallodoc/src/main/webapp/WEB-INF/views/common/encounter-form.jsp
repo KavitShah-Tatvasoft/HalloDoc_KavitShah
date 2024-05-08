@@ -2,7 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="common-navbar.jsp"%>
+<c:choose>
+	<c:when test="${sessionScope.aspUser.user.aspNetRoles.id == 1}">
+		<%@include file="common-navbar.jsp"%>
+	</c:when>
+	<c:otherwise>
+		<%@include file="provider-navbar.jsp"%>
+	</c:otherwise>
+</c:choose>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,34 +62,37 @@
 				<!--row-2---- till email input-->
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1"  value="${userDetails.firstName }"
-							id="floatingInput-1" placeholder="First Name" autocomplete="off" disabled>
-						<label for="floatingInput-1">First Name</label>
+						<input type="text" class="form-control input-1"
+							value="${userDetails.firstName }" id="floatingInput-1"
+							placeholder="First Name" autocomplete="off" disabled> <label
+							for="floatingInput-1">First Name</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1"  value="${userDetails.lastName }"
-							id="floatingInput-2" placeholder="Last Name" autocomplete="off" disabled>
-						<label for="floatingInput-2">Last Name</label>
+						<input type="text" class="form-control input-1"
+							value="${userDetails.lastName }" id="floatingInput-2"
+							placeholder="Last Name" autocomplete="off" disabled> <label
+							for="floatingInput-2">Last Name</label>
 					</div>
 				</div>
 
 				<div class="col-12">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1" value="${userDetails.location }" disabled
-							id="floatingInput-3" placeholder="Location" autocomplete="off">
-						<label for="floatingInput-3">Location</label>
+						<input type="text" class="form-control input-1"
+							value="${userDetails.location }" disabled id="floatingInput-3"
+							placeholder="Location" autocomplete="off"> <label
+							for="floatingInput-3">Location</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp custom-date-input">
-						<input type="date" class="form-control input-1" value="${userDetails.dob }" disabled
-							id="floatingInput-4" placeholder="Date Of Birth"
-							autocomplete="off"> <label for="floatingInput-4">Date
-							of Birth</label> <img
+						<input type="date" class="form-control input-1"
+							value="${userDetails.dob }" disabled id="floatingInput-4"
+							placeholder="Date Of Birth" autocomplete="off"> <label
+							for="floatingInput-4">Date of Birth</label> <img
 							src="<c:url value='/resources/images/calendar4-week.svg' />"
 							alt="" class="custom-date-icon">
 					</div>
@@ -90,9 +100,10 @@
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp custom-date-input">
-						<input type="date" class="form-control input-1" value="${userDetails.dos }" disabled
-							id="floatingInput-5" placeholder="Date" autocomplete="off">
-						<label for="floatingInput-5">Date of Service</label> <img
+						<input type="date" class="form-control input-1"
+							value="${userDetails.dos }" disabled id="floatingInput-5"
+							placeholder="Date" autocomplete="off"> <label
+							for="floatingInput-5">Date of Service</label> <img
 							src="<c:url value='/resources/images/calendar4-week.svg' />"
 							alt="" class="custom-date-icon">
 					</div>
@@ -102,15 +113,17 @@
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp phonecolheight">
-						<input type="tel" class="form-control phoneflags" id="phone" value="${userDetails.phoneNumber }" disabled />
+						<input type="tel" class="form-control phoneflags" id="phone"
+							value="${userDetails.phoneNumber }" disabled />
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6 add-extra-margin">
 					<div class="form-floating mb-3 inp">
-						<input type="email" class="form-control input-1" value="${userDetails.email}" disabled
-							id="floatingInput-6" placeholder="Email" autocomplete="off">
-						<label for="floatingInput-6">Email</label>
+						<input type="email" class="form-control input-1"
+							value="${userDetails.email}" disabled id="floatingInput-6"
+							placeholder="Email" autocomplete="off"> <label
+							for="floatingInput-6">Email</label>
 					</div>
 				</div>
 
@@ -121,7 +134,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" value="${encounterForm.historyOfIllness}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							value="${encounterForm.historyOfIllness}" disabled="disabled"
 							id="floatingInput-7" name="historyOfIllness"
 							placeholder="History of Present Illness Or Injury"
 							autocomplete="off"> <label for="floatingInput-7">History
@@ -131,26 +146,33 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" value="${encounterForm.medicalHistory}" disabled="disabled"
-							id="floatingInput-8" placeholder="Medical History" name="medicalHistory"
-							autocomplete="off"> <label for="floatingInput-8">Medical
-							History</label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							value="${encounterForm.medicalHistory}" disabled="disabled"
+							id="floatingInput-8" placeholder="Medical History"
+							name="medicalHistory" autocomplete="off"> <label
+							for="floatingInput-8">Medical History</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="medications" value="${encounterForm.medications}" disabled="disabled"
-							id="floatingInput-9" placeholder="Medications" autocomplete="off">
-						<label for="floatingInput-9">Medications</label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="medications" value="${encounterForm.medications}"
+							disabled="disabled" id="floatingInput-9"
+							placeholder="Medications" autocomplete="off"> <label
+							for="floatingInput-9">Medications</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="allergies" value="${encounterForm.allergies}" disabled="disabled"
-							id="floatingInput-10" placeholder="Allergies" autocomplete="off">
-						<label for="floatingInput-10">Allergies</label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="allergies" value="${encounterForm.allergies}"
+							disabled="disabled" id="floatingInput-10" placeholder="Allergies"
+							autocomplete="off"> <label for="floatingInput-10">Allergies</label>
 					</div>
 				</div>
 
@@ -160,7 +182,9 @@
 				<!--row-4-- TEMP,HR,RR-->
 				<div class="col-6 col-md-4">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled" name="temp" value="${encounterForm.temp}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled"
+							name="temp" value="${encounterForm.temp}" disabled="disabled"
 							id="floatingInput-11" placeholder="Temp" autocomplete="off">
 						<label for="floatingInput-11">Temp</label>
 					</div>
@@ -168,7 +192,9 @@
 
 				<div class="col-6 col-md-4">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled" name="hr" value="${encounterForm.hr}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled" name="hr"
+							value="${encounterForm.hr}" disabled="disabled"
 							id="floatingInput-12" placeholder="HR" autocomplete="off">
 						<label for="floatingInput-12">HR</label>
 					</div>
@@ -176,7 +202,9 @@
 
 				<div class="col-12 col-md-4">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled"  name="rr" value="${encounterForm.rr}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled" name="rr"
+							value="${encounterForm.rr}" disabled="disabled"
 							id="floatingInput-13" placeholder="RR" autocomplete="off">
 						<label for="floatingInput-13">RR</label>
 					</div>
@@ -187,25 +215,31 @@
 				<!--row-5-- BP,O2,Pain-->
 				<div class="col-6 col-md-2">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled" name="bloodPresurePlus" value="${encounterForm.bloodPresurePlus}" disabled="disabled"
-							id="floatingInput-14" placeholder="Blood Pressure()"
-							autocomplete="off"> <label for="floatingInput-14">Blood
-							Pressure()</label>
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled"
+							name="bloodPresurePlus" value="${encounterForm.bloodPresurePlus}"
+							disabled="disabled" id="floatingInput-14"
+							placeholder="Blood Pressure()" autocomplete="off"> <label
+							for="floatingInput-14">Blood Pressure()</label>
 					</div>
 				</div>
 
 				<div class="col-6 col-md-2">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled" name="bloodPresureneg" value="${encounterForm.bloodPresureneg}" disabled="disabled"
-							id="floatingInput-15" placeholder="Blood Pressure()"
-							autocomplete="off"> <label for="floatingInput-15">Blood
-							Pressure()</label>
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled"
+							name="bloodPresureneg" value="${encounterForm.bloodPresureneg}"
+							disabled="disabled" id="floatingInput-15"
+							placeholder="Blood Pressure()" autocomplete="off"> <label
+							for="floatingInput-15">Blood Pressure()</label>
 					</div>
 				</div>
 
 				<div class="col-6 col-md-4">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled" name="o2" value="${encounterForm.o2}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled" name="o2"
+							value="${encounterForm.o2}" disabled="disabled"
 							id="floatingInput-16" placeholder="O2" autocomplete="off">
 						<label for="floatingInput-16">O2</label>
 					</div>
@@ -213,7 +247,9 @@
 
 				<div class="col-6 col-md-4">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 encounter-fields-disabled" name="pain" value="${encounterForm.pain}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 encounter-fields-disabled"
+							name="pain" value="${encounterForm.pain}" disabled="disabled"
 							id="floatingInput-17" placeholder="Pain" autocomplete="off">
 						<label for="floatingInput-17">Pain</label>
 					</div>
@@ -223,7 +259,9 @@
 			<div class="row">
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" value="${encounterForm.heent}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							value="${encounterForm.heent}" disabled="disabled"
 							id="floatingInput-18" placeholder="Medications" name="heent"
 							autocomplete="off"> <label for="floatingInput-18">Heent</label>
 					</div>
@@ -231,7 +269,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="cv" value="${encounterForm.cv}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="cv" value="${encounterForm.cv}" disabled="disabled"
 							id="floatingInput-19" placeholder="Allergies" autocomplete="off">
 						<label for="floatingInput-19">CV</label>
 					</div>
@@ -239,7 +279,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" value="${encounterForm.chest}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							value="${encounterForm.chest}" disabled="disabled"
 							id="floatingInput-20" placeholder="Medications" name="chest"
 							autocomplete="off"> <label for="floatingInput-20">Chest</label>
 					</div>
@@ -247,15 +289,19 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="abd" value="${encounterForm.abd}" disabled="disabled"
-							id="floatingInput-21" placeholder="Allergies" autocomplete="off"> 
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="abd" value="${encounterForm.abd}" disabled="disabled"
+							id="floatingInput-21" placeholder="Allergies" autocomplete="off">
 						<label for="floatingInput-21">ABD</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="extr" value="${encounterForm.extr}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="extr" value="${encounterForm.extr}" disabled="disabled"
 							id="floatingInput-22" placeholder="Medications"
 							autocomplete="off"> <label for="floatingInput-22">Extr</label>
 					</div>
@@ -263,7 +309,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="skin" value="${encounterForm.skin}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="skin" value="${encounterForm.skin}" disabled="disabled"
 							id="floatingInput-23" placeholder="Allergies" autocomplete="off">
 						<label for="floatingInput-23">Skin</label>
 					</div>
@@ -271,7 +319,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="neuro" value="${encounterForm.neuro}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="neuro" value="${encounterForm.neuro}" disabled="disabled"
 							id="floatingInput-24" placeholder="Medications"
 							autocomplete="off"> <label for="floatingInput-24">Neuro</label>
 					</div>
@@ -279,7 +329,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="other" value="${encounterForm.other}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="other" value="${encounterForm.other}" disabled="disabled"
 							id="floatingInput-25" placeholder="Allergies" autocomplete="off">
 						<label for="floatingInput-25">Other</label>
 					</div>
@@ -288,7 +340,9 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" value="${encounterForm.diagnosis}" disabled="disabled"
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							value="${encounterForm.diagnosis}" disabled="disabled"
 							id="floatingInput-26" placeholder="Medications" name="diagnosis"
 							autocomplete="off"> <label for="floatingInput-26">Diagnosis</label>
 					</div>
@@ -296,47 +350,72 @@
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="treatmentPlan" value="${encounterForm.treatmentPlan}" disabled="disabled"
-							id="floatingInput-27" placeholder="Allergies" autocomplete="off">
-						<label for="floatingInput-27">Treatment Plan</label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="treatmentPlan" value="${encounterForm.treatmentPlan}"
+							disabled="disabled" id="floatingInput-27" placeholder="Allergies"
+							autocomplete="off"> <label for="floatingInput-27">Treatment
+							Plan</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" value="${encounterForm.medicationsDespensed}" disabled="disabled"
-							id="floatingInput-28" placeholder="Medications" name="medicationsDespensed"
-							autocomplete="off"> <label for="floatingInput-28">Medications
-							Dispensed</label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							value="${encounterForm.medicationsDespensed}" disabled="disabled"
+							id="floatingInput-28" placeholder="Medications"
+							name="medicationsDespensed" autocomplete="off"> <label
+							for="floatingInput-28">Medications Dispensed</label>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="procedures" value="${encounterForm.procedures}" disabled="disabled"
-							id="floatingInput-29" placeholder="Allergies" autocomplete="off">
-						<label for="floatingInput-29">Procedures</label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="procedures" value="${encounterForm.procedures}"
+							disabled="disabled" id="floatingInput-29" placeholder="Allergies"
+							autocomplete="off"> <label for="floatingInput-29">Procedures</label>
 					</div>
 				</div>
 
 				<div class="col-12 inc-height">
 					<div class="form-floating mb-3 inp">
-						<input type="text" class="form-control input-1 inc-inp-height encounter-fields-disabled" name="followUp" value="${encounterForm.followUp}" disabled="disabled"
-							id="floatingInput-30" placeholder="Allergies" autocomplete="off">
-						<label for="floatingInput-30">Followup </label>
+						<input type="text"
+							class="form-control input-1 inc-inp-height encounter-fields-disabled"
+							name="followUp" value="${encounterForm.followUp}"
+							disabled="disabled" id="floatingInput-30" placeholder="Allergies"
+							autocomplete="off"> <label for="floatingInput-30">Followup
+						</label>
 					</div>
 				</div>
 			</div>
-			
+
 			<input type="text" hidden value="${reqId }" name="requestId">
 
 			<div class="row">
 				<div class="bottom-btns mt-3 mb-3">
-					<button type="button" class="bottom-btns-submit edit-hide-class" onclick="editEncounterForm('edit')">Edit</button>
-					<button type="submit" class="bottom-btns-submit edit-show-class d-none" >Save
+					<button type="button" class="bottom-btns-submit edit-hide-class"
+						onclick="editEncounterForm('edit')">Edit</button>
+					<button type="submit"
+						class="bottom-btns-submit edit-show-class d-none">Save
 						Changes</button>
-<!-- 					<button class="bottom-btns-finalize">Finalize</button> -->
-					<button type="reset" class="bottom-btns-cancel edit-show-class d-none" onclick="editEncounterForm('cancel')">Cancel</button>
+
+					<c:choose>
+						<c:when test="${sessionScope.aspUser.user.aspNetRoles.id != 1}">
+							<a type="button" href="../finalize-encounter-form/${reqId }"  class="bottom-btns-finalize">Finalize</a>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
+
+
+					
+					<button type="reset"
+						class="bottom-btns-cancel edit-show-class d-none"
+						onclick="editEncounterForm('cancel')">Cancel</button>
 				</div>
 			</div>
 

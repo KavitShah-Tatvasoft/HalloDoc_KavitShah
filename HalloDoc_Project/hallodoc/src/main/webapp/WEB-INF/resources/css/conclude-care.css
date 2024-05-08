@@ -1,3 +1,19 @@
+.ul-padding-remove{
+	padding-left: 0px !important;
+}
+
+.accpet-case-btn-flex{
+	justify-content: center !important;
+}
+
+.cancel-btn{
+	background-color: #01bce9;
+	border: 1px solid #01bce9;
+	border-radius: 4px;
+	padding: 4px 8px;
+	color: white;
+}
+
 .logout-btn-admin{
     margin-left: 10px;
     margin-bottom: 2px;

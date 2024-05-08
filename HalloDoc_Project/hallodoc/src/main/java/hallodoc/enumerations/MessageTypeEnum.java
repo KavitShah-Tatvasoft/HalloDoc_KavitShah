@@ -7,7 +7,8 @@ public enum MessageTypeEnum {
 		SEND_FILES(3,"Send Files"),
 		SEND_ORDERS(4,"Send New Order"),
 		SEND_CREDENTIALS_PROVIDER(5,"Send Provider Credentials"),
-		COMMUNICTION_MESSAGE(6,"Communication with Provider");
+		COMMUNICTION_MESSAGE(6,"Communication with Provider"),
+		REQUEST_CHANGES_TO_ADMIN(7,"Request Profile Changes to Admin");
 		private int messageTypeId;
 		private String messageType;
 		

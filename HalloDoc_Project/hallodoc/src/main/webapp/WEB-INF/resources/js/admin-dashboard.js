@@ -47,7 +47,7 @@ const changeStatus = (element) => {
 	const states = document.getElementsByClassName("row-cards")
 	const current_state = element.classList[1]
 	const capitalizedState = current_state.charAt(0).toUpperCase() + current_state.slice(1);
-	  
+
 	stateName.innerHTML = "(" + capitalizedState + ")"
 	$(".state-type-class-name").attr("data-state", current_state)
 
@@ -111,8 +111,8 @@ function loadData(current_state) {
 		},
 
 		success: function(res) {
-			  
-			  
+
+
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
 			tbody.empty()
@@ -134,7 +134,7 @@ function loadData(current_state) {
 
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
-				  ;
+					;
 				accordionBody.append(accordionCard)
 
 			})
@@ -146,7 +146,7 @@ function loadData(current_state) {
 
 		},
 		error: function() {
-			  
+
 		}
 
 	})
@@ -165,7 +165,7 @@ function loadCount() {
 			var countConclude = document.getElementById("conclude-request-count");
 			var countToClose = document.getElementById("to-close-request-count");
 			var countUnpaid = document.getElementById("unpaid-request-count");
-			  
+
 
 			countNew.innerHTML = res[0];
 			countPending.innerHTML = res[1];
@@ -176,7 +176,7 @@ function loadCount() {
 
 		},
 		error: function() {
-			  
+
 		}
 	})
 
@@ -353,7 +353,7 @@ function createOtherReqRow(data, current_state) {
 												src="/hallodoc/resources/images/x-circle-grey.svg"
 												class="dropdown-icons" alt=""> <a
 												class="action-dropdown-text" role="button"
-												href="../user/closeCaseForm	/`+ data.requestId +`">Close Case</a>
+												href="../user/closeCaseForm	/`+ data.requestId + `">Close Case</a>
 										</div>
 									</li>
 
@@ -372,7 +372,7 @@ function createOtherReqRow(data, current_state) {
 											<img
 												src="/hallodoc/resources/images/view-upload.png"
 												class="dropdown-icons" alt=""> <a
-												href="../user/viewRequestUploads/`+ data.requestId +`" class="action-dropdown-text "
+												href="../user/viewRequestUploads/`+ data.requestId + `" class="action-dropdown-text "
 												type="button">View Uploads</a>
 										</div>
 									</li>
@@ -402,7 +402,7 @@ function createOtherReqRow(data, current_state) {
 											<img
 												src="/hallodoc/resources/images/order-delivery.png"
 												class="dropdown-icons" alt=""> <a
-												href="../user/sendOrderDetails/`+ data.requestId +`" class="action-dropdown-text"
+												href="../user/sendOrderDetails/`+ data.requestId + `" class="action-dropdown-text"
 												type="button">Orders</a>
 										</div>
 									</li>
@@ -412,7 +412,7 @@ function createOtherReqRow(data, current_state) {
 											<img src="/hallodoc/resources/images/document.png"
 												class="dropdown-icons" alt=""> <a
 												class="action-dropdown-text" type="button"
-												href="../user/encounterForm/`+ data.requestId +`">Encounter</a>
+												href="../user/encounterForm/`+ data.requestId + `">Encounter</a>
 										</div>
 									</li>
 									
@@ -444,8 +444,8 @@ $(document).ready(function() {
 		},
 
 		success: function(res) {
-			  
-			  
+
+
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
 			tbody.empty()
@@ -491,7 +491,7 @@ $(document).ready(function() {
 
 		},
 		error: function() {
-			  
+
 		}
 	})
 })
@@ -560,13 +560,13 @@ function poplulateAccordions(data, current_state, count) {
 	card.find(".view-notes-anchor-class").attr("href", "viewNotes/" + data.requestId)
 
 	card.find(".block-case-anchor-class").attr("onclick", "blockCase('" + data.name + "','" + data.requestId + "')")
-	
-	card.find(".clear-case-anchor").attr("onclick", "clearCase('" + data.requestId  + "')")
-	
-	card.find(".view-uploads-anchor").attr("href","../user/viewRequestUploads/"+ data.requestId )
-	
-	card.find(".send-agreement-anchor").attr("onclick", "sendAgreement('"+ data.requestId  +"')")
-	
+
+	card.find(".clear-case-anchor").attr("onclick", "clearCase('" + data.requestId + "')")
+
+	card.find(".view-uploads-anchor").attr("href", "../user/viewRequestUploads/" + data.requestId)
+
+	card.find(".send-agreement-anchor").attr("onclick", "sendAgreement('" + data.requestId + "')")
+
 	card.find(".transfer-case-anchor").attr("onclick", "transferCase('" + data.requestId + "')")
 	return card;
 }
@@ -589,14 +589,14 @@ $("#sendLinkForm").submit(function(event) {
 		type: 'POST',
 		data: payloadData,
 		success: function(data) {
-			  
-			  
-			hideLoader() 
+
+
+			hideLoader()
 		},
 		error: function(data) {
-			hideLoader() 
-			  
-			  
+			hideLoader()
+
+
 		}
 
 
@@ -607,7 +607,7 @@ $("#sendLinkForm").submit(function(event) {
 });
 
 function changeActiveBtn(element) {
-	  
+
 	$(".button-class").removeClass("active-btn")
 	$(".commom-label-class").removeClass("show-active-button-class")
 	$(element).addClass("active-btn")
@@ -653,14 +653,14 @@ function filterRequest() {
 	payLoadData["requestType"] = requestType
 	payLoadData["statusType"] = statusType
 
-	  
+
 
 	$.ajax({
 		url: 'searchRequestFilter',
 		type: 'POST',
 		data: payLoadData,
 		success: function(res) {
-			  
+
 
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
@@ -683,7 +683,7 @@ function filterRequest() {
 
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
-				  ;
+					;
 				accordionBody.append(accordionCard)
 
 
@@ -697,7 +697,7 @@ function filterRequest() {
 
 		},
 		error: function(res) {
-			  
+
 		}
 	});
 
@@ -717,7 +717,7 @@ $("#cancelCaseForm").submit(function(event) {
 	payLoadData["additionalNotes"] = additionalNotes
 	payLoadData["requestId"] = requestId
 
-	  
+
 
 	$.ajax({
 		url: 'cancelRequestedCase',
@@ -726,10 +726,10 @@ $("#cancelCaseForm").submit(function(event) {
 		success: function(res) {
 			loadCount()
 			loadData(current_state)
-			  
+
 		},
 		error: function(res) {
-			  
+
 		}
 
 	});
@@ -750,7 +750,7 @@ $("#blockPatientForm").submit(function(event) {
 	payLoadData["blockReason"] = blockReason
 	payLoadData["requestId"] = requestId
 
-	  
+
 
 	$.ajax({
 		url: 'blockRequestedCase',
@@ -759,10 +759,10 @@ $("#blockPatientForm").submit(function(event) {
 		success: function(res) {
 			loadCount()
 			loadData(current_state)
-			  
+
 		},
 		error: function(res) {
-			  
+
 		}
 
 	});
@@ -791,7 +791,7 @@ function getPhysiciansByRegion(region) {
 
 
 	debugger
-	  
+
 	$.ajax({
 		url: 'getPhysiciansByRegion',
 		type: 'POST',
@@ -799,8 +799,8 @@ function getPhysiciansByRegion(region) {
 			regionId: region
 		},
 		success: function(res) {
-			  
-			  
+
+
 
 			$(".physician-name-class").empty()
 			$(".physician-name-class").append("<option value='0' hidden selected>Select Physician</option>")
@@ -811,7 +811,7 @@ function getPhysiciansByRegion(region) {
 
 		},
 		error: function(res) {
-			  
+
 		}
 
 	});
@@ -841,10 +841,10 @@ $("#assign-case-form").submit(function(event) {
 			type: 'POST',
 			data: payload,
 			success: function(data) {
-				  
+
 			},
 			error: function(data) {
-				  
+
 			}
 		})
 
@@ -910,8 +910,8 @@ function exportData(current_status) {
 		},
 		data: payload,
 		success: function(data) {
-			hideLoader() 
-			  
+			hideLoader()
+
 			var blob = new Blob([data]);
 			var link = document.createElement("a");
 			link.href = window.URL.createObjectURL(blob);
@@ -920,8 +920,8 @@ function exportData(current_status) {
 			link.click();
 			document.body.removeChild(link);
 		}, error: function(data) {
-			hideLoader() 
-			  
+			hideLoader()
+
 		}
 
 
@@ -947,11 +947,11 @@ $("#clear-case-form").submit(function(event) {
 			$(".cancel-case-btn-class").click()
 			loadCount()
 			loadData(current_state)
-			  
+
 
 		},
 		error: function(data) {
-			  
+
 			error.innerHTML = "Failed to clear the case"
 		}
 	})
@@ -988,12 +988,12 @@ $("#transfer-request-form").submit(function(event) {
 			type: 'POST',
 			data: payload,
 			success: function(data) {
-				  
+
 				loadCount()
 				loadData(current_state)
 			},
 			error: function(data) {
-				  
+
 			}
 		})
 
@@ -1013,15 +1013,15 @@ function sendAgreement(reqId) {
 			reqId: reqId
 		},
 		success: function(data) {
-			  
-			  
+
+
 
 			$(".agreement-phone").val(data.phoneNumber)
 			$(".agreement-email").val(data.email)
 
 		},
 		error: function(data) {
-			  
+
 		}
 	})
 }
@@ -1044,13 +1044,13 @@ $("#sendAgreementForm").submit(function(event) {
 		data: payload,
 		success: function(data) {
 			$(".send-agreement-reset").click()
-			hideLoader() 
-			  
-			  
+			hideLoader()
+
+
 		},
 		error: function(data) {
-			hideLoader() 
-			  
+			hideLoader()
+
 			var error = document.getElementById("error-send-agreement")
 			error.innerHTML = "Error sending agreement! Please try again!"
 		}

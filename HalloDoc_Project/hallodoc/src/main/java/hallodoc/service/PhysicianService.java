@@ -1,24 +1,43 @@
 package hallodoc.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.Address;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.password4j.BcryptFunction;
+import com.password4j.Hash;
+import com.password4j.Password;
+import com.password4j.types.Bcrypt;
 
 import hallodoc.dto.PhysicianRequestDataDto;
+import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.StatusWiseCountDto;
+import hallodoc.email.EmailService;
 import hallodoc.enumerations.AspNetRolesEnum;
+import hallodoc.enumerations.MessageTypeEnum;
 import hallodoc.enumerations.RequestStatus;
 import hallodoc.model.AspNetUsers;
+import hallodoc.model.EmailLog;
 import hallodoc.model.Physician;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
+import hallodoc.model.User;
+import hallodoc.repository.AspNetUserDao;
+import hallodoc.repository.LogsDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestStatusLogDao;
+import hallodoc.repository.UserDao;
 
 @Service
 public class PhysicianService {
@@ -28,6 +47,18 @@ public class PhysicianService {
 	
 	@Autowired
 	private RequestStatusLogDao requestStatusLogDao;
+	
+	@Autowired
+	private AspNetUserDao aspNetUserDao;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private LogsDao logsDao;
 
 	public List<PhysicianRequestDataDto> getPhysicianRequests(String status,HttpServletRequest request) {
 
@@ -63,10 +94,32 @@ public class PhysicianService {
 			statusList.add(hallodoc.enumerations.RequestStatus.UNPAID.getRequestId());
 		}
 		
-		List<PhysicianRequestDataDto> requestList = this.requestDao.getRequestByPhysicianId(statusList, physicianId);
+		List<Request> requestList = this.requestDao.getRequestByPhysicianId(statusList, physicianId);
+		List<PhysicianRequestDataDto>  returnList= new ArrayList<PhysicianRequestDataDto>();
 		
+		for (Request request2 : requestList) {
+			PhysicianRequestDataDto physicianRequestDataDto = new PhysicianRequestDataDto();
+			physicianRequestDataDto.setCallType(request2.getCallType());
+			physicianRequestDataDto.setPatientFirstName(request2.getRequestClient().getFirstName());
+			physicianRequestDataDto.setPatientLastName(request2.getRequestClient().getLastName());
+			physicianRequestDataDto.setPtCity(request2.getRequestClient().getCity());
+			physicianRequestDataDto.setPtPhoneNumber(request2.getRequestClient().getPhoneNumber());
+			physicianRequestDataDto.setPtState(request2.getRequestClient().getState());
+			physicianRequestDataDto.setPtStreet(request2.getRequestClient().getStreet());
+			physicianRequestDataDto.setPtZipcode(request2.getRequestClient().getZipcode());
+			physicianRequestDataDto.setReqId(request2.getRequestId());
+			physicianRequestDataDto.setReqPhoneNumber(request2.getPhoneNumber());
+			physicianRequestDataDto.setReqPhoneType(request2.getRequestType().getName());
+			if(request2.getEncounterForm() != null) {
+				
+				physicianRequestDataDto.setFinalized(request2.getEncounterForm().isFinalized());
+			}else {
+				physicianRequestDataDto.setFinalized(false);
+			}
+			returnList.add(physicianRequestDataDto);
+		}
 
-		return requestList;
+		return returnList;
 	}
 	
 public List<Integer> getStatusWiseCount(HttpServletRequest httpServletRequest){
@@ -153,6 +206,153 @@ public List<Integer> getStatusWiseCount(HttpServletRequest httpServletRequest){
 		this.requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
 		
 		return "Transferred Case to Admin";
+	}
+	
+	public String changeCallType(int reqId, int callType, HttpServletRequest httpServletRequest) {
+		Request request = this.requestDao.getRequestOb(reqId);
+		if(callType == 1) {
+		}else {
+			Physician physician = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician();
+			request.setStatus(RequestStatus.CONCLUDE.getRequestId());
+			RequestStatusLog requestStatusLog = new RequestStatusLog();
+			Date date = new Date();
+			requestStatusLog.setCreatedDate(date);
+			requestStatusLog.setNotes("Physician Dr. "+ physician.getFirstName() + " " + physician.getLastName() + " concluded the case on " + date.getDate() + "-" + date.getMonth() + "-" + date.getYear());
+			requestStatusLog.setPhysician(physician);
+			requestStatusLog.setRequest(request);
+			requestStatusLog.setStatus(RequestStatus.CONCLUDE.getRequestId());
+			
+			this.requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		}
+		request.setCallType(callType);
+		request.setModifieDate(new Date());
+		
+		this.requestDao.updateRequest(request);
+		return "Updated call type";
+	}
+	
+	public String concludeCaseByReqId(int reqId, HttpServletRequest httpServletRequest) {
+		Physician physician = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician();
+		Request request = this.requestDao.getRequestOb(reqId);
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		Date date = new Date();
+		request.setStatus(RequestStatus.CONCLUDE.getRequestId());
+		request.setModifieDate(date);
+		
+		
+		requestStatusLog.setCreatedDate(date);
+		requestStatusLog.setNotes("Physician Dr. "+ physician.getFirstName() + " " + physician.getLastName() + " concluded the case on " + date.getDate() + "-" + date.getMonth() + "-" + date.getYear());
+		requestStatusLog.setPhysician(physician);
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(RequestStatus.CONCLUDE.getRequestId());
+		
+		this.requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		this.requestDao.updateRequest(request);
+		
+		return "Case concluded";
+	}
+	
+	public String changePassword(AspNetUsers aspNetUsers, String password) {
+		
+		BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
+		Hash hash = Password.hash(password).with(bcrypt);
+		aspNetUsers.setPassword_hash(hash.getResult());
+		aspNetUsers.setModified_date(new Date());
+		aspNetUserDao.updateAspNetUser(aspNetUsers);
+		
+		return "Password Updated";
+	}
+	
+	@Transactional
+	public String sendRequestToAdmin(HttpServletRequest httpServletRequest, String description) {
+		
+		String status = "";
+		String subject = "Request to Admin";
+		LocalDateTime date = LocalDateTime.now();
+		List<User> allAdmin = this.userDao.getAllAdminUsers();
+		int physicianId = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician().getPhysicianId();
+		InternetAddress[] addresses = new InternetAddress[allAdmin.size()];
+		 try {
+	            for (int i = 0; i < allAdmin.size(); i++) {
+	                addresses[i] = new InternetAddress(allAdmin.get(i).getEmail());
+	            }
+	        } catch (AddressException e) {
+	            e.printStackTrace();
+	        }
+		
+		boolean isSent = false;
+		int sentTries = 1;
+		int tries;
+		for (int i = sentTries; i <= 3; i++) {
+			if (isSent) {
+				continue;
+			}
+			try {
+				this.emailService.sendRequestToAdmin(httpServletRequest,subject,addresses,description);
+				isSent = true;
+				tries = i;
+				status = status + "mail send";
+
+			} catch (Exception e) {
+				if (i == 3) {
+//					emailLog.setSentTries(3);
+//					emailLog.setEmailSent(false);
+					tries = 3;
+					isSent = false;
+					status = status + "failed to send mail";
+					return status;
+				}
+			}
+
+		}
+		
+		for (User adminUser : allAdmin) {
+			EmailLog emailLog = new EmailLog();
+			emailLog.setSubjectName(subject);
+			emailLog.setEmailId(adminUser.getEmail());
+//			emailLog.setAdminId(adminUser.getAspNetUsers().getAdmin().getAdminId());
+			emailLog.setCreatedDate(date);
+			emailLog.setSentDate(date);
+			emailLog.setAction(MessageTypeEnum.REQUEST_CHANGES_TO_ADMIN.getMessageTypeId());
+			emailLog.setRecipientName(adminUser.getFirstName() + " " + adminUser.getLastName());
+			emailLog.setPhysicianId(physicianId);
+			emailLog.setRoleId(1);
+			emailLog.setSentTries(sentTries);
+			emailLog.setEmailSent(isSent);
+			logsDao.addEmailLogEntry(emailLog);
+		}
+
+		 return status;
+	}
+	
+	public List<PhysicianRequestDataDto> getFilteredPhysicianRequests(RequestFiltersDto requestFiltersDto, HttpServletRequest httpServletRequest){
+		List<Request> filteredList = requestDao.getPhysicianFilteredRequests(requestFiltersDto, httpServletRequest);
+		List<PhysicianRequestDataDto>  returnList= new ArrayList<PhysicianRequestDataDto>();
+		
+		for (Request request2 : filteredList) {
+			PhysicianRequestDataDto physicianRequestDataDto = new PhysicianRequestDataDto();
+			physicianRequestDataDto.setCallType(request2.getCallType());
+			physicianRequestDataDto.setPatientFirstName(request2.getRequestClient().getFirstName());
+			physicianRequestDataDto.setPatientLastName(request2.getRequestClient().getLastName());
+			physicianRequestDataDto.setPtCity(request2.getRequestClient().getCity());
+			physicianRequestDataDto.setPtPhoneNumber(request2.getRequestClient().getPhoneNumber());
+			physicianRequestDataDto.setPtState(request2.getRequestClient().getState());
+			physicianRequestDataDto.setPtStreet(request2.getRequestClient().getStreet());
+			physicianRequestDataDto.setPtZipcode(request2.getRequestClient().getZipcode());
+			physicianRequestDataDto.setReqId(request2.getRequestId());
+			physicianRequestDataDto.setReqPhoneNumber(request2.getPhoneNumber());
+			physicianRequestDataDto.setReqPhoneType(request2.getRequestType().getName());
+			if(request2.getEncounterForm() != null) {
+				
+				physicianRequestDataDto.setFinalized(request2.getEncounterForm().isFinalized());
+			}else {
+				physicianRequestDataDto.setFinalized(false);
+			}
+			returnList.add(physicianRequestDataDto);
+		}
+
+		return returnList;
+
 	}
 
 }

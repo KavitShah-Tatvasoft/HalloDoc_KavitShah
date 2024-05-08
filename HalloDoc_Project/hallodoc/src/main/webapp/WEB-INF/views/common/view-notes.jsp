@@ -7,7 +7,7 @@
 		<%@include file="common-navbar.jsp"%>
 	</c:when>
 	<c:otherwise>
-
+		<%@include file="provider-navbar.jsp"%>
 	</c:otherwise>
 </c:choose>
 

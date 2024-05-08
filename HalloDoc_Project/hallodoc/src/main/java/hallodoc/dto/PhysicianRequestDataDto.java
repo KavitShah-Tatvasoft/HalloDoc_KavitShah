@@ -13,8 +13,24 @@ public class PhysicianRequestDataDto {
 	private int reqId;
 	private String ptPhoneType = "Patient";
 	private String reqPhoneType;
+	private Integer callType;
+	private boolean isFinalized;
 	
 	
+	
+	
+	public boolean isFinalized() {
+		return isFinalized;
+	}
+	public void setFinalized(boolean isFinalized) {
+		this.isFinalized = isFinalized;
+	}
+	public Integer getCallType() {
+		return callType;
+	}
+	public void setCallType(Integer callType) {
+		this.callType = callType;
+	}
 	public String getPatientFirstName() {
 		return patientFirstName;
 	}
@@ -86,29 +102,13 @@ public class PhysicianRequestDataDto {
 	}
 	public void setReqPhoneType(String reqPhoneType) {
 		this.reqPhoneType = reqPhoneType;
-	}
-	
+	} 	 
 	
 	
 	
 	public PhysicianRequestDataDto(String patientFirstName, String patientLastName, String ptPhoneNumber,
 			String reqPhoneNumber, String ptStreet, String ptCity, String ptState, String ptZipcode, int reqId,
-			String reqPhoneType) {
-		super();
-		this.patientFirstName = patientFirstName;
-		this.patientLastName = patientLastName;
-		this.ptPhoneNumber = ptPhoneNumber;
-		this.reqPhoneNumber = reqPhoneNumber;
-		this.ptStreet = ptStreet;
-		this.ptCity = ptCity;
-		this.ptState = ptState;
-		this.ptZipcode = ptZipcode;
-		this.reqId = reqId;
-		this.reqPhoneType = reqPhoneType;
-	}
-	public PhysicianRequestDataDto(String patientFirstName, String patientLastName, String ptPhoneNumber,
-			String reqPhoneNumber, String ptStreet, String ptCity, String ptState, String ptZipcode, int reqId,
-			String ptPhoneType, String reqPhoneType) {
+			String ptPhoneType, String reqPhoneType, Integer callType, boolean isFinalized) {
 		super();
 		this.patientFirstName = patientFirstName;
 		this.patientLastName = patientLastName;
@@ -121,6 +121,8 @@ public class PhysicianRequestDataDto {
 		this.reqId = reqId;
 		this.ptPhoneType = ptPhoneType;
 		this.reqPhoneType = reqPhoneType;
+		this.callType = callType;
+		this.isFinalized = isFinalized;
 	}
 	public PhysicianRequestDataDto() {
 		super();

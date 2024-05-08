@@ -3,7 +3,14 @@
 <%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@include file="common-navbar.jsp"%>
+<c:choose>
+	<c:when test="${sessionScope.aspUser.user.aspNetRoles.id == 1}">
+		<%@include file="common-navbar.jsp"%>
+	</c:when>
+	<c:otherwise>
+		<%@include file="provider-navbar.jsp"%>
+	</c:otherwise>
+</c:choose>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,19 +88,22 @@
 			<div class="col-12 doc-download-flex">
 				<div class="doc-text">Documents</div>
 				<div class="    ">
-					<button class="download-all-btn" type="button" onclick="downloadAll()">
+					<button class="download-all-btn" type="button"
+						onclick="downloadAll()">
 						<span class="download-all-text">Download All</span> <img
 							src="<c:url value='/resources/images/download-all.svg' />"
 							class="download-all-image" alt="">
 					</button>
 
-					<button class="download-all-btn" type="button" onclick="deleteAll()">
+					<button class="download-all-btn" type="button"
+						onclick="deleteAll()">
 						<span class="download-all-text">Delete All</span> <img
 							src="<c:url value='/resources/images/Dustbin.svg' />"
 							class="download-all-image" alt="">
 					</button>
 
-					<button class="download-all-btn" type="button" type="button" onclick="sendMailToPatient(${reqId})">
+					<button class="download-all-btn" type="button" type="button"
+						onclick="sendMailToPatient(${reqId})">
 						<span class="download-all-text">Send Mail</span> <img
 							src="<c:url value='/resources/images/envelope-blue.svg' />"
 							class="download-all-image" alt="">
@@ -109,18 +119,22 @@
 					<hr class="mt-3">
 					<div class="col-12 single-mobile-card">
 						<div class="mobile-checkbox-name-flex">
-							<input type="checkbox" class="justone-mobile justone-download" name="row1" data-value=${listOb.requestWiseFileId }>
-							<span class="pdf-name-flex"><img
+							<input type="checkbox" class="justone-mobile justone-download"
+								name="row1" data-value=${listOb.requestWiseFileId }> <span
+								class="pdf-name-flex"><img
 								src="<c:url value='/resources/images/pdf.png' />"
-								class="pdf-img" alt=""><span class="stored-filename-class" data-value="${listOb.storedFileName }" >${listOb.filename}</span></span>
+								class="pdf-img" alt=""><span class="stored-filename-class"
+								data-value="${listOb.storedFileName }">${listOb.filename}</span></span>
 						</div>
 						<fmt:formatDate value="${listOb.createdDate}"
 							pattern="MMMM dd, yyyy" var="formattedDate" />
 						<div class="date-col common-margin-top">${formattedDate}</div>
 						<div class="accordion-div-flex">
 							<button class="cloud-download-btn common-margin-top">
-								<a class="link cloud-download-btn" href="${listOb.url}" download="${listOb.filename} " >
-									<img src="<c:url value="/resources/images/cloud-arrow-down.svg" />" class="cloud-btn-down" alt="">
+								<a class="link cloud-download-btn" href="${listOb.url}"
+									download="${listOb.filename} "> <img
+									src="<c:url value="/resources/images/cloud-arrow-down.svg" />"
+									class="cloud-btn-down" alt="">
 								</a>
 							</button>
 							<button class="cloud-download-btn common-margin-top">
@@ -162,27 +176,35 @@
 					<c:forEach items="${docList}" var="listOb">
 						<c:if test="${not empty listOb.filename}">
 							<tr>
-								<th class="px-3" scope="row"><input type="checkbox" data-value="${listOb.requestWiseFileId }"
+								<th class="px-3" scope="row"><input type="checkbox"
+									data-value="${listOb.requestWiseFileId }"
 									class="justone justone-download" name="row1"></th>
 								<td class="pdf-name-flex"><img
 									src="<c:url value='/resources/images/pdf.png' />"
-									class="pdf-img" alt=""><span class="stored-filename-class" data-value="${listOb.storedFileName }">${listOb.filename}</span></td>
+									class="pdf-img" alt=""><span
+									class="stored-filename-class"
+									data-value="${listOb.storedFileName }">${listOb.filename}</span></td>
 								<fmt:formatDate value="${listOb.createdDate}"
 									pattern="MMMM dd, yyyy" var="formattedDate" />
 								<td>${formattedDate}</td>
 								<td class="text-center">
 									<div class="download-delete-btns-flex">
 										<div class="cloud-download-btn">
-											<a class="link" href="${listOb.url}" download="${listOb.filename}" class="cloud-download-btn">
-												<img src="<c:url value="/resources/images/cloud-arrow-down.svg" />" class="cloud-btn-down" alt="">
+											<a class="link" href="${listOb.url}"
+												download="${listOb.filename}" class="cloud-download-btn">
+												<img
+												src="<c:url value="/resources/images/cloud-arrow-down.svg" />"
+												class="cloud-btn-down" alt="">
 											</a>
 										</div>
-										<button class="cloud-download-btn" type="button" onclick="showDoc('${listOb.url}')">
+										<button class="cloud-download-btn" type="button"
+											onclick="showDoc('${listOb.url}')">
 											<img
 												src="<c:url value='/resources/images/password-eye-blue.svg' />"
 												class="cloud-btn-down" alt="">
 										</button>
-										<div class="cloud-download-btn" onclick="deleteFile(${listOb.requestWiseFileId})">
+										<div class="cloud-download-btn"
+											onclick="deleteFile(${listOb.requestWiseFileId})">
 											<img src="<c:url value='/resources/images/Dustbin.svg' />"
 												class="cloud-btn-down" alt="">
 										</div>
@@ -198,7 +220,8 @@
 	</div>
 
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
-	<script src="<c:url value='/resources/js/requested-case-view-uploads.js' />"></script>
+	<script
+		src="<c:url value='/resources/js/requested-case-view-uploads.js' />"></script>
 </body>
 </html>
 <%@include file="footer-black.jsp"%>

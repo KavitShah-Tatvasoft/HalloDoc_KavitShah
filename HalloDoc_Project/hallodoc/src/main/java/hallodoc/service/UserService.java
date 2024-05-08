@@ -19,6 +19,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.coyote.http2.HPackHuffman;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -49,6 +50,7 @@ import hallodoc.dto.OrderVendorDetailsDto;
 import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.PatientHistoryDto;
 import hallodoc.dto.PatientRecordsDto;
+import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SMSLogDashboardDataDto;
 import hallodoc.dto.SearchRecordsDashboardData;
@@ -61,6 +63,7 @@ import hallodoc.dto.ViewNotesDto;
 import hallodoc.email.EmailService;
 import hallodoc.enumerations.DocType;
 import hallodoc.enumerations.MessageTypeEnum;
+import hallodoc.enumerations.RequestStatus;
 import hallodoc.helper.Constants;
 import hallodoc.helper.DateHelper;
 import hallodoc.helper.ExcelSheetHelper;
@@ -241,18 +244,18 @@ public class UserService {
 		String fileExtension = document.getOriginalFilename()
 				.substring(document.getOriginalFilename().lastIndexOf('.') + 1);
 		String storedFileName = "patient" + formattedDate + "-" + fileName;
-		 ;
+		 
 		String path = Constants.getUplaodPath(session) + storedFileName;
-		 ;
+		 
 
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
 			fos.write(data);
 			fos.close();
-			 ;
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
-			 ;
+			 
 		}
 
 		requestWiseFile.setRequest(request);
@@ -270,7 +273,7 @@ public class UserService {
 			requestWiseFile.setAdmin(aspNetUsers.getAdmin());
 			break;
 		case 2:
-			requestWiseFile.setPhysician(null);
+			requestWiseFile.setPhysician(aspNetUsers.getPhysician());
 			break;
 		default:
 			break;
@@ -769,17 +772,28 @@ public class UserService {
 	public String sendOrderDetails(OrdersDetailsDto ordersDetailsDto, HttpServletRequest httpServletRequest) {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
-		Admin admin = aspNetUsers.getAdmin();
+		Admin admin;
+		Physician physician;
 		EmailLog emailLog = new EmailLog();
 		OrderDetails orderDetail = new OrderDetails();
 		LocalDateTime localDateTime = LocalDateTime.now();
 		Request request = requestDao.getRequestOb(ordersDetailsDto.getOrderRequestId());
 		HealthProfessionals healthProfessionals = this.healthProfessionalsDao
 				.getProfessionalOb(ordersDetailsDto.getBusinessTypeId());
+		
+		if(aspNetUsers.getUser().getAspNetRoles().getId() == 1) {
+			admin = aspNetUsers.getAdmin();
+			orderDetail.setCreatedBy(admin.getAdminId());
+			emailLog.setAdminId(admin.getAdminId());
+		}else {
+			physician = aspNetUsers.getPhysician();
+			orderDetail.setCreatedBy(physician.getPhysicianId());
+			emailLog.setPhysicianId(physician.getPhysicianId());
+
+		}
 
 		orderDetail.setBusinessContact(ordersDetailsDto.getBusinessContactNumber());
 		orderDetail.setBusinessEmail(ordersDetailsDto.getBusinessEmailContact());
-		orderDetail.setCreatedBy(admin.getAdminId());
 		orderDetail.setFaxNumber(ordersDetailsDto.getBusinessFaxNumber());
 		orderDetail.setNumberOfRefills(ordersDetailsDto.getRefillsDetails());
 		orderDetail.setRequestId(ordersDetailsDto.getOrderRequestId());
@@ -791,13 +805,12 @@ public class UserService {
 		emailLog.setEmailId(request.getRequestClient().getEmail());
 		emailLog.setRequestId(request.getRequestId());
 		emailLog.setConfirmationNumber(request.getConfirmationNumber());
-		emailLog.setAdminId(admin.getAdminId());
 		emailLog.setCreatedDate(localDateTime);
 		emailLog.setSentDate(localDateTime);
 		emailLog.setAction(MessageTypeEnum.SEND_ORDERS.getMessageTypeId());
 		emailLog.setRecipientName(healthProfessionals.getVendorName());
 		emailLog.setRoleId(4);
-		int id = this.orderDetailsDao.saveOrderDetail(orderDetail);
+		this.orderDetailsDao.saveOrderDetail(orderDetail);
 
 		String status = "";
 		boolean isSent = false;
@@ -821,7 +834,6 @@ public class UserService {
 					emailLog.setEmailSent(false);
 					this.logsDao.addEmailLogEntry(emailLog);
 					status = status + "failed to send mail";
-
 				}
 			}
 		}
@@ -832,19 +844,29 @@ public class UserService {
 	public String updateEncounterFormDetails(EncounterFormDto encounterFormDto, HttpServletRequest httpServletRequest) {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
-		Admin admin = aspNetUsers.getAdmin();
+		Admin admin ;
+		Physician physician;
+		
+		List<EncounterForm> encounterForms = encounterFormDao.getEncounterFormByReqID(encounterFormDto.getRequestId());
 		Request request = requestDao.getRequestOb(encounterFormDto.getRequestId());
 		EncounterForm encounterForm;
-		List<EncounterForm> encounterForms = encounterFormDao.getEncounterFormByReqID(encounterFormDto.getRequestId());
-
 		if (encounterForms.size() > 0) {
 			encounterForm = encounterForms.get(0);
 		} else {
 			encounterForm = new EncounterForm();
 		}
 
+		
+		if(aspNetUsers.getUser().getAspNetRoles().getId() == 1) {
+			admin = aspNetUsers.getAdmin();
+			encounterForm.setAdminId(admin.getAdminId());
+		}else {
+			physician = aspNetUsers.getPhysician();
+			encounterForm.setPhysicianId(physician.getPhysicianId());
+		}
+		
+		
 		encounterForm.setAbd(encounterFormDto.getAbd());
-		encounterForm.setAdminId(admin.getAdminId());
 		encounterForm.setAllergies(encounterFormDto.getAllergies());
 		encounterForm.setBloodPresureneg(encounterFormDto.getBloodPresureneg());
 		encounterForm.setBloodPresurePlus(encounterFormDto.getBloodPresurePlus());
@@ -925,7 +947,8 @@ public class UserService {
 			encounterFormDto.setTemp(encounterForm.getTemp());
 			encounterFormDto.setTreatmentPlan(encounterForm.getTreatmentPlan());
 			encounterFormDto.setMedicationsDespensed(encounterForm.getMedicationsDespensed());
-
+			encounterForm.setFinalized(false);
+			
 			return encounterFormDto;
 
 		} else {
@@ -1402,6 +1425,39 @@ public class UserService {
 	public String deleteRequest(Integer requestId) {
 		this.requestDao.deleteRequest(requestId);
 		return "Soft Deleted Request";
+	}
+	
+	public void finalizeEncounterForm(int reqId) {
+		Request request = this.requestDao.getRequestOb(reqId);
+		EncounterForm encounterForm = request.getEncounterForm();
+		encounterForm.setFinalized(true);
+		request.setEncounterForm(encounterForm);
+		this.requestDao.updateRequest(request);
+	}
+	
+	public List<RequestDocumentsDto> getRequestDocuments(int id) {
+		List<RequestDocumentsDto> requestList = requestDao.getDocuments(id);
+
+		return requestList;
+	}
+	
+	public void concludeCare(int reqId, HttpServletRequest httpServletRequest) {
+		Physician physician = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician();
+		Request request = requestDao.getRequestOb(reqId);
+		Date date = new Date();
+		request.setStatus(RequestStatus.CLOSED.getRequestId());
+		request.setModifieDate(date);
+		request.setCompletedByPhysician(true);
+		
+		RequestStatusLog requestStatusLog = new RequestStatusLog();
+		requestStatusLog.setCreatedDate(date);
+		requestStatusLog.setNotes("Dr." + physician.getFirstName() + " " + physician.getLastName() + " completed this case on " + date.getDate() + "-" + date.getMonth() + "-" + date.getYear());
+		requestStatusLog.setPhysician(physician);
+		requestStatusLog.setRequest(request);
+		requestStatusLog.setStatus(RequestStatus.CLOSED.getRequestId());
+		
+		this.requestStatusLogDao.addNewRequestStatusLog(requestStatusLog);
+		this.requestDao.updateRequest(request);
 	}
 
 }

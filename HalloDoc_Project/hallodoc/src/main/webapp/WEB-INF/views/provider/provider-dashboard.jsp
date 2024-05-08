@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <%@include file="provider-dashboard.jsp"%> --%>
+<%@include file="provider-navbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,19 +153,19 @@
 						<div class="inner-table-top-flex-left">
 
 							<div class="relativity search-1">
-								<input class="form-control search-btn" type="text"
+								<input class="form-control search-btn" onblur="filterRequest()" id="patient-name-search" type="text"
 									placeholder="Search Patients"> <img
 									src="<c:url value='/resources/images/search.svg' />" alt=""
 									class="search-img">
 							</div>
 
 							<div class="relativity ms-2 search-2">
-								<select class="form-select select-dropdown-admin" type="button">
-									<option value="0"><a class="dropdown-item" href="#">All
+								<select class="form-select select-dropdown-admin" onchange="filterRequest()" id="region-name-search" type="button">
+									<option value="All"><a class="dropdown-item" href="#">All
 											Regions</a></option>
 									<c:forEach items="${regionList}" var="region">
 
-										<option value="${region.regionId }"><a
+										<option value="${region.name }"><a
 												class="dropdown-item" href="#">${region.name }</a></option>
 									</c:forEach>
 
@@ -182,7 +182,7 @@
 							<div>
 								<button class="all-label button-class active-btn d-none"
 									id="all-type-req" data-value="All"
-									onclick="changeActiveBtn(this);filterRequest()"
+									onclick="changeActiveBtn(this),filterRequest();filterRequest()"
 									id="all-type-req">All</button>
 								<label for="all-type-req" style="display: flex"
 									class="show-active-button-class commom-label-class">
@@ -194,7 +194,7 @@
 
 							<button id="patient-type-req" class="button-class"
 								data-value="Patient"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this),filterRequest()"
 								style="display: none;">Patient</button>
 							<label for="patient-type-req" style="display: flex"
 								class="commom-label-class">
@@ -206,7 +206,7 @@
 
 							<button id="family-type-req" class=" button-class"
 								data-value="Family"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this),filterRequest()"
 								style="display: none;">Family</button>
 							<label for="family-type-req" style="display: flex"
 								class="commom-label-class">
@@ -218,7 +218,7 @@
 
 							<button id="business-type-req" class=" button-class"
 								data-value="Business"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this),filterRequest()"
 								style="display: none;">Business</button>
 							<label for="business-type-req" style="display: flex"
 								class="commom-label-class">
@@ -230,7 +230,7 @@
 
 							<button class="button-class" id="concierge-type-req"
 								data-value="Concierge"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this),filterRequest()"
 								style="display: none;">Concierge</button>
 							<label for="concierge-type-req" style="display: flex"
 								class="commom-label-class">
@@ -293,9 +293,8 @@
 					</td>
 					<td class="text-nowrap address-tr">1331, Maryland Ave SW
 						Washington, DC 20024</td>
-					<td class="status-class-tr d-none">
-						<div role="button" class="house-call-status"
-							data-bs-toggle="modal" data-bs-target="#house-call"
+					<td class="status-class-tr d-none ">
+						<div role="button" class="house-call-status show-call-type"
 							id="housecall-consult-text">House Call</div>
 					</td>
 
@@ -316,7 +315,8 @@
 									<div class=" action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/view-case.png' />"
 											class="dropdown-icons" alt=""> <a href="view-case.html"
-											class=" action-dropdown-text view-case-set-link" type="button">View Case</a>
+											class=" action-dropdown-text view-case-set-link"
+											type="button">View Case</a>
 									</div>
 								</li>
 
@@ -327,7 +327,8 @@
 										<img
 											src="<c:url value='/resources/images/journal-text.svg' />"
 											class="dropdown-icons" alt=""> <a
-											href="view-notes.html" class="action-dropdown-text view-notes-send-link"
+											href="view-notes.html"
+											class="action-dropdown-text view-notes-send-link"
 											type="button">View Notes</a>
 									</div>
 								</li>
@@ -340,7 +341,8 @@
 										<img src="<c:url value='/resources/images/view-upload.png' />"
 											class="dropdown-icons" alt=""> <a
 											href="view-uploads-patient-conclude.html"
-											class="action-dropdown-text " type="button">View Uploads</a>
+											class="action-dropdown-text view-uploads-btn" type="button">View
+											Uploads</a>
 									</div>
 								</li>
 
@@ -349,8 +351,9 @@
 										<img
 											src="<c:url value='/resources/images/journal-check-grey.svg' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text transfer-case-button-class" data-bs-toggle="modal"
-											data-bs-target="#transfer-case" type="button">Transfer</a>
+											class="action-dropdown-text transfer-case-button-class"
+											data-bs-toggle="modal" data-bs-target="#transfer-case"
+											type="button">Transfer</a>
 									</div>
 								</li>
 
@@ -358,9 +361,9 @@
 									<div class="action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/document.png' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text send-agreement-btn" data-bs-toggle="modal"
-											data-bs-target="#send-agreement" type="button">Send
-											Agreement</a>
+											class="action-dropdown-text send-agreement-btn"
+											data-bs-toggle="modal" data-bs-target="#send-agreement"
+											type="button">Send Agreement</a>
 									</div>
 								</li>
 
@@ -369,26 +372,17 @@
 										<img
 											src="<c:url value='/resources/images/order-delivery.png' />"
 											class="dropdown-icons" alt=""> <a
-											href="send-order.html" class="action-dropdown-text"
+											href="" class="send-order-details action-dropdown-text"
 											type="button">Orders</a>
 									</div>
 								</li>
 
-								<li class="common-action-class actives concludes d-none">
-									<div class="action-dropdown-flex dropdown-item">
-										<img src="<c:url value='/resources/images/document.png' />"
-											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text" type="button"
-											href="view-notes.html">Doctor Notes</a>
-									</div>
-								</li>
 
 								<li class="common-action-class actives concludes d-none">
 									<div class="action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/document.png' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text" type="button"
-											href="encounter-form.html">Encounter</a>
+											class="action-dropdown-text encounter-form-btn">Encounter</a>
 									</div>
 								</li>
 
@@ -406,7 +400,7 @@
 									<div class="action-dropdown-flex dropdown-item">
 										<img src="<c:url value='/resources/images/heart-rate.png' />"
 											class="dropdown-icons" alt=""> <a
-											class="action-dropdown-text" type="button"
+											class="action-dropdown-text conclude-care-btn" type="button"
 											href="conclude-care.html">Conclude Care</a>
 									</div>
 								</li>
@@ -508,33 +502,20 @@
 
 							<div class="row p-3 text-center">
 
-								<div class="col-6 mb-3 accordion-btns">
-									<a class="accordion-btn-admin purple-background-btn"
+								
+
+								<div class="col-6 mb-3">
+									<a
+										class="accordion-btn-admin orange-background-btn send-agreement-btn"
 										role="button" data-bs-toggle="modal"
-										data-bs-target="#assign-case">Assign Case</a>
-								</div>
-
-								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin purple-background-btn"
-										role="button" href="close-case.html">Close Case</a>
-								</div>
-
-								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin orange-background-btn send-agreement-btn"
-										role="button" data-bs-toggle="modal" 
 										data-bs-target="#send-agreement">Send Agreement</a>
 								</div>
-
-								<div class="col-6 mb-3 accordion-btns">
-									<a class="accordion-btn-admin red-background-btn" role="button"
-										data-bs-toggle="modal" data-bs-target="#cancel-case">Cancel
-										Case</a>
-								</div>
-
+								
 								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin red-background-btn"
-										data-bs-toggle="modal" data-bs-target="#block-case"
-										role="button">Block Case</a>
+									<a
+										class="accordion-btn-admin orange-background-btn send-agreement-btn"
+										role="button" data-bs-toggle="modal"
+										data-bs-target="#send-agreement">Accept</a>
 								</div>
 
 								<div class="col-6 mb-3 accordion-btns">
@@ -548,6 +529,11 @@
 										class="accordion-btn-admin green-background-btn" role="button">View
 										Uploads</a>
 								</div>
+								
+								<div class="col-6 mb-3">
+									<a href="view-uploads-patient-conclude.html"
+										class="accordion-btn-admin green-background-btn" role="button">Conclude Care</a>
+								</div>
 
 								<div class="col-6 mb-3">
 									<a href="send-order.html"
@@ -556,7 +542,8 @@
 								</div>
 
 								<div class="col-6 accordion-btns">
-									<a class="accordion-btn-admin blue-background-btn transfer-case-button-class"
+									<a
+										class="accordion-btn-admin blue-background-btn transfer-case-button-class"
 										data-bs-toggle="modal" data-bs-target="#transfer-case"
 										role="button">Transfer</a>
 								</div>
@@ -566,37 +553,7 @@
 										href="encounter-form.html" role="button">Encounter</a>
 								</div>
 
-								<div class="col-6 mb-3 accordion-btns">
-									<a class="accordion-btn-admin dark-green-background-btn"
-										href="view-notes.html" role="button">Doctors Note</a>
-								</div>
 
-								<div class="col-6 mb-3">
-									<a class="accordion-btn-admin orange-background-btn"
-										data-bs-toggle="modal" data-bs-target="#clear-case"
-										role="button">Clear Case</a>
-								</div>
-
-								<div class="col-6 mb-3 accordion-btns">
-									<a class="accordion-btn-admin green-background-btn"
-										role="button">Email</a>
-								</div>
-
-
-
-							</div>
-
-
-							<div class="extended-flex-bottom">
-								<span class="bottom-btn-texts">Chat with:</span>
-								<div class="btn">
-									<img src="<c:url value='/resources/images/person.svg' />"
-										class="bottom-btn-img" alt="" />Patient
-								</div>
-								<div class="btn">
-									<img src="<c:url value='/resources/images/person-add.svg' />"
-										class="bottom-btn-img" alt="" />Provider
-								</div>
 							</div>
 						</div>
 					</div>
@@ -617,45 +574,50 @@
 				<div class="modal-header">
 					<h3 class="modal-title fs-5" id="staticBackdropLabel">Send
 						Agreement</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close close-btn-class"
+						data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div class="agreement-patient-type-flex">
-						<div class="patient-type"></div>
-						<span class="agreement-text">Patient</span>
-					</div>
-					<span class="agreement-text">To Send Agreement please make
-						sure that you are updating the correct contact information below
-						for the responsible party. </span><br>
-					<div>
+				<form method="get" id="sendAgreementForm">
+					<div class="modal-body">
+						<div class="agreement-patient-type-flex">
+							<div class="patient-type"></div>
+							<span class="agreement-text">Patient</span>
+						</div>
+						<span class="agreement-text">To Send Agreement please make
+							sure that you are updating the correct contact information below
+							for the responsible party. </span><br>
+						<div>
 
-						<form action="">
 							<div class="col-12 mt-3">
 								<div class="form-floating mb-3 inp">
-									<input type="text" disabled class="form-control input-1 agreement-inp agreement-phone"
-										id="floatingInput-2" placeholder="Phone Number"
-										autocomplete="off"> <label for="floatingInput-2"
-										class="agreement-label">Phone Number</label>
+									<input type="text" disabled
+										class="form-control input-1 agreement-inp agreement-phone"
+										id="send-agreement-phone-no" placeholder="Phone Number"
+										autocomplete="off"> <label
+										for="send-agreement-phone-no" class="agreement-label">Phone
+										Number</label>
 								</div>
 							</div>
 
 							<div class="col-12">
 								<div class="form-floating mb-3 inp">
-									<input type="email" disabled class="form-control input-1 agreement-inp agreement-email"
-										id="floatingInput-2" placeholder="Email" autocomplete="off">
-									<label for="floatingInput-2" class="agreement-label">Email</label>
+									<input type="email" disabled
+										class="form-control input-1 agreement-inp agreement-email"
+										id="send-agreement-email" placeholder="Email"
+										autocomplete="off"> <label for="send-agreement-email"
+										class="agreement-label">Email</label>
 								</div>
 								<input type="text" hidden id="send-agreement-req-id">
 							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="send-btn">Confirm</button>
-						<button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="send-btn">Confirm</button>
+							<button type="reset" class="cancel-btn cancel-btn-class"
+								data-bs-dismiss="modal">Cancel</button>
 
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -971,12 +933,10 @@
 					<div class="modal-body">
 						<div class="font-clr-light">This request will be transferred
 							to admin.</div>
-						<br>
-						
-						<input type="text" hidden id="reqId-transfer-case">
+						<br> <input type="text" hidden id="reqId-transfer-case">
 
-						<textarea name="message" class="form-control transfer-reason" id="" cols="10"
-							rows="5" placeholder="Description"></textarea>
+						<textarea name="message" class="form-control transfer-reason"
+							id="" cols="10" rows="5" placeholder="Description"></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="send-btn" data-bs-dismiss="modal">Send</button>
@@ -998,23 +958,53 @@
 				<div class="modal-header modal-title-background">
 					<h2 class="modal-title fs-5" id="staticBackdropLabel">Select
 						Type Of Care</h2>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
+					<button type="button" class="btn-close close-call-type-btn" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div class="request-type-pop-flex">
-						<button class="me-type-btn" id="Housecall"
-							onclick="changeCss(this)">House Call</button>
-						<button class="else-type-btn" id="Consult"
-							onclick="changeCss(this)">Consult</button>
-					</div>
+				<form id="callTypeFormId" method="post">
+					<div class="modal-body">
+						<div class="request-type-pop-flex">
+							<button class="me-type-btn" id="Housecall"
+								onclick="changeCss(this)">House Call</button>
+							<button class="else-type-btn" id="Consult"
+								onclick="changeCss(this)">Consult</button>
 
-					<div class="continue-cancel-flex">
-						<button type="button" class="me-type-btn">Save</button>
-						<button type="button" class="else-type-btn"
-							data-bs-dismiss="modal">Cancel</button>
+							<input type="text" hidden value="1" class="call-type-val-id">
+							<input type="text" hidden class="call-type-req-id">
+						</div>
+
+						<div class="continue-cancel-flex">
+							<button type="submit" class="me-type-btn">Save</button>
+							<button type="reset" class="else-type-btn"
+								data-bs-dismiss="modal">Cancel</button>
+						</div>
 					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- house-call-status -->
+	
+	<div class="modal fade" id="finalized-encounter-form" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header modal-title-background">
+					<button type="button" class="btn-close close-call-type-btn" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
+				
+					<div class="modal-body">
+						<div>
+							The encounter form is already finalized.
+						</div>
+						<div class="continue-cancel-flex">
+							<button type="button" class="else-type-btn"
+								data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				
 			</div>
 		</div>
 	</div>
@@ -1026,7 +1016,6 @@
 		</div>
 	</footer>
 
-	<!-- house-call-status -->
 
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -1044,34 +1033,7 @@
 							utilsScript : "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 						});
 
-		function changeCss(element) {
-			console.log(element.id)
-			var x = document.getElementById("Housecall");
-			var y = document.getElementById("Consult");
-			var z = document.getElementById("housecall-consult-text");
-
-			if (element.id == "Housecall") {
-				x.style.backgroundColor = "#01bce9";
-				x.style.color = "white";
-
-				y.style.color = "#01bce9";
-				y.style.backgroundColor = "white";
-
-				z.innerHTML = element.id;
-
-			}
-
-			else {
-				y.style.backgroundColor = "#01bce9";
-				y.style.color = "white";
-
-				x.style.color = "#01bce9";
-				x.style.backgroundColor = "white";
-
-				z.innerHTML = element.id;
-
-			}
-		}
+	
 	</script>
 	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script type="text/javascript">

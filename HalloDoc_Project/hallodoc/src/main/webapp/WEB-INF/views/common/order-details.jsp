@@ -2,7 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="common-navbar.jsp"%>
+<c:choose>
+	<c:when test="${sessionScope.aspUser.user.aspNetRoles.id == 1}">
+		<%@include file="common-navbar.jsp"%>
+	</c:when>
+	<c:otherwise>
+		<%@include file="provider-navbar.jsp"%>
+	</c:otherwise>
+</c:choose>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +62,8 @@
 		<div class="top-patient-view-text">
 			<span class="view-reservation-text">Send Orders</span>
 		</div>
-		<form method="post" id="sendOrderForm" action="../sendOrderDetails" onsubmit="showLoader()">
+		<form method="post" id="sendOrderForm" action="../sendOrderDetails"
+			onsubmit="showLoader()">
 			<div class="row">
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">

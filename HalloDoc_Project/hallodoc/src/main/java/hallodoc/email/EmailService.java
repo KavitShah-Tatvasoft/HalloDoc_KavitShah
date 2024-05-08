@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -409,7 +411,25 @@ public class EmailService {
 				
 				message.setSubject(subject);
 				String content = "<html> <h2> Hello, " + physician.getFirstName() + " " + physician.getLastName() + "</h2><br>"
-						+ "<p style=\"\"margin-top:30px;\"\">message</p>" ;
+						+ "<p style=\"\"margin-top:30px;\"\">" + message + "</p>" ;
+						
+				message.setText(content, true);
+			}
+		};
+
+		mailSender.send(messagePreparator);
+	}
+	
+	public void sendRequestToAdmin(HttpServletRequest httpServletRequest, String subject, InternetAddress[] address, String message) {
+		MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("hallodoc29@outlook.com");
+				message.setTo(address);
+				
+				message.setSubject(subject);
+				String content = "<html> <h2> Hello, Admin</h2><br>"
+						+ "<p style=\"\"margin-top:30px;\"\">"+ message +"</p>" ;
 						
 				message.setText(content, true);
 			}

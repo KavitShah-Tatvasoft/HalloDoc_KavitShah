@@ -14,6 +14,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
@@ -30,6 +31,7 @@ import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SearchRecordsFilter;
 import hallodoc.dto.StatusWiseCountDto;
+import hallodoc.model.AspNetUsers;
 import hallodoc.model.Physician;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
@@ -156,6 +158,83 @@ public class RequestDao {
 		s.close();
 		return list;
 	}
+	
+	public List<Request> getPhysicianFilteredRequests(RequestFiltersDto requestFiltersDto, HttpServletRequest httpServletRequest){
+		
+		int physicianId = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician().getPhysicianId();
+		
+		Session s = this.sessionFactory.openSession();
+
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<Request> cr = cb.createQuery(Request.class);
+		Root<Request> root = cr.from(Request.class);
+
+		Join<Request, RequestClient> clientJoin = root.join("requestClient");
+
+		Join<Request, RequestType> requestTypeJoin = root.join("requestType");
+		
+		Join<Request, Physician> physicianTypeJoin = root.join("physician");
+
+		Predicate[] predicates = new Predicate[5];
+
+		if (!requestFiltersDto.getPatientName().equals("")) {
+			predicates[0] = cb.like(clientJoin.get("firstName"), requestFiltersDto.getPatientName() + "%");
+		} else {
+			predicates[0] = cb.like(clientJoin.get("firstName"), "%");
+		}
+
+		if (!requestFiltersDto.getStateName().equals("All")) {
+			predicates[1] = cb.equal(clientJoin.get("state"), requestFiltersDto.getStateName());
+		} else {
+			predicates[1] = cb.like(clientJoin.get("state"), "%");
+		}
+
+		switch (requestFiltersDto.getStatusType()) {
+		case "1":
+			predicates[2] = root.get("status").in(1);
+			break;
+
+		case "2":
+			predicates[2] = root.get("status").in(2);
+			break;
+
+		case "3":
+			predicates[2] = root.get("status").in(4, 5);
+			break;
+
+		case "4":
+			predicates[2] = root.get("status").in(6);
+			break;
+
+		case "5":
+			predicates[2] = root.get("status").in(3, 7, 8);
+			break;
+
+		case "6":
+			predicates[2] = root.get("status").in(9);
+			break;
+
+		default:
+			predicates[2] = root.get("status").in(1, 2, 3, 4, 5, 6, 7, 8, 9);
+			break;
+		}
+
+		if (!requestFiltersDto.getRequestType().equals("All")) {
+			predicates[3] = cb.equal(requestTypeJoin.get("name"), requestFiltersDto.getRequestType());
+		} else {
+			predicates[3] = cb.like(requestTypeJoin.get("name"), "%");
+		}
+		
+		predicates[4] = cb.equal(physicianTypeJoin.get("physicianId"), physicianId);
+
+		cr.select(root).where(predicates);
+
+		Query<Request> query = s.createQuery(cr);
+		
+		List<Request> list = query.getResultList();
+		s.close();
+		return list;
+	}
 
 	public List<Request> getFilteredRequests(RequestFiltersDto requestFiltersDto) {
 
@@ -222,7 +301,8 @@ public class RequestDao {
 		cr.select(root).where(predicates);
 
 		Query<Request> query = s.createQuery(cr);
-
+//		query.setFirstResult(0);
+//		query.setMaxResults(6);
 		List<Request> list = query.getResultList();
 		s.close();
 		return list;
@@ -237,6 +317,8 @@ public class RequestDao {
 		s.close();
 		return list;
 	}
+	
+
 
 	public List<Request> getFilteredRequest(SearchRecordsFilter searchRecordsFilter) {
 		Session s = this.sessionFactory.openSession();
@@ -380,13 +462,14 @@ public class RequestDao {
 		
 	}
 	
-	public List<PhysicianRequestDataDto> getRequestByPhysicianId(List<Integer> status, int physicianId){
+	public List<Request> getRequestByPhysicianId(List<Integer> status, int physicianId){
 		Session s = this.sessionFactory.openSession();
-		String query = "SELECT new hallodoc.dto.PhysicianRequestDataDto(re.requestClient.firstName,re.requestClient.lastName, re.requestClient.phoneNumber, re.phoneNumber, re.requestClient.street, re.requestClient.city,  re.requestClient.state,  re.requestClient.zipcode, re.requestId , re.requestType.name )  FROM Request re WHERE re.physician.physicianId =:physicianId AND re.status IN (:status) AND re.isDeleted = false";
+//		String query = "SELECT new hallodoc.dto.PhysicianRequestDataDto(re.requestClient.firstName,re.requestClient.lastName, re.requestClient.phoneNumber, re.phoneNumber, re.requestClient.street, re.requestClient.city,  re.requestClient.state,  re.requestClient.zipcode, re.requestId , re.requestType.name , re.callType)  FROM Request re WHERE re.physician.physicianId =:physicianId AND re.status IN (:status) AND re.isDeleted = false";
+		String query =  "FROM Request re WHERE re.physician.physicianId =:physicianId AND re.status IN (:status) AND re.isDeleted = false";
 		Query hql = s.createQuery(query);
 		hql.setParameter("physicianId", physicianId);
 		hql.setParameter("status", status);
-		List<PhysicianRequestDataDto> reqList = hql.list();
+		List<Request> reqList = hql.list();
 		s.close();
 		return reqList;
 	}

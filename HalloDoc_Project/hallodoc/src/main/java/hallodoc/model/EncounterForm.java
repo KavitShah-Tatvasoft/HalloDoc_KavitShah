@@ -82,6 +82,19 @@ public class EncounterForm {
 
 	@Column(name = "follow_up")
 	private String followUp;
+	
+	@Column(name = "is_finalized")
+	private boolean isFinalized;
+	
+	
+
+	public boolean isFinalized() {
+		return isFinalized;
+	}
+
+	public void setFinalized(boolean isFinalized) {
+		this.isFinalized = isFinalized;
+	}
 
 	public int getEncounterFormId() {
 		return encounterFormId;
@@ -307,23 +320,15 @@ public class EncounterForm {
 		this.followUp = followUp;
 	}
 
-	@Override
-	public String toString() {
-		return "EncounterForm [encounterFormId=" + encounterFormId + ", request=" + request + ", adminId=" + adminId
-				+ ", physicianId=" + physicianId + ", historyOfIllness=" + historyOfIllness + ", medicalHistory="
-				+ medicalHistory + ", medications=" + medications + ", allergies=" + allergies + ", temp=" + temp
-				+ ", hr=" + hr + ", rr=" + rr + ", bloodPresurePlus=" + bloodPresurePlus + ", bloodPresureneg="
-				+ bloodPresureneg + ", o2=" + o2 + ", pain=" + pain + ", heent=" + heent + ", cv=" + cv + ", chest="
-				+ chest + ", abd=" + abd + ", extr=" + extr + ", skin=" + skin + ", neuro=" + neuro + ", other=" + other
-				+ ", diagnosis=" + diagnosis + ", treatmentPlan=" + treatmentPlan + ", medicationsDespensed="
-				+ medicationsDespensed + ", procedures=" + procedures + ", followUp=" + followUp + "]";
-	}
+	
 
+	
 	public EncounterForm(int encounterFormId, Request request, int adminId, int physicianId, String historyOfIllness,
 			String medicalHistory, String medications, String allergies, String temp, String hr, String rr,
 			String bloodPresurePlus, String bloodPresureneg, String o2, String pain, String heent, String cv,
 			String chest, String abd, String extr, String skin, String neuro, String other, String diagnosis,
-			String treatmentPlan, String medicationsDespensed, String procedures, String followUp) {
+			String treatmentPlan, String medicationsDespensed, String procedures, String followUp,
+			boolean isFinalized) {
 		super();
 		this.encounterFormId = encounterFormId;
 		this.request = request;
@@ -353,6 +358,7 @@ public class EncounterForm {
 		this.medicationsDespensed = medicationsDespensed;
 		this.procedures = procedures;
 		this.followUp = followUp;
+		this.isFinalized = isFinalized;
 	}
 
 	public EncounterForm() {

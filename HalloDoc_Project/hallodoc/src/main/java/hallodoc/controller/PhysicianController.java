@@ -1,5 +1,6 @@
 package hallodoc.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -13,15 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import hallodoc.dto.PhysicianRequestDataDto;
+import hallodoc.dto.RequestDocumentsDto;
+import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendAgreementDto;
+import hallodoc.dto.ShowProviderDetailsDto;
 import hallodoc.dto.ViewNotesDto;
+import hallodoc.helper.Constants;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
+import hallodoc.model.Region;
 import hallodoc.model.Request;
+import hallodoc.model.User;
+import hallodoc.service.AdminService;
 import hallodoc.service.PhysicianService;
 import hallodoc.service.UserService;
 
@@ -30,10 +40,13 @@ import hallodoc.service.UserService;
 public class PhysicianController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	PhysicianService physicianService;
+	private PhysicianService physicianService;
+
+	@Autowired
+	private AdminService adminService;
 
 	@RequestMapping("/provider-dashboard")
 	public ModelAndView adminDashboard(HttpServletRequest request) {
@@ -101,7 +114,7 @@ public class PhysicianController {
 		m.addAttribute("reqId", id);
 		return "common/view-notes";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getViewNotesData", method = RequestMethod.POST)
 	public List<ViewNotesDto> getViewNotesData(@RequestParam("reqId") int id) {
@@ -117,7 +130,7 @@ public class PhysicianController {
 		userService.updateAdminNote(adminNote, id, aspNetUsers);
 		return "Success";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getSendAgreementData", method = RequestMethod.POST)
 	public SendAgreementDto getSendAgreementDetails(@RequestParam("reqId") int reqId,
@@ -127,13 +140,114 @@ public class PhysicianController {
 		return sendAgreementDto;
 
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/sendAgreementToPatient", method = RequestMethod.POST)
 	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto, HttpServletRequest httpServletRequest) {
-		
+
 		String status = userService.sendAgreementToPatient(sendAgreementDto, httpServletRequest);
 		return status;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "set-call-type", method = RequestMethod.POST)
+	public String setCallType(@RequestParam("reqId") int reqId, @RequestParam("callType") int callType,
+			HttpServletRequest httpServletRequest) {
+		return this.physicianService.changeCallType(reqId, callType, httpServletRequest);
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/conclude-requested-case", method = RequestMethod.POST)
+	public String concludeCase(@RequestParam("reqId") int reqId, HttpServletRequest httpServletRequest) {
+		return this.physicianService.concludeCaseByReqId(reqId, httpServletRequest);
+	}
+
+	@RequestMapping(value = "/conclude-care/{reqId}", method = RequestMethod.GET)
+	public String concludeCare(@PathVariable("reqId") int reqId, Model m, HttpServletRequest httpServletRequest) {
+		m.addAttribute("reqId", reqId);
+		Request request = userService.getRequestById(reqId);
+
+		if (request.getRequestNotes() == null) {
+			m.addAttribute("physicianNotes", "-");
+		} else {
+			m.addAttribute("physicianNotes", request.getRequestNotes().getPhysicanNotes());
+		}
+
+		if (request.getEncounterForm() == null) {
+			m.addAttribute("isFinalized", false);
+		} else {
+			m.addAttribute("isFinalized", request.getEncounterForm().isFinalized());
+		}
+
+		m.addAttribute("ptName",
+				request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
+		m.addAttribute("confNumber", request.getConfirmationNumber());
+		List<RequestDocumentsDto> requests = userService.getRequestDocuments(reqId);
+		m.addAttribute("docList", requests);
+		AspNetUsers aspNetUsersOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		User userOb = aspNetUsersOb.getUser();
+
+		m.addAttribute("userOb", userOb);
+
+		return "provider/conclude-care";
+	}
+
+	@RequestMapping(value = "/upload-files-conclude-care", method = RequestMethod.POST)
+	public RedirectView uploadConludeCareFiles(@RequestParam("fileupload") CommonsMultipartFile uploadFile,
+			@RequestParam("reqId") int reqId) {
+		System.out.println(reqId);
+		return new RedirectView("conclude-care/" + reqId);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/softDeleteUploadedFile", method = RequestMethod.POST)
+	public String deleteUploadedFile(@RequestParam("fileId") int fileId) {
+
+		userService.softDeleteRequestedFile(fileId);
+		return "deleted";
+	}
+
+	@RequestMapping(value = "/close-case-by-physician/{reqId}", method = RequestMethod.GET)
+	public RedirectView concludeCareByPhysician(@PathVariable("reqId") int reqId,
+			HttpServletRequest httpServletRequest) {
+		this.userService.concludeCare(reqId, httpServletRequest);
+		return new RedirectView("../provider-dashboard");
+	}
+
+	@RequestMapping(value="/provider-profile", method = RequestMethod.GET)
+	public String viewProviderProfile(HttpServletRequest httpServletRequest, Model m) {
+		
+		int physicianId = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician().getPhysicianId();
+		
+		String prefix = Constants.CONTEXT_PATH;
+		String uploadPath =  String.format("%s/%s/%s/%s/%d", prefix, "resources", "fileuploads", "provider", physicianId);
+		
+		 
+		ShowProviderDetailsDto providerData = this.adminService.getProviderDetails(physicianId);
+		m.addAttribute("uploadPath",uploadPath);
+		m.addAttribute("providerData", providerData);
+		return "provider/provider-my-profile";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/change-provider-password", method = RequestMethod.POST)
+	public String changeProviderPassword(@RequestParam("pass") String pass,HttpServletRequest httpServletRequest) {
+		AspNetUsers physician = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser"));
+		return this.physicianService.changePassword(physician,pass);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/send-request-to-admin", method = RequestMethod.POST)
+	public String sendRequestToAdmin(@RequestParam("desc") String description,HttpServletRequest httpServletRequest) {
+		return this.physicianService.sendRequestToAdmin(httpServletRequest,description);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/get-physician-request-filtered-data", method = RequestMethod.POST)
+	public List<PhysicianRequestDataDto> getFilteredPhysicianRequest(RequestFiltersDto requestFiltersDto, HttpServletRequest httpServletRequest){
+		return this.physicianService.getFilteredPhysicianRequests(requestFiltersDto, httpServletRequest);
 	}
 
 }

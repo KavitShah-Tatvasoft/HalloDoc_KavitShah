@@ -107,6 +107,18 @@ public class UserDao {
 			return list;
 
 		}
+	
+	public List<User> getAllAdminUsers(){
+		Session s = this.sessionFactory.openSession();
+		String queryString = "FROM User user where user.aspNetRoles.id=1";
+		Query q = s.createQuery(queryString);
+		List<User> list = q.list();
+		s.close();
+
+		return list;
+		
+		
+	}
 
 
 

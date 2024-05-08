@@ -293,7 +293,6 @@ public class BusinessRequestService {
 			}
 
 			String emailChange = emailTokenDao.updateOldEmailResetStatus(emailList);
-			 ;
 		}
 
 		int mailId = emailTokenDao.createNewEmail(emailToken);

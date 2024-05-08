@@ -67,7 +67,7 @@ import hallodoc.service.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService uService;
+	private UserService userService;
 
 	@Autowired
 	private RequestDao requestDao;
@@ -79,7 +79,7 @@ public class UserController {
 	@RequestMapping(value = "/sendReviewAgreement/{reqId}")
 	public String showAgreementEmail(@PathVariable("reqId") int reqId, Model m) {
 
-		boolean validateAgreement = uService.validateAgreementRequest(reqId);
+		boolean validateAgreement = userService.validateAgreementRequest(reqId);
 		if (validateAgreement) {
 			Request request = this.requestDao.getRequestOb(reqId);
 			m.addAttribute("reqId", reqId);
@@ -95,7 +95,7 @@ public class UserController {
 	@RequestMapping(value = "/acceptedReviewAgreement/{reqId}")
 	public String acceptedReviewAgreement(@PathVariable("reqId") int reqId, HttpServletRequest httpServletRequest) {
 
-		uService.acceptAgreement(reqId, httpServletRequest, true, "");
+		userService.acceptAgreement(reqId, httpServletRequest, true, "");
 
 		return "patient/patient-site";
 	}
@@ -104,7 +104,7 @@ public class UserController {
 	public RedirectView cancelAgreementDetails(@RequestParam("cancel-details") String cancellationReasons,
 			@PathVariable("reqId") int reqId, HttpServletRequest httpServletRequest) {
 
-		uService.acceptAgreement(reqId, httpServletRequest, false, cancellationReasons);
+		userService.acceptAgreement(reqId, httpServletRequest, false, cancellationReasons);
 
 		return new RedirectView(httpServletRequest.getContextPath() + "/patientHome");
 	}
@@ -112,7 +112,7 @@ public class UserController {
 	@RequestMapping("/viewRequestUploads/{reqId}")
 	public String viewRequestUploads(@PathVariable("reqId") int reqId, HttpServletRequest httpServletRequest, Model m) {
 		m.addAttribute("reqId", reqId);
-		Request request = uService.getRequestById(reqId);
+		Request request = userService.getRequestById(reqId);
 		m.addAttribute("ptName",
 				request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
 		m.addAttribute("confNumber", request.getConfirmationNumber());
@@ -130,14 +130,14 @@ public class UserController {
 	public RedirectView uploadRequestDocument(@RequestParam("documentFile") CommonsMultipartFile document,
 			@RequestParam("uploaderName") String name, @RequestParam("requestId") int requestId,
 			HttpServletRequest request) {
-		 ;
+		 
 		Date date = new Date();
-		Request requestOb = uService.getRequestObject(requestId);
+		Request requestOb = userService.getRequestObject(requestId);
 		try {
 			HttpSession session = request.getSession(false);
-			uService.uploadRequestDocument(document, name, requestOb, session, date);
+			userService.uploadRequestDocument(document, name, requestOb, session, date);
 		} catch (Exception e) {
-			 ;
+			 
 		}
 		RedirectView redirectView = new RedirectView("/user/viewRequestUploads/" + requestId, true);
 		return redirectView;
@@ -147,7 +147,7 @@ public class UserController {
 	@RequestMapping(value = "/softDeleteUploadedFile", method = RequestMethod.POST)
 	public String deleteUploadedFile(@RequestParam("fileId") int fileId) {
 
-		uService.softDeleteRequestedFile(fileId);
+		userService.softDeleteRequestedFile(fileId);
 		return "deleted";
 	}
 
@@ -155,7 +155,7 @@ public class UserController {
 	@RequestMapping(value = "/deleteMultipleFiles", method = RequestMethod.POST)
 	public String deleteMultipleFiles(@RequestParam("data") String list) {
 
-		uService.softDeleteMultipleRequestedFile(list); // can you in query
+		userService.softDeleteMultipleRequestedFile(list); // can you in query
 
 		return "Success";
 	}
@@ -164,15 +164,14 @@ public class UserController {
 	@RequestMapping(value = "/sendFilesToPatient", method = RequestMethod.POST)
 	public String sendFilesToPatient(@RequestParam("reqId") int reqId, @RequestParam("attachmentList") String list,
 			HttpServletRequest httpServletRequest) {
-		String status = uService.sendFilesToPatient(reqId, list, httpServletRequest);
+		String status = userService.sendFilesToPatient(reqId, list, httpServletRequest);
 		return status;
 	}
 
-	@RequestMapping(value = "/sendOrderDetails/{reqId}")
+	@RequestMapping(value = "/sendOrderDetails/{reqId}", method = RequestMethod.GET)
 	public String sendOrderDetails(@PathVariable("reqId") int reqId, Model model) {
-		 ;
 
-		List<HealthProfessionalTypes> professionList = uService.getActiveProfessions();
+		List<HealthProfessionalTypes> professionList = userService.getActiveProfessions();
 
 		model.addAttribute("reqId", reqId);
 		model.addAttribute("professionList", professionList);
@@ -183,30 +182,35 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getVendorDetails", method = RequestMethod.POST)
 	public List<VendorDetailsDto> getVendorDetails(@RequestParam("professionTypeId") int professionTypeId) {
-		 ;
-		List<VendorDetailsDto> vendorList = uService.getActiveVendors(professionTypeId);
+		 List<VendorDetailsDto> vendorList = userService.getActiveVendors(professionTypeId);
 		return vendorList;
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/getSelectedVendorDetails", method = RequestMethod.POST)
 	public OrderVendorDetailsDto getSelectedVendorDetails(@RequestParam("vendorId") int vendorId) {
-		OrderVendorDetailsDto orderVendorDetailsDto = uService.getOrderVendorDetails(vendorId);
+		OrderVendorDetailsDto orderVendorDetailsDto = userService.getOrderVendorDetails(vendorId);
 		return orderVendorDetailsDto;
 	}
 
 	@RequestMapping(value = "/sendOrderDetails", method = RequestMethod.POST)
 	public RedirectView sendOrderDetails(@ModelAttribute("orderDetails") OrdersDetailsDto ordersDetailsDto,
 			HttpServletRequest httpServletRequest) {
-		String status = uService.sendOrderDetails(ordersDetailsDto, httpServletRequest);
-		RedirectView redirectView = new RedirectView("../admin/adminDashboard");
-		return redirectView;
+		String status = userService.sendOrderDetails(ordersDetailsDto, httpServletRequest);
+		int roleId = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getUser().getAspNetRoles().getId();
+		RedirectView adminView = new RedirectView("../admin/adminDashboard");
+		RedirectView providerView = new RedirectView("../provider/provider-dashboard");
+		if(roleId == 1) {
+			return adminView;
+		}else {
+			return providerView;
+		}
 	}
 
 	@RequestMapping(value = "/encounterForm/{reqId}")
 	public String viewEncounterForm(@PathVariable("reqId") int reqId, Model m) {
-		EncounterFormUserDetailsDto encounterFormUserDetailsDto = uService.getEncounterFormUserDetailsDto(reqId);
-		EncounterFormDto encounterFormdto = uService.getEncounterFormDtoOb(reqId);
+		EncounterFormUserDetailsDto encounterFormUserDetailsDto = userService.getEncounterFormUserDetailsDto(reqId);
+		EncounterFormDto encounterFormdto = userService.getEncounterFormDtoOb(reqId);
 		m.addAttribute("reqId", reqId);
 		m.addAttribute("userDetails", encounterFormUserDetailsDto);
 		m.addAttribute("encounterForm", encounterFormdto);
@@ -217,15 +221,15 @@ public class UserController {
 	public RedirectView editEncounterFormDetails(@ModelAttribute("editEncounterForm") EncounterFormDto encounterFormDto,
 			HttpServletRequest httpServletRequest) {
 //		 ;
-		String status = uService.updateEncounterFormDetails(encounterFormDto, httpServletRequest);
+		String status = userService.updateEncounterFormDetails(encounterFormDto, httpServletRequest);
 		return new RedirectView("../user/encounterForm/" + encounterFormDto.getRequestId());
 	}
 
 	@RequestMapping(value = "/closeCaseForm/{reqId}")
 	public String closeCasePage(@PathVariable("reqId") int reqId, Model m) {
 		m.addAttribute("reqId", reqId);
-		Request request = uService.getRequestById(reqId);
-		ClearCaseDto clearCaseDto = uService.getClearCasePtDetails(request);
+		Request request = userService.getRequestById(reqId);
+		ClearCaseDto clearCaseDto = userService.getClearCasePtDetails(request);
 		m.addAttribute("userDetails", clearCaseDto);
 		m.addAttribute("ptName",
 				request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
@@ -238,7 +242,7 @@ public class UserController {
 	@RequestMapping(value = "/closeCaseRequest/{reqId}")
 	public RedirectView closeCaseRequest(@PathVariable("reqId") int reqId, HttpServletRequest request) {
 
-		String changeStatus = uService.closeRequestedCase(reqId, request);
+		String changeStatus = userService.closeRequestedCase(reqId, request);
 
 		RedirectView redirectView = new RedirectView(request.getContextPath() + "/admin/adminDashboard");
 		return redirectView;
@@ -248,13 +252,13 @@ public class UserController {
 	@RequestMapping(value = "/updateCloseCaseDetails", method = RequestMethod.POST)
 	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
 		 ;
-		String status = uService.editCloseCaseDetails(closeCaseEditDataDto);
+		String status = userService.editCloseCaseDetails(closeCaseEditDataDto);
 		return "updated";
 	}
 
 	@RequestMapping(value = "/professionMenu")
 	public String showProfessionMenu(Model m) {
-		List<HealthProfessionalTypes> healthProfessionalTypes = this.uService.getActiveProfessions();
+		List<HealthProfessionalTypes> healthProfessionalTypes = this.userService.getActiveProfessions();
 		m.addAttribute("healthProfessionalTypes", healthProfessionalTypes);
 		return "common/profession-menu-vendor";
 	}
@@ -264,13 +268,13 @@ public class UserController {
 	public List<HealthProfessionalDataDto> getProfessionMenuData(@RequestParam("name") String name,
 			@RequestParam("typeId") Integer typeId) {
 
-		List<HealthProfessionalDataDto> list = this.uService.getHealthProfessionalsData(name, typeId);
+		List<HealthProfessionalDataDto> list = this.userService.getHealthProfessionalsData(name, typeId);
 		return list;
 	}
 
 	@RequestMapping(value = "/addNewBusiness")
 	public String showNewBusinessPage(Model m) {
-		List<HealthProfessionalTypes> healthProfessionalTypes = this.uService.getActiveProfessions();
+		List<HealthProfessionalTypes> healthProfessionalTypes = this.userService.getActiveProfessions();
 		m.addAttribute("healthProfessionalTypes", healthProfessionalTypes);
 		return "common/new-business";
 	}
@@ -279,15 +283,15 @@ public class UserController {
 	public RedirectView addNewBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
 		 ;
 
-		this.uService.addNewBusiness(newBusinessDto);
+		this.userService.addNewBusiness(newBusinessDto);
 
 		return new RedirectView(request.getContextPath() + "/user/professionMenu");
 	}
 
 	@RequestMapping(value = "/editExsistingBusiness/{businessId}")
 	public String editExsistingBusiness(@PathVariable("businessId") Integer businessId, Model m) {
-		HealthProfessionals healthProfessionals = this.uService.getHealthProfessionalData(businessId);
-		List<HealthProfessionalTypes> healthProfessionalTypes = this.uService.getActiveProfessions();
+		HealthProfessionals healthProfessionals = this.userService.getHealthProfessionalData(businessId);
+		List<HealthProfessionalTypes> healthProfessionalTypes = this.userService.getActiveProfessions();
 		m.addAttribute("healthProfessional", healthProfessionals);
 		m.addAttribute("healthProfessionalTypes", healthProfessionalTypes);
 		m.addAttribute("businessId", businessId);
@@ -297,14 +301,14 @@ public class UserController {
 	@RequestMapping(value = "/editBusinessRequest", method = RequestMethod.POST)
 	public RedirectView editBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
 		 ;
-		this.uService.updateBusiness(newBusinessDto);
+		this.userService.updateBusiness(newBusinessDto);
 		return new RedirectView(request.getContextPath() + "/user/professionMenu");
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteExsistingBusiness", method = RequestMethod.POST)
 	public String deleteExsistingBusiness(@RequestParam("businessId") Integer businessId) {
-		return this.uService.deleteBusinessRequest(businessId);
+		return this.userService.deleteBusinessRequest(businessId);
 
 	}
 
@@ -322,14 +326,14 @@ public class UserController {
 	@RequestMapping(value = "/getFilteredEmailLogData", method = RequestMethod.POST)
 	public List<EmailLogDashboardDto> getFilteredEmailLogData(EmailLogFiltersDto emailLogFiltersDto) {
 		 ;
-		return this.uService.getEmailLogFilteredDate(emailLogFiltersDto);
+		return this.userService.getEmailLogFilteredDate(emailLogFiltersDto);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/getFilteredSMSLogData", method = RequestMethod.POST)
 	public List<SMSLogDashboardDataDto> getFilteredSMSLogData(EmailLogFiltersDto emailLogFiltersDto) {
-		 ;
-		return this.uService.getSmsLogFilteredData(emailLogFiltersDto);
+		 
+		return this.userService.getSmsLogFilteredData(emailLogFiltersDto);
 	}
 
 	@RequestMapping("/patientHistory")
@@ -340,14 +344,13 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getPatientHistoryData", method = RequestMethod.POST)
 	public List<PatientHistoryDto> getPatientHistoryData(PatientHistoryDto patientHistoryDto) {
-		return this.uService.getPatientHistory(patientHistoryDto);
+		return this.userService.getPatientHistory(patientHistoryDto);
 	}
 
 	@RequestMapping(value = "/explore/{userId}")
 	public String showUserCaseDetails(@PathVariable("userId") Integer userId, Model m) {
-		List<PatientRecordsDto> reqLists = this.uService.getRequestByUserId(userId);
+		List<PatientRecordsDto> reqLists = this.userService.getRequestByUserId(userId);
 		m.addAttribute("dataLists", reqLists);
-		 ;
 		return "common/patient-explore";
 	}
 
@@ -359,13 +362,13 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getBlockHistoryData", method = RequestMethod.POST)
 	public List<BlockRequestsTableData> getBlockRequestsDetails(BlockHistoryFilterData blockHistoryFilterData) {
-		return this.uService.getBlockRequestData(blockHistoryFilterData);
+		return this.userService.getBlockRequestData(blockHistoryFilterData);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/unblockCase", method = RequestMethod.POST)
 	public String unblockCase(@RequestParam("blockId") Integer blockId, HttpServletRequest httpServletRequest) {
-		return this.uService.unblockRequestedCase(blockId, httpServletRequest);
+		return this.userService.unblockRequestedCase(blockId, httpServletRequest);
 	}
 
 	@RequestMapping("/searchRecords")
@@ -376,22 +379,29 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getSearchRecordFilteredData", method = RequestMethod.POST)
 	public List<SearchRecordsDashboardData> getFilteredSearchRecordData(SearchRecordsFilter searchRecordsFilter) {
-		return this.uService.getFilteredSearchRecords(searchRecordsFilter);
+		return this.userService.getFilteredSearchRecords(searchRecordsFilter);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/exportSearchRecordsToExcel", method = RequestMethod.POST)
 	public ResponseEntity<Resource> exportSearchRecordsToExcel(SearchRecordsFilter searchRecordsFilter) throws IOException
 	{
-		List<SearchRecordsDashboardData> list = this.uService.getFilteredSearchRecords(searchRecordsFilter);
-		ResponseEntity<Resource> resource = this.uService.exportSearchRecord(list);
+		List<SearchRecordsDashboardData> list = this.userService.getFilteredSearchRecords(searchRecordsFilter);
+		ResponseEntity<Resource> resource = this.userService.exportSearchRecord(list);
 		return resource;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/deleteRequest", method = RequestMethod.POST)
 	public String deletedRequest(@RequestParam("reqId") Integer reqId) {
-		return this.uService.deleteRequest(reqId);
+		return this.userService.deleteRequest(reqId);
+	}
+	
+	@RequestMapping(value="/finalize-encounter-form/{reqId}", method = RequestMethod.GET)
+	public RedirectView finalizeEncounterForm(@PathVariable("reqId") int reqId, HttpServletRequest request) {
+		
+		this.userService.finalizeEncounterForm(reqId);
+		return new RedirectView(request.getContextPath() + "/provider/provider-dashboard");
 	}
 
 	

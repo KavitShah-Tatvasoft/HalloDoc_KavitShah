@@ -103,6 +103,9 @@ public class Request {
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private RequestClient requestClient;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
+	private EncounterForm encounterForm;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "request")
 	private List<RequestWiseFile> listRequestWiseFiles;
@@ -116,11 +119,13 @@ public class Request {
 	@Column(name = "case_tag_physician")
 	private Integer caseTagPhysician;
 
+	
+	
 	public Request(Integer requestId, RequestType requestType, User user, String firstName, String lastName,
 			String phoneNumber, String email, int status, Physician physician, String confirmationNumber,
 			Date createdDate, boolean isDeleted, Date modifieDate, AspNetUsers aspUsers, Date lastWellnessDate,
 			int callType, boolean completedByPhysician, Date lastReservationDate, Date acceptedDate,
-			String relationName, String caseNumber, RequestClient requestClient,
+			String relationName, String caseNumber, RequestClient requestClient, EncounterForm encounterForm,
 			List<RequestWiseFile> listRequestWiseFiles, RequestNotes requestNotes, Integer caseTag,
 			Integer caseTagPhysician) {
 		super();
@@ -146,25 +151,26 @@ public class Request {
 		this.relationName = relationName;
 		this.caseNumber = caseNumber;
 		this.requestClient = requestClient;
+		this.encounterForm = encounterForm;
 		this.listRequestWiseFiles = listRequestWiseFiles;
 		this.requestNotes = requestNotes;
 		this.caseTag = caseTag;
 		this.caseTagPhysician = caseTagPhysician;
 	}
 
-	@Override
-	public String toString() {
-		return "Request [requestId=" + requestId + ", requestType=" + requestType + ", user=" + user + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", status=" + status + ", physician=" + physician + ", confirmationNumber=" + confirmationNumber
-				+ ", createdDate=" + createdDate + ", isDeleted=" + isDeleted + ", modifieDate=" + modifieDate
-				+ ", aspUsers=" + aspUsers + ", lastWellnessDate=" + lastWellnessDate + ", callType=" + callType
-				+ ", completedByPhysician=" + completedByPhysician + ", lastReservationDate=" + lastReservationDate
-				+ ", acceptedDate=" + acceptedDate + ", relationName=" + relationName + ", caseNumber=" + caseNumber
-				+ ", requestClient=" + requestClient + ", listRequestWiseFiles=" + listRequestWiseFiles
-				+ ", requestNotes=" + requestNotes + ", caseTag=" + caseTag + ", caseTagPhysician=" + caseTagPhysician
-				+ "]";
+
+
+	public EncounterForm getEncounterForm() {
+		return encounterForm;
 	}
+
+
+
+	public void setEncounterForm(EncounterForm encounterForm) {
+		this.encounterForm = encounterForm;
+	}
+
+
 
 	public Integer getRequestId() {
 		return requestId;

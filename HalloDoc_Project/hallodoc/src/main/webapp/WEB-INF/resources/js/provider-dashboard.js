@@ -45,9 +45,139 @@ function acceptCaseChangeId(id) {
 	$("#reqId-accept-case").val(id)
 }
 
-function transferCaseChangeId(id){
+function transferCaseChangeId(id) {
 	$("#reqId-transfer-case").val(id)
 }
+
+function filterRequest() {
+	debugger
+	var patientName = document.getElementById("patient-name-search").value
+	var stateName = document.getElementById("region-name-search").value
+	var requestType = $(".button-class.active-btn").attr("data-value")
+	var statusType = $("#type-text").html();
+
+	
+
+	statusType = statusType.slice(1, -1).toLowerCase();
+	var current_state = statusType
+	
+	if (current_state == "to close") { current_state = "to-close" }
+
+	if (current_state == "active") {
+		$(".status-class-tr").removeClass("d-none")
+	} else {
+		$(".status-class-tr").addClass("d-none")
+	}
+
+	let tbody = $(".tbody-empty")
+
+	if (statusType == "new") {
+		statusType = 1
+	}
+	if (statusType == "pending") {
+		statusType = 2
+	}
+	if (statusType == "active") {
+		statusType = 3
+	}
+	if (statusType == "conclude") {
+		statusType = 4
+	}
+	if (statusType == "to close") {
+		statusType = 5
+	}
+	if (statusType == "unpaid") {
+		statusType = 6
+	}
+
+	var payLoadData = {}
+
+	payLoadData["patientName"] = patientName
+	payLoadData["stateName"] = stateName
+	payLoadData["requestType"] = requestType
+	payLoadData["statusType"] = statusType
+
+
+
+	$.ajax({
+		url: 'get-physician-request-filtered-data',
+		type: 'POST',
+		data: payLoadData,
+		success: function(res) {
+
+			tbody.empty()
+			var count = 120;
+			res.forEach(function(data) {
+
+				count = count + 1
+
+				var card = $(".phy-dash-tr-clone").clone().removeClass("phy-dash-tr-clone").removeClass("d-none")
+
+				if (current_state != "active") {
+					card.find(".show-call-type").addClass("d-none")
+				}
+				if (current_state == "active" && data.callType != 1) {
+					card.find(".show-call-type").addClass("d-none")
+				} else {
+					card.find(".show-call-type").attr("onclick", "concludeCase('" + data.reqId + "')")
+				}
+
+				card.find(".name-tr").text(data.patientFirstName + " " + data.patientLastName)
+				card.find(".number-tr").text(data.ptPhoneNumber)
+				card.find(".number-req-tr").text(data.reqPhoneNumber)
+				card.find(".accept-case-button-class").attr("onclick", "acceptCaseChangeId('" + data.reqId + "')")
+				card.find(".transfer-case-button-class").attr("onclick", "transferCaseChangeId('" + data.reqId + "')");
+				card.find(".view-case-set-link").attr("href", "viewCase/" + data.reqId)
+				card.find(".view-notes-send-link").attr("href", "viewNotes/" + data.reqId)
+				card.find(".send-agreement-btn").attr("onclick", "sendAgreement('" + data.reqId + "')")
+				card.find(".view-uploads-btn").attr("href", "../user/viewRequestUploads/" + data.reqId)
+				card.find(".send-order-details").attr("href", "../user/sendOrderDetails/" + data.reqId)
+				card.find(".conclude-care-btn").attr("href", "conclude-care/" + data.reqId);
+
+				if (data.finalized == true) {
+					card.find(".encounter-form-btn").attr("type", "button")
+					card.find(".encounter-form-btn").attr("data-bs-toggle", "modal")
+					card.find(".encounter-form-btn").attr("data-bs-target", "#finalized-encounter-form")
+				} else if (data.callType != 0) {
+					card.find(".encounter-form-btn").attr("href", "../user/encounterForm/" + data.reqId)
+				} else {
+					card.find(".encounter-form-btn").attr("type", "button")
+					card.find(".encounter-form-btn").attr("data-bs-toggle", "modal")
+					card.find(".encounter-form-btn").attr("data-bs-target", "#house-call")
+					card.find(".encounter-form-btn").attr("onclick", "encounterChangeId('" + data.reqId + "')");
+				}
+
+				if (data.reqPhoneType == "Business") {
+					card.find(".color-class").removeClass("tr-clr").addClass("tr-business")
+				}
+				if (data.reqPhoneType == "Family") {
+					card.find(".color-class").removeClass("tr-clr").addClass("tr-family")
+				}
+				if (data.reqPhoneType == "Concierge") {
+					card.find(".color-class").removeClass("tr-clr").addClass("tr-concierge")
+				}
+
+				card.find(".req-type").text("(" + data.reqPhoneType + ")")
+				card.find(".address-tr").text(data.ptStreet + ", " + data.ptCity + ", " + data.ptState + ", " + data.ptZipcode)
+				tbody.append(card)
+
+
+			})
+
+			const currentActions = document.getElementsByClassName(current_state + "s")
+			for (let i = 0; i < currentActions.length; i++) {
+				currentActions[i].classList.remove('d-none')
+			}
+
+
+		},
+		error: function(res) {
+
+		}
+	});
+
+}
+
 
 function loadData(current_state) {
 	debugger
@@ -80,14 +210,41 @@ function loadData(current_state) {
 				count = count + 1
 
 				var card = $(".phy-dash-tr-clone").clone().removeClass("phy-dash-tr-clone").removeClass("d-none")
+
+				if (current_state != "active") {
+					card.find(".show-call-type").addClass("d-none")
+				}
+				if (current_state == "active" && data.callType != 1) {
+					card.find(".show-call-type").addClass("d-none")
+				} else {
+					card.find(".show-call-type").attr("onclick", "concludeCase('" + data.reqId + "')")
+				}
+
 				card.find(".name-tr").text(data.patientFirstName + " " + data.patientLastName)
 				card.find(".number-tr").text(data.ptPhoneNumber)
 				card.find(".number-req-tr").text(data.reqPhoneNumber)
 				card.find(".accept-case-button-class").attr("onclick", "acceptCaseChangeId('" + data.reqId + "')")
-				card.find(".transfer-case-button-class").attr("onclick","transferCaseChangeId('" + data.reqId + "')");
-				card.find(".view-case-set-link").attr("href","viewCase/" + data.reqId)
-				card.find(".view-notes-send-link").attr("href","viewNotes/" + data.reqId)
-				card.find(".send-agreement-btn").attr("onclick","sendAgreement('" + data.reqId + "')")
+				card.find(".transfer-case-button-class").attr("onclick", "transferCaseChangeId('" + data.reqId + "')");
+				card.find(".view-case-set-link").attr("href", "viewCase/" + data.reqId)
+				card.find(".view-notes-send-link").attr("href", "viewNotes/" + data.reqId)
+				card.find(".send-agreement-btn").attr("onclick", "sendAgreement('" + data.reqId + "')")
+				card.find(".view-uploads-btn").attr("href", "../user/viewRequestUploads/" + data.reqId)
+				card.find(".send-order-details").attr("href", "../user/sendOrderDetails/" + data.reqId)
+				card.find(".conclude-care-btn").attr("href", "conclude-care/" + data.reqId);
+
+				if (data.finalized == true) {
+					card.find(".encounter-form-btn").attr("type", "button")
+					card.find(".encounter-form-btn").attr("data-bs-toggle", "modal")
+					card.find(".encounter-form-btn").attr("data-bs-target", "#finalized-encounter-form")
+				} else if (data.callType != 0) {
+					card.find(".encounter-form-btn").attr("href", "../user/encounterForm/" + data.reqId)
+				} else {
+					card.find(".encounter-form-btn").attr("type", "button")
+					card.find(".encounter-form-btn").attr("data-bs-toggle", "modal")
+					card.find(".encounter-form-btn").attr("data-bs-target", "#house-call")
+					card.find(".encounter-form-btn").attr("onclick", "encounterChangeId('" + data.reqId + "')");
+				}
+
 				if (data.reqPhoneType == "Business") {
 					card.find(".color-class").removeClass("tr-clr").addClass("tr-business")
 				}
@@ -116,6 +273,40 @@ function loadData(current_state) {
 		}
 
 	})
+}
+
+function concludeCase(reqId) {
+
+	var current_state = $(".state-type-class-name").attr("data-state")
+
+	$.ajax({
+		url: 'conclude-requested-case',
+		type: 'POST',
+		data: {
+
+			reqId: reqId
+
+		},
+		success: function(data) {
+
+			console.log("concluded case")
+			loadData(current_state)
+			loadCount()
+			hideLoader()
+		},
+		error: function(data) {
+			console.log("failed to conclude case")
+			hideLoader()
+		}
+
+
+	});
+
+
+}
+
+function encounterChangeId(reqId) {
+	$(".call-type-req-id").val(reqId)
 }
 
 function loadCount() {
@@ -190,10 +381,10 @@ $("#transferCaseForm").submit(function(event) {
 	var description = $(".transfer-reason").val()
 	var current_state = $(".state-type-class-name").attr("data-state")
 	var payload = {}
-	
+
 	payload["description"] = description
 	payload["reqId"] = reqId
-	
+
 	$.ajax({
 		url: 'transfer-case-admin',
 		type: 'POST',
@@ -260,16 +451,109 @@ function sendAgreement(reqId) {
 			reqId: reqId
 		},
 		success: function(data) {
-			  
-			  
 
+
+			$("#send-agreement-req-id").val(reqId)
 			$(".agreement-phone").val(data.phoneNumber)
 			$(".agreement-email").val(data.email)
 
 		},
 		error: function(data) {
-			  
+
 		}
 	})
 }
 
+
+$("#sendAgreementForm").submit(function(event) {
+	event.preventDefault();
+	debugger
+	var reqId = document.getElementById("send-agreement-req-id").value
+	var phoneNumber = document.getElementById("send-agreement-phone-no").value
+	var email = document.getElementById("send-agreement-email").value
+
+	var payload = {}
+	payload["reqId"] = reqId
+	payload["phoneNumber"] = phoneNumber
+	payload["email"] = email
+	showLoader()
+	$.ajax({
+		url: 'sendAgreementToPatient',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+			$(".close-btn-class").click()
+			hideLoader()
+
+
+		},
+		error: function(data) {
+			hideLoader()
+
+			var error = document.getElementById("error-send-agreement")
+			error.innerHTML = "Error sending agreement! Please try again!"
+		}
+	})
+
+})
+
+function changeCss(element) {
+	console.log(element.id)
+	var x = document.getElementById("Housecall");
+	var y = document.getElementById("Consult");
+
+	if (element.id == "Housecall") {
+		x.style.backgroundColor = "#01bce9";
+		x.style.color = "white";
+
+		y.style.color = "#01bce9";
+		y.style.backgroundColor = "white";
+
+		$(".call-type-val-id").val("1")
+	}
+
+	else {
+		y.style.backgroundColor = "#01bce9";
+		y.style.color = "white";
+
+		x.style.color = "#01bce9";
+		x.style.backgroundColor = "white";
+
+		$(".call-type-val-id").val("2")
+
+	}
+}
+
+$("#callTypeFormId").submit(function(event) {
+	debugger
+	event.preventDefault();
+	var reqId = $(".call-type-req-id").val()
+	var callType = $(".call-type-val-id").val()
+	var current_state = $(".state-type-class-name").attr("data-state")
+
+	var payload = {}
+	payload["reqId"] = reqId
+	payload["callType"] = callType
+
+	$.ajax({
+		url: 'set-call-type',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+
+			console.log("call type set")
+			$(".close-call-type-btn").click()
+			loadData(current_state)
+			loadCount()
+			hideLoader()
+		},
+		error: function(data) {
+			console.log("failed to set call type")
+			hideLoader()
+		}
+
+
+	});
+
+
+})
