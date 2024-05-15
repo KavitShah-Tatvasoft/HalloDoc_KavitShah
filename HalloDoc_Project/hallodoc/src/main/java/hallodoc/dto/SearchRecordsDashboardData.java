@@ -17,9 +17,17 @@ public class SearchRecordsDashboardData {
 	private String adminNotes;
 	private String patientNotes;
 	private Integer requestId;
+	private int pageNo;
 	
 	
 	
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public Integer getRequestId() {
 		return requestId;
 	}
@@ -110,20 +118,12 @@ public class SearchRecordsDashboardData {
 	public void setPatientNotes(String patientNotes) {
 		this.patientNotes = patientNotes;
 	}
-	@Override
-	public String toString() {
-		return "SearchRecordsDashboardData [patientName=" + patientName + ", requestorName=" + requestorName
-				+ ", dateOfService=" + dateOfService + ", closeCaseDate=" + closeCaseDate + ", email=" + email
-				+ ", phoneNumber=" + phoneNumber + ", address=" + address + ", zip=" + zip + ", requestStatus="
-				+ requestStatus + ", physicianName=" + physicianName + ", physicianNote=" + physicianNote
-				+ ", cancelledByPhysicianNote=" + cancelledByPhysicianNote + ", adminNotes=" + adminNotes
-				+ ", patientNotes=" + patientNotes + "]";
-	}
+	
 	
 	public SearchRecordsDashboardData(String patientName, String requestorName, String dateOfService,
 			String closeCaseDate, String email, String phoneNumber, String address, String zip, String requestStatus,
 			String physicianName, String physicianNote, String cancelledByPhysicianNote, String adminNotes,
-			String patientNotes, Integer requestId) {
+			String patientNotes, Integer requestId, int pageNo) {
 		super();
 		this.patientName = patientName;
 		this.requestorName = requestorName;
@@ -140,6 +140,7 @@ public class SearchRecordsDashboardData {
 		this.adminNotes = adminNotes;
 		this.patientNotes = patientNotes;
 		this.requestId = requestId;
+		this.pageNo = pageNo;
 	}
 	public SearchRecordsDashboardData() {
 		super();

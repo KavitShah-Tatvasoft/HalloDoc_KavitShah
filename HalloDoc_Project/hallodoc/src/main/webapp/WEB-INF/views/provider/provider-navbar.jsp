@@ -27,17 +27,17 @@
 						<div class="offcanvas-body">
 
 							<div class="sidebar-profile-text">
-								<span> Welcome, </span> <span> <strong>Dr Shah</strong>
+								<span> Welcome, </span> <span> <strong>Dr. ${aspUser.user.firstName } ${aspUser.user.lastName }</strong>
 								</span>
 							</div>
 							<ul class="nav sidebar-list-flex">
 								<li class="nav-item"><a class="nav-link"
-									aria-current="page" href="provider-dashboard.html">Dashboard</a>
+									aria-current="page" href="${pageContext.request.contextPath}/provider/provider-dashboard">Dashboard</a>
 								</li>
-								<li class="nav-item"><a class="nav-link" href="#">My
-										Schedule</a></li>
+<!-- 								<li class="nav-item"><a class="nav-link" href="#">My -->
+<!-- 										Schedule</a></li> -->
 								<li class="nav-item"><a class="nav-link"
-									href="provider-my-profile.html">My Profile</a></li>
+									href="${pageContext.request.contextPath}/provider/provider-profile">My Profile</a></li>
 						</div>
 					</div>
 				</div>
@@ -50,10 +50,10 @@
 
 			<div class="nav-right">
 				<span class="mx-1 profile-name"> Welcome </span> <span
-					class="mx-1 profile-name"> <strong>Dr Shah</strong>
+					class="mx-1 profile-name"> <strong>Dr. ${aspUser.user.firstName } ${aspUser.user.lastName }</strong>
 				</span>
 				<div>
-					<a href="login.html">
+					<a href="${pageContext.request.contextPath}/provider/logout">
 						<div class="logout-btn-admin">
 							<img src="<c:url value='/resources/images/box-arrow-right.svg' />"
 								class="logout-img" alt="Logout" /><span class="logout-btn-text">Logout</span>
@@ -84,13 +84,13 @@
 		<!-- ---------------------------------------------------------------INNER NAV BAR------------------------------------------------------ -->
 		<ul class="nav nav-underline cm-margin ms-3 inner-nav">
 			<li class="nav-item"><a class="nav-link" aria-current="page"
-				href="provider-dashboard.html">Dashboard</a></li>
+				href="${pageContext.request.contextPath}/provider/provider-dashboard">Dashboard</a></li>
 
-			<li class="nav-item"><a class="nav-link" href="#">My
-					Schedule</a></li>
+<!-- 			<li class="nav-item"><a class="nav-link" href="#">My -->
+<!-- 					Schedule</a></li> -->
 
 			<li class="nav-item"><a class="nav-link"
-				href="provider-my-profile.html">My Profile</a></li>
+				href="${pageContext.request.contextPath}/provider/provider-profile">My Profile</a></li>
 
 
 		</ul>

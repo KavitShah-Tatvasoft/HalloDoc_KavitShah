@@ -122,6 +122,8 @@
 				<value>hallodoc.model.HealthProfessionals</value>
 				<value>hallodoc.model.EncounterForm</value>
 				<value>hallodoc.model.PhysicianNotification</value>
+				<value>hallodoc.model.Shift</value>
+				<value>hallodoc.model.ShiftDetails</value>
 			</list>
 		</property>
 	</bean>

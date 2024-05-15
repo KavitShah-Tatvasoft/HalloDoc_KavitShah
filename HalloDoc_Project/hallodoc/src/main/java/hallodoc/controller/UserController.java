@@ -24,11 +24,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import hallodoc.dto.BlockHistoryFilterData;
+import hallodoc.dto.BlockHistoryPaginatedDto;
 import hallodoc.dto.BlockRequestsTableData;
 import hallodoc.dto.ClearCaseDto;
 import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.EmailLogDashboardDto;
 import hallodoc.dto.EmailLogFiltersDto;
+import hallodoc.dto.EmailLogPaginatedDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
 import hallodoc.dto.HealthProfessionalDataDto;
@@ -36,11 +38,14 @@ import hallodoc.dto.NewBusinessDto;
 import hallodoc.dto.OrderVendorDetailsDto;
 import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.PatientHistoryDto;
+import hallodoc.dto.PatientHistoryPaginatedDto;
 import hallodoc.dto.PatientRecordsDto;
 import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.SMSLogDashboardDataDto;
 import hallodoc.dto.SearchRecordsDashboardData;
 import hallodoc.dto.SearchRecordsFilter;
+import hallodoc.dto.SearchRecordsPaginationDto;
+import hallodoc.dto.SmsLogPaginatedDto;
 import hallodoc.dto.VendorDetailsDto;
 import hallodoc.email.EmailService;
 import hallodoc.helper.ExcelSheetHelper;
@@ -74,7 +79,6 @@ public class UserController {
 
 	@Autowired
 	private PatientService pService;
-	
 
 	@RequestMapping(value = "/sendReviewAgreement/{reqId}")
 	public String showAgreementEmail(@PathVariable("reqId") int reqId, Model m) {
@@ -130,14 +134,14 @@ public class UserController {
 	public RedirectView uploadRequestDocument(@RequestParam("documentFile") CommonsMultipartFile document,
 			@RequestParam("uploaderName") String name, @RequestParam("requestId") int requestId,
 			HttpServletRequest request) {
-		 
+
 		Date date = new Date();
 		Request requestOb = userService.getRequestObject(requestId);
 		try {
 			HttpSession session = request.getSession(false);
 			userService.uploadRequestDocument(document, name, requestOb, session, date);
 		} catch (Exception e) {
-			 
+
 		}
 		RedirectView redirectView = new RedirectView("/user/viewRequestUploads/" + requestId, true);
 		return redirectView;
@@ -182,7 +186,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getVendorDetails", method = RequestMethod.POST)
 	public List<VendorDetailsDto> getVendorDetails(@RequestParam("professionTypeId") int professionTypeId) {
-		 List<VendorDetailsDto> vendorList = userService.getActiveVendors(professionTypeId);
+		List<VendorDetailsDto> vendorList = userService.getActiveVendors(professionTypeId);
 		return vendorList;
 	}
 
@@ -197,12 +201,13 @@ public class UserController {
 	public RedirectView sendOrderDetails(@ModelAttribute("orderDetails") OrdersDetailsDto ordersDetailsDto,
 			HttpServletRequest httpServletRequest) {
 		String status = userService.sendOrderDetails(ordersDetailsDto, httpServletRequest);
-		int roleId = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getUser().getAspNetRoles().getId();
+		int roleId = ((AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser")).getUser().getAspNetRoles()
+				.getId();
 		RedirectView adminView = new RedirectView("../admin/adminDashboard");
 		RedirectView providerView = new RedirectView("../provider/provider-dashboard");
-		if(roleId == 1) {
+		if (roleId == 1) {
 			return adminView;
-		}else {
+		} else {
 			return providerView;
 		}
 	}
@@ -251,7 +256,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/updateCloseCaseDetails", method = RequestMethod.POST)
 	public String updateCloseCaseDetails(CloseCaseEditDataDto closeCaseEditDataDto) throws ParseException {
-		 ;
+		;
 		String status = userService.editCloseCaseDetails(closeCaseEditDataDto);
 		return "updated";
 	}
@@ -281,7 +286,7 @@ public class UserController {
 
 	@RequestMapping(value = "/addNewBusinessRequest", method = RequestMethod.POST)
 	public RedirectView addNewBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
-		 ;
+		;
 
 		this.userService.addNewBusiness(newBusinessDto);
 
@@ -300,7 +305,7 @@ public class UserController {
 
 	@RequestMapping(value = "/editBusinessRequest", method = RequestMethod.POST)
 	public RedirectView editBusinessRequest(NewBusinessDto newBusinessDto, HttpServletRequest request) {
-		 ;
+		;
 		this.userService.updateBusiness(newBusinessDto);
 		return new RedirectView(request.getContextPath() + "/user/professionMenu");
 	}
@@ -324,15 +329,14 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getFilteredEmailLogData", method = RequestMethod.POST)
-	public List<EmailLogDashboardDto> getFilteredEmailLogData(EmailLogFiltersDto emailLogFiltersDto) {
-		 ;
+	public EmailLogPaginatedDto getFilteredEmailLogData(EmailLogFiltersDto emailLogFiltersDto) {
 		return this.userService.getEmailLogFilteredDate(emailLogFiltersDto);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/getFilteredSMSLogData", method = RequestMethod.POST)
-	public List<SMSLogDashboardDataDto> getFilteredSMSLogData(EmailLogFiltersDto emailLogFiltersDto) {
-		 
+	public SmsLogPaginatedDto getFilteredSMSLogData(EmailLogFiltersDto emailLogFiltersDto) {
+
 		return this.userService.getSmsLogFilteredData(emailLogFiltersDto);
 	}
 
@@ -343,7 +347,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getPatientHistoryData", method = RequestMethod.POST)
-	public List<PatientHistoryDto> getPatientHistoryData(PatientHistoryDto patientHistoryDto) {
+	public PatientHistoryPaginatedDto getPatientHistoryData(PatientHistoryDto patientHistoryDto) {
 		return this.userService.getPatientHistory(patientHistoryDto);
 	}
 
@@ -361,7 +365,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getBlockHistoryData", method = RequestMethod.POST)
-	public List<BlockRequestsTableData> getBlockRequestsDetails(BlockHistoryFilterData blockHistoryFilterData) {
+	public BlockHistoryPaginatedDto getBlockRequestsDetails(BlockHistoryFilterData blockHistoryFilterData) {
 		return this.userService.getBlockRequestData(blockHistoryFilterData);
 	}
 
@@ -378,32 +382,30 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getSearchRecordFilteredData", method = RequestMethod.POST)
-	public List<SearchRecordsDashboardData> getFilteredSearchRecordData(SearchRecordsFilter searchRecordsFilter) {
+	public SearchRecordsPaginationDto getFilteredSearchRecordData(SearchRecordsFilter searchRecordsFilter) {
 		return this.userService.getFilteredSearchRecords(searchRecordsFilter);
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/exportSearchRecordsToExcel", method = RequestMethod.POST)
-	public ResponseEntity<Resource> exportSearchRecordsToExcel(SearchRecordsFilter searchRecordsFilter) throws IOException
-	{
-		List<SearchRecordsDashboardData> list = this.userService.getFilteredSearchRecords(searchRecordsFilter);
+	public ResponseEntity<Resource> exportSearchRecordsToExcel(SearchRecordsFilter searchRecordsFilter)
+			throws IOException {
+		List<SearchRecordsDashboardData> list = this.userService.getExportFilteredSearchRecords(searchRecordsFilter);
 		ResponseEntity<Resource> resource = this.userService.exportSearchRecord(list);
 		return resource;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/deleteRequest", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteRequest", method = RequestMethod.POST)
 	public String deletedRequest(@RequestParam("reqId") Integer reqId) {
 		return this.userService.deleteRequest(reqId);
 	}
-	
-	@RequestMapping(value="/finalize-encounter-form/{reqId}", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/finalize-encounter-form/{reqId}", method = RequestMethod.GET)
 	public RedirectView finalizeEncounterForm(@PathVariable("reqId") int reqId, HttpServletRequest request) {
-		
+
 		this.userService.finalizeEncounterForm(reqId);
 		return new RedirectView(request.getContextPath() + "/provider/provider-dashboard");
 	}
-
-	
 
 }

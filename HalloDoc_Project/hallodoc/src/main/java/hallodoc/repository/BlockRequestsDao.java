@@ -89,12 +89,65 @@ public class BlockRequestsDao {
 		cr.select(root).where(predicates);
 
 		Query<BlockRequests> query = s.createQuery(cr);
-
+		query.setMaxResults(10);
+		if (blockHistoryFilterData.getPageNo() != 0) {
+			query.setFirstResult((blockHistoryFilterData.getPageNo() - 1) * 10);
+		} else {
+			query.setFirstResult(0);
+		}
 		List<BlockRequests> list = query.getResultList();
 		s.close();
 		return list;
 
 	}
+	
+	
+	public Long getBlockRequestDataCount(BlockHistoryFilterData blockHistoryFilterData){
+		Session s = this.sessionFactory.openSession();
+		
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<BlockRequests> root = cr.from(BlockRequests.class);
+		Join<BlockRequests, Request> blockJoin = root.join("request");
+		Join<Request, RequestClient> requestJoin = blockJoin.join("requestClient");
+		
+
+		Predicate[] predicates = new Predicate[4];
+		
+		if (!blockHistoryFilterData.getName().equals("")) {
+			predicates[0] = cb.like(requestJoin.get("firstName"), blockHistoryFilterData.getName() + "%");
+		} else {
+			predicates[0] = cb.like(requestJoin.get("firstName"), "%");
+		}
+		
+		if (!blockHistoryFilterData.getPhone().equals("")) {
+			predicates[1] = cb.like(root.get("phoneNumber"), blockHistoryFilterData.getPhone() + "%");
+		} else {
+			predicates[1] = cb.like(root.get("phoneNumber"), "%");
+		}
+		
+		if (!blockHistoryFilterData.getEmail().equals("")) {
+			predicates[2] = cb.like(root.get("email"), blockHistoryFilterData.getEmail() + "%");
+		} else {
+			predicates[2] = cb.like(root.get("email"), "%");
+		}
+		
+		if(!blockHistoryFilterData.getDate().equals("")) {
+			String createdDate = blockHistoryFilterData.getDate(); 
+			LocalDate createDateTime = LocalDate.parse(createdDate); 
+			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")), Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		}else {
+			predicates[3] = cb.like(root.get("phoneNumber"), "%");
+		}
+
+		cr.select(cb.count(root)).where(predicates);
+		Long total = s.createQuery(cr).getSingleResult();
+
+		s.close();
+		return total;
+
+	}
+	
 	
 	@Transactional
 	public void updateBlockRequest(BlockRequests blockRequests) {

@@ -35,10 +35,10 @@
 
 <title>Search Records</title>
 </head>
-<body onload="getSearchRecordsData()">
+<body onload="getSearchRecordsData(true)">
 	<div class="loader-container">
 		<div class="loader"></div>
-	</div>	
+	</div>
 	<div
 		class="container-fluid footer-container patient-form shadow bg-white rounded relative-position extra-margin">
 
@@ -145,7 +145,7 @@
 				<!-- 				<button class="clear-btn select-all shrink-btns">Select All</button> -->
 				<button class="clear-btn shrink-btns" onclick="clearFilters()">Clear</button>
 				<button class="search-btn shrink-btns"
-					onclick="getSearchRecordsData()">Search</button>
+					onclick="getSearchRecordsData(true)">Search</button>
 			</div>
 
 		</div>
@@ -350,17 +350,6 @@
 							</div>
 						</div>
 
-						<!-- 							<div class="accordion-row-inner-flex"> -->
-						<!-- 								<div class="image-blue-border"> -->
-						<%-- 									<img src="<c:url value='/resources/images/journal-text.svg' />" --%>
-						<!-- 										class="note-icon-resize-search" alt=""> -->
-						<!-- 								</div> -->
-						<!-- 								<div> -->
-						<!-- 									<span class="email-label">Cancelled By Provider Note: </span> <span -->
-						<!-- 										class="email-text acc-cancel-provider-td">-</span> -->
-						<!-- 								</div> -->
-						<!-- 							</div> -->
-
 						<div class="accordion-row-inner-flex">
 							<div class="image-blue-border">
 								<img src="<c:url value='/resources/images/journal-text.svg' />"
@@ -371,17 +360,6 @@
 									class="email-text acc-admin-notes-td">-</span>
 							</div>
 						</div>
-
-						<!-- 							<div class="accordion-row-inner-flex"> -->
-						<!-- 								<div class="image-blue-border"> -->
-						<%-- 									<img src="<c:url value='/resources/images/journal-text.svg' />" --%>
-						<!-- 										class="note-icon-resize-search" alt=""> -->
-						<!-- 								</div> -->
-						<!-- 								<div> -->
-						<!-- 									<span class="email-label">Cancellation Reason: </span> <span -->
-						<!-- 										class="email-text ">Insurance Issue</span> -->
-						<!-- 								</div> -->
-						<!-- 							</div> -->
 
 						<div class="accordion-row-inner-flex">
 							<div class="image-blue-border">
@@ -408,7 +386,24 @@
 		<div class="accordion accordion-body-empty"
 			id="accordionPanelsStayOpenExample"></div>
 
+
+
 	</div>
+
+	<nav aria-label="..." class="pagination-center-class">
+
+		<li class="page-item prev-navigation d-none"><a
+			onclick="prevPage()" class="page-link" href="#" tabindex="-1">Previous</a></li>
+
+		<li class="page-item pageno-pagination add-onclick d-none"><a
+			class="page-link add-active common-active" href="#"></a></li>
+		<li class="page-item next-pagination d-none"><a
+			onclick="nextPage()" class="page-link" href="#">Next</a></li>
+
+		<ul class="pagination empty-pagination">
+
+		</ul>
+	</nav>
 	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/search-records.js' />"></script>

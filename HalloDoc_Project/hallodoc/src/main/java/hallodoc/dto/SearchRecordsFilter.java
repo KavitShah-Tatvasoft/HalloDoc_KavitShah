@@ -10,7 +10,16 @@ public class SearchRecordsFilter {
 	private String providerName;
 	private String email;
 	private String phoneNumber;
+	private int pageNo;
 	
+	
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public int getRequestStatus() {
 		return requestStatus;
 	}
@@ -59,14 +68,9 @@ public class SearchRecordsFilter {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	@Override
-	public String toString() {
-		return "SearchRecordsFilter [requestStatus=" + requestStatus + ", firstName=" + firstName + ", requestType="
-				+ requestType + ", fromDOS=" + fromDOS + ", toDOS=" + toDOS + ", providerName=" + providerName
-				+ ", email=" + email + ", phoneNumber=" + phoneNumber + "]";
-	}
-	public SearchRecordsFilter(int requestStatus, String firstName, int requestType, String fromDOS,
-			String toDOS, String providerName, String email, String phoneNumber) {
+	
+	public SearchRecordsFilter(int requestStatus, String firstName, int requestType, String fromDOS, String toDOS,
+			String providerName, String email, String phoneNumber, int pageNo) {
 		super();
 		this.requestStatus = requestStatus;
 		this.firstName = firstName;
@@ -76,7 +80,9 @@ public class SearchRecordsFilter {
 		this.providerName = providerName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.pageNo = pageNo;
 	}
+	
 	public SearchRecordsFilter() {
 		super();
 		// TODO Auto-generated constructor stub

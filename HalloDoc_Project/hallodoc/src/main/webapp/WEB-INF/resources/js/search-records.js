@@ -36,7 +36,37 @@ function clearFilters() {
 	getSearchRecordsData()
 }
 
-function getSearchRecordsData() {
+function changeActivePage(element) {
+	debugger
+	$(".add-active").removeClass("active")
+	console.log(element)
+
+	element.classList.add('active');
+	getSearchRecordsData(false)
+}
+
+function prevPage() {
+	debugger
+	var pageNo = $(".page-link.active").attr("data-pg")
+	const prevPage = pageNo - 1;
+	const prevLink = document.querySelector(`.page-link[data-pg="${prevPage}"]`);
+	if (prevLink) {
+		prevLink.click();
+	}
+}
+
+function nextPage() {
+	debugger
+	var pageNo = $(".page-link.active").attr("data-pg")
+	const nextPage = parseInt(pageNo) + 1;
+	const nextLink = document.querySelector(`.page-link[data-pg="${nextPage}"]`);
+	if (nextLink) {
+		nextLink.click();
+	}
+}
+
+
+function getSearchRecordsData(bool) {
 
 	debugger
 	var requestStatus = $(".filter-request-status").val()
@@ -47,6 +77,11 @@ function getSearchRecordsData() {
 	var providerName = $(".filter-provider-name").val()
 	var email = $(".filter-email").val()
 	var phoneNumber = $(".filter-phone").val()
+	if (bool == true) {
+		var pageNo = 1
+	} else {
+		var pageNo = $(".page-link.active").attr("data-pg")
+	}
 
 	var payload = {}
 
@@ -58,6 +93,7 @@ function getSearchRecordsData() {
 	payload["providerName"] = providerName
 	payload["email"] = email
 	payload["phoneNumber"] = phoneNumber
+	payload["pageNo"] = pageNo
 
 	tbody = $(".table-empty-class")
 	accordionBody = $(".accordion-body-empty")
@@ -71,7 +107,48 @@ function getSearchRecordsData() {
 			tbody.empty()
 			accordionBody.empty()
 			count = 120
-			res.forEach(function(data) {
+
+			let paginationBody = $(".empty-pagination")
+			paginationBody.empty()
+			var prev = $(".prev-navigation").clone().removeClass("prev-navigation").removeClass("d-none")
+			var next = $(".next-pagination").clone().removeClass("next-pagination").removeClass("d-none")
+			paginationBody.append(prev)
+
+			var totalPageNumber = Math.ceil(res.count / 10)
+
+			for (let i = 1; i <= totalPageNumber; i++) {
+				paginationNumber = $(".pageno-pagination").clone().removeClass("pageno-pagination").removeClass("d-none")
+				paginationNumber.find(".page-link").text(i)
+				paginationNumber.find(".page-link").attr("data-pg", i)
+				paginationNumber.find(".page-link").attr("onclick", "changeActivePage(this)")
+				if (i == pageNo) {
+					paginationNumber.find(".add-active").addClass("active")
+				}
+
+				paginationBody.append(paginationNumber)
+			}
+
+			if (pageNo == 1) {
+				prev.addClass("disabled")
+			} else {
+				prev.removeClass("disabled")
+			}
+
+			if (pageNo == totalPageNumber) {
+				next.addClass("disabled")
+			} else {
+				next.removeClass("disabled")
+			}
+
+			paginationBody.append(next)
+
+			if (totalPageNumber == 1 || totalPageNumber == 0) {
+				prev.addClass("disabled")
+				next.addClass("disabled")
+			}
+
+
+			res.searchRecordsDashboardDatas.forEach(function(data) {
 				count++
 				var rowCard = $(".table-td-class-clone").clone().removeClass("d-none").removeClass("table-td-class-clone")
 				rowCard.find(".name-td").text(data.patientName)

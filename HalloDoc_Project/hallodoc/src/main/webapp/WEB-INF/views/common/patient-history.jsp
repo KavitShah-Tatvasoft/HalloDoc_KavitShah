@@ -18,9 +18,12 @@
 	crossorigin="anonymous" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/footer.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/patient-history.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/navbar.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/patient-history.css' />">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -29,7 +32,7 @@
 
 <title>Patient History</title>
 </head>
-<body onload="filterPatientHistory()">
+<body onload="filterPatientHistory(true)">
 	<div
 		class="container-fluid footer-container patient-form shadow bg-white rounded relative-position extra-margin">
 
@@ -72,7 +75,8 @@
 
 			<div class="row-1-clear-search-btn-flex">
 				<button class="clear-btn shrink-btns" onclick="clearFilter()">Clear</button>
-				<button class="search-btn shrink-btns" onclick="filterPatientHistory()">Search</button>
+				<button class="search-btn shrink-btns"
+					onclick="filterPatientHistory(true)">Search</button>
 			</div>
 		</div>
 
@@ -89,90 +93,103 @@
 						<th scope="col" class="thead width-col6 text-center">Actions</th>
 					</tr>
 				</thead>
-				
+
 				<tr class="patient-history-tr d-none">
-						<td class="extra-padding-td pt-fname-td">Derek</td>
-						<td class="pt-l-name-td">Shah</td>
-						<td class="pt-email-td">derekshah@gmail.com</td>
-						<td class="pt-phone-td">1234567890</td>
-						<td class="pt-address-td">-</td>
-						<td class="text-center-flex"><a class="pt-explore-td"
-							href="patient-explore-record.html">
-								<div class="edit-btn">
-									<span>Explore</span>
-								</div>
-						</a></td>
-					</tr>
+					<td class="extra-padding-td pt-fname-td">Derek</td>
+					<td class="pt-l-name-td">Shah</td>
+					<td class="pt-email-td">derekshah@gmail.com</td>
+					<td class="pt-phone-td">1234567890</td>
+					<td class="pt-address-td">-</td>
+					<td class="text-center-flex"><a class="pt-explore-td"
+						href="patient-explore-record.html">
+							<div class="edit-btn">
+								<span>Explore</span>
+							</div>
+					</a></td>
+				</tr>
 
 				<tbody class="patient-history-empty-tbody">
-					
+
 				</tbody>
 			</table>
 		</div>
-		
+
 		<div class="accordion-item patient-history-accordion-clone d-none">
-				<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-					<button class="accordion-button acc-change-target-class" type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-						aria-controls="panelsStayOpen-collapseOne">
-						<div class="accordion-button-flex">
-							<span class="accordion-row-name acc-name">Derek Shah</span> <small
-								class="acount-type-btn-text acc-number">12345677890</small>
+			<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+				<button class="accordion-button acc-change-target-class"
+					type="button" data-bs-toggle="collapse"
+					data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+					aria-controls="panelsStayOpen-collapseOne">
+					<div class="accordion-button-flex">
+						<span class="accordion-row-name acc-name">Derek Shah</span> <small
+							class="acount-type-btn-text acc-number">12345677890</small>
+					</div>
+
+				</button>
+			</h2>
+			<div id="panelsStayOpen-collapseOne"
+				class="accordion-collapse collapse acc-change-id"
+				aria-labelledby="panelsStayOpen-headingOne">
+				<div class="accordion-body">
+					<div class="accordion-rows-main-flex">
+
+						<div class="accordion-row-inner-flex">
+							<div class="image-blue-border">
+								<img src="<c:url value='/resources/images/envelope-blue.svg' />"
+									alt="">
+							</div>
+							<div>
+								<span class="email-label ">Email: </span> <span
+									class="email-text acc-email">kavitshah324@gmail.com</span>
+							</div>
 						</div>
 
-					</button>
-				</h2>
-				<div id="panelsStayOpen-collapseOne"
-					class="accordion-collapse collapse acc-change-id"
-					aria-labelledby="panelsStayOpen-headingOne">
-					<div class="accordion-body">
-						<div class="accordion-rows-main-flex">
-
-							<div class="accordion-row-inner-flex">
-								<div class="image-blue-border">
-									<img src="<c:url value='/resources/images/envelope-blue.svg' />" alt="">
-								</div>
-								<div>
-									<span class="email-label ">Email: </span> <span
-										class="email-text acc-email">kavitshah324@gmail.com</span>
-								</div>
+						<div class="accordion-row-inner-flex">
+							<div class="image-blue-border">
+								<img
+									src="<c:url value='/resources/images/telephone-blue.svg' />"
+									alt="">
 							</div>
-
-							<div class="accordion-row-inner-flex">
-								<div class="image-blue-border">
-									<img src="<c:url value='/resources/images/telephone-blue.svg' />" alt="">
-								</div>
-								<div>
-									<span class="email-label">Phone: </span> <span
-										class="email-text acc-phone">1234567890</span>
-								</div>
+							<div>
+								<span class="email-label">Phone: </span> <span
+									class="email-text acc-phone">1234567890</span>
 							</div>
+						</div>
 
-							<div class="accordion-btn-inner-flex">
-								<a href="patient-explore-record.html" role="button"
-									class="bottom-accordion-row-btn accordion-explore-case">Explore</a>
-							</div>
+						<div class="accordion-btn-inner-flex">
+							<a href="patient-explore-record.html" role="button"
+								class="bottom-accordion-row-btn accordion-explore-case">Explore</a>
 						</div>
 					</div>
 				</div>
 			</div>
-
-		
-
-		<div class="accordion mt-4 accordion-body-empty" id="accordionPanelsStayOpenExample" >
-			
 		</div>
 
-	</div>
 
+
+		<div class="accordion mt-4 accordion-body-empty"
+			id="accordionPanelsStayOpenExample"></div>
+
+	</div>
+	<nav aria-label="..." class="pagination-center-class">
+
+		<li class="page-item prev-navigation d-none"><a
+			onclick="prevPage()" class="page-link" href="#" tabindex="-1">Previous</a></li>
+
+		<li class="page-item pageno-pagination add-onclick d-none"><a
+			class="page-link add-active common-active" href="#"></a></li>
+		<li class="page-item next-pagination d-none"><a
+			onclick="nextPage()" class="page-link" href="#">Next</a></li>
+
+		<ul class="pagination empty-pagination">
+
+		</ul>
+	</nav>
 	<script src="<c:url value='/resources/js/patient-history.js' />"></script>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script type="text/javascript">
-		
 		$(".common-link-class").removeClass("active")
 		$(".records-link-class").addClass("active")
-	
 	</script>
 </body>
 </html>

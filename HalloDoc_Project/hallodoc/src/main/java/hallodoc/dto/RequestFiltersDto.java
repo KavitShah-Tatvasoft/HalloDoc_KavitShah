@@ -6,9 +6,19 @@ public class RequestFiltersDto {
 	private String stateName;
 	private String requestType;
 	private String statusType;
+	private int pageNo;
 	
 	
 	
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
 	public String getStatusType() {
 		return statusType;
 	}
@@ -46,19 +56,17 @@ public class RequestFiltersDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RequestFiltersDto(String patientName, String stateName, String requestType, String statusType) {
+	public RequestFiltersDto(String patientName, String stateName, String requestType, String statusType, int pageNo) {
 		super();
 		this.patientName = patientName;
 		this.stateName = stateName;
 		this.requestType = requestType;
 		this.statusType = statusType;
+		this.pageNo = pageNo;
 	}
 
-	@Override
-	public String toString() {
-		return "RequestFiltersDto [patientName=" + patientName + ", stateName=" + stateName + ", requestType="
-				+ requestType + ", statusType=" + statusType + "]";
-	}
+	
+	
 
 	
 

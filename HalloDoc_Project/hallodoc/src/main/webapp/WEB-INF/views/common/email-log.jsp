@@ -18,9 +18,12 @@
 	crossorigin="anonymous" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/footer.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/email-log.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/navbar.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/email-log.css' />">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -29,21 +32,22 @@
 
 <title>Email Logs</title>
 </head>
-<body onload="filterEmailLog()">
+<body onload="filterEmailLog(true)">
 	<div
 		class="container-fluid patient-form footer-container shadow bg-white rounded relative-position extra-margin">
 
 		<div class="submit-info-txt">Email Logs (Gmail)</div>
 
 		<div class="back-btn-top" role="button" onclick="history.go(-1)">
-			<img src="<c:url value='/resources/images/chevron-left.svg' />" alt=""> Back
+			<img src="<c:url value='/resources/images/chevron-left.svg' />"
+				alt=""> Back
 		</div>
 
 		<div class="row p-3 pt-4">
 
 			<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-2">
 				<div class="form-floating mb-3 inp">
-					<select name="Refill" id="floatingInput-5" 
+					<select name="Refill" id="floatingInput-5"
 						class="form-control form-select input-2 filter-by-role">
 						<option value="0">All</option>
 						<option value="1">Admin</option>
@@ -74,11 +78,13 @@
 			<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-2">
 				<div class="form-floating mb-3 inp custom-date-input">
 					<!--Date Picker col-->
-					<input type="date" class="form-control input-1 filter-by-create-date"
+					<input type="date"
+						class="form-control input-1 filter-by-create-date"
 						id="floatingInput-4" placeholder="From Date of Service"
 						autocomplete="off"> <label for="floatingInput-4">Create
-						Date</label> <img src="<c:url value='/resources/images/calendar4-week.svg' />" alt=""
-						class="custom-date-icon">
+						Date</label> <img
+						src="<c:url value='/resources/images/calendar4-week.svg' />"
+						alt="" class="custom-date-icon">
 				</div>
 			</div>
 
@@ -88,8 +94,9 @@
 					<input type="date" class="form-control input-1 filter-by-sent-date"
 						id="floatingInput-4" placeholder="To Date of Service"
 						autocomplete="off"> <label for="floatingInput-4">Sent
-						Date</label> <img src="<c:url value='/resources/images/calendar4-week.svg' />" alt=""
-						class="custom-date-icon">
+						Date</label> <img
+						src="<c:url value='/resources/images/calendar4-week.svg' />"
+						alt="" class="custom-date-icon">
 				</div>
 			</div>
 
@@ -97,7 +104,7 @@
 
 			<div class="col-12 col-lg-2 justify-content-end btn-col">
 				<div class="row-1-clear-search-btn-flex">
-					<button class="search-btn shrink-btns" onclick="filterEmailLog()">Search</button>
+					<button class="search-btn shrink-btns" onclick="filterEmailLog(true)">Search</button>
 					<button class="clear-btn shrink-btns" onclick="clearFilters()">Clear</button>
 				</div>
 			</div>
@@ -126,144 +133,158 @@
 							Number</th>
 					</tr>
 				</thead>
-				
+
 				<tr class="email-log-tr-clone d-none">
-						<td class="extra-padding-td name-td">Shah, Nilomi</td>
-						<td class="action-td">Request Monthly Data</td>
-						<td class="role-td">Physician</td>
-						<td class="email-td">derekshah@gmail.com</td>
-						<td class="created-date-td">Aug 23,2024</td>
-						<td class="send-date-td">Aug 23,2024</td>
-						<td class="mail-sent-td">Yes</td>
-						<td class="send-tries-td">1</td>
-						<td class="conf-td">MD1234567SDF5678DR</td>
-					</tr>
-				
+					<td class="extra-padding-td name-td">Shah, Nilomi</td>
+					<td class="action-td">Request Monthly Data</td>
+					<td class="role-td">Physician</td>
+					<td class="email-td">derekshah@gmail.com</td>
+					<td class="created-date-td">Aug 23,2024</td>
+					<td class="send-date-td">Aug 23,2024</td>
+					<td class="mail-sent-td">Yes</td>
+					<td class="send-tries-td">1</td>
+					<td class="conf-td">MD1234567SDF5678DR</td>
+				</tr>
+
 
 				<tbody class="email-log-tbody">
-					
+
 				</tbody>
 			</table>
-			
+
 			<div class="accordion-item accordion-clone-class d-none">
-					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-						<button class="accordion-button acc-target"  type="button"
-							data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-							aria-controls="panelsStayOpen-collapseOne">
-							<div class="accordion-button-flex">
+				<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+					<button class="accordion-button acc-target" type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+						aria-controls="panelsStayOpen-collapseOne">
+						<div class="accordion-button-flex">
 
-								<big class="mb-3"><span class="email-label acc-name">Patel
-										Sagar</span></big> <small class="acount-type-btn-text"> <span
-									class="email-label">Action Name: </span> <span
-									class="email-text acc-action">Schedule Remainder</span>
-								</small> <small class="acount-type-btn-text"> <span
-									class="email-label">Email: </span> <span class="email-text acc-email">sagar@gmail.com</span>
-								</small>
+							<big class="mb-3"><span class="email-label acc-name">Patel
+									Sagar</span></big> <small class="acount-type-btn-text"> <span
+								class="email-label">Action Name: </span> <span
+								class="email-text acc-action">Schedule Remainder</span>
+							</small> <small class="acount-type-btn-text"> <span
+								class="email-label">Email: </span> <span
+								class="email-text acc-email">sagar@gmail.com</span>
+							</small>
 
+						</div>
+
+					</button>
+				</h2>
+				<div id="panelsStayOpen-collapseOne"
+					class="accordion-collapse collapse acc-id"
+					aria-labelledby="panelsStayOpen-headingOne">
+					<div class="accordion-body">
+						<div class="accordion-rows-main-flex">
+
+							<div class="accordion-row-inner-flex">
+								<div class="image-blue-border">
+									<img src="<c:url value='/resources/images/person.svg' />"
+										alt="">
+								</div>
+								<div>
+									<span class="email-label">Role Name: </span> <span
+										class="email-text acc-role">Physician</span>
+								</div>
 							</div>
 
-						</button>
-					</h2>
-					<div id="panelsStayOpen-collapseOne"
-						class="accordion-collapse collapse acc-id"
-						aria-labelledby="panelsStayOpen-headingOne">
-						<div class="accordion-body">
-							<div class="accordion-rows-main-flex">
-
-								<div class="accordion-row-inner-flex">
-									<div class="image-blue-border">
-										<img src="<c:url value='/resources/images/person.svg' />" alt="">
-									</div>
-									<div>
-										<span class="email-label">Role Name: </span> <span
-											class="email-text acc-role">Physician</span>
-									</div>
+							<div class="accordion-row-inner-flex">
+								<div class="image-blue-border">
+									<img
+										src="<c:url value='/resources/images/calendar4-week.svg' />"
+										class="calendar-resize-search" alt="">
 								</div>
-
-								<div class="accordion-row-inner-flex">
-									<div class="image-blue-border">
-										<img src="<c:url value='/resources/images/calendar4-week.svg' />"
-											class="calendar-resize-search" alt="">
-									</div>
-									<div>
-										<span class="email-label">Create Date: </span> <span
-											class="email-text acc-created">Dec 5, 2022</span>
-									</div>
+								<div>
+									<span class="email-label">Create Date: </span> <span
+										class="email-text acc-created">Dec 5, 2022</span>
 								</div>
-
-								<div class="accordion-row-inner-flex">
-									<div class="image-blue-border">
-										<img src="<c:url value='/resources/images/calendar4-week.svg' />"
-											class="calendar-resize-search" alt="">
-									</div>
-									<div>
-										<span class="email-label">Sent Date: </span> <span
-											class="email-text acc-sent">Dec 5, 2022</span>
-									</div>
-								</div>
-
-
-
-
-								<div class="accordion-row-inner-flex">
-									<div class="image-blue-border">
-										<img src="<c:url value='/resources/images/tick.svg' />"
-											class="tick-icon-resize-search" alt="">
-									</div>
-									<div>
-										<span class="email-label">Sent: </span> <span
-											class="email-text acc-sent-bool">Yes </span>
-									</div>
-								</div>
-
-								<div class="accordion-row-inner-flex">
-									<div class="image-blue-border">
-										<img src="<c:url value='/resources/images/envelope-blue.svg' />" alt="">
-									</div>
-									<div>
-										<span class="email-label">Sent Tries: </span> <span
-											class="email-text acc-sent-tries">1</span>
-									</div>
-								</div>
-
-								<div class="accordion-row-inner-flex">
-									<div class="image-blue-border">
-										<img src="<c:url value='/resources/images/tick.svg' />"
-											class="tick-icon-resize-search" alt="">
-									</div>
-									<div>
-										<span class="email-label">Confirmation Number: </span> <span
-											class="email-text acc-conf">MD1234567SDF5678DR</span>
-									</div>
-								</div>
-
-
 							</div>
+
+							<div class="accordion-row-inner-flex">
+								<div class="image-blue-border">
+									<img
+										src="<c:url value='/resources/images/calendar4-week.svg' />"
+										class="calendar-resize-search" alt="">
+								</div>
+								<div>
+									<span class="email-label">Sent Date: </span> <span
+										class="email-text acc-sent">Dec 5, 2022</span>
+								</div>
+							</div>
+
+
+
+
+							<div class="accordion-row-inner-flex">
+								<div class="image-blue-border">
+									<img src="<c:url value='/resources/images/tick.svg' />"
+										class="tick-icon-resize-search" alt="">
+								</div>
+								<div>
+									<span class="email-label">Sent: </span> <span
+										class="email-text acc-sent-bool">Yes </span>
+								</div>
+							</div>
+
+							<div class="accordion-row-inner-flex">
+								<div class="image-blue-border">
+									<img
+										src="<c:url value='/resources/images/envelope-blue.svg' />"
+										alt="">
+								</div>
+								<div>
+									<span class="email-label">Sent Tries: </span> <span
+										class="email-text acc-sent-tries">1</span>
+								</div>
+							</div>
+
+							<div class="accordion-row-inner-flex">
+								<div class="image-blue-border">
+									<img src="<c:url value='/resources/images/tick.svg' />"
+										class="tick-icon-resize-search" alt="">
+								</div>
+								<div>
+									<span class="email-label">Confirmation Number: </span> <span
+										class="email-text acc-conf">MD1234567SDF5678DR</span>
+								</div>
+							</div>
+
+
 						</div>
 					</div>
 				</div>
-			
-
-			<div class="accordion  enpty-accordion-class" id="accordionPanelsStayOpenExample">
-				
-
 			</div>
 
 
-
+			<div class="accordion  enpty-accordion-class"
+				id="accordionPanelsStayOpenExample"></div>
 		</div>
 
 	</div>
 
+	<nav aria-label="..." class="pagination-center-class">
+
+		<li class="page-item prev-navigation d-none"><a
+			onclick="prevPage()" class="page-link" href="#" tabindex="-1">Previous</a></li>
+
+		<li class="page-item pageno-pagination add-onclick d-none"><a
+			class="page-link add-active common-active" href="#"></a></li>
+		<li class="page-item next-pagination d-none"><a
+			onclick="nextPage()" class="page-link" href="#">Next</a></li>
+
+		<ul class="pagination empty-pagination">
+
+		</ul>
+	</nav>
+
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/email-logs.js' />"></script>
 	<script type="text/javascript">
-		
 		$(".common-link-class").removeClass("active")
 		$(".records-link-class").addClass("active")
-	
 	</script>
 </body>
 </html>
-	<%@include file="footer-black.jsp"%>
+<%@include file="footer-black.jsp"%>

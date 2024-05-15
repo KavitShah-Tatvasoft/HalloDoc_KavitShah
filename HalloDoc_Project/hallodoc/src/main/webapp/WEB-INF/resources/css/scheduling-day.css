@@ -1,3 +1,16 @@
+.physician-unavailable-error-div{
+	
+	display: flex;
+	justify-content: center;
+	
+}
+
+.physician-unavailable-error{
+	
+	color: red;
+	font-size: 15px;
+	margin-bottom: 10px;
+}
 .navigator_default_main{
   position: relative !important;
   top: -90px !important;

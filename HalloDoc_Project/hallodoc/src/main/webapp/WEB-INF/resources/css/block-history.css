@@ -1,3 +1,10 @@
+.pagination-center-class{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .logout-btn-admin{
     margin-left: 10px;
     margin-bottom: 2px;

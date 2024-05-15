@@ -13,7 +13,7 @@
 <body>
 	<div class="container"
 		style="width: 60%; text-align: center; margin-top: 25vh;">
-		<h2>${errorMessage}</h2>
+		<h2>You are not authorized to access the current page. Please login with authorized account to access this page.</h2>
 	</div>
 </body>
 </html>

@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/error")
 public class ErrorController {
 	
-	@RequestMapping("/error-page")
+	@RequestMapping("/authorization-error")
 	public String showErrorPage(HttpServletRequest request, Model m) {
-		m.addAttribute("errorMessage",request.getAttribute("errorMessage"));
 		return "admin/authorization-error";
 	}
 	
+	
+	@RequestMapping("/session-expired")
+	public String showSessionError(HttpServletRequest request, Model m) {
+		return "admin/session-error";
+	}
 }

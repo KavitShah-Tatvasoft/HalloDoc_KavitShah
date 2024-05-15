@@ -342,6 +342,7 @@
 						<th class="col-width-2"></th>
 					</tr>
 					<tr class="border-bottom-mobile">
+					
 						<td><span class="doc-type-text">Provider Agreement</span></td>
 						<td>
 							<div class="view-doc-btns-flex">
@@ -352,9 +353,9 @@
 										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
-								</label> <a class="view-doc-btn "><span class="view-txt">View</span><img
+								</label> <button class="view-doc-btn " id="pAgreement-view-btn"><span class="view-txt">View</span><img
 									src="<c:url value='/resources/images/password-eye-white.svg' />"
-									class="view-img" alt=""></a>
+									class="view-img" alt=""></button>
 							</div>
 						</td>
 					</tr>
@@ -364,14 +365,14 @@
 							<div class="view-doc-btns-flex">
 								<input type="file" class="bottom-upload-hide pHipaa"
 									name="pHipaa" id="upload-2"> <label for="upload-2">
-									<a class="view-doc-btn view-doc-btn-upload" role="button">
+									<a class="view-doc-btn view-doc-btn-upload"  role="button">
 										<span class="view-txt">Upload</span><img
 										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
-								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
+								</label> <button class="view-doc-btn" id="pHipaa-view-btn"><span class="view-txt">View</span><img
 									src="<c:url value='/resources/images/password-eye-white.svg' />"
-									class="view-img" alt=""></a>
+									class="view-img" alt=""></button>
 							</div>
 						</td>
 					</tr>
@@ -388,9 +389,9 @@
 										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
-								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
+								</label> <button class="view-doc-btn" id="pBackgroundCheck-view-btn"><span class="view-txt">View</span><img
 									src="<c:url value='/resources/images/password-eye-white.svg' />"
-									class="view-img" alt=""></a>
+									class="view-img" alt=""></button>
 							</div>
 						</td>
 					</tr>
@@ -407,9 +408,9 @@
 										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
-								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
+								</label> <button class="view-doc-btn" id="pNda-view-btn"><span class="view-txt">View</span><img
 									src="<c:url value='/resources/images/password-eye-white.svg' />"
-									class="view-img" alt=""></a>
+									class="view-img" alt=""></button>
 							</div>
 						</td>
 					</tr>
@@ -425,17 +426,17 @@
 										src="<c:url value='/resources/images/cloud-arrow-up-white.svg' />"
 										class="view-img-1" alt="">
 								</a>
-								</label> <a class="view-doc-btn"><span class="view-txt">View</span><img
+								</label> <button class="view-doc-btn" id="pLicense-view-btn"><span class="view-txt">View</span><img
 									src="<c:url value='/resources/images/password-eye-white.svg' />"
-									class="view-img" alt=""></a>
+									class="view-img" alt=""></button>
 							</div>
 						</td>
 					</tr>
 				</table>
 				<input type="text" name="pRegions" class="pRegions" hidden>
 				<div class="submission-btns-flex">
-					<button role="submit" class="submission-create shrink-btns " id="create-provider-btn">Create</button> <button
-						role="reset" class="submission-cancel shrink-btns">Cancel</button>
+					<button role="submit" class="submission-create shrink-btns " id="create-provider-btn">Create</button>
+					 <button type="reset" class="submission-cancel shrink-btns">Cancel</button>
 				</div>
 
 			</div>

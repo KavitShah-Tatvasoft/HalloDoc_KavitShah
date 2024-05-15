@@ -1,3 +1,7 @@
+#pAgreement-view-btn, #pHipaa-view-btn, #pBackgroundCheck-view-btn, #pNda-view-btn, #pLicense-view-btn{
+	display: none;
+}
+
 .bottom-upload-hide{
   display: none;
 }
@@ -16,6 +20,7 @@ a{
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
+    margin-bottom : 10px;
   }
   .back-btn-top:hover, .request-admin-btn:hover, .reset-pass-btn:hover{
     background-color: #01bce9;

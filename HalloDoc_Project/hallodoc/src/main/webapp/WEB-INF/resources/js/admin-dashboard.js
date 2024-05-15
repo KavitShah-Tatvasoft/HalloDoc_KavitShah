@@ -101,14 +101,15 @@ function loadData(current_state) {
 		}
 	}
 
+	payload = {}
+	payload["status"] = current_state
+	payload["pageNo"] = 1
 
 	$.ajax({
 		url: 'getRequestData',
 		type: 'POST',
 		dataType: 'json',
-		data: {
-			status: current_state
-		},
+		data: payload,
 
 		success: function(res) {
 
@@ -118,7 +119,45 @@ function loadData(current_state) {
 			tbody.empty()
 			accordionBody.empty()
 			var count = 120;
-			res.forEach(function(data) {
+
+			let paginationBody = $(".empty-pagination")
+			paginationBody.empty()
+			var prev = $(".prev-navigation").clone().removeClass("prev-navigation").removeClass("d-none")
+			var next = $(".next-pagination").clone().removeClass("next-pagination").removeClass("d-none")
+			paginationBody.append(prev)
+
+			var totalPageNumber = Math.ceil(res.count / 5)
+
+			for (let i = 1; i <= totalPageNumber; i++) {
+				pageNo = $(".pageno-pagination").clone().removeClass("pageno-pagination").removeClass("d-none")
+				pageNo.find(".page-link").text(i)
+				pageNo.find(".page-link").attr("data-pg", i)
+				pageNo.find(".page-link").attr("onclick", "changeActivePage(this)")
+				if (i == 1) {
+					pageNo.find(".add-active").addClass("active")
+					prev.addClass("disabled")
+				} else {
+					prev.removeClass("disabled")
+				}
+
+				if (i == totalPageNumber) {
+					next.addClass("disabled")
+				} else {
+					next.removeClass("disabled")
+				}
+
+				paginationBody.append(pageNo)
+			}
+
+
+			paginationBody.append(next)
+
+			if (totalPageNumber == 1) {
+				prev.addClass("disabled")
+				next.addClass("disabled")
+			}
+
+			res.newRequestDataDtos.forEach(function(data) {
 
 				count = count + 1
 
@@ -134,7 +173,7 @@ function loadData(current_state) {
 
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
-					;
+
 				accordionBody.append(accordionCard)
 
 			})
@@ -431,27 +470,99 @@ function createOtherReqRow(data, current_state) {
 
 }
 
+function changeActivePage(element) {
+	debugger
+	$(".add-active").removeClass("active")
+	console.log(element)
+
+	element.classList.add('active');
+	filterRequest(false)
+}
+
+function prevPage(){
+	debugger
+	var pageNo = $(".page-link.active").attr("data-pg")
+	const prevPage = pageNo - 1;
+    const prevLink = document.querySelector(`.page-link[data-pg="${prevPage}"]`);
+    if (prevLink) {
+      prevLink.click();
+    }
+}
+
+function nextPage(){
+	debugger
+	var pageNo = $(".page-link.active").attr("data-pg")
+	const nextPage = parseInt(pageNo) + 1;
+    const nextLink = document.querySelector(`.page-link[data-pg="${nextPage}"]`);
+    if (nextLink) {
+      nextLink.click();
+    }
+}
+
 $(document).ready(function() {
 
 	loadCount()
-
+	payload = {}
+	payload["status"] = "new"
+	payload["pageNo"] = 1
 	$.ajax({
 		url: 'getRequestData',
 		type: 'POST',
 		dataType: 'json',
-		data: {
-			status: "new"
-		},
+		data: payload,
 
 		success: function(res) {
 
-
+			console.log(res)
 			let tbody = $("#admin-table tbody")
 			let accordionBody = $(".empty-accordion")
 			tbody.empty()
 			accordionBody.empty()
 			let count = 121;
-			res.forEach(function(data) {
+
+			let paginationBody = $(".empty-pagination")
+			paginationBody.empty()
+			var prev = $(".prev-navigation").clone().removeClass("prev-navigation").removeClass("d-none")
+			var next = $(".next-pagination").clone().removeClass("next-pagination").removeClass("d-none")
+			paginationBody.append(prev)
+
+			var totalPageNumber = Math.ceil(res.count / 5)
+
+
+			for (let i = 1; i <= totalPageNumber; i++) {
+				pageNo = $(".pageno-pagination").clone().removeClass("pageno-pagination").removeClass("d-none")
+				pageNo.find(".page-link").text(i)
+				pageNo.find(".page-link").attr("data-pg", i)
+				pageNo.find(".page-link").attr("onclick", "changeActivePage(this)")
+				if (i == 1) {
+					pageNo.find(".add-active").addClass("active")
+					prev.addClass("disabled")
+				} else {
+					prev.removeClass("disabled")
+				}
+
+				if (i == totalPageNumber) {
+					next.addClass("disabled")
+				} else {
+					next.removeClass("disabled")
+				}
+
+				paginationBody.append(pageNo)
+			}
+
+
+
+			paginationBody.append(next)
+
+			if (totalPageNumber == 1) {
+				prev.addClass("disabled")
+				next.addClass("disabled")
+			} else {
+				prev.addClass("disabled")
+			}
+
+
+			res.newRequestDataDtos.forEach(function(data) {
 
 				const obj = {};
 				const columns = document.getElementsByClassName("table-columns");
@@ -614,14 +725,19 @@ function changeActiveBtn(element) {
 	$(element).next().addClass("show-active-button-class")
 }
 
-function filterRequest() {
+function filterRequest(bool) {
 
 	//	var requestType = $(".button-class.active-btn").html()
 	var patientName = document.getElementById("patient-name-search").value
 	var stateName = document.getElementById("region-name-search").value
 	var requestType = $(".button-class.active-btn").attr("data-value")
 	var statusType = $("#type-text").html();
-
+	debugger
+	if (bool == true) {
+		var pageNo = 1
+	}else{
+		var pageNo = $(".page-link.active").attr("data-pg")
+	}
 	statusType = statusType.slice(1, -1).toLowerCase();
 	var current_state = statusType
 	if (current_state == "to close") { current_state = "to-close" }
@@ -652,7 +768,7 @@ function filterRequest() {
 	payLoadData["stateName"] = stateName
 	payLoadData["requestType"] = requestType
 	payLoadData["statusType"] = statusType
-
+	payLoadData["pageNo"] = pageNo
 
 
 	$.ajax({
@@ -667,7 +783,51 @@ function filterRequest() {
 			tbody.empty()
 			accordionBody.empty()
 			var count = 120;
-			res.forEach(function(data) {
+
+			let paginationBody = $(".empty-pagination")
+			paginationBody.empty()
+			var prev = $(".prev-navigation").clone().removeClass("prev-navigation").removeClass("d-none")
+			var next = $(".next-pagination").clone().removeClass("next-pagination").removeClass("d-none")
+			paginationBody.append(prev)
+
+			var totalPageNumber = Math.ceil(res.count / 5)
+
+			for (let i = 1; i <= totalPageNumber; i++) {
+				paginationNumber = $(".pageno-pagination").clone().removeClass("pageno-pagination").removeClass("d-none")
+				paginationNumber.find(".page-link").text(i)
+				paginationNumber.find(".page-link").attr("data-pg", i)
+				paginationNumber.find(".page-link").attr("onclick", "changeActivePage(this)")
+				if (i == pageNo) {
+					paginationNumber.find(".add-active").addClass("active")
+				}
+
+				paginationBody.append(paginationNumber)
+			}
+
+			if (pageNo == 1) {
+				prev.addClass("disabled")
+			} else {
+				prev.removeClass("disabled")
+			}
+
+			if (pageNo == totalPageNumber) {
+				next.addClass("disabled")
+			} else {
+				next.removeClass("disabled")
+			}
+
+
+
+
+			paginationBody.append(next)
+
+			if (totalPageNumber == 1) {
+				prev.addClass("disabled")
+				next.addClass("disabled")
+			}
+
+
+			res.newRequestDataDtos.forEach(function(data) {
 
 				count = count + 1
 
@@ -683,7 +843,6 @@ function filterRequest() {
 
 
 				var accordionCard = poplulateAccordions(data, current_state, count)
-					;
 				accordionBody.append(accordionCard)
 
 

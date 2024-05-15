@@ -40,7 +40,7 @@ public class UserDao {
 		int id = (Integer) this.hibernateTemplate.save(user);
 		return id;
 	}
-	
+
 	public List<User> getUserByEmail(String userEmail) {
 
 		Session s = this.sessionFactory.openSession();
@@ -52,63 +52,111 @@ public class UserDao {
 
 		return list;
 	}
-	
+
 	@Transactional
 	public void updateUser(User users) {
 		this.hibernateTemplate.update(users);
 	}
-	
-	public List<User> getUserDetails(PatientHistoryDto patientHistoryDto){
-		
-			Session s = this.sessionFactory.openSession();
-			
-			CriteriaBuilder cb = s.getCriteriaBuilder();
-			CriteriaQuery<User> cr = cb.createQuery(User.class);
-			Root<User> root = cr.from(User.class);
-			
-			Join<User, AspNetRoles> roleJoin = root.join("aspNetRoles");
 
-			Predicate[] predicates = new Predicate[5];
+	public List<User> getUserDetails(PatientHistoryDto patientHistoryDto) {
 
-			
-			predicates[0] = cb.equal(roleJoin.get("id"), AspNetRolesEnum.PATIENT.getAspNetRolesId());
-			
-			if (!patientHistoryDto.getFirstName().equals("")) {
-				predicates[1] = cb.like(root.get("firstName"), patientHistoryDto.getFirstName() + "%");
-			} else {
-				predicates[1] = cb.like(root.get("firstName"), "%");
-			}
-			
-			if (!patientHistoryDto.getLastName().equals("")) {
-				predicates[2] = cb.like(root.get("lastName"), patientHistoryDto.getLastName() + "%");
-			} else {
-				predicates[2] = cb.like(root.get("lastName"), "%");
-			}
-			
-			if (!patientHistoryDto.getEmail().equals("")) {
-				predicates[3] = cb.like(root.get("email"), patientHistoryDto.getEmail() + "%");
-			} else {
-				predicates[3] = cb.like(root.get("email"), "%");
-			}
+		Session s = this.sessionFactory.openSession();
 
-			if (!patientHistoryDto.getPhoneNumber().equals("")) {
-				predicates[4] = cb.like(root.get("mobile"), patientHistoryDto.getPhoneNumber() + "%");
-			} else {
-				predicates[4] = cb.like(root.get("mobile"), "%");
-			}
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<User> cr = cb.createQuery(User.class);
+		Root<User> root = cr.from(User.class);
 
+		Join<User, AspNetRoles> roleJoin = root.join("aspNetRoles");
 
-			cr.select(root).where(predicates);
+		Predicate[] predicates = new Predicate[5];
 
-			Query<User> query = s.createQuery(cr);
+		predicates[0] = cb.equal(roleJoin.get("id"), AspNetRolesEnum.PATIENT.getAspNetRolesId());
 
-			List<User> list = query.getResultList();
-			s.close();
-			return list;
-
+		if (!patientHistoryDto.getFirstName().equals("")) {
+			predicates[1] = cb.like(root.get("firstName"), patientHistoryDto.getFirstName() + "%");
+		} else {
+			predicates[1] = cb.like(root.get("firstName"), "%");
 		}
-	
-	public List<User> getAllAdminUsers(){
+
+		if (!patientHistoryDto.getLastName().equals("")) {
+			predicates[2] = cb.like(root.get("lastName"), patientHistoryDto.getLastName() + "%");
+		} else {
+			predicates[2] = cb.like(root.get("lastName"), "%");
+		}
+
+		if (!patientHistoryDto.getEmail().equals("")) {
+			predicates[3] = cb.like(root.get("email"), patientHistoryDto.getEmail() + "%");
+		} else {
+			predicates[3] = cb.like(root.get("email"), "%");
+		}
+
+		if (!patientHistoryDto.getPhoneNumber().equals("")) {
+			predicates[4] = cb.like(root.get("mobile"), patientHistoryDto.getPhoneNumber() + "%");
+		} else {
+			predicates[4] = cb.like(root.get("mobile"), "%");
+		}
+
+		cr.select(root).where(predicates);
+
+		Query<User> query = s.createQuery(cr);
+		query.setMaxResults(10);
+		if (patientHistoryDto.getPageNo() != 0) {
+			query.setFirstResult((patientHistoryDto.getPageNo() - 1) * 10);
+		} else {
+			query.setFirstResult(0);
+		}
+		List<User> list = query.getResultList();
+		s.close();
+		return list;
+
+	}
+
+	public Long getUserDetailsCount(PatientHistoryDto patientHistoryDto) {
+
+		Session s = this.sessionFactory.openSession();
+
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<User> root = cr.from(User.class);
+
+		Join<User, AspNetRoles> roleJoin = root.join("aspNetRoles");
+
+		Predicate[] predicates = new Predicate[5];
+
+		predicates[0] = cb.equal(roleJoin.get("id"), AspNetRolesEnum.PATIENT.getAspNetRolesId());
+
+		if (!patientHistoryDto.getFirstName().equals("")) {
+			predicates[1] = cb.like(root.get("firstName"), patientHistoryDto.getFirstName() + "%");
+		} else {
+			predicates[1] = cb.like(root.get("firstName"), "%");
+		}
+
+		if (!patientHistoryDto.getLastName().equals("")) {
+			predicates[2] = cb.like(root.get("lastName"), patientHistoryDto.getLastName() + "%");
+		} else {
+			predicates[2] = cb.like(root.get("lastName"), "%");
+		}
+
+		if (!patientHistoryDto.getEmail().equals("")) {
+			predicates[3] = cb.like(root.get("email"), patientHistoryDto.getEmail() + "%");
+		} else {
+			predicates[3] = cb.like(root.get("email"), "%");
+		}
+
+		if (!patientHistoryDto.getPhoneNumber().equals("")) {
+			predicates[4] = cb.like(root.get("mobile"), patientHistoryDto.getPhoneNumber() + "%");
+		} else {
+			predicates[4] = cb.like(root.get("mobile"), "%");
+		}
+
+		cr.select(cb.count(root)).where(predicates);
+
+		Long total = s.createQuery(cr).getSingleResult();
+		s.close();
+		return total;
+	}
+
+	public List<User> getAllAdminUsers() {
 		Session s = this.sessionFactory.openSession();
 		String queryString = "FROM User user where user.aspNetRoles.id=1";
 		Query q = s.createQuery(queryString);
@@ -116,10 +164,7 @@ public class UserDao {
 		s.close();
 
 		return list;
-		
-		
+
 	}
-
-
 
 }

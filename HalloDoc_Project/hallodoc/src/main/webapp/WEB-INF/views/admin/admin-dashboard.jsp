@@ -48,7 +48,7 @@
 
 	<div class="loader-container">
 		<div class="loader"></div>
-	</div>	
+	</div>
 
 	<div class="container-fluid  footer-container mt-5">
 		<div class="row">
@@ -201,13 +201,14 @@
 								All</span>
 						</a>
 
-						<button class="btn btn-info mx-1" data-bs-toggle="modal"
-							data-bs-target="#staticBackdropdty">
-							<img
-								src="<c:url value='/resources/images/person-add-white.svg' />"
-								class="btn-info-img"> <span class="btns-text">Request
-								DTY Support</span>
-						</button>
+						<!-- 						<button class="btn btn-info mx-1" data-bs-toggle="modal" -->
+						<!-- 							data-bs-target="#staticBackdropdty"> -->
+						<!-- 							<img -->
+						<%-- 								src="<c:url value='/resources/images/person-add-white.svg' />" --%>
+						<!-- 								class="btn-info-img"> <span class="btns-text">Request -->
+						<!-- 								DTY Support</span> -->
+						<!-- 						</button> -->
+
 					</div>
 				</div>
 			</div>
@@ -221,7 +222,7 @@
 
 							<div class="relativity search-1">
 								<input class="form-control search-btn" id="patient-name-search"
-									onblur="filterRequest()" type="text"
+									onblur="filterRequest(true)" type="text"
 									placeholder="Search Patients"> <img
 									src="<c:url value='/resources/images/search.svg' />" alt=""
 									class="search-img">
@@ -229,10 +230,10 @@
 
 							<div class="admin-table-filter">
 								<div class="d-flex align-items-center">
-							
+
 									<div class="admin-table-filter-by-select">
 										<select class="form-select on-select" id="region-name-search"
-											onchange="filterRequest()"
+											onchange="filterRequest(true)"
 											aria-label="Default select example" style="color: gray;">
 											<option selected value="All">All</option>
 
@@ -257,7 +258,7 @@
 							<div>
 								<button class="all-label button-class active-btn d-none"
 									id="all-type-req" data-value="All"
-									onclick="changeActiveBtn(this);filterRequest()"
+									onclick="changeActiveBtn(this);filterRequest(true)"
 									id="all-type-req">All</button>
 								<label for="all-type-req" style="display: flex"
 									class="show-active-button-class commom-label-class">
@@ -269,7 +270,7 @@
 
 							<button id="patient-type-req" class="button-class"
 								data-value="Patient"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this);filterRequest(true)"
 								style="display: none;">Patient</button>
 							<label for="patient-type-req" style="display: flex"
 								class="commom-label-class">
@@ -281,7 +282,7 @@
 
 							<button id="family-type-req" class=" button-class"
 								data-value="Family"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this);filterRequest(true)"
 								style="display: none;">Family</button>
 							<label for="family-type-req" style="display: flex"
 								class="commom-label-class">
@@ -293,7 +294,7 @@
 
 							<button id="business-type-req" class=" button-class"
 								data-value="Business"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this);filterRequest(true)"
 								style="display: none;">Business</button>
 							<label for="business-type-req" style="display: flex"
 								class="commom-label-class">
@@ -305,7 +306,7 @@
 
 							<button class="button-class" id="concierge-type-req"
 								data-value="Concierge"
-								onclick="changeActiveBtn(this);filterRequest()"
+								onclick="changeActiveBtn(this);filterRequest(true)"
 								style="display: none;">Concierge</button>
 							<label for="concierge-type-req" style="display: flex"
 								class="commom-label-class">
@@ -741,6 +742,18 @@
 		</div>
 
 	</div>
+
+	<nav aria-label="..." class="pagination-center-class">
+
+		<li class="page-item prev-navigation d-none"><a onclick="prevPage()" class="page-link" href="#" tabindex="-1">Previous</a></li>
+
+		<li class="page-item pageno-pagination add-onclick d-none" ><a class="page-link add-active common-active" href="#"></a></li>
+		<li class="page-item next-pagination d-none" ><a onclick="nextPage()" class="page-link" href="#">Next</a></li>
+
+		<ul class="pagination empty-pagination">
+
+		</ul>
+	</nav>
 
 
 	<!-- --------------All Pop Ups--------------- -->

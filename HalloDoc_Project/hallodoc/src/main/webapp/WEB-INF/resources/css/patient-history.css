@@ -1,3 +1,10 @@
+.pagination-center-class{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .clear-btn:hover, .edit-btn:hover{
     background-color: #01bce9;
     color: white;

@@ -44,7 +44,7 @@
 									<ul class="dropdown-menu">
 										<div class="disc-align">
 											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/physicianMenu">Provider</a></li>
-											<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li>
+<%-- 											<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li> --%>
 											<!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
 										</div>
 									</ul></li>
@@ -134,7 +134,7 @@
 				role="button" aria-expanded="false">Provider</a>
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/physicianMenu">Provider</a></li>
-					<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li>
+<%-- 					<li><a class="dropdown-item" href="<c:url value='' />">Scheduling</a></li> --%>
 					<!-- <li><a class="dropdown-item" href="#">Invoicing</a></li> -->
 				</ul></li>
 			<li class="nav-item"><a href="${pageContext.request.contextPath}/user/professionMenu"

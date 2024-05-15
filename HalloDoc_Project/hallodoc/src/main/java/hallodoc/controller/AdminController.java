@@ -35,13 +35,17 @@ import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.dto.CreateRoleDataDto;
+import hallodoc.dto.CreateShiftDto;
 import hallodoc.dto.EditRoleDto;
+import hallodoc.dto.EventsDto;
 import hallodoc.dto.ExportDataDto;
 import hallodoc.dto.GetRolesDto;
 import hallodoc.dto.MenusDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.NewStatePageDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
+import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
@@ -124,9 +128,10 @@ public class AdminController {
 
 	@RequestMapping(value = "/getRequestData", method = RequestMethod.POST)
 	@ResponseBody
-	public List<NewRequestDataDto> getNewRequestData(@RequestParam("status") String status) {
+	public NewStatePageDataDto getNewRequestData(@RequestParam("status") String status,
+			@RequestParam("pageNo") int pageNo) {
 
-		List<NewRequestDataDto> requestsList = aService.getStatusCorrespondingRequests(status);
+		NewStatePageDataDto requestsList = aService.getStatusCorrespondingRequests(status, pageNo);
 
 		return requestsList;
 
@@ -142,8 +147,8 @@ public class AdminController {
 
 	@ResponseBody
 	@RequestMapping(value = "/searchRequestFilter", method = RequestMethod.POST)
-	public List<NewRequestDataDto> searchRequestFilter(RequestFiltersDto requestFiltersDto) {
-		List<NewRequestDataDto> filteredList = uService.getFilteredRequest(requestFiltersDto);
+	public NewStatePageDataDto searchRequestFilter(RequestFiltersDto requestFiltersDto) {
+		NewStatePageDataDto filteredList = uService.getFilteredRequest(requestFiltersDto);
 		return filteredList;
 	}
 
@@ -262,7 +267,7 @@ public class AdminController {
 		requestFiltersDto.setStateName(exportDataDto.getStateName());
 		requestFiltersDto.setStatusType(exportDataDto.getStatusType());
 
-		List<NewRequestDataDto> requestsList = uService.getFilteredRequest(requestFiltersDto);
+		List<NewRequestDataDto> requestsList = uService.getExportFilteredRequest(requestFiltersDto);
 		ResponseEntity<Resource> resource = uService.exportDataToExcelSheet(requestsList,
 				exportDataDto.getCurrentStatus());
 		return resource;
@@ -305,7 +310,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/sendAgreementToPatient", method = RequestMethod.POST)
 	public String sendAgreementToPatient(SendAgreementDto sendAgreementDto, HttpServletRequest httpServletRequest) {
-		
+
 		String status = uService.sendAgreementToPatient(sendAgreementDto, httpServletRequest);
 		return status;
 	}
@@ -378,7 +383,7 @@ public class AdminController {
 	@RequestMapping(value = "/createNewProviderAccount", method = RequestMethod.POST)
 	public RedirectView createNewProviderAccount(NewProviderAccountDto newProviderAccountDto,
 			HttpServletRequest request) {
-		;
+
 		String status = this.aService.createNewProvider(newProviderAccountDto, request);
 
 		return new RedirectView("physicianMenu", true);
@@ -526,10 +531,35 @@ public class AdminController {
 
 		HttpSession session = request.getSession();
 		session.invalidate();
-		;
+
 		RedirectView redirectView = new RedirectView(request.getServletContext().getContextPath() + "/patient_login",
 				false);
 		return redirectView;
 
+	}
+	
+	@RequestMapping(value = "/scheduling-day", method = RequestMethod.GET)
+	public String dayScheduling(Model m) {
+		return "admin/scheduling-day";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/create-shift", method=RequestMethod.POST)
+	public boolean createShift(CreateShiftDto createShiftDto, HttpServletRequest httpServletRequest) {
+		System.out.println(createShiftDto.getIsRepeated());
+		
+		return this.aService.createNewShift(createShiftDto,httpServletRequest );
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/get-physician-details-scheduling", method = RequestMethod.GET)
+	public List<PhysicianResources> getPhysicianDetails(HttpServletRequest httpServletRequest){
+		return this.aService.getAllPhysicianDetails(httpServletRequest);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="get-physician-events", method = RequestMethod.GET)
+	public List<EventsDto> getEventsData(){
+		return this.aService.getAllActiveEvents();
 	}
 }

@@ -6,6 +6,15 @@ public class BlockHistoryFilterData {
 	private String date;
 	private String email;
 	private String phone;
+	private int pageNo;
+	
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public String getName() {
 		return name;
 	}
@@ -39,13 +48,15 @@ public class BlockHistoryFilterData {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public BlockHistoryFilterData(String name, String date, String email, String phone) {
+	public BlockHistoryFilterData(String name, String date, String email, String phone, int pageNo) {
 		super();
 		this.name = name;
 		this.date = date;
 		this.email = email;
 		this.phone = phone;
+		this.pageNo = pageNo;
 	}
+	
 	
 	
 }

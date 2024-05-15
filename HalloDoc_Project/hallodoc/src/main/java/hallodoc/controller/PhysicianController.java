@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -248,6 +249,18 @@ public class PhysicianController {
 	@RequestMapping(value="/get-physician-request-filtered-data", method = RequestMethod.POST)
 	public List<PhysicianRequestDataDto> getFilteredPhysicianRequest(RequestFiltersDto requestFiltersDto, HttpServletRequest httpServletRequest){
 		return this.physicianService.getFilteredPhysicianRequests(requestFiltersDto, httpServletRequest);
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public RedirectView logoutUser(HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+		RedirectView redirectView = new RedirectView(request.getServletContext().getContextPath() + "/patient_login",
+				false);
+		return redirectView;
+
 	}
 
 }

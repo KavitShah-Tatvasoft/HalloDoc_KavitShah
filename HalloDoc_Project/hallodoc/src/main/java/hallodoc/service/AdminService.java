@@ -5,10 +5,13 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,7 @@ import javax.swing.event.MenuDragMouseEvent;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +36,16 @@ import hallodoc.dto.AdminContactDto;
 import hallodoc.dto.AdminRegions;
 import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.CreateRoleDataDto;
+import hallodoc.dto.CreateShiftDto;
 import hallodoc.dto.EditRoleDto;
+import hallodoc.dto.EventsDto;
 import hallodoc.dto.GetRolesDto;
 import hallodoc.dto.MenusDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.NewStatePageDataDto;
 import hallodoc.dto.PhysicianAssignCaseDto;
+import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
@@ -58,6 +66,8 @@ import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.RequestStatusLog;
 import hallodoc.model.Role;
+import hallodoc.model.Shift;
+import hallodoc.model.ShiftDetails;
 import hallodoc.model.SmsLog;
 import hallodoc.model.User;
 import hallodoc.repository.AdminDao;
@@ -70,6 +80,7 @@ import hallodoc.repository.RegionDao;
 import hallodoc.repository.RequestDao;
 import hallodoc.repository.RequestStatusLogDao;
 import hallodoc.repository.RoleAccessDao;
+import hallodoc.repository.ShiftDao;
 import hallodoc.sms.SmsService;
 import hallodoc.email.*;
 import hallodoc.enumerations.AspNetRolesEnum;
@@ -115,7 +126,10 @@ public class AdminService {
 	@Autowired
 	private AdminDao adminDao;
 
-	public List<NewRequestDataDto> getStatusCorrespondingRequests(String status) {
+	@Autowired
+	private ShiftDao shiftDao;
+
+	public NewStatePageDataDto getStatusCorrespondingRequests(String status, int pageNo) {
 
 		List<Integer> statusList = new ArrayList<Integer>();
 
@@ -146,16 +160,9 @@ public class AdminService {
 			statusList.add(hallodoc.enumerations.RequestStatus.UNPAID.getRequestId());
 		}
 
-		List<Request> requestsList = requestDao.getRequstStatusData(statusList);
+		NewStatePageDataDto requestsList = requestDao.getRequstStatusData(statusList, pageNo);
 
-		List<NewRequestDataDto> newRequestDataDtoList = new ArrayList<NewRequestDataDto>();
-		NewRequestDataDto newRequestDataDto;
-		for (Request request : requestsList) {
-			newRequestDataDto = RequestNewDataDtoMapper.mapDataNeWDataDto(request);
-			newRequestDataDtoList.add(newRequestDataDto);
-		}
-
-		return newRequestDataDtoList;
+		return requestsList;
 	}
 
 	public List<Integer> getStatusWiseRequestCount() {
@@ -210,18 +217,18 @@ public class AdminService {
 	public boolean sendRequestLink(HttpServletRequest request, SendLinkDto sendLinkDto) {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) request.getSession().getAttribute("aspUser");
-		Admin admin ;
+		Admin admin;
 		Physician physician;
 		EmailLog emailLog = new EmailLog();
 
-		if(aspNetUsers.getAdmin() != null) {
+		if (aspNetUsers.getAdmin() != null) {
 			admin = aspNetUsers.getAdmin();
 			emailLog.setAdminId(admin.getAdminId());
-		}else {
+		} else {
 			physician = aspNetUsers.getPhysician();
 			emailLog.setPhysicianId(physician.getPhysicianId());
 		}
-		
+
 		LocalDateTime date = LocalDateTime.now();
 		emailLog.setSubjectName(sendLinkDto.getEmailSubject());
 		emailLog.setEmailId(sendLinkDto.getEmail());
@@ -229,7 +236,7 @@ public class AdminService {
 		emailLog.setSentDate(date);
 		emailLog.setAction(1);
 		emailLog.setRecipientName(sendLinkDto.getFirstName() + " " + sendLinkDto.getLastName());
-		
+
 		emailLog.setRoleId(3);
 		boolean isSent = false;
 		int sentTries = 1;
@@ -470,18 +477,18 @@ public class AdminService {
 			FileOutputStream fos = new FileOutputStream(fullPath);
 			fos.write(data);
 			fos.close();
-			 ;
+			;
 			return "File Uploaded";
 		} catch (Exception e) {
 			e.printStackTrace();
-			 ;
+			;
 			return "File Upload Failed";
 		}
 	}
 
 	public String createNewProvider(NewProviderAccountDto newProviderAccountDto,
 			HttpServletRequest httpServletRequest) {
-		
+
 		Role role = this.roleAccessDao.getRoleOb(newProviderAccountDto.getpRole());
 		AspNetUsers adminOb = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		AspNetUsers aspNetUsers = new AspNetUsers();
@@ -1146,17 +1153,16 @@ public class AdminService {
 	public void deleteRole(Integer roleId) {
 		this.roleAccessDao.deleteRoleById(roleId);
 	}
-	
-	
-	private List<UserAccessDto> getPhysicianList(List<Physician> phyList){
+
+	private List<UserAccessDto> getPhysicianList(List<Physician> phyList) {
 		List<UserAccessDto> userAccessDtos = new ArrayList<UserAccessDto>();
 		for (Physician physician : phyList) {
 			UserAccessDto userAccessDto = new UserAccessDto();
 			userAccessDto.setAccountType("Provider");
 			userAccessDto.setName(physician.getFirstName() + " " + physician.getLastName());
-			
+
 			List<Request> physicianRequests = this.requestDao.getPhysicianRequests(physician.getPhysicianId());
-			
+
 			userAccessDto.setOpenRequests(physicianRequests.size());
 			String status = physician.getStatus() == 1 ? "Active" : "Inactive";
 			userAccessDto.setStatus(status);
@@ -1166,12 +1172,11 @@ public class AdminService {
 
 		}
 		return userAccessDtos;
-		
-		
+
 	}
-	
-	private List<UserAccessDto> getAdminList(List<Admin> adminList, Integer noRequest){
-		
+
+	private List<UserAccessDto> getAdminList(List<Admin> adminList, Integer noRequest) {
+
 		List<UserAccessDto> userAccessDtos = new ArrayList<UserAccessDto>();
 		for (Admin admin : adminList) {
 			UserAccessDto userAccessDto = new UserAccessDto();
@@ -1184,34 +1189,32 @@ public class AdminService {
 			userAccessDtos.add(userAccessDto);
 
 		}
-		
+
 		return userAccessDtos;
-		
+
 	}
-	
 
 	@Transactional
 	public List<UserAccessDto> getUserAccessData(Integer typeId) {
-		
+
 		Integer noRequest = this.requestDao.getOpenReqeustCount();
 		List<Admin> adminList = this.adminDao.getAdminData();
 		List<Physician> phyList = this.physicianDao.getAllActivePhysician();
-		
-		if(typeId == 0) {
+
+		if (typeId == 0) {
 			List<UserAccessDto> physicianLists = getPhysicianList(phyList);
-			List<UserAccessDto> adminLists = getAdminList(adminList,noRequest);
+			List<UserAccessDto> adminLists = getAdminList(adminList, noRequest);
 			List<UserAccessDto> commonList = Stream.concat(physicianLists.stream(), adminLists.stream()).toList();
 			return commonList;
-		}else if (typeId == 1) {
-			return  getAdminList(adminList,noRequest);
-		}else {
+		} else if (typeId == 1) {
+			return getAdminList(adminList, noRequest);
+		} else {
 			return getPhysicianList(phyList);
 		}
-		
-		
+
 	}
-	
-	public List<GetRolesDto> getPhysicianRoles(){
+
+	public List<GetRolesDto> getPhysicianRoles() {
 		List<Role> rolesList = this.roleAccessDao.getPhysicianRoles();
 		List<GetRolesDto> list = new ArrayList<GetRolesDto>();
 		for (Role role : rolesList) {
@@ -1220,8 +1223,181 @@ public class AdminService {
 			getRolesDto.setRoleName(role.getName());
 			list.add(getRolesDto);
 		}
-		
+
 		return list;
 	}
 
+	private ShiftDetails createNewShiftDetails(CreateShiftDto createShiftDto, AspNetUsers aspNetUsers,
+			LocalDate shiftDate, LocalTime startTime, LocalTime endTime, Shift shift) {
+		ShiftDetails shiftDetails = new ShiftDetails();
+		shiftDetails.setDeleted(false);
+		shiftDetails.setEndTime(endTime);
+		shiftDetails.setModifiedBy(aspNetUsers);
+		shiftDetails.setRegionId(createShiftDto.getRegion());
+		shiftDetails.setShiftDate(shiftDate);
+		shiftDetails.setShiftId(shift);
+		shiftDetails.setStartTime(startTime);
+		shiftDetails.setStatus(1);
+		return shiftDetails;
+	}
+	
+	private boolean physicianAvailableForShift(CreateShiftDto createShiftDto,Physician physician,
+			LocalDate shiftDate, LocalTime startTime, LocalTime endTime, String daysString) {
+		
+		List<LocalDate> shiftDates = new ArrayList<LocalDate>();
+		int shiftDateInt = shiftDate.getDayOfWeek().getValue();
+		if (createShiftDto.getIsRepeated().equals("true")) {
+			for (int i = 0; i < daysString.length(); i++) {
+				if (daysString.charAt(i) == '1') {
+					int diff;
+					if (shiftDateInt > i) {
+						diff = 7 - Math.abs(i - shiftDateInt) + 1;
+					} else {
+						diff = Math.abs(i - shiftDateInt) + 1;
+					}
+
+					LocalDate nextDate = shiftDate.plusDays(diff);
+					shiftDates.add(nextDate);
+
+					for (int j = 0; j < createShiftDto.getRepeatTimes() - 1; j++) {
+						LocalDate futureShiftDate = nextDate.plusDays(7);
+						shiftDates.add(futureShiftDate);
+					}
+				}
+			}
+		} else {
+			shiftDates.add(shiftDate);
+		}
+
+		if (daysString.charAt(shiftDateInt - 1) == '0') {
+			shiftDates.add(shiftDate);
+		}
+		
+		List<ShiftDetails> physicianShifts =  this.shiftDao.getPhysicianAvailbility(shiftDates, physician);
+		boolean flag = true;
+		for (ShiftDetails shiftDetails : physicianShifts) {
+			if((startTime.isAfter(shiftDetails.getStartTime()) && startTime.isBefore(shiftDetails.getEndTime())) || (endTime.isAfter(shiftDetails.getStartTime()) && endTime.isBefore(shiftDetails.getEndTime())) || (startTime.isBefore(shiftDetails.getStartTime()) && endTime.isAfter(shiftDetails.getEndTime())) ) {
+				flag = false;
+				break;
+			}
+		}
+		
+		return flag;
+	}
+
+	public boolean createNewShift(CreateShiftDto createShiftDto, HttpServletRequest httpServletRequest) {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate shiftDate = LocalDate.parse(createShiftDto.getShiftDate(), formatter);
+		int shiftDateInt = shiftDate.getDayOfWeek().getValue();
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
+		LocalTime startTime = LocalTime.parse(createShiftDto.getStartTime(), timeFormatter);
+		LocalTime endTime = LocalTime.parse(createShiftDto.getEndTime(), timeFormatter);
+
+		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
+		Physician physician = this.physicianDao.getPhysicianById(createShiftDto.getPhysicianId());
+
+		String[] selectedDays = createShiftDto.getSelectedDays().split(",");
+		String daysString = selectedDays[3] + selectedDays[5] + selectedDays[1] + selectedDays[4] + selectedDays[6]
+				+ selectedDays[2] + selectedDays[0];
+		boolean physicainAvailable = physicianAvailableForShift(createShiftDto,physician,shiftDate,startTime,endTime,daysString);
+		if (physicainAvailable) {
+
+			Shift shift = new Shift();
+			List<ShiftDetails> shiftDetailsList = new ArrayList<ShiftDetails>();
+			shift.setCreatedBy(aspNetUsers);
+			shift.setPhysicianId(physician);
+			if (createShiftDto.getIsRepeated().equals("true")) {
+				shift.setRepeat(true);
+			} else {
+				shift.setRepeat(false);
+			}
+			shift.setRepeatUpto(createShiftDto.getRepeatTimes());
+			shift.setStartDate(shiftDate);
+			shift.setWeekDays(createShiftDto.getSelectedDays());
+
+			if (createShiftDto.getIsRepeated().equals("true")) {
+				for (int i = 0; i < daysString.length(); i++) {
+					if (daysString.charAt(i) == '1') {
+						int diff;
+						if (shiftDateInt > i) {
+							diff = 7 - Math.abs(i - shiftDateInt) + 1;
+						} else {
+							diff = Math.abs(i - shiftDateInt) + 1;
+						}
+
+						LocalDate nextDate = shiftDate.plusDays(diff);
+						ShiftDetails shiftDetails = createNewShiftDetails(createShiftDto, aspNetUsers, nextDate,
+								startTime, endTime, shift);
+						shiftDetailsList.add(shiftDetails);
+
+						for (int j = 0; j < createShiftDto.getRepeatTimes() - 1; j++) {
+							LocalDate futureShiftDate = nextDate.plusDays(7);
+							ShiftDetails futureshiftDetails = createNewShiftDetails(createShiftDto, aspNetUsers,
+									futureShiftDate, startTime, endTime, shift);
+							shiftDetailsList.add(futureshiftDetails);
+						}
+					}
+				}
+			} else {
+
+				ShiftDetails shiftDetails = createNewShiftDetails(createShiftDto, aspNetUsers, shiftDate, startTime,
+						endTime, shift);
+				shiftDetailsList.add(shiftDetails);
+			}
+
+			if (daysString.charAt(shiftDateInt - 1) == '0' && createShiftDto.getIsRepeated().equals("true")) {
+				ShiftDetails shiftDetails = createNewShiftDetails(createShiftDto, aspNetUsers, shiftDate, startTime,
+						endTime, shift);
+				shiftDetailsList.add(shiftDetails);
+			}
+
+			shift.setShiftDetails(shiftDetailsList);
+			this.shiftDao.addNewShift(shift);
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	
+	public List<PhysicianResources> getAllPhysicianDetails(HttpServletRequest httpServletRequest){
+		
+		List<PhysicianResources> physicianResources = new ArrayList<PhysicianResources>();
+		List<Physician> physicians = this.physicianDao.getAllActivePhysician();
+		for (Physician physician : physicians) {
+			String path = Constants.getProviderUplaodPath(httpServletRequest.getSession()) + File.separator + physician.getPhysicianId() + File.separator + physician.getPhoto();
+			PhysicianResources phyResources = new PhysicianResources();
+			phyResources.setPhysicianId(physician.getPhysicianId());
+			phyResources.setPhysicianName(physician.getFirstName() + " " + physician.getLastName());
+			if(physician.getPhoto() != null) {
+				phyResources.setPath(path);
+			}else {
+				
+			}
+			
+			physicianResources.add(phyResources);
+		}
+		return physicianResources;
+	}
+	
+	public List<EventsDto> getAllActiveEvents(){
+		List<EventsDto> eventsDtos = new ArrayList<EventsDto>();
+		List<ShiftDetails> shiftDetailsList = this.shiftDao.getAllActiveShifts();
+		
+		for (ShiftDetails shiftDetails : shiftDetailsList) {
+			EventsDto eventsDto = new EventsDto();
+			eventsDto.setEndTime(shiftDetails.getEndTime().toString());
+			eventsDto.setPhysicianId(shiftDetails.getShiftId().getPhysicianId().getPhysicianId());
+			eventsDto.setRegionAbbr(regionDao.getRegionById(shiftDetails.getRegionId()).get(0).getAbbreviation());
+			eventsDto.setShiftDate(shiftDetails.getShiftDate().toString());
+			eventsDto.setShiftDetailId(shiftDetails.getShiftDetailId());
+			eventsDto.setStartTime(shiftDetails.getStartTime().toString());
+			eventsDto.setStatus(shiftDetails.getStatus());
+			eventsDto.setRegionId(shiftDetails.getRegionId());
+			eventsDtos.add(eventsDto);
+		}
+		
+		return eventsDtos;
+	}
 }

@@ -8,6 +8,15 @@ public class PatientHistoryDto {
 	private String email;
 	private String phoneNumber;
 	private String address;
+	private int pageNo;
+	
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
@@ -44,13 +53,11 @@ public class PatientHistoryDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	@Override
-	public String toString() {
-		return "PatientHistoryDto [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + "]";
-	}
+	
+	
+	
 	public PatientHistoryDto(Integer userId, String firstName, String lastName, String email, String phoneNumber,
-			String address) {
+			String address, int pageNo) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
@@ -58,6 +65,7 @@ public class PatientHistoryDto {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
+		this.pageNo = pageNo;
 	}
 	public PatientHistoryDto() {
 		super();

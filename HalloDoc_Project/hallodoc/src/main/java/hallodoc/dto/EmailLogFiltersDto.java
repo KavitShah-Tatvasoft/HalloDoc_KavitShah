@@ -7,7 +7,16 @@ public class EmailLogFiltersDto {
 	private String email;
 	private String createdDate;
 	private String sentDate;
+	private int pageNo;
 	
+	
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public Integer getRoleId() {
 		return roleId;
 	}
@@ -38,22 +47,20 @@ public class EmailLogFiltersDto {
 	public void setSentDate(String sentDate) {
 		this.sentDate = sentDate;
 	}
-	@Override
-	public String toString() {
-		return "EmailLogFiltersDto [roleId=" + roleId + ", reciever=" + reciever + ", email=" + email + ", createdDate="
-				+ createdDate + ", sentDate=" + sentDate + "]";
+	
+	public EmailLogFiltersDto() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	public EmailLogFiltersDto(Integer roleId, String reciever, String email, String createdDate, String sentDate) {
+	public EmailLogFiltersDto(Integer roleId, String reciever, String email, String createdDate, String sentDate,
+			int pageNo) {
 		super();
 		this.roleId = roleId;
 		this.reciever = reciever;
 		this.email = email;
 		this.createdDate = createdDate;
 		this.sentDate = sentDate;
-	}
-	public EmailLogFiltersDto() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.pageNo = pageNo;
 	}
 	
 	

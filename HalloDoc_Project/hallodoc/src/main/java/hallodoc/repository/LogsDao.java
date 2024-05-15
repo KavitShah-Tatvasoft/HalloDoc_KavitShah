@@ -46,114 +46,227 @@ public class LogsDao {
 		return smsLogId;
 	}
 
-	public List<EmailLog> getFilteredEmailLogData(EmailLogFiltersDto emailLogFiltersDto){
+	public List<EmailLog> getFilteredEmailLogData(EmailLogFiltersDto emailLogFiltersDto) {
 		Session s = this.sessionFactory.openSession();
-		
+
 		CriteriaBuilder cb = s.getCriteriaBuilder();
 		CriteriaQuery<EmailLog> cr = cb.createQuery(EmailLog.class);
 		Root<EmailLog> root = cr.from(EmailLog.class);
-		
 
 		Predicate[] predicates = new Predicate[5];
 
-		if(emailLogFiltersDto.getRoleId() == 0) {
+		if (emailLogFiltersDto.getRoleId() == 0) {
 			predicates[0] = cb.gt(root.get("roleId"), 0);
-		}else {
+		} else {
 			predicates[0] = cb.equal(root.get("roleId"), emailLogFiltersDto.getRoleId());
 		}
-		
+
 		if (!emailLogFiltersDto.getReciever().equals("")) {
 			predicates[1] = cb.like(root.get("recipientName"), emailLogFiltersDto.getReciever() + "%");
 		} else {
 			predicates[1] = cb.like(root.get("recipientName"), "%");
 		}
-		
+
 		if (!emailLogFiltersDto.getEmail().equals("")) {
 			predicates[2] = cb.like(root.get("emailId"), emailLogFiltersDto.getEmail() + "%");
 		} else {
 			predicates[2] = cb.like(root.get("emailId"), "%");
 		}
-		
-		if(!emailLogFiltersDto.getCreatedDate().equals("")) {
-			String createdDate = emailLogFiltersDto.getCreatedDate(); 
-			LocalDate createDateTime = LocalDate.parse(createdDate); 
-			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")), Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		}else {
+
+		if (!emailLogFiltersDto.getCreatedDate().equals("")) {
+			String createdDate = emailLogFiltersDto.getCreatedDate();
+			LocalDate createDateTime = LocalDate.parse(createdDate);
+			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")),
+					Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
 			predicates[3] = cb.like(root.get("emailId"), "%");
 		}
 
-		if(!emailLogFiltersDto.getSentDate().equals("")) {
-			String sentDate = emailLogFiltersDto.getSentDate(); 
-			LocalDate sentDateTime = LocalDate.parse(sentDate); 
-			predicates[4] = cb.equal(cb.function("DATE", Date.class, root.get("sentDate")), Date.from(sentDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		}else {
+		if (!emailLogFiltersDto.getSentDate().equals("")) {
+			String sentDate = emailLogFiltersDto.getSentDate();
+			LocalDate sentDateTime = LocalDate.parse(sentDate);
+			predicates[4] = cb.equal(cb.function("DATE", Date.class, root.get("sentDate")),
+					Date.from(sentDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
 			predicates[4] = cb.like(root.get("emailId"), "%");
 		}
-
 
 		cr.select(root).where(predicates);
 
 		Query<EmailLog> query = s.createQuery(cr);
-
+		query.setMaxResults(10);
+		if (emailLogFiltersDto.getPageNo() != 0) {
+			query.setFirstResult((emailLogFiltersDto.getPageNo() - 1) * 10);
+		} else {
+			query.setFirstResult(0);
+		}
 		List<EmailLog> list = query.getResultList();
 		s.close();
 		return list;
 
 	}
 
-	
-	public List<SmsLog> getFilteredSMSLogData(EmailLogFiltersDto emailLogFiltersDto){
+	public Long getFilteredEmailLogDataCount(EmailLogFiltersDto emailLogFiltersDto) {
 		Session s = this.sessionFactory.openSession();
-		
+
 		CriteriaBuilder cb = s.getCriteriaBuilder();
-		CriteriaQuery<SmsLog> cr = cb.createQuery(SmsLog.class);
-		Root<SmsLog> root = cr.from(SmsLog.class);
-		
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<EmailLog> root = cr.from(EmailLog.class);
 
 		Predicate[] predicates = new Predicate[5];
 
-		if(emailLogFiltersDto.getRoleId() == 0) {
+		if (emailLogFiltersDto.getRoleId() == 0) {
 			predicates[0] = cb.gt(root.get("roleId"), 0);
-		}else {
+		} else {
 			predicates[0] = cb.equal(root.get("roleId"), emailLogFiltersDto.getRoleId());
 		}
-		
+
 		if (!emailLogFiltersDto.getReciever().equals("")) {
 			predicates[1] = cb.like(root.get("recipientName"), emailLogFiltersDto.getReciever() + "%");
 		} else {
 			predicates[1] = cb.like(root.get("recipientName"), "%");
 		}
-		
+
+		if (!emailLogFiltersDto.getEmail().equals("")) {
+			predicates[2] = cb.like(root.get("emailId"), emailLogFiltersDto.getEmail() + "%");
+		} else {
+			predicates[2] = cb.like(root.get("emailId"), "%");
+		}
+
+		if (!emailLogFiltersDto.getCreatedDate().equals("")) {
+			String createdDate = emailLogFiltersDto.getCreatedDate();
+			LocalDate createDateTime = LocalDate.parse(createdDate);
+			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")),
+					Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
+			predicates[3] = cb.like(root.get("emailId"), "%");
+		}
+
+		if (!emailLogFiltersDto.getSentDate().equals("")) {
+			String sentDate = emailLogFiltersDto.getSentDate();
+			LocalDate sentDateTime = LocalDate.parse(sentDate);
+			predicates[4] = cb.equal(cb.function("DATE", Date.class, root.get("sentDate")),
+					Date.from(sentDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
+			predicates[4] = cb.like(root.get("emailId"), "%");
+		}
+
+		cr.select(cb.count(root)).where(predicates);
+		Long total = s.createQuery(cr).getSingleResult();
+		s.close();
+		return total;
+
+	}
+
+	public List<SmsLog> getFilteredSMSLogData(EmailLogFiltersDto emailLogFiltersDto) {
+		Session s = this.sessionFactory.openSession();
+
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<SmsLog> cr = cb.createQuery(SmsLog.class);
+		Root<SmsLog> root = cr.from(SmsLog.class);
+
+		Predicate[] predicates = new Predicate[5];
+
+		if (emailLogFiltersDto.getRoleId() == 0) {
+			predicates[0] = cb.gt(root.get("roleId"), 0);
+		} else {
+			predicates[0] = cb.equal(root.get("roleId"), emailLogFiltersDto.getRoleId());
+		}
+
+		if (!emailLogFiltersDto.getReciever().equals("")) {
+			predicates[1] = cb.like(root.get("recipientName"), emailLogFiltersDto.getReciever() + "%");
+		} else {
+			predicates[1] = cb.like(root.get("recipientName"), "%");
+		}
+
 		if (!emailLogFiltersDto.getEmail().equals("")) {
 			predicates[2] = cb.like(root.get("mobileNumber"), emailLogFiltersDto.getEmail() + "%");
 		} else {
 			predicates[2] = cb.like(root.get("mobileNumber"), "%");
 		}
-		
-		if(!emailLogFiltersDto.getCreatedDate().equals("")) {
-			String createdDate = emailLogFiltersDto.getCreatedDate(); 
-			LocalDate createDateTime = LocalDate.parse(createdDate); 
-			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")), Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		}else {
+
+		if (!emailLogFiltersDto.getCreatedDate().equals("")) {
+			String createdDate = emailLogFiltersDto.getCreatedDate();
+			LocalDate createDateTime = LocalDate.parse(createdDate);
+			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")),
+					Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
 			predicates[3] = cb.like(root.get("mobileNumber"), "%");
 		}
 
-		if(!emailLogFiltersDto.getSentDate().equals("")) {
-			String sentDate = emailLogFiltersDto.getSentDate(); 
-			LocalDate sentDateTime = LocalDate.parse(sentDate); 
-			predicates[4] = cb.equal(cb.function("DATE", Date.class, root.get("sentDate")), Date.from(sentDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		}else {
+		if (!emailLogFiltersDto.getSentDate().equals("")) {
+			String sentDate = emailLogFiltersDto.getSentDate();
+			LocalDate sentDateTime = LocalDate.parse(sentDate);
+			predicates[4] = cb.equal(cb.function("DATE", Date.class, root.get("sentDate")),
+					Date.from(sentDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
 			predicates[4] = cb.like(root.get("mobileNumber"), "%");
 		}
-
 
 		cr.select(root).where(predicates);
 
 		Query<SmsLog> query = s.createQuery(cr);
-
+		query.setMaxResults(10);
+		if (emailLogFiltersDto.getPageNo() != 0) {
+			query.setFirstResult((emailLogFiltersDto.getPageNo() - 1) * 10);
+		} else {
+			query.setFirstResult(0);
+		}
 		List<SmsLog> list = query.getResultList();
 		s.close();
 		return list;
+
+	}
+	
+	public Long getFilteredSmsLogDataCount(EmailLogFiltersDto emailLogFiltersDto) {
+		Session s = this.sessionFactory.openSession();
+
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<SmsLog> root = cr.from(SmsLog.class);
+
+		Predicate[] predicates = new Predicate[5];
+
+		if (emailLogFiltersDto.getRoleId() == 0) {
+			predicates[0] = cb.gt(root.get("roleId"), 0);
+		} else {
+			predicates[0] = cb.equal(root.get("roleId"), emailLogFiltersDto.getRoleId());
+		}
+
+		if (!emailLogFiltersDto.getReciever().equals("")) {
+			predicates[1] = cb.like(root.get("recipientName"), emailLogFiltersDto.getReciever() + "%");
+		} else {
+			predicates[1] = cb.like(root.get("recipientName"), "%");
+		}
+
+		if (!emailLogFiltersDto.getEmail().equals("")) {
+			predicates[2] = cb.like(root.get("mobileNumber"), emailLogFiltersDto.getEmail() + "%");
+		} else {
+			predicates[2] = cb.like(root.get("mobileNumber"), "%");
+		}
+
+		if (!emailLogFiltersDto.getCreatedDate().equals("")) {
+			String createdDate = emailLogFiltersDto.getCreatedDate();
+			LocalDate createDateTime = LocalDate.parse(createdDate);
+			predicates[3] = cb.equal(cb.function("DATE", Date.class, root.get("createdDate")),
+					Date.from(createDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
+			predicates[3] = cb.like(root.get("mobileNumber"), "%");
+		}
+
+		if (!emailLogFiltersDto.getSentDate().equals("")) {
+			String sentDate = emailLogFiltersDto.getSentDate();
+			LocalDate sentDateTime = LocalDate.parse(sentDate);
+			predicates[4] = cb.equal(cb.function("DATE", Date.class, root.get("sentDate")),
+					Date.from(sentDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		} else {
+			predicates[4] = cb.like(root.get("mobileNumber"), "%");
+		}
+
+		cr.select(cb.count(root)).where(predicates);
+		Long total = s.createQuery(cr).getSingleResult();
+		s.close();
+		return total;
 
 	}
 

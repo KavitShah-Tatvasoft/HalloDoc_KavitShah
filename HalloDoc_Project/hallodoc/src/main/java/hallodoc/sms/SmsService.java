@@ -46,7 +46,6 @@ public class SmsService {
 
 		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
 		        Message message = messageFactory.create(params);
-		         ;
 		    } 
 		    catch (TwilioRestException e) {
 		         ;

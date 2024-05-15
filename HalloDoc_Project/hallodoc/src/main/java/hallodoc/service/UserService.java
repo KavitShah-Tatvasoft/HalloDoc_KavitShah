@@ -34,6 +34,7 @@ import com.password4j.types.Bcrypt;
 
 import hallodoc.dto.BlockCaseDto;
 import hallodoc.dto.BlockHistoryFilterData;
+import hallodoc.dto.BlockHistoryPaginatedDto;
 import hallodoc.dto.BlockRequestsTableData;
 import hallodoc.dto.CancelCaseDetailsDto;
 import hallodoc.dto.ClearCaseDto;
@@ -41,21 +42,26 @@ import hallodoc.dto.CloseCaseEditDataDto;
 import hallodoc.dto.CommonRequestDto;
 import hallodoc.dto.EmailLogDashboardDto;
 import hallodoc.dto.EmailLogFiltersDto;
+import hallodoc.dto.EmailLogPaginatedDto;
 import hallodoc.dto.EncounterFormDto;
 import hallodoc.dto.EncounterFormUserDetailsDto;
 import hallodoc.dto.HealthProfessionalDataDto;
 import hallodoc.dto.NewBusinessDto;
 import hallodoc.dto.NewRequestDataDto;
+import hallodoc.dto.NewStatePageDataDto;
 import hallodoc.dto.OrderVendorDetailsDto;
 import hallodoc.dto.OrdersDetailsDto;
 import hallodoc.dto.PatientHistoryDto;
+import hallodoc.dto.PatientHistoryPaginatedDto;
 import hallodoc.dto.PatientRecordsDto;
 import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SMSLogDashboardDataDto;
 import hallodoc.dto.SearchRecordsDashboardData;
 import hallodoc.dto.SearchRecordsFilter;
+import hallodoc.dto.SearchRecordsPaginationDto;
 import hallodoc.dto.SendAgreementDto;
+import hallodoc.dto.SmsLogPaginatedDto;
 import hallodoc.dto.UpdateCaseDto;
 import hallodoc.dto.UserProfileDto;
 import hallodoc.dto.VendorDetailsDto;
@@ -288,9 +294,9 @@ public class UserService {
 		Request request = requestDao.getRequestOb(id);
 		return request;
 	}
-
-	public List<NewRequestDataDto> getFilteredRequest(RequestFiltersDto requestFiltersDto) {
-		List<Request> filteredList = requestDao.getFilteredRequests(requestFiltersDto);
+	
+	public List<NewRequestDataDto> getExportFilteredRequest(RequestFiltersDto requestFiltersDto) {
+		List<Request> filteredList = requestDao.getExportFilteredRequests(requestFiltersDto);
 		List<NewRequestDataDto> newRequestDataDtos = new ArrayList<NewRequestDataDto>();
 
 		NewRequestDataDto newRequestDataDto;
@@ -299,6 +305,12 @@ public class UserService {
 			newRequestDataDtos.add(newRequestDataDto);
 		}
 		return newRequestDataDtos;
+	}
+
+
+	public NewStatePageDataDto getFilteredRequest(RequestFiltersDto requestFiltersDto) {
+		return requestDao.getFilteredRequests(requestFiltersDto);
+		
 	}
 
 //	public Request getViewCaseRequest(int reqId) {
@@ -1135,7 +1147,7 @@ public class UserService {
 		}
 	}
 
-	public List<SMSLogDashboardDataDto> getSmsLogFilteredData(EmailLogFiltersDto emailLogFiltersDto) {
+	public SmsLogPaginatedDto getSmsLogFilteredData(EmailLogFiltersDto emailLogFiltersDto) {
 		List<SMSLogDashboardDataDto> smsDashboard = new ArrayList<SMSLogDashboardDataDto>();
 		List<SmsLog> logs = this.logsDao.getFilteredSMSLogData(emailLogFiltersDto);
 
@@ -1184,11 +1196,16 @@ public class UserService {
 			smsDashboard.add(smsLogDashboardDataDto);
 		}
 
-		return smsDashboard;
+		Long count = this.logsDao.getFilteredSmsLogDataCount(emailLogFiltersDto);
+		
+		SmsLogPaginatedDto smsLogPaginatedDto = new SmsLogPaginatedDto();
+		smsLogPaginatedDto.setSmsLogDashboardDataDtos(smsDashboard);
+		smsLogPaginatedDto.setCount(count);
+		return smsLogPaginatedDto;
 
 	}
 
-	public List<EmailLogDashboardDto> getEmailLogFilteredDate(EmailLogFiltersDto emailLogFiltersDto) {
+	public EmailLogPaginatedDto getEmailLogFilteredDate(EmailLogFiltersDto emailLogFiltersDto) {
 		List<EmailLogDashboardDto> emailDashboard = new ArrayList<EmailLogDashboardDto>();
 		List<EmailLog> logs = this.logsDao.getFilteredEmailLogData(emailLogFiltersDto);
 
@@ -1235,11 +1252,16 @@ public class UserService {
 			emailLogDashboardDto.setSentTries(emailLog.getSentTries());
 			emailDashboard.add(emailLogDashboardDto);
 		}
-
-		return emailDashboard;
+		
+		Long count = this.logsDao.getFilteredEmailLogDataCount(emailLogFiltersDto);
+		
+		EmailLogPaginatedDto emailLogPaginatedDto = new EmailLogPaginatedDto();
+		emailLogPaginatedDto.setEmailLogDashboardDto(emailDashboard);
+		emailLogPaginatedDto.setCount(count);
+		return emailLogPaginatedDto;
 	}
 
-	public List<PatientHistoryDto> getPatientHistory(PatientHistoryDto patientHistoryDtoData) {
+	public PatientHistoryPaginatedDto getPatientHistory(PatientHistoryDto patientHistoryDtoData) {
 		List<PatientHistoryDto> patientHistoryDtos = new ArrayList<PatientHistoryDto>();
 		List<User> userList = this.userDao.getUserDetails(patientHistoryDtoData);
 
@@ -1258,8 +1280,13 @@ public class UserService {
 			}
 			patientHistoryDtos.add(patientHistoryDto);
 		}
-
-		return patientHistoryDtos;
+		
+		Long count = this.userDao.getUserDetailsCount(patientHistoryDtoData);
+		
+		PatientHistoryPaginatedDto patientHistoryPaginatedDto = new PatientHistoryPaginatedDto();
+		patientHistoryPaginatedDto.setPatientHistoryDtos(patientHistoryDtos);
+		patientHistoryPaginatedDto.setCount(count);
+		return patientHistoryPaginatedDto;
 
 	}
 
@@ -1304,7 +1331,7 @@ public class UserService {
 
 	}
 
-	public List<BlockRequestsTableData> getBlockRequestData(BlockHistoryFilterData blockHistoryFilterData) {
+	public BlockHistoryPaginatedDto getBlockRequestData(BlockHistoryFilterData blockHistoryFilterData) {
 		List<BlockRequestsTableData> list = new ArrayList<BlockRequestsTableData>();
 		List<BlockRequests> requests = this.blockRequestsDao.getBlockRequestData(blockHistoryFilterData);
 		for (BlockRequests blockRequests : requests) {
@@ -1320,8 +1347,12 @@ public class UserService {
 			ob.setRequestId(blockRequests.getBlockRequestId());
 			list.add(ob);
 		}
-
-		return list;
+		
+		Long count = this.blockRequestsDao.getBlockRequestDataCount(blockHistoryFilterData);
+		BlockHistoryPaginatedDto blockHistoryPaginatedDto = new BlockHistoryPaginatedDto();
+		blockHistoryPaginatedDto.setBlockRequestsTableDatas(list);
+		blockHistoryPaginatedDto.setCount(count);
+		return blockHistoryPaginatedDto;
 	}
 
 	public String unblockRequestedCase(Integer blockId, HttpServletRequest httpServletRequest) {
@@ -1350,8 +1381,66 @@ public class UserService {
 
 		return "Unblocked the Requested Case";
 	}
+	
+	public List<SearchRecordsDashboardData> getExportFilteredSearchRecords(SearchRecordsFilter searchRecordsFilter) {
+		List<SearchRecordsDashboardData> returnList = new ArrayList<SearchRecordsDashboardData>();
+		List<Request> list = this.requestDao.getExportFilteredRequest(searchRecordsFilter);
 
-	public List<SearchRecordsDashboardData> getFilteredSearchRecords(SearchRecordsFilter searchRecordsFilter) {
+		for (Request request : list) {
+			List<RequestStatusLog> closeCaseLogs = this.requestStatusLogDao.getStatusSpecificLogs(
+					hallodoc.enumerations.RequestStatus.UNPAID.getRequestId(), request.getRequestId());
+			SearchRecordsDashboardData searchData = new SearchRecordsDashboardData();
+			RequestStatusLog requestStatusLog;
+			if (closeCaseLogs.size() > 0) {
+				requestStatusLog = closeCaseLogs.get(0);
+
+				searchData.setCloseCaseDate(DateHelper.getDateStrigSepratedBySpace(requestStatusLog.getCreatedDate()));
+			}else {
+				searchData.setCloseCaseDate("-");
+			}
+			searchData.setRequestId(request.getRequestId());
+			searchData.setAddress(request.getRequestClient().getNoZipAddress());
+			if (request.getRequestNotes() != null) {
+				searchData.setAdminNotes(request.getRequestNotes().getAdminNotes() == null ? "-" : request.getRequestNotes().getAdminNotes());
+				searchData.setPhysicianNote(request.getRequestNotes().getPhysicanNotes() == null ? "-" : request.getRequestNotes().getPhysicanNotes() );
+			} else {
+				searchData.setAdminNotes("-");
+				searchData.setPhysicianNote("-");
+			}
+			searchData.setPatientNotes(request.getRequestClient().getNotes() == null ? "-" : request.getRequestClient().getNotes());
+			searchData.setDateOfService(DateHelper.getDateStrigSepratedBySpace(request.getAcceptedDate()));
+			searchData.setEmail(request.getRequestClient().getEmail());
+			searchData.setPatientName(
+					request.getRequestClient().getFirstName() + " " + request.getRequestClient().getLastName());
+			searchData.setPhoneNumber(request.getRequestClient().getPhoneNumber());
+			
+			if(request.getPhysician() == null) {
+				searchData.setPhysicianName("-");
+			}else {
+				searchData.setPhysicianName(
+						request.getPhysician().getFirstName() + " " + request.getPhysician().getLastName());
+			}
+	
+		
+			for (hallodoc.enumerations.RequestType type : hallodoc.enumerations.RequestType.values()) {
+				if(type.getId() == request.getRequestType().getRequestTypeId()) {
+					searchData.setRequestorName(type.getRequestType());
+				}
+			}
+
+			String status = hallodoc.enumerations.RequestStatus.getStatusTypeText(request.getStatus());
+
+			searchData.setRequestStatus(status);
+			searchData.setZip(request.getRequestClient().getZipcode());
+			returnList.add(searchData);
+		}
+
+		return returnList;
+	}
+
+
+	public SearchRecordsPaginationDto getFilteredSearchRecords(SearchRecordsFilter searchRecordsFilter) {
+		SearchRecordsPaginationDto searchRecordsPaginationDto = new SearchRecordsPaginationDto();
 		List<SearchRecordsDashboardData> returnList = new ArrayList<SearchRecordsDashboardData>();
 		List<Request> list = this.requestDao.getFilteredRequest(searchRecordsFilter);
 
@@ -1404,7 +1493,11 @@ public class UserService {
 			returnList.add(searchData);
 		}
 
-		return returnList;
+		Long count = this.requestDao.getFilteredRequestCount(searchRecordsFilter);
+		
+		searchRecordsPaginationDto.setCount(count);
+		searchRecordsPaginationDto.setSearchRecordsDashboardDatas(returnList);
+		return searchRecordsPaginationDto;
 	}
 	
 	public ResponseEntity<Resource> exportSearchRecord(List<SearchRecordsDashboardData> list)

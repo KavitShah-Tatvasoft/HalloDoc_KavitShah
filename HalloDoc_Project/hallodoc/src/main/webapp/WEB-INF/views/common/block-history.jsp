@@ -18,9 +18,12 @@
 	crossorigin="anonymous" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/footer.css' />">
-<link rel="stylesheet" href="<c:url value='/resources/css/block-history.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/navbar.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/footer.css' />">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/block-history.css' />">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -28,7 +31,7 @@
 	rel="stylesheet">
 
 <title>Block History</title>
-<body onload="getFilteredBlockData()">
+<body onload="getFilteredBlockData(true)">
 	<div
 		class="container-fluid patient-form shadow bg-white rounded footer-containers relative-position extra-margin">
 
@@ -38,7 +41,7 @@
 
 			<div class="col-12 col-sm-12 col-md-6 col-lg-3">
 				<div class="form-floating mb-3 inp">
-					<input type="text" class="form-control input-1 filter-name" 
+					<input type="text" class="form-control input-1 filter-name"
 						id="floatingInput-3" placeholder="Name" autocomplete="off">
 					<label for="floatingInput-3">Name</label>
 				</div>
@@ -49,8 +52,8 @@
 					<input type="date" class="form-control input-1 filter-date"
 						id="floatingInput-4" placeholder="Date" autocomplete="off">
 					<label for="floatingInput-4">Date</label> <img
-						src="<c:url value='/resources/images/calendar4-week.svg' />" alt=""
-						class="custom-date-icon">
+						src="<c:url value='/resources/images/calendar4-week.svg' />"
+						alt="" class="custom-date-icon">
 				</div>
 			</div>
 
@@ -73,7 +76,8 @@
 			<div class="btn-col">
 				<div class="row-1-clear-search-btn-flex">
 					<button class="clear-btn shrink-btns" onclick="clearFilters()">Clear</button>
-					<button class="search-btn shrink-btns" onclick="getFilteredBlockData()">Search</button>
+					<button class="search-btn shrink-btns"
+						onclick="getFilteredBlockData(true)">Search</button>
 				</div>
 			</div>
 		</div>
@@ -97,116 +101,130 @@
 						<th scope="col" class="thead width-col7">Action</th>
 					</tr>
 				</thead>
-				
+
 				<tr class="clone-block-tr d-none">
-						<td class="extra-padding-td bname-td">Shah, Nilomi</td>
-						<td class="bnumber-td">1234567890</td>
-						<td class="bemail-td">nilomi@gmail.com</td>
-						<td class="bdate-td">Aug 23,2024</td>
-						<td class="bnotes-td">test</td>
-						<td><input type="checkbox" name="" id=""
-							class="check-box-resize bactive-td" disabled="disabled"></td>
-						<td><button type="button" class="unblock-btn bunblock-td">Unblock</a></td>
-					</tr>
+					<td class="extra-padding-td bname-td">Shah, Nilomi</td>
+					<td class="bnumber-td">1234567890</td>
+					<td class="bemail-td">nilomi@gmail.com</td>
+					<td class="bdate-td">Aug 23,2024</td>
+					<td class="bnotes-td">test</td>
+					<td><input type="checkbox" name="" id=""
+						class="check-box-resize bactive-td" disabled="disabled"></td>
+					<td><button type="button" class="unblock-btn bunblock-td">
+							Unblock</a></td>
+				</tr>
 
 				<tbody class="empty-tbody-block">
-					
+
 
 				</tbody>
 			</table>
 		</div>
-		
+
 		<div class="accordion-item clone-accordion-class d-none">
-				<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-					<button class="accordion-button change-target-class" type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-						aria-controls="panelsStayOpen-collapseOne">
-						<div class="accordion-button-flex">
+			<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+				<button class="accordion-button change-target-class" type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+					aria-controls="panelsStayOpen-collapseOne">
+					<div class="accordion-button-flex">
 
-							<span class="email-label acc-name">Patel Sagar</span> <small
-								class="acount-type-btn-text mb-3"> <span
-								class="email-label acc-email">xyz.abc@gmail.com</span>
-							</small>
+						<span class="email-label acc-name">Patel Sagar</span> <small
+							class="acount-type-btn-text mb-3"> <span
+							class="email-label acc-email">xyz.abc@gmail.com</span>
+						</small>
 
+					</div>
+
+				</button>
+			</h2>
+			<div id="panelsStayOpen-collapseOne"
+				class="accordion-collapse collapse change-id-class"
+				aria-labelledby="panelsStayOpen-headingOne">
+				<div class="accordion-body">
+					<div class="accordion-rows-main-flex">
+
+						<div class="accordion-row-inner-flex">
+							<div class="image-blue-border">
+								<img
+									src="<c:url value='/resources/images/telephone-blue.svg' />"
+									alt="">
+							</div>
+							<div>
+								<span class="email-label ">Phone: </span> <span
+									class="email-text acc-phone">(91) 1234567890</span>
+							</div>
 						</div>
 
-					</button>
-				</h2>
-				<div id="panelsStayOpen-collapseOne"
-					class="accordion-collapse collapse change-id-class"
-					aria-labelledby="panelsStayOpen-headingOne">
-					<div class="accordion-body">
-						<div class="accordion-rows-main-flex">
-
-							<div class="accordion-row-inner-flex">
-								<div class="image-blue-border">
-									<img src="<c:url value='/resources/images/telephone-blue.svg' />" alt="">
-								</div>
-								<div>
-									<span class="email-label ">Phone: </span> <span
-										class="email-text acc-phone">(91) 1234567890</span>
-								</div>
+						<div class="accordion-row-inner-flex">
+							<div class="image-blue-border">
+								<img
+									src="<c:url value='/resources/images/calendar4-week.svg' />"
+									class="calendar-resize-search" alt="">
 							</div>
-
-							<div class="accordion-row-inner-flex">
-								<div class="image-blue-border">
-									<img src="<c:url value='/resources/images/calendar4-week.svg' />"
-										class="calendar-resize-search" alt="">
-								</div>
-								<div>
-									<span class="email-label">Created Date: </span> <span
-										class="email-text acc-create-date">Dec 5, 2022</span>
-								</div>
+							<div>
+								<span class="email-label">Created Date: </span> <span
+									class="email-text acc-create-date">Dec 5, 2022</span>
 							</div>
-
-							<div class="accordion-row-inner-flex">
-								<div class="image-blue-border">
-									<img src="<c:url value='/resources/images/journal-text.svg' />"
-										class="calendar-resize-search" alt="">
-								</div>
-								<div>
-									<span class="email-label">Notes: </span> <span
-										class="email-text acc-notes">test dummy</span>
-								</div>
-							</div>
-
-							<div class="accordion-row-inner-flex">
-								<div class="image-blue-border">
-									<img src="<c:url value='/resources/images/tick.svg' />"
-										class="tick-icon-resize-search" alt="">
-								</div>
-								<div>
-									<span class="email-label">is Active: </span> <span
-										class="email-text acc-active">Yes </span>
-								</div>
-							</div>
-
-							<div class="bottom-btn-flex-block-history">
-								<a role="button"
-									class="unblock-btn extra-changes-unblock shrink-btns acc-unblock">Unblock</a>
-							</div>
-
 						</div>
+
+						<div class="accordion-row-inner-flex">
+							<div class="image-blue-border">
+								<img src="<c:url value='/resources/images/journal-text.svg' />"
+									class="calendar-resize-search" alt="">
+							</div>
+							<div>
+								<span class="email-label">Notes: </span> <span
+									class="email-text acc-notes">test dummy</span>
+							</div>
+						</div>
+
+						<div class="accordion-row-inner-flex">
+							<div class="image-blue-border">
+								<img src="<c:url value='/resources/images/tick.svg' />"
+									class="tick-icon-resize-search" alt="">
+							</div>
+							<div>
+								<span class="email-label">is Active: </span> <span
+									class="email-text acc-active">Yes </span>
+							</div>
+						</div>
+
+						<div class="bottom-btn-flex-block-history">
+							<a role="button"
+								class="unblock-btn extra-changes-unblock shrink-btns acc-unblock">Unblock</a>
+						</div>
+
 					</div>
 				</div>
 			</div>
-
-		<div class="accordion empty-accordion-class" id="accordionPanelsStayOpenExample">
-			
 		</div>
+
+		<div class="accordion empty-accordion-class"
+			id="accordionPanelsStayOpenExample"></div>
 
 
 	</div>
 
+	<nav aria-label="..." class="pagination-center-class">
 
+		<li class="page-item prev-navigation d-none"><a
+			onclick="prevPage()" class="page-link" href="#" tabindex="-1">Previous</a></li>
+
+		<li class="page-item pageno-pagination add-onclick d-none"><a
+			class="page-link add-active common-active" href="#"></a></li>
+		<li class="page-item next-pagination d-none"><a
+			onclick="nextPage()" class="page-link" href="#">Next</a></li>
+
+		<ul class="pagination empty-pagination">
+
+		</ul>
+	</nav>
 	<script src="<c:url value='/resources/js/darktheme.js' />"></script>
 	<script src="<c:url value='/resources/js/block-case.js' />"></script>
 	<script type="text/javascript">
-		
 		$(".common-link-class").removeClass("active")
 		$(".records-link-class").addClass("active")
-	
 	</script>
 </body>
 </html>
