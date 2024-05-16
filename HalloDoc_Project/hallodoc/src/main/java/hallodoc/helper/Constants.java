@@ -9,6 +9,8 @@ public class Constants {
 	
 	public static final String CONTEXT_PATH = "/hallodoc";
 	
+	public static final String PROVIDER_DOC_PATH = "/hallodoc/resources/fileuploads/provider";
+	
 	public static final String ACCOUNT_SID = "ACe8a35d6938d4380a6b3ec5fe8f6a74e4";
 	
 	public static final String AUTH_TOKEN = "9e7a66ac4be72d0f5a4d9cc4cfff878d";

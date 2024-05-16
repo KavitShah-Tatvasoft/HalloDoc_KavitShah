@@ -37,6 +37,8 @@ import hallodoc.dto.CreatePatientRequestDto;
 import hallodoc.dto.CreateRoleDataDto;
 import hallodoc.dto.CreateShiftDto;
 import hallodoc.dto.EditRoleDto;
+import hallodoc.dto.EditShiftDetailsDto;
+import hallodoc.dto.EditShiftDto;
 import hallodoc.dto.EventsDto;
 import hallodoc.dto.ExportDataDto;
 import hallodoc.dto.GetRolesDto;
@@ -50,6 +52,8 @@ import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
 import hallodoc.dto.RequestFiltersDto;
+import hallodoc.dto.ReviewShiftDto;
+import hallodoc.dto.ReviewShiftFilterDto;
 import hallodoc.dto.RolesDto;
 import hallodoc.dto.SendAgreementDto;
 import hallodoc.dto.SendLinkDto;
@@ -74,7 +78,7 @@ import hallodoc.sms.SmsService;
 public class AdminController {
 
 	@Autowired
-	private AdminService aService;
+	private AdminService adminService;
 
 	@Autowired
 	private UserService uService;
@@ -100,7 +104,7 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/sendLinkByEmail")
 	public String submitForm(HttpServletRequest request, SendLinkDto sendLinkDto) {
-		Boolean check = aService.sendRequestLink(request, sendLinkDto);
+		Boolean check = adminService.sendRequestLink(request, sendLinkDto);
 		return "Success";
 	}
 
@@ -131,7 +135,7 @@ public class AdminController {
 	public NewStatePageDataDto getNewRequestData(@RequestParam("status") String status,
 			@RequestParam("pageNo") int pageNo) {
 
-		NewStatePageDataDto requestsList = aService.getStatusCorrespondingRequests(status, pageNo);
+		NewStatePageDataDto requestsList = adminService.getStatusCorrespondingRequests(status, pageNo);
 
 		return requestsList;
 
@@ -141,7 +145,7 @@ public class AdminController {
 	@ResponseBody
 	public List<Integer> getStatusRequestCount() {
 
-		return this.aService.getStatusWiseRequestCount();
+		return this.adminService.getStatusWiseRequestCount();
 
 	}
 
@@ -245,7 +249,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/getPhysiciansByRegion", method = RequestMethod.POST)
 	public List<PhysicianAssignCaseDto> getPhysicianByRegion(@RequestParam("regionId") int regionId) {
-		List<PhysicianAssignCaseDto> physicians = aService.getPhysicianByRegion(regionId);
+		List<PhysicianAssignCaseDto> physicians = adminService.getPhysicianByRegion(regionId);
 		return physicians;
 	}
 
@@ -253,7 +257,7 @@ public class AdminController {
 	@RequestMapping(value = "/assignPhysician", method = RequestMethod.POST)
 	public String assignPhysicianToRequest(AssignCaseDto assignCaseDto, HttpServletRequest httpServletRequest) {
 
-		aService.assignPhysicianToRequest(assignCaseDto, httpServletRequest);
+		adminService.assignPhysicianToRequest(assignCaseDto, httpServletRequest);
 		return "Success";
 	}
 
@@ -286,7 +290,7 @@ public class AdminController {
 	@RequestMapping(value = "/transferPhysician", method = RequestMethod.POST)
 	public String transferRequestedCase(AssignCaseDto assignCaseDto, HttpServletRequest httpServletRequest) {
 
-		aService.transferRequestedCase(assignCaseDto, httpServletRequest);
+		adminService.transferRequestedCase(assignCaseDto, httpServletRequest);
 
 		return "Transferred";
 	}
@@ -321,7 +325,7 @@ public class AdminController {
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 		Admin admin = aspNetUsers.getAdmin();
 //		List<Region> regions = admin.getRegions();
-		List<AdminRegions> adminRegions = aService.getAdminRegions(admin);
+		List<AdminRegions> adminRegions = adminService.getAdminRegions(admin);
 		m.addAttribute("username", aspNetUsers.getUser_name());
 		m.addAttribute("adminEmail", aspNetUsers.getEmail());
 		m.addAttribute("phoneNumber", aspNetUsers.getPhone_number());
@@ -336,7 +340,7 @@ public class AdminController {
 
 		AspNetUsers aspNetUsers = (AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser");
 
-		return aService.updateAspUserPassword(aspNetUsers, password, httpServletRequest);
+		return adminService.updateAspUserPassword(aspNetUsers, password, httpServletRequest);
 
 	}
 
@@ -344,7 +348,7 @@ public class AdminController {
 	@RequestMapping(value = "/changeAdminAddress", method = RequestMethod.POST)
 	public String changeAdminAddress(AdminAddressDto adminAddressDto, HttpServletRequest httpServletRequest) {
 
-		return this.aService.updateAspUserAddress(httpServletRequest, adminAddressDto);
+		return this.adminService.updateAspUserAddress(httpServletRequest, adminAddressDto);
 
 	}
 
@@ -352,7 +356,7 @@ public class AdminController {
 	@RequestMapping(value = "/updateAdminContactDetails", method = RequestMethod.POST)
 	public String updateAdminContactDetails(AdminContactDto adminContactDto, HttpServletRequest httpServletRequest) {
 
-		return this.aService.updateAdminContactDetails(adminContactDto, httpServletRequest);
+		return this.adminService.updateAdminContactDetails(adminContactDto, httpServletRequest);
 
 	}
 
@@ -364,12 +368,12 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/getFilteredProviderMenuData", method = RequestMethod.POST)
 	public List<ProviderMenuDto> getProviderMenuData(@RequestParam("region") Integer regionId) {
-		return this.aService.getProviderMenuDetails(regionId);
+		return this.adminService.getProviderMenuDetails(regionId);
 	}
 
 	@RequestMapping(value = "/createProviderAccount")
 	public String createPhysicianAccount(Model m) {
-		List<GetRolesDto> rolesDto = this.aService.getPhysicianRoles();
+		List<GetRolesDto> rolesDto = this.adminService.getPhysicianRoles();
 		m.addAttribute("rolesDto", rolesDto);
 		return "admin/create-provider-account";
 	}
@@ -384,16 +388,16 @@ public class AdminController {
 	public RedirectView createNewProviderAccount(NewProviderAccountDto newProviderAccountDto,
 			HttpServletRequest request) {
 
-		String status = this.aService.createNewProvider(newProviderAccountDto, request);
+		String status = this.adminService.createNewProvider(newProviderAccountDto, request);
 
 		return new RedirectView("physicianMenu", true);
 	}
 
 	@RequestMapping("/updatePhysicianAccount/{physicianId}")
 	public String updatePhysicianAccount(@PathVariable("physicianId") Integer physicianId, Model m) {
-		List<Region> regionList = this.aService.getRegionList();
-		ShowProviderDetailsDto providerData = this.aService.getProviderDetails(physicianId);
-		List<GetRolesDto> rolesDto = this.aService.getPhysicianRoles();
+		List<Region> regionList = this.adminService.getRegionList();
+		ShowProviderDetailsDto providerData = this.adminService.getProviderDetails(physicianId);
+		List<GetRolesDto> rolesDto = this.adminService.getPhysicianRoles();
 		m.addAttribute("rolesDto", rolesDto);
 		m.addAttribute("listRegions", regionList);
 		m.addAttribute("providerData", providerData);
@@ -405,7 +409,7 @@ public class AdminController {
 	public String updateProviderRoleStatus(@RequestParam("id") Integer id, @RequestParam("role") Integer role,
 			@RequestParam("status") Integer status, HttpServletRequest http) {
 
-		return this.aService.updateProviderRoleStatus(id, role, status, http);
+		return this.adminService.updateProviderRoleStatus(id, role, status, http);
 
 	}
 
@@ -414,7 +418,7 @@ public class AdminController {
 	public String updateProviderPassword(@RequestParam("id") Integer id, @RequestParam("password") String password,
 			HttpServletRequest httpServletRequest) {
 
-		return this.aService.updatePhysicianPassword(id, password, httpServletRequest);
+		return this.adminService.updatePhysicianPassword(id, password, httpServletRequest);
 
 	}
 
@@ -422,33 +426,33 @@ public class AdminController {
 	@RequestMapping(value = "/updateProviderMailingDetails", method = RequestMethod.POST)
 	public String updateProviderMailingDetails(ProviderMailingDto providerMailingDto,
 			HttpServletRequest httpServletRequest) {
-		return this.aService.updateProviderMailingDetails(providerMailingDto, httpServletRequest);
+		return this.adminService.updateProviderMailingDetails(providerMailingDto, httpServletRequest);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/updateProviderInfoDetails", method = RequestMethod.POST)
 	public String updateProviderInfoDetails(ProviderUpdatedInfoDto providerUpdatedInfoDto,
 			HttpServletRequest httpServletRequest) {
-		return this.aService.updateProviderInfo(providerUpdatedInfoDto, httpServletRequest);
+		return this.adminService.updateProviderInfo(providerUpdatedInfoDto, httpServletRequest);
 	}
 
 	@RequestMapping("/deleteProviderAccount/{phyId}")
 	public RedirectView deleteProviderAccount(@PathVariable("phyId") Integer phyId) {
-		this.aService.deleteProviderAccount(phyId);
+		this.adminService.deleteProviderAccount(phyId);
 		return new RedirectView("../physicianMenu", true);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/toggleNotification", method = RequestMethod.POST)
 	public String toggleNotification(@RequestParam("id") Integer id) {
-		return this.aService.changeProviderNotification(id);
+		return this.adminService.changeProviderNotification(id);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/contactProvider", method = RequestMethod.POST)
 	public String contactProvider(@RequestParam("id") Integer id, @RequestParam("method") String method,
 			@RequestParam("message") String message, HttpServletRequest httpServletRequest) {
-		return this.aService.contactProvider(id, method, message, httpServletRequest);
+		return this.adminService.contactProvider(id, method, message, httpServletRequest);
 	}
 
 	@RequestMapping(value = "/createRoleAccess", method = RequestMethod.GET)
@@ -460,13 +464,13 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/getMenus", method = RequestMethod.POST)
 	public List<MenusDto> getMenus(@RequestParam("role") Integer role) {
-		return this.aService.getRoleMenus(role);
+		return this.adminService.getRoleMenus(role);
 	}
 
 	@RequestMapping(value = "/createNewRole", method = RequestMethod.POST)
 	public RedirectView createNewRole(CreateRoleDataDto createRoleDataDto, HttpServletRequest httpServletRequest) {
 
-		this.aService.createNewRoleAccess(createRoleDataDto, httpServletRequest);
+		this.adminService.createNewRoleAccess(createRoleDataDto, httpServletRequest);
 
 		return new RedirectView("accountAccess", true);
 	}
@@ -479,13 +483,13 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/getRoleDetails", method = RequestMethod.GET)
 	public List<RolesDto> getRoleDetails() {
-		return this.aService.getRolesDataForAccountAccess();
+		return this.adminService.getRolesDataForAccountAccess();
 	}
 
 	@RequestMapping(value = "/editRoleAccess/{roleId}", method = RequestMethod.GET)
 	public String editRoleAccess(@PathVariable("roleId") Integer roleId, Model m) {
 
-		EditRoleDto editRoleDto = this.aService.getEditRolesDetails(roleId);
+		EditRoleDto editRoleDto = this.adminService.getEditRolesDetails(roleId);
 		m.addAttribute("editDetails", editRoleDto);
 		m.addAttribute("roleId", roleId);
 
@@ -496,7 +500,7 @@ public class AdminController {
 	public RedirectView updateRole(@RequestParam("selectedMenu") String menuString,
 			@RequestParam("roleId") Integer roleId) {
 
-		this.aService.updateRoleDetails(menuString, roleId);
+		this.adminService.updateRoleDetails(menuString, roleId);
 
 		return new RedirectView("accountAccess", true);
 	}
@@ -505,7 +509,7 @@ public class AdminController {
 	@RequestMapping("/deleteRole")
 	public String deleteRole(@RequestParam("roleId") Integer roleId) {
 
-		this.aService.deleteRole(roleId);
+		this.adminService.deleteRole(roleId);
 		return "Deleted Role";
 	}
 
@@ -517,7 +521,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/get-user-access-data", method = RequestMethod.POST)
 	public List<UserAccessDto> getUserAccessData(@RequestParam("typeId") Integer typeId) {
-		List<UserAccessDto> list = this.aService.getUserAccessData(typeId);
+		List<UserAccessDto> list = this.adminService.getUserAccessData(typeId);
 		return list;
 	}
 
@@ -548,18 +552,53 @@ public class AdminController {
 	public boolean createShift(CreateShiftDto createShiftDto, HttpServletRequest httpServletRequest) {
 		System.out.println(createShiftDto.getIsRepeated());
 		
-		return this.aService.createNewShift(createShiftDto,httpServletRequest );
+		return this.adminService.createNewShift(createShiftDto,httpServletRequest );
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/get-physician-details-scheduling", method = RequestMethod.GET)
-	public List<PhysicianResources> getPhysicianDetails(HttpServletRequest httpServletRequest){
-		return this.aService.getAllPhysicianDetails(httpServletRequest);
+	@RequestMapping(value="/get-physician-details-scheduling", method = RequestMethod.POST)
+	public List<PhysicianResources> getPhysicianDetails(HttpServletRequest httpServletRequest, @RequestParam("regionId") int regionId){
+		return this.adminService.getAllPhysicianDetails(httpServletRequest,regionId);
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="get-physician-events", method = RequestMethod.GET)
-	public List<EventsDto> getEventsData(){
-		return this.aService.getAllActiveEvents();
+	@RequestMapping(value="get-physician-events", method = RequestMethod.POST)
+	public List<EventsDto> getEventsData(@RequestParam("regionId") int regionId){
+		return this.adminService.getAllActiveEvents(regionId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="get-event-details", method = RequestMethod.POST)
+	public EditShiftDto getEventDetails(@RequestParam("eventId") int eventId) {
+		return this.adminService.getEventDetails(eventId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="edit-old-shift-details", method = RequestMethod.POST)
+	public boolean editRequestedShift(EditShiftDetailsDto editShiftDetailsDto, HttpServletRequest httpServletRequest) {
+		return this.adminService.editShiftDetails(editShiftDetailsDto, httpServletRequest);
+	}
+	
+	@RequestMapping(value="/review-shift", method = RequestMethod.GET)
+	public String reviewShifts() {
+		return "admin/review-shift";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/toggle-shift-status",method=RequestMethod.POST)
+	public String toggleShiftState(@RequestParam("shiftDetailId") int shiftDetailId) {
+		return this.adminService.toggleShiftStatus(shiftDetailId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete-shift",method=RequestMethod.POST)
+	public String deleteShift(@RequestParam("shiftDetailId") int shiftDetailId) {
+		return this.adminService.deleteShift(shiftDetailId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/get-review-shift-details", method = RequestMethod.POST)
+	public ReviewShiftDto getReviewShiftDetails(ReviewShiftFilterDto reviewShiftFilterDto) {
+		return this.adminService.getReviewShiftData(reviewShiftFilterDto.getRegionId(),reviewShiftFilterDto.getPageNo());
 	}
 }

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +39,8 @@ import hallodoc.dto.AssignCaseDto;
 import hallodoc.dto.CreateRoleDataDto;
 import hallodoc.dto.CreateShiftDto;
 import hallodoc.dto.EditRoleDto;
+import hallodoc.dto.EditShiftDetailsDto;
+import hallodoc.dto.EditShiftDto;
 import hallodoc.dto.EventsDto;
 import hallodoc.dto.GetRolesDto;
 import hallodoc.dto.MenusDto;
@@ -49,6 +52,8 @@ import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
+import hallodoc.dto.ReviewShiftDetailsDto;
+import hallodoc.dto.ReviewShiftDto;
 import hallodoc.dto.RolesDto;
 import hallodoc.dto.SendLinkDto;
 import hallodoc.dto.ShowProviderDetailsDto;
@@ -1240,10 +1245,10 @@ public class AdminService {
 		shiftDetails.setStatus(1);
 		return shiftDetails;
 	}
-	
-	private boolean physicianAvailableForShift(CreateShiftDto createShiftDto,Physician physician,
-			LocalDate shiftDate, LocalTime startTime, LocalTime endTime, String daysString) {
-		
+
+	private boolean physicianAvailableForShift(CreateShiftDto createShiftDto, Physician physician, LocalDate shiftDate,
+			LocalTime startTime, LocalTime endTime, String daysString) {
+
 		List<LocalDate> shiftDates = new ArrayList<LocalDate>();
 		int shiftDateInt = shiftDate.getDayOfWeek().getValue();
 		if (createShiftDto.getIsRepeated().equals("true")) {
@@ -1272,16 +1277,19 @@ public class AdminService {
 		if (daysString.charAt(shiftDateInt - 1) == '0') {
 			shiftDates.add(shiftDate);
 		}
-		
-		List<ShiftDetails> physicianShifts =  this.shiftDao.getPhysicianAvailbility(shiftDates, physician);
+
+		List<ShiftDetails> physicianShifts = this.shiftDao.getPhysicianAvailbility(shiftDates, physician);
 		boolean flag = true;
 		for (ShiftDetails shiftDetails : physicianShifts) {
-			if((startTime.isAfter(shiftDetails.getStartTime()) && startTime.isBefore(shiftDetails.getEndTime())) || (endTime.isAfter(shiftDetails.getStartTime()) && endTime.isBefore(shiftDetails.getEndTime())) || (startTime.isBefore(shiftDetails.getStartTime()) && endTime.isAfter(shiftDetails.getEndTime())) ) {
+			if ((startTime.isAfter(shiftDetails.getStartTime()) && startTime.isBefore(shiftDetails.getEndTime()))
+					|| (endTime.isAfter(shiftDetails.getStartTime()) && endTime.isBefore(shiftDetails.getEndTime()))
+					|| (startTime.isBefore(shiftDetails.getStartTime())
+							&& endTime.isAfter(shiftDetails.getEndTime()))) {
 				flag = false;
 				break;
 			}
 		}
-		
+
 		return flag;
 	}
 
@@ -1300,7 +1308,8 @@ public class AdminService {
 		String[] selectedDays = createShiftDto.getSelectedDays().split(",");
 		String daysString = selectedDays[3] + selectedDays[5] + selectedDays[1] + selectedDays[4] + selectedDays[6]
 				+ selectedDays[2] + selectedDays[0];
-		boolean physicainAvailable = physicianAvailableForShift(createShiftDto,physician,shiftDate,startTime,endTime,daysString);
+		boolean physicainAvailable = physicianAvailableForShift(createShiftDto, physician, shiftDate, startTime,
+				endTime, daysString);
 		if (physicainAvailable) {
 
 			Shift shift = new Shift();
@@ -1355,36 +1364,44 @@ public class AdminService {
 			shift.setShiftDetails(shiftDetailsList);
 			this.shiftDao.addNewShift(shift);
 			return true;
-		}else {
+		} else {
 			return false;
 		}
-		
+
 	}
-	
-	public List<PhysicianResources> getAllPhysicianDetails(HttpServletRequest httpServletRequest){
-		
+
+	public List<PhysicianResources> getAllPhysicianDetails(HttpServletRequest httpServletRequest, int regionId) {
+
 		List<PhysicianResources> physicianResources = new ArrayList<PhysicianResources>();
-		List<Physician> physicians = this.physicianDao.getAllActivePhysician();
+		List<Physician> physicians;
+		if (regionId == 0) {
+			physicians = this.physicianDao.getAllActivePhysician();
+		} else {
+			List<Integer> regionList = this.physicianDao.getPhysicianObByRegion(regionId);
+			physicians = this.physicianDao.getPhysicianByRegionList(regionList);
+		}
 		for (Physician physician : physicians) {
-			String path = Constants.getProviderUplaodPath(httpServletRequest.getSession()) + File.separator + physician.getPhysicianId() + File.separator + physician.getPhoto();
+			String path = Constants.PROVIDER_DOC_PATH + File.separator + physician.getPhysicianId() + File.separator
+					+ physician.getPhoto();
 			PhysicianResources phyResources = new PhysicianResources();
 			phyResources.setPhysicianId(physician.getPhysicianId());
 			phyResources.setPhysicianName(physician.getFirstName() + " " + physician.getLastName());
-			if(physician.getPhoto() != null) {
+			if (physician.getPhoto() != null) {
 				phyResources.setPath(path);
-			}else {
-				
+			} else {
+
 			}
-			
+
 			physicianResources.add(phyResources);
 		}
 		return physicianResources;
 	}
-	
-	public List<EventsDto> getAllActiveEvents(){
+
+	public List<EventsDto> getAllActiveEvents(int regionId) {
 		List<EventsDto> eventsDtos = new ArrayList<EventsDto>();
-		List<ShiftDetails> shiftDetailsList = this.shiftDao.getAllActiveShifts();
-		
+
+		List<ShiftDetails> shiftDetailsList = this.shiftDao.getAllActiveShifts(regionId);
+
 		for (ShiftDetails shiftDetails : shiftDetailsList) {
 			EventsDto eventsDto = new EventsDto();
 			eventsDto.setEndTime(shiftDetails.getEndTime().toString());
@@ -1397,7 +1414,102 @@ public class AdminService {
 			eventsDto.setRegionId(shiftDetails.getRegionId());
 			eventsDtos.add(eventsDto);
 		}
-		
+
 		return eventsDtos;
+	}
+
+	public EditShiftDto getEventDetails(int eventId) {
+
+		ShiftDetails shiftDetails = this.shiftDao.getEventById(eventId);
+		Region region = regionDao.getRegionById(shiftDetails.getRegionId()).get(0);
+		EditShiftDto editShiftDto = new EditShiftDto();
+		editShiftDto.setEndTime(shiftDetails.getEndTime().toString());
+		editShiftDto.setPhysicianId(shiftDetails.getShiftId().getPhysicianId().getPhysicianId());
+		editShiftDto.setPhysicianName("Dr." + shiftDetails.getShiftId().getPhysicianId().getFirstName() + " "
+				+ shiftDetails.getShiftId().getPhysicianId().getLastName());
+		editShiftDto.setRegionId(shiftDetails.getRegionId());
+		editShiftDto.setRegionName(region.getName());
+		editShiftDto.setShiftDate(shiftDetails.getShiftDate().toString());
+		editShiftDto.setShiftDetailId(shiftDetails.getShiftDetailId());
+		editShiftDto.setStartTime(shiftDetails.getStartTime().toString());
+
+		return editShiftDto;
+	}
+
+	public boolean editShiftDetails(EditShiftDetailsDto editShiftDetailsDto, HttpServletRequest httpServletRequest) {
+		ShiftDetails shiftDetails = this.shiftDao.getEventById(editShiftDetailsDto.getShiftDetailId());
+		Physician physician = shiftDetails.getShiftId().getPhysicianId();
+
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
+		LocalTime startTime = LocalTime.parse(editShiftDetailsDto.getStartTime(), timeFormatter);
+		LocalTime endTime = LocalTime.parse(editShiftDetailsDto.getEndTime(), timeFormatter);
+
+		List<LocalDate> localDates = new ArrayList<LocalDate>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate shiftDate = LocalDate.parse(editShiftDetailsDto.getShiftDate(), formatter);
+		localDates.add(shiftDate);
+
+		List<ShiftDetails> physicianShifts = this.shiftDao.getPhysicianAvailbility(localDates, physician);
+
+		boolean flag = true;
+		for (ShiftDetails oldShift : physicianShifts) {
+
+			if (oldShift.getStartTime() == startTime && oldShift.getEndTime() == endTime) {
+
+			} else {
+				if ((startTime.isAfter(oldShift.getStartTime()) && startTime.isBefore(oldShift.getEndTime()))
+						|| (endTime.isAfter(oldShift.getStartTime()) && endTime.isBefore(oldShift.getEndTime()))
+						|| (startTime.isBefore(oldShift.getStartTime()) && endTime.isAfter(oldShift.getEndTime()))) {
+					flag = false;
+					break;
+				}
+			}
+
+		}
+
+		if (flag) {
+			shiftDetails.setStartTime(startTime);
+			shiftDetails.setEndTime(endTime);
+			this.shiftDao.updateShiftDetails(shiftDetails);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public String toggleShiftStatus(int shiftDetailId) {
+		return this.shiftDao.toggleShiftStatus(shiftDetailId);
+	}
+
+	public String deleteShift(int shiftDetailId) {
+		return this.shiftDao.deleteShift(shiftDetailId);
+	}
+
+	public ReviewShiftDto getReviewShiftData(int regionId, int pageNo) {
+
+		ReviewShiftDto reviewShiftDto = new ReviewShiftDto();
+		List<ReviewShiftDetailsDto> reviewShiftDetailsDtos = new ArrayList<ReviewShiftDetailsDto>();
+		Long count = this.shiftDao.getFilteredShiftReviewDetailsCount(regionId, pageNo);
+		List<ShiftDetails> shiftDetails = this.shiftDao.getFilteredShiftReviewDetails(regionId, pageNo);
+//		Region region = this.regionDao.getRegionById(regionId).get(0);
+
+		for (ShiftDetails shift : shiftDetails) {
+			ReviewShiftDetailsDto reviewShiftDetailsDto = new ReviewShiftDetailsDto();
+			reviewShiftDetailsDto.setEndTime(shift.getEndTime().toString());
+			reviewShiftDetailsDto.setRegionId(shift.getRegionId());
+			String name = "Dr." + shift.getShiftId().getPhysicianId().getFirstName() + " "
+					+ shift.getShiftId().getPhysicianId().getLastName();
+			reviewShiftDetailsDto.setPhysicainName(name);
+			Region region = this.regionDao.getRegionById(shift.getRegionId()).get(0);
+			reviewShiftDetailsDto.setRegionName(region.getName());
+			reviewShiftDetailsDto.setShiftDate(shift.getShiftDate().toString());
+			reviewShiftDetailsDto.setStartTime(shift.getStartTime().toString());
+			reviewShiftDetailsDto.setShiftDetailId(shift.getShiftDetailId());
+			reviewShiftDetailsDtos.add(reviewShiftDetailsDto);
+		}
+		reviewShiftDto.setCount(count);
+		reviewShiftDto.setReviewShiftDetailsDto(reviewShiftDetailsDtos);
+		
+		return reviewShiftDto;
 	}
 }

@@ -128,7 +128,8 @@
           eventMoveHandling: "Disabled",
           eventResizeHandling: "Disabled",
           eventClickHandling: "Enabled",
-            onEventClicked: () => {
+            onEventClicked: (args) => {
+                alert(args.e.id())
                 var myModal = new bootstrap.Modal(document.getElementById('accept'), {});
                 myModal.show()
             },

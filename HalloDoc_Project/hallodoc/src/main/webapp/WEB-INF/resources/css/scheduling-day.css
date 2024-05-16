@@ -1,16 +1,24 @@
-.physician-unavailable-error-div{
+.physician-unavailable-error-div, .physician-unavailable-edit-div{
 	
 	display: flex;
 	justify-content: center;
 	
 }
-
+.view-shift-footer-flex{
+	padding-right: 10px !important;
+}
 .physician-unavailable-error{
 	
 	color: red;
 	font-size: 15px;
 	margin-bottom: 10px;
 }
+
+.coverage-img{
+	height: 35px;
+	width : 40px;
+}
+
 .navigator_default_main{
   position: relative !important;
   top: -90px !important;

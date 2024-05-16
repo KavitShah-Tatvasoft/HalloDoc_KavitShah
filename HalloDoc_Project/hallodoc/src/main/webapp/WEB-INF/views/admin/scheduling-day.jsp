@@ -52,7 +52,7 @@
 
 		<div class="all-region-btns-flex">
 
-			<select class="form-select select-scheduling"
+			<select onchange="regionFilter()" class="form-select select-scheduling select-scheduling-region"
 				aria-label="Default select example">
 				<option value="0">All Regions</option>
 				<c:forEach items="${regionList }" var="region">
@@ -136,6 +136,92 @@
 
 	<!-- pop-ups -->
 
+	<div class="modal fade" id="accept" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content cancel-pop-scale">
+				<div class="modal-header">
+					<h3 class="modal-title fs-5" id="staticBackdropLabel">View
+						Shift</h3>
+					<button type="button" class="btn-close dismiss-button"
+						data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="physician-unavailable-edit-div d-none">
+						<em class="physician-unavailable-error">Physician is not
+							available at the time current shift is selected.</em>
+					</div>
+					<form action="">
+						<div class="col-12">
+							<div class="form-floating mb-3 inp">
+								<select name="Number_Type" id="floatingInput-5" disabled
+									class="form-control form-select input-2 view-shift-inp">
+									<option class="region-details-edit-shift" value=""></option>
+								</select> <label for="floatingInput-5" class="view-shift-label">Region</label>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<div class="form-floating mb-3 inp">
+								<select name="Number_Type" id="floatingInput-5" disabled
+									class="form-control form-select input-2 view-shift-inp">
+									<option class="physician-details-edit-shift" value=""></option>
+								</select> <label for="floatingInput-5" class="view-shift-label">Physician</label>
+							</div>
+
+							<div class="col-12">
+								<div class="form-floating mb-3 inp custom-date-input">
+									<input type="date"
+										class="form-control shift-date-edit-shift input-1 view-shift-inp"
+										id="floatingInput-4" placeholder="Date Of Birth"
+										autocomplete="off"> <label for="floatingInput-4"
+										class="view-shift-label">Date of Shift</label> <img
+										src="<c:url value='/resources/images/calendar4-week.svg' />"
+										alt="" class="custom-date-icon">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-6">
+									<div class="form-floating mb-3 inp custom-clock-input">
+										<input type="time"
+											class="form-control shift-start-edit-shift input-1 view-shift-inp"
+											id="floatingInput-4" placeholder="Start" autocomplete="off">
+										<label for="floatingInput-4" class="view-shift-label">Start</label>
+										<img src="<c:url value='/resources/images/clock.svg' />"
+											alt="" class="custom-clock-icon">
+									</div>
+								</div>
+
+								<div class="col-6">
+									<div class="form-floating mb-3 inp custom-clock-input">
+										<input type="time"
+											class="form-control shift-end-edit-shift input-1 view-shift-inp"
+											id="floatingInput-4" placeholder="End" autocomplete="off">
+										<label for="floatingInput-4" class="view-shift-label">End</label>
+										<img src="<c:url value='/resources/images/clock.svg' />"
+											alt="" class="custom-clock-icon">
+									</div>
+								</div>
+
+								<input type="text" class="hidden-shift-id" hidden>
+
+							</div>
+
+
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer view-shift-footer-flex">
+					<button type="button" onclick="toggleStatus()" class="send-btn" data-bs-dismiss="modal">Return</button>
+					<button type="button" onclick="editShift()" class="send-btn">Edit</button>
+					<button type="button" onclick="deleteShift()" class="delete-btn" data-bs-dismiss="modal">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="modal fade" id="create-shift" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -196,8 +282,8 @@
 												class="form-control input-1 view-shift-inp"
 												id="start-time-case" placeholder="Start" autocomplete="off">
 											<label for="start-time-case" class="view-shift-label">Start</label>
-											<img src="./SRS Screen Shorts/clock.svg" alt=""
-												class="custom-clock-icon">
+											<img src="<c:url value='/resources/images/clock.svg' />"
+												alt="" class="custom-clock-icon">
 										</div>
 									</div>
 
@@ -311,6 +397,8 @@
                 dp.update({
                     startDate: args.start
                 });
+                
+                changeDate()
             }
         });
 
@@ -323,7 +411,7 @@
               businessBeginsHour: 8,
               businessEndsHour: 21,
               eventHeight: 40,
-              timeRangeSelectedHandling: "Enabled",
+              timeRangeSelectedHandling: "Disabled",
               onTimeRangeSelected: async (args) => {
                 const dp = args.control;
                 const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
@@ -349,7 +437,12 @@
               onEventDeleted: (args) => {
                 args.control.message("Event deleted: " + args.e.text());
               },
-              eventClickHandling: "Disabled",
+              eventClickHandling: "Enabled",
+              onEventClicked: (args) => {
+                  getShiftDetails(args.e.id())
+                  var myModal = new bootstrap.Modal(document.getElementById('accept'), {});
+                  myModal.show()
+              },
               eventHoverHandling: "Bubble",
               bubble: new DayPilot.Bubble({
                 onLoad: (args) => {
@@ -360,32 +453,84 @@
               }),
               treeEnabled: true,
             });
-//             dp.resources = [
-//               {name: "Resource 1", id: "R1"},
-//               {name: "Resource 2", id: "R2"},
-//               {name: "Resource 3", id: "R3"},
-//               {name: "Resource 4", id: "R4"},
-//               {name: "Resource 5", id: "R5"},
-//               {name: "Resource 6", id: "R6"},
-//               {name: "Resource 7", id: "R7"},
-//               {name: "Resource 8", id: "R8"},
-//               {name: "Resource 9", id: "R9"},
-//             ];
-//             dp.events.list = [];
+
             dp.init();
             
-function getEventDetails(events){
-	return events;
+// function getEventDetails(events){
+// 	return events;
+// }
+
+function getShiftDetails(eventId){
+	
+	$(".physician-unavailable-edit-div").addClass("d-none")
+	$.ajax({
+		url: 'get-event-details',
+		type: 'POST',
+		data: {
+			eventId : eventId
+		},
+		success: function(data) {
+			  console.log(data)
+			  $(".region-details-edit-shift").attr("value",data.regionId)
+			  $(".region-details-edit-shift").text(data.regionName)
+			  $(".physician-details-edit-shift").attr("value",data.physicianId)
+			  $(".physician-details-edit-shift").text(data.physicianName)
+			  $(".shift-date-edit-shift").attr("value",data.shiftDate)
+			  $(".shift-start-edit-shift").attr("value",data.startTime)
+			  $(".shift-end-edit-shift").attr("value",data.endTime)
+			  $(".hidden-shift-id").attr("value",data.shiftDetailId)
+		},
+		error: function(data) {
+			 console.log("Failed")
+		}
+	})
+	
+}
+
+function editShift(){
+	debugger
+	var shiftDetailId = $(".hidden-shift-id").val()
+	var shiftDate =  $(".shift-date-edit-shift").val()
+	var startTime = $(".shift-start-edit-shift").val()
+	var endTime = $(".shift-end-edit-shift").val()
+	
+	var payload = {}
+	payload["shiftDetailId"] = shiftDetailId
+	payload["shiftDate"] = shiftDate
+	payload["startTime"] = startTime
+	payload["endTime"] = endTime
+	
+	$.ajax({
+		url: 'edit-old-shift-details',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+			  if(data == true){
+				  $(".dismiss-button").click()
+				  app.init()
+			  }else{
+				  $(".physician-unavailable-edit-div").removeClass("d-none")
+			  }
+			  
+		},
+		error: function(data) {
+			 console.log("Failed")
+		}
+	})
+	
 }
      
 function getPhysicianData(eventData){
+	var regionId = $(".select-scheduling-region").val()
     const events = [];
 	const resources = [{ html: "<b>Coverage</b>", id: "R0" }]
 	$.ajax({
 		url: 'get-physician-details-scheduling',
-		type: 'GET',
+		type: 'POST',
+		data: {
+			regionId : regionId
+		},
 		success: function(res) {
-			debugger
 			console.log(eventData)
 			 for (let i = 0; i < res.length; ++i) {
 				 	var nameHtml = "<div class='coverage-flex'><div class='coverage-inner-flex'><img src =  " + res[i].path + " class='coverage-img' /><span> " + res[i].physicianName + "</span></div></div>"
@@ -429,16 +574,16 @@ const app = {
         change: document.querySelector("#change")
     },
     loadData() {
+    	var regionId = $(".select-scheduling-region").val()
     	
-
-		let eventData = null;
 		$.ajax({
 			url: 'get-physician-events',
-			type: 'GET',
+			type: 'POST',
+			data : {
+				regionId : regionId
+			},
 			success: function(res) {
 				
-// 				eventData = res
-				console.log(eventData)
 				getPhysicianData(res)
 				
 			},
@@ -462,19 +607,7 @@ const app = {
         this.loadData();
     },
     addEventHandlers() {
-        // this.elements.previous.addEventListener("click", () => {
-        //     // ev.preventDefault();
-        //     dp.update({
-        //         startDate: dp.startDate.addMonths(-1)
-        //     });
-        // });
-        // this.elements.next.addEventListener("click", (ev) => {
-        //     ev.preventDefault();
-        //     dp.update({
-        //         startDate: dp.startDate.addMonths(1)
-        //     });
-        // });
-
+        
         this.elements.change.addEventListener("click", (ev) => {
                     ev.preventDefault();
                     picker.show();
@@ -482,6 +615,10 @@ const app = {
     }
 };
 app.init();
+
+function regionFilter(){
+	app.init();
+}
            
           document.querySelector(".scheduler_default_corner_inner").nextElementSibling.style.display="none";
 

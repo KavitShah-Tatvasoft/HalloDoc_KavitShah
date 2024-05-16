@@ -1,13 +1,13 @@
 var physicianResources = []
 
-function getPhysicianData(){
+function getPhysicianData() {
 	$.ajax({
 		url: 'get-physician-details-scheduling',
 		type: 'GET',
 		success: function(res) {
 
-		physicianResources = res
-		
+			physicianResources = res
+
 
 		},
 		error: function(res) {
@@ -15,7 +15,7 @@ function getPhysicianData(){
 		}
 
 	});
-	
+
 	console.log(physicianResources)
 }
 
@@ -72,8 +72,8 @@ function toggleRepeatDetails() {
 }
 
 function changeDate() {
+	debugger
 	$(".current-date-class").text($(".scheduler_default_timeheadergroup_inner").text())
-
 }
 
 function setInitialDate() {
@@ -98,9 +98,48 @@ function selectedDays() {
 
 }
 
-function hideShiftRepeatDetials(){
+function hideShiftRepeatDetials() {
 	$(".physician-unavailable-error-div").addClass("d-none")
 	$(".repeat-details-class").addClass("d-none")
+}
+
+function toggleStatus() {
+	var shiftDetailId = $(".hidden-shift-id").val()
+
+	$.ajax({
+		url: 'toggle-shift-status',
+		type: 'POST',
+		data: {
+			shiftDetailId: shiftDetailId
+		},
+		success: function(data) {
+			app.init()
+			console.log("shift-toggled")
+		},
+		error: function(data) {
+			console.log("failed to toggle")
+		}
+	})
+
+}
+
+function deleteShift() {
+	var shiftDetailId = $(".hidden-shift-id").val()
+
+	$.ajax({
+		url: 'delete-shift',
+		type: 'POST',
+		data: {
+			shiftDetailId: shiftDetailId
+		},
+		success: function(data) {
+			app.init()
+			console.log("shift-deleted")
+		},
+		error: function(data) {
+			console.log("failed to delete")
+		}
+	})
 }
 
 $("#create-shift-form").submit(function(event) {
@@ -136,10 +175,10 @@ $("#create-shift-form").submit(function(event) {
 		type: 'POST',
 		data: payload,
 		success: function(data) {
-			if(data == true){
+			if (data == true) {
 				$(".reset-shift-modal-btn").click()
 				location.reload()
-			}else{
+			} else {
 				$(".physician-unavailable-error-div").removeClass("d-none")
 			}
 			console.log("create shift success")

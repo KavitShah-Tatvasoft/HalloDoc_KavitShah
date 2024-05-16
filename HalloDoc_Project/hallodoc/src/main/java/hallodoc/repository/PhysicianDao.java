@@ -106,7 +106,7 @@ public class PhysicianDao {
 	public List<Physician> getPhysicianByRegionList(List<Integer> list){
 		
 		Session s = this.sessionFactory.openSession();
-		Query query = s.createQuery("FROM Physician phy WHERE phy.physicianId IN (:list)");
+		Query query = s.createQuery("FROM Physician phy WHERE phy.physicianId IN (:list) AND phy.isDeleted=false");
 		query.setParameter("list", list);
 		List<Physician> listPhysician = query.list();
 		s.close();
