@@ -4,7 +4,7 @@ function changeActivePage(element) {
 	console.log(element)
 
 	element.classList.add('active');
-	filterPatientHistory(false)
+	filterReviewShifts(false)
 }
 
 function prevPage() {
@@ -27,32 +27,99 @@ function nextPage() {
 	}
 }
 
+function convertTo12HourFormat(time) {
+	var [hours, minutes] = time.split(":");
+	let ampm = "AM";
+	if (hours >= 12) {
+		ampm = "PM";
+		if (hours > 12) {
+			hours -= 12;
+		}
+	}
+	if (hours == 0) {
+		hours = 12;
+	}
+	return `${hours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
+}
+
+function approveSelected() {
+	var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+	var values = [];
+	for (var i = 0; i < checkboxes.length; i++) {
+		values.push(checkboxes[i].value);
+	}
+
+	$.ajax({
+		url: 'approve-selected-shifts',
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(values),
+
+		success: function(data) {
+
+			console.log("approve-selected")
+			filterReviewShifts(true)
+		},
+		error: function(data) {
+			console.log("failure approve-selected")
+		}
+	})
+
+}
+
+function deleteSelected() {
+
+	var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+	var values = [];
+	for (var i = 0; i < checkboxes.length; i++) {
+		values.push(checkboxes[i].value);
+	}
+
+	$.ajax({
+		url: 'delete-selected-shifts',
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(values),
+
+		success: function(data) {
+
+			console.log("deleted-selected")
+			filterReviewShifts(true)
+		},
+		error: function(data) {
+			console.log("failure deleted-selected")
+		}
+	})
+
+
+}
 
 function filterReviewShifts(bool) {
 	debugger
 	var regionId = $(".region-review-shift").val()
-	
+
 	if (bool == true) {
 		var pageNo = 1
 	} else {
 		var pageNo = $(".page-link.active").attr("data-pg")
 	}
-	
+
 	var payload = {}
 	payload["regionId"] = parseInt(regionId)
 	payload["pageNo"] = parseInt(pageNo)
-	
+
 	var tbody = $(".tbody-empty")
-//	var accordionBody = $(".accordion-body-empty")
-	
+	var accordionBody = $(".empty-accordion-body")
+
 	$.ajax({
 		url: 'get-review-shift-details',
 		type: 'POST',
 		data: payload,
 		success: function(res) {
-			
+
 			let paginationBody = $(".empty-pagination")
 			paginationBody.empty()
+			accordionBody.empty()
 			var prev = $(".prev-navigation").clone().removeClass("prev-navigation").removeClass("d-none")
 			var next = $(".next-pagination").clone().removeClass("next-pagination").removeClass("d-none")
 			paginationBody.append(prev)
@@ -92,18 +159,25 @@ function filterReviewShifts(bool) {
 
 			tbody.empty()
 			console.log(res.reviewShiftDetailsDto)
-			res.reviewShiftDetailsDto.forEach(function(data){
-				
-			var row = $("clone-tr-review").clone().removeClass("d-none").removeClass("clone-tr-review")
-			row.find(".checkbox-review").attr("value",data.shiftDetailId)
-			row.find(".physician-name-review").text(data.physicainName)
-			row.find(".shift-date-review").text(data.shiftDate)
-			row.find(".shift-time-review").text(data.startTime)
-			row.find(".shift-region-review").text(data.regionName)
-			tbody.append(row)
-				
+			res.reviewShiftDetailsDto.forEach(function(data) {
+
+				var row = $(".clone-tr-review").clone(true).removeClass("d-none").removeClass("clone-tr-review")
+				row.find(".checkbox-review").attr("value", data.shiftDetailId)
+				row.find(".physician-name-review").text(data.physicainName)
+				row.find(".shift-date-review").text(data.shiftDate)
+				row.find(".shift-time-review").text(convertTo12HourFormat(data.startTime) + " - " + convertTo12HourFormat(data.endTime))
+				row.find(".shift-region-review").text(data.regionName)
+				tbody.append(row)
+
+				var card = $(".clone-accordion-card").clone(true).removeClass("d-none").removeClass("clone-accordion-card")
+				card.find(".checkbox-review").attr("value", data.shiftDetailId)
+				card.find(".physician-name-review").text(data.physicainName)
+				card.find(".shift-date-review").text(data.shiftDate)
+				card.find(".shift-time-review").text(convertTo12HourFormat(data.startTime) + " - " + convertTo12HourFormat(data.endTime))
+				card.find(".shift-region-review").text(data.regionName)
+				accordionBody.append(card)
 			})
-			
+
 			console.log("review-shift")
 		},
 		error: function(data) {

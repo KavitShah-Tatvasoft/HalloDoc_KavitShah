@@ -51,6 +51,7 @@ import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
+import hallodoc.dto.ProviderOnCallStatusDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
 import hallodoc.dto.ReviewShiftDetailsDto;
 import hallodoc.dto.ReviewShiftDto;
@@ -1341,9 +1342,9 @@ public class AdminService {
 						shiftDetailsList.add(shiftDetails);
 
 						for (int j = 0; j < createShiftDto.getRepeatTimes() - 1; j++) {
-							LocalDate futureShiftDate = nextDate.plusDays(7);
+							nextDate = nextDate.plusDays(7);
 							ShiftDetails futureshiftDetails = createNewShiftDetails(createShiftDto, aspNetUsers,
-									futureShiftDate, startTime, endTime, shift);
+									nextDate, startTime, endTime, shift);
 							shiftDetailsList.add(futureshiftDetails);
 						}
 					}
@@ -1406,12 +1407,14 @@ public class AdminService {
 			EventsDto eventsDto = new EventsDto();
 			eventsDto.setEndTime(shiftDetails.getEndTime().toString());
 			eventsDto.setPhysicianId(shiftDetails.getShiftId().getPhysicianId().getPhysicianId());
+			eventsDto.setPhysicianName("Dr."+shiftDetails.getShiftId().getPhysicianId().getFirstName() + " " + shiftDetails.getShiftId().getPhysicianId().getLastName());
 			eventsDto.setRegionAbbr(regionDao.getRegionById(shiftDetails.getRegionId()).get(0).getAbbreviation());
 			eventsDto.setShiftDate(shiftDetails.getShiftDate().toString());
 			eventsDto.setShiftDetailId(shiftDetails.getShiftDetailId());
 			eventsDto.setStartTime(shiftDetails.getStartTime().toString());
 			eventsDto.setStatus(shiftDetails.getStatus());
 			eventsDto.setRegionId(shiftDetails.getRegionId());
+			
 			eventsDtos.add(eventsDto);
 		}
 
@@ -1491,6 +1494,7 @@ public class AdminService {
 		List<ReviewShiftDetailsDto> reviewShiftDetailsDtos = new ArrayList<ReviewShiftDetailsDto>();
 		Long count = this.shiftDao.getFilteredShiftReviewDetailsCount(regionId, pageNo);
 		List<ShiftDetails> shiftDetails = this.shiftDao.getFilteredShiftReviewDetails(regionId, pageNo);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM, yyyy");
 //		Region region = this.regionDao.getRegionById(regionId).get(0);
 
 		for (ShiftDetails shift : shiftDetails) {
@@ -1502,7 +1506,7 @@ public class AdminService {
 			reviewShiftDetailsDto.setPhysicainName(name);
 			Region region = this.regionDao.getRegionById(shift.getRegionId()).get(0);
 			reviewShiftDetailsDto.setRegionName(region.getName());
-			reviewShiftDetailsDto.setShiftDate(shift.getShiftDate().toString());
+			reviewShiftDetailsDto.setShiftDate(shift.getShiftDate().format(formatter));
 			reviewShiftDetailsDto.setStartTime(shift.getStartTime().toString());
 			reviewShiftDetailsDto.setShiftDetailId(shift.getShiftDetailId());
 			reviewShiftDetailsDtos.add(reviewShiftDetailsDto);
@@ -1511,5 +1515,17 @@ public class AdminService {
 		reviewShiftDto.setReviewShiftDetailsDto(reviewShiftDetailsDtos);
 		
 		return reviewShiftDto;
+	}
+	
+	public String approveSelectedShifts(List<Integer> shiftIds) {
+		return this.shiftDao.approveShifts(shiftIds);
+	}
+	
+	public String deleteSelectedShifts(List<Integer> shiftIds) {
+		return this.shiftDao.deleteShifts(shiftIds);
+	}
+	
+	public List<ProviderOnCallStatusDto> getProviderOnCallStauts(){
+		return this.shiftDao.getProviderOnCallStatus();
 	}
 }

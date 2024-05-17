@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,6 +51,7 @@ import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.ProviderMailingDto;
 import hallodoc.dto.ProviderMenuDto;
+import hallodoc.dto.ProviderOnCallStatusDto;
 import hallodoc.dto.ProviderUpdatedInfoDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.ReviewShiftDto;
@@ -547,6 +549,17 @@ public class AdminController {
 		return "admin/scheduling-day";
 	}
 	
+	@RequestMapping(value = "/scheduling-week", method = RequestMethod.GET)
+	public String weekScheduling(Model m) {
+		return "admin/scheduling-week";
+	}
+	
+	
+	@RequestMapping(value = "/scheduling-month", method = RequestMethod.GET)
+	public String monthScheduling(Model m) {
+		return "admin/scheduling-month";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/create-shift", method=RequestMethod.POST)
 	public boolean createShift(CreateShiftDto createShiftDto, HttpServletRequest httpServletRequest) {
@@ -601,4 +614,30 @@ public class AdminController {
 	public ReviewShiftDto getReviewShiftDetails(ReviewShiftFilterDto reviewShiftFilterDto) {
 		return this.adminService.getReviewShiftData(reviewShiftFilterDto.getRegionId(),reviewShiftFilterDto.getPageNo());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/approve-selected-shifts",method = RequestMethod.POST)
+	public String approveSelectedShifts(@RequestBody List<Integer> values) {
+		return this.adminService.approveSelectedShifts(values);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete-selected-shifts",method = RequestMethod.POST)
+	public String deleteSelectedShifts(@RequestBody List<Integer> values) {
+		return this.adminService.deleteSelectedShifts(values);
+	}
+	
+	@RequestMapping(value="/provider-on-call", method =RequestMethod.GET)
+	public String providerOnCall() {
+		return "admin/provider-on-call";
+	}
+	
+	
+	@RequestMapping(value="/get-provider-on-call-data", method = )
+	public String getProviderOnCallStatus() {
+		List<ProviderOnCallStatusDto> onCallStatusDtos = this.adminService.getProviderOnCallStauts();
+		return "admin/provider-on-call";
+	}
+	
+	
 }

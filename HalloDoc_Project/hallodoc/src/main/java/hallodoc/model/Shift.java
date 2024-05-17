@@ -29,7 +29,7 @@ public class Shift {
 
 	@OneToOne
 	@JoinColumn(name = "physician_id")
-	private Physician physicianId;
+	private Physician physicianId  ;
 
 	@Column(name = "start_date")
 	private LocalDate startDate;

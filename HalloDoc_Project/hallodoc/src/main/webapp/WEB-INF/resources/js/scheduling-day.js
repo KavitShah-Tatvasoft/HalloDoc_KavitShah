@@ -1,5 +1,72 @@
 var physicianResources = []
 
+function getShiftDetails(eventId) {
+
+	$(".physician-unavailable-edit-div").addClass("d-none")
+	$.ajax({
+		url: 'get-event-details',
+		type: 'POST',
+		data: {
+			eventId: eventId
+		},
+		success: function(data) {
+			console.log(data)
+			$(".region-details-edit-shift").val(data.regionId)
+			$(".region-details-edit-shift").text(data.regionName)
+			$(".physician-details-edit-shift").val(data.physicianId)
+			$(".physician-details-edit-shift").text(data.physicianName)
+			$(".shift-date-edit-shift").val(data.shiftDate)
+			$(".shift-start-edit-shift").val(data.startTime)
+			$(".shift-end-edit-shift").val(data.endTime)
+			$(".hidden-shift-id").val(data.shiftDetailId)
+
+		},
+		error: function(data) {
+			console.log("Failed")
+		}
+	})
+
+}
+
+function editShift() {
+	debugger
+	var shiftDetailId = $(".hidden-shift-id").val()
+	var shiftDate = $(".shift-date-edit-shift").val()
+	var startTime = $(".shift-start-edit-shift").val()
+	var endTime = $(".shift-end-edit-shift").val()
+
+	var payload = {}
+	payload["shiftDetailId"] = shiftDetailId
+	payload["shiftDate"] = shiftDate
+	payload["startTime"] = startTime
+	payload["endTime"] = endTime
+
+	$.ajax({
+		url: 'edit-old-shift-details',
+		type: 'POST',
+		data: payload,
+		success: function(data) {
+			if (data == true) {
+
+				$(".dismiss-button").click()
+				app.init()
+			} else {
+				$(".physician-unavailable-edit-div").removeClass("d-none")
+			}
+
+		},
+		error: function(data) {
+			console.log("Failed")
+		}
+	})
+
+}
+
+function regionFilter() {
+	app.init();
+}
+
+
 function getPhysicianData() {
 	$.ajax({
 		url: 'get-physician-details-scheduling',
@@ -78,6 +145,16 @@ function changeDate() {
 
 function setInitialDate() {
 	$(".current-date-class").text($(".scheduler_default_timeheadergroup_inner").text())
+}
+
+function setWeekDate() {
+	var date = `${new DayPilot.Date(dp.startDate).toString("MMM d")} - ${new DayPilot.Date(dp.startDate).addDays(6).toString("MMM d, yyyy")}`
+	$(".current-date-class").text(date)
+}
+
+function setMonthDate(){
+	var date = `${new DayPilot.Date(dp.startDate).toString("MMM yyyy")}`
+	$(".current-date-class").text(date)
 }
 
 function selectedDays() {

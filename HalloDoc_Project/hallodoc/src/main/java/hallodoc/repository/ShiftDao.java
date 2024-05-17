@@ -23,6 +23,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import hallodoc.dto.CreateShiftDto;
+import hallodoc.dto.ProviderOnCallStatusDto;
 import hallodoc.model.Physician;
 import hallodoc.model.Request;
 import hallodoc.model.RequestClient;
@@ -96,6 +97,19 @@ public class ShiftDao {
 		s.close();
 		return "Toggled Status";
 	}
+	
+	@Transactional
+		public String approveShifts(List<Integer> shiftDetailIds) {
+		Session s = this.sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		String queryString = "UPDATE ShiftDetails sd SET sd.status = 1 WHERE sd.shiftDetailId IN (:shiftDetailIds)";
+		Query q = s.createQuery(queryString);
+		q.setParameter("shiftDetailIds", shiftDetailIds);
+		q.executeUpdate();
+		tx.commit();
+		s.close();
+		return "Toggled Status";
+	}
 
 	@Transactional
 	public String deleteShift(int shiftDetailId) {
@@ -109,6 +123,29 @@ public class ShiftDao {
 		s.close();
 		return "Shift Deleted";
 	}
+	
+	@Transactional
+	public String deleteShifts(List<Integer> shiftDetailIds) {
+		Session s = this.sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		String queryString = "UPDATE ShiftDetails sd SET sd.isDeleted=true WHERE sd.shiftDetailId IN (:shiftDetailIds)";
+		Query q = s.createQuery(queryString);
+		q.setParameter("shiftDetailIds", shiftDetailIds);
+		q.executeUpdate();
+		tx.commit();
+		s.close();
+		return "Selected Shifts Deleted";
+	}
+	
+	public List<ProviderOnCallStatusDto> getProviderOnCallStatus(){
+		Session s = this.sessionFactory.openSession();
+		String queryString = "";
+		Query q = s.createQuery(queryString);
+		List<ProviderOnCallStatusDto> providerOnCallStatusDtos = q.list();
+		s.close();
+		return providerOnCallStatusDtos;
+	}
+
 
 	public List<ShiftDetails> getFilteredShiftReviewDetails(int regionId, int pageNo) {
 
@@ -126,7 +163,7 @@ public class ShiftDao {
 			predicates[0] = cb.equal(root.get("regionId"), regionId);
 		}
 
-		predicates[1] = cb.equal(root.get("isDeleted"), false);
+		predicates[1] = cb.equal(root.get("status"), 0);
 
 		cr.select(root).where(predicates);
 
@@ -159,7 +196,7 @@ public class ShiftDao {
 			predicates[0] = cb.equal(root.get("regionId"), regionId);
 		}
 
-		predicates[1] = cb.equal(root.get("isDeleted"), false);
+		predicates[1] = cb.equal(root.get("status"), 0);
 		
 		cr.select(cb.count(root)).where(predicates);
 		Long total = s.createQuery(cr).getSingleResult();

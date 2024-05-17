@@ -55,30 +55,32 @@
 					</div>
 
 					<div class="shifts-btns-flex">
-						<a href="scheduling-month.html" role="button"
-							class="current-month-btn">View Current Month Shift</a> <a
+						<a href="${pageContext.request.contextPath}/admin/scheduling-month" role="button"
+							class="current-month-btn">View Current Month Shift</a> <a onclick="approveSelected()"
 							href="#" role="button" class="approved-shift-btn">Approved
-							Selected</a> <a href="#" role="button" class="delete-shift-btn">Delete
+							Selected</a> <a href="#" role="button" class="delete-shift-btn" onclick="deleteSelected()">Delete
 							Selected</a>
 					</div>
 				</div>
 			</div>
-
-			<div class="card-div">
-				<div class="mobile-cards">
+			
+			<div class="mobile-cards clone-accordion-card d-none">
 					<hr>
 					<div class="checkbox-name-flex">
-						<input type="checkbox" class="input-checkbox"> <span
-							class="doc-name">Dr. Shah</span>
+						<input type="checkbox" class="input-checkbox checkbox-review"> <span
+							class="doc-name physician-name-review">Dr. Shah</span>
 					</div>
 
 					<div class="date-time-region-flex">
-						<span class="card-div-flex-text">Dec 09, 2023</span> <span
-							class="card-div-flex-text">8.15 PM - 9.15 PM</span> <span
-							class="card-div-flex-text">Newyork</span>
+						<span class="shift-date-review">Dec 09, 2023</span> <span
+							class="shift-time-review">8.15 PM - 9.15 PM</span> <span
+							class="shift-region-review">Newyork</span>
 					</div>
 					<hr>
 				</div>
+
+			<div class="card-div empty-accordion-body">
+				
 			</div>
 
 		</div>
@@ -100,7 +102,7 @@
 						<th scope="col" class="thead width-col5">Region</th>
 					</tr>
 				</thead>
- 
+
 				<tr class="clone-tr-review d-none">
 					<td class="thead width-col1 extra-padding-td"><input
 						type="checkbox" name="" id=""
@@ -151,6 +153,7 @@
 		});
 
 		$("input[type='checkbox'].justone").change(function() {
+			debugger
 			var a = $("input[type='checkbox'].justone");
 			if (a.length == a.filter(":checked").length) {
 				$('.selectall').prop('checked', true);
