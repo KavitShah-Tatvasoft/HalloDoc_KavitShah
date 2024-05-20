@@ -34,8 +34,8 @@
 								<li class="nav-item"><a class="nav-link"
 									aria-current="page" href="${pageContext.request.contextPath}/provider/provider-dashboard">Dashboard</a>
 								</li>
-<!-- 								<li class="nav-item"><a class="nav-link" href="#">My -->
-<!-- 										Schedule</a></li> -->
+								<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/provider/provider-schedule">My
+										Schedule</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="${pageContext.request.contextPath}/provider/provider-profile">My Profile</a></li>
 						</div>
@@ -86,8 +86,8 @@
 			<li class="nav-item"><a class="nav-link" aria-current="page"
 				href="${pageContext.request.contextPath}/provider/provider-dashboard">Dashboard</a></li>
 
-<!-- 			<li class="nav-item"><a class="nav-link" href="#">My -->
-<!-- 					Schedule</a></li> -->
+			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/provider/provider-schedule">My
+					Schedule</a></li>
 
 			<li class="nav-item"><a class="nav-link"
 				href="${pageContext.request.contextPath}/provider/provider-profile">My Profile</a></li>

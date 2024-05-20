@@ -6,6 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/loader.css' />">
 <link
@@ -16,6 +17,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
@@ -53,8 +57,8 @@
 				alt=""> Back
 		</div>
 
-		<form action="createNewFamilyRequest" method="post"
-			enctype="multipart/form-data" onsubmit="showLoader()">
+		<form id="family-friend-form-id" action="createNewFamilyRequest"
+			method="post" enctype="multipart/form-data">
 
 			<!--     </a> -->
 			<div class="row">
@@ -69,9 +73,10 @@
 					<!--First Name col-->
 					<div class="form-floating mb-3 inp">
 						<input name="reqFirstName" type="text"
-							class="form-control input-2" id="floatingInput-2"
+							class="form-control input-2" id="reqFirstName"
 							placeholder="First Name" autocomplete="off"> <label
-							for="floatingInput-2">Your First Name</label>
+							for="reqFirstName">Your First Name</label> <span
+							class="error-class-span" id="reqFirstNameError"></span>
 					</div>
 				</div>
 
@@ -79,8 +84,9 @@
 					<!--Last Name col-->
 					<div class="form-floating mb-3 inp">
 						<input name="reqLastName" type="text" class="form-control input-1"
-							id="floatingInput-3" placeholder="Last Name" autocomplete="off">
-						<label for="floatingInput-3">Your Last Name</label>
+							id="reqLastName" placeholder="Last Name" autocomplete="off">
+						<label for="reqLastName">Your Last Name</label> <span
+							class="error-class-span" id="reqLastNameError"></span>
 					</div>
 				</div>
 
@@ -88,7 +94,8 @@
 					<!--Phone Number col-->
 					<div class="form-floating mb-3 inp phonecolheight">
 						<input name="reqMobileNumber" type="tel"
-							class="form-control phoneflags phone" />
+							class="form-control phoneflags phone" /> <span
+							class="error-class-span" id="reqMobileNumberError"></span>
 					</div>
 				</div>
 
@@ -96,8 +103,9 @@
 					<!--Email col-->
 					<div class="form-floating mb-3 inp">
 						<input name="reqEmail" type="email" class="form-control input-2"
-							id="floatingInput-5" placeholder="Email" autocomplete="off">
-						<label for="floatingInput-5">Your Email</label>
+							id="reqEmail" placeholder="Email" autocomplete="off">
+						<label for="reqEmail">Your Email</label> <span
+							class="error-class-span" id="reqEmailError"></span>
 					</div>
 				</div>
 
@@ -105,9 +113,9 @@
 					<!--Relation with patient col-->
 					<div class="form-floating mb-3 inp">
 						<input name="reqRelation" type="text" class="form-control input-2"
-							id="floatingInput-2" placeholder="Relation With Patient"
-							autocomplete="off"> <label for="floatingInput-2">Relation
-							With Patient</label>
+							id="reqRelation" placeholder="Relation With Patient"
+							autocomplete="off"> <label for="reqRelation">Relation
+							With Patient</label> <span class="error-class-span" id="reqRelationError"></span>
 					</div>
 				</div>
 
@@ -137,8 +145,9 @@
 					<!--First Name col-->
 					<div class="form-floating mb-3 inp">
 						<input name="ptFirstName" type="text" class="form-control input-2"
-							id="floatingInput-2" placeholder="First Name" autocomplete="off">
-						<label for="floatingInput-2">First Name</label>
+							id="ptFirstName" placeholder="First Name" autocomplete="off">
+						<label for="ptFirstName">First Name</label> <span
+							class="error-class-span" id="ptFirstNameError"></span>
 					</div>
 				</div>
 
@@ -146,8 +155,9 @@
 					<!--Last Name col-->
 					<div class="form-floating mb-3 inp">
 						<input name="ptLastName" type="text" class="form-control input-1"
-							id="floatingInput-3" placeholder="Last Name" autocomplete="off">
-						<label for="floatingInput-3">Last Name</label>
+							id="ptLastName" placeholder="Last Name" autocomplete="off">
+						<label for="ptLastName">Last Name</label> <span
+							class="error-class-span" id="ptLastNameError"></span>
 					</div>
 				</div>
 
@@ -155,10 +165,11 @@
 					<div class="form-floating mb-3 inp custom-date-input">
 						<!--Date Picker col-->
 						<input name="ptDob" type="date" class="form-control input-1"
-							id="floatingInput-4" placeholder="Date Of Birth"
-							autocomplete="off"> <label for="floatingInput-4">Date
+							id="ptDob" placeholder="Date Of Birth"
+							autocomplete="off"> <label for="ptDob">Date
 							of Birth</label> <img src="./SRS Screen Shorts/calendar4-week.svg" alt=""
-							class="custom-date-icon">
+							class="custom-date-icon"> <span class="error-class-span"
+							id="ptDobError"></span>
 					</div>
 				</div>
 
@@ -176,8 +187,9 @@
 					<!--Email col-->
 					<div class="form-floating mb-3 inp">
 						<input name="ptEmail" type="email" class="form-control input-2"
-							id="floatingInput-5" placeholder="Email" autocomplete="off">
-						<label for="floatingInput-5">Email</label>
+							id="ptEmail" placeholder="Email" autocomplete="off">
+						<label for="ptEmail">Email</label> <span
+							class="error-class-span" id="ptEmailError"></span>
 					</div>
 				</div>
 
@@ -185,8 +197,8 @@
 					<!--Phone Number col-->
 					<div class="form-floating mb-3 inp phonecolheight">
 						<input name="ptMobileNumber" type="tel"
-							class="form-control phoneflags phone" />
-
+							class="form-control phoneflags phone" /> <span
+							class="error-class-span" id="ptMobileNumberError"></span>
 					</div>
 				</div>
 
@@ -206,8 +218,9 @@
 					<!--Street col-->
 					<div class="form-floating mb-3 inp">
 						<input name="ptStreet" type="text" class="form-control input-2"
-							id="floatingInput-7" placeholder="Street" autocomplete="off">
-						<label for="floatingInput-7">Street</label>
+							id="ptStreet" placeholder="Street" autocomplete="off">
+						<label for="ptStreet">Street</label> <span
+							class="error-class-span" id="ptStreetError"></span>
 					</div>
 				</div>
 
@@ -215,8 +228,9 @@
 					<!--City col-->
 					<div class="form-floating mb-3 inp">
 						<input name="ptCity" type="text" class="form-control input-2"
-							id="floatingInput-8" placeholder="City" autocomplete="off">
-						<label for="floatingInput-8">City</label>
+							id="ptCity" placeholder="City" autocomplete="off">
+						<label for="ptCity">City</label> <span
+							class="error-class-span" id="ptCityError"></span>
 					</div>
 				</div>
 
@@ -226,7 +240,7 @@
 						<input name="ptState" type="text" class="form-control input-2"
 							id="state" placeholder="State" autocomplete="off"
 							onblur="validatePatientState()"> <label for="state">State</label>
-						<span id="stateErrorField"></span>
+						<span id="stateErrorField" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -234,8 +248,9 @@
 					<!--Zip Code col-->
 					<div class="form-floating mb-3 inp">
 						<input name="ptZipcode" type="text" class="form-control input-2"
-							id="floatingInput-10" placeholder="Zip Code" autocomplete="off">
-						<label for="floatingInput-10">Zip Code</label>
+							id="ptZipcode" placeholder="Zip Code" autocomplete="off">
+						<label for="ptZipcode">Zip Code</label> <span
+							class="error-class-span" id="ptZipcodeError"></span>
 					</div>
 				</div>
 
@@ -243,8 +258,8 @@
 					<!--Room #/ Suite(Optional) col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" class="form-control input-2" name="ptRoom"
-							id="floatingInput-11" placeholder="Room #/ Suite(Optional)"
-							autocomplete="off"> <label for="floatingInput-11">Room
+							id="ptRoom" placeholder="Room #/ Suite(Optional)"
+							autocomplete="off"> <label for="ptRoom">Room
 							#/ Suite(Optional)</label>
 					</div>
 				</div>
@@ -300,6 +315,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script>

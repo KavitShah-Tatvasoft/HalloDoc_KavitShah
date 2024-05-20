@@ -18,6 +18,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
@@ -54,7 +57,7 @@
 				alt=""> Back
 		</div>
 		<!-- 		</a> -->
-		<form action="addNewConciergeRequest" method="post" onsubmit="showLoader()">
+		<form action="addNewConciergeRequest" method="post" id="concierge-form-id">
 			<div class="row">
 				<!--Row 1-->
 
@@ -67,9 +70,10 @@
 					<!--First Name col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="reqFirstName"
-							class="form-control input-2" id="floatingInput-2"
+							class="form-control input-2" id="reqFirstName"
 							placeholder="First Name" autocomplete="off"> <label
-							for="floatingInput-2">Your First Name</label>
+							for="reqFirstName">Your First Name</label>
+						<span id="reqFirstNameError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -77,8 +81,9 @@
 					<!--Last Name col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="reqLastName" class="form-control input-1"
-							id="floatingInput-3" placeholder="Last Name" autocomplete="off">
-						<label for="floatingInput-3">Your Last Name</label>
+							id="reqLastName" placeholder="Last Name" autocomplete="off">
+						<label for="reqLastName">Your Last Name</label>
+						<span id="reqLastNameError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -87,6 +92,7 @@
 					<div class="form-floating mb-3 inp phonecolheight">
 						<input type="tel" name="reqMobileNumber"
 							class="form-control phoneflags phone" />
+						<span id="reqMobileNumberError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -94,8 +100,9 @@
 					<!--Email col-->
 					<div class="form-floating mb-3 inp concierge-req-only">
 						<input type="email" name="reqEmail" class="form-control input-2"
-							id="floatingInput-5" placeholder="Email" autocomplete="off">
-						<label for="floatingInput-5">Your Email</label>
+							id="reqEmail" placeholder="Email" autocomplete="off">
+						<label for="reqEmail">Your Email</label>
+						<span id="reqEmailError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -103,9 +110,10 @@
 					<!--Relation with patient col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="reqProperty" class="form-control input-2"
-							id="floatingInput-2" placeholder="Relation With Patient"
-							autocomplete="off"> <label for="floatingInput-2">Hotel/Property
+							id="reqProperty" placeholder="Relation With Patient"
+							autocomplete="off"> <label for="reqProperty">Hotel/Property
 							Name</label>
+						<span id="reqPropertyError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -124,8 +132,9 @@
 					<!--Street col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="reqStreet" class="form-control input-2"
-							id="floatingInput-7" placeholder="Street" autocomplete="off">
-						<label for="floatingInput-7">Street</label>
+							id="reqStreet" placeholder="Street" autocomplete="off">
+						<label for="reqStreet">Street</label>
+						<span id="reqStreetError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -133,8 +142,9 @@
 					<!--City col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="reqCity" class="form-control input-2"
-							id="floatingInput-8" placeholder="City" autocomplete="off">
-						<label for="floatingInput-8">City</label>
+							id="reqCity" placeholder="City" autocomplete="off">
+						<label for="reqCity">City</label>
+						<span id="reqCityError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -152,8 +162,9 @@
 					<!--Zip Code col-->
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="reqZipcode" class="form-control input-2"
-							id="floatingInput-10" placeholder="Zip Code" autocomplete="off">
-						<label for="floatingInput-10">Zip Code</label>
+							id="reqZipcode" placeholder="Zip Code" autocomplete="off">
+						<label for="reqZipcode">Zip Code</label>
+						<span id="reqZipcodeError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -181,9 +192,10 @@
 						<!--First Name col-->
 						<div class="form-floating mb-3 inp">
 							<input type="text" name="ptFirstName"
-								class="form-control input-2" id="floatingInput-2"
+								class="form-control input-2" id="ptFirstName"
 								placeholder="First Name" autocomplete="off"> <label
-								for="floatingInput-2">First Name</label>
+								for="ptFirstName">First Name</label>
+							<span id="ptFirstNameError" class="error-class-span"></span>
 						</div>
 					</div>
 
@@ -191,8 +203,9 @@
 						<!--Last Name col-->
 						<div class="form-floating mb-3 inp">
 							<input type="text" name="ptLastName" class="form-control input-1"
-								id="floatingInput-3" placeholder="Last Name" autocomplete="off">
-							<label for="floatingInput-3">Last Name</label>
+								id="ptLastName" placeholder="Last Name" autocomplete="off">
+							<label for="floaptLastNametingInput-3">Last Name</label>
+							<span id="ptLastNameError" class="error-class-span"></span>
 						</div>
 					</div>
 
@@ -200,11 +213,12 @@
 						<div class="form-floating mb-3 inp custom-date-input">
 							<!--Date Picker col-->
 							<input type="date" name="ptDob" class="form-control input-1"
-								id="floatingInput-4" placeholder="Date Of Birth"
-								autocomplete="off"> <label for="floatingInput-4">Date
+								id="ptDob" placeholder="Date Of Birth"
+								autocomplete="off"> <label for="ptDob">Date
 								of Birth</label> <img
 								src="<c:url value='/resources/images/calendar4-week.svg' />"
 								alt="" class="custom-date-icon">
+							<span id="ptDobError" class="error-class-span"></span>
 						</div>
 					</div>
 
@@ -222,8 +236,9 @@
 						<!--Email col-->
 						<div class="form-floating mb-3 inp">
 							<input type="email" name="ptEmail" class="form-control input-2"
-								id="floatingInput-5" placeholder="Email" autocomplete="off">
-							<label for="floatingInput-5">Email</label>
+								id="ptEmail" placeholder="Email" autocomplete="off">
+							<label for="ptEmail">Email</label>
+							<span id="ptEmailError" class="error-class-span"></span>
 						</div>
 					</div>
 
@@ -232,6 +247,7 @@
 						<div class="form-floating mb-3 inp phonecolheight">
 							<input type="tel" name="ptMobileNumber"
 								class="form-control phoneflags phone" />
+							<span id="ptMobileNumberError" class="error-class-span"></span>
 						</div>
 					</div>
 
@@ -253,6 +269,7 @@
 								id="floatingInput-11" placeholder="Room #/ Suite(Optional)"
 								autocomplete="off"> <label for="floatingInput-11">Room
 								#/ Suite(Optional)</label>
+								
 						</div>
 					</div>
 

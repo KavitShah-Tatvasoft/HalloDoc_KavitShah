@@ -1,397 +1,381 @@
-#passwordRowId{
+.error-class-span {
+	display: none;
+	padding-left: 5px;
+	color: red;
+}
+
+.error-class-span.visible {
+	display: inline-block;
+	padding-left: 5px;
+	color: red;
+}
+
+#passwordRowId {
 	display: none;
 }
 
-#save-btn-pdashboard{
-  display: none;
+#save-btn-pdashboard {
+	display: none;
 }
 
-#cancel-btn-pdashboard{
-  display: none;
+#cancel-btn-pdashboard {
+	display: none;
 }
 
-#passError1, #passError, #stateErrorField{
+#passError1, #passError, #stateErrorField {
 	color: red;
 	margin-left: 8px
 }
 
-.open-eye{
-    position: absolute;
-    top: 18px;
-    right: 15px;
-    width: 21px;
-    height: 22px;
+.open-eye {
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	width: 21px;
+	height: 22px;
 }
 
-.close-eye{
-    position: absolute;
-    top: 18px;
-    right: 15px;
-    width: 21px;
-    height: 22px;
-    display: none;
+.close-eye {
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	width: 21px;
+	height: 22px;
+	display: none;
 }
 
-.back-btn-top:hover, .bottom-btns-cancel:hover, .map-text-flex-patient-profile-only:hover{
-  background-color: #01bce9;
-  color: white;
+.back-btn-top:hover, .bottom-btns-cancel:hover,
+	.map-text-flex-patient-profile-only:hover {
+	background-color: #01bce9;
+	color: white;
 }
 
-.map-text-flex-patient-profile-only:hover span{
-  color: white;
+.map-text-flex-patient-profile-only:hover span {
+	color: white;
 }
 
-.back-btn-top:hover img, .map-text-flex-patient-profile-only:hover img{
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg) brightness(200%) contrast(101%);
+.back-btn-top:hover img, .map-text-flex-patient-profile-only:hover img {
+	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(206deg)
+		brightness(200%) contrast(101%);
 }
 
-.bottom-btns-submit:hover, .bottom-btns-edit:hover{
-  background-color: #1991b3;
-
+.bottom-btns-submit:hover, .bottom-btns-edit:hover {
+	background-color: #1991b3;
 }
 
-
-
-.body{
-    background-color: #f9f9f9;
+.body {
+	background-color: #f9f9f9;
 }
 
-.patient-form{
-    width: 60%;
-    background-color: white;
+.patient-form {
+	width: 60%;
+	background-color: white;
 }
 
-.relative-position{
-  position: relative;
+.relative-position {
+	position: relative;
 }
 
-.extra-margin{
-  margin-top: 80px;
-  margin-bottom: 50px;
+.extra-margin {
+	margin-top: 80px;
+	margin-bottom: 50px;
 }
 
 /* label{
   color: #a3a195;
 } */
-
 .back-btn-top {
-    display: flex;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    border: 1px solid #01bce9;
-    border-radius: 5px;
-    padding: 9px 12px 9px 8px;
-    color: #01bce9;
-    gap: 4px;
-    width: 84px;
-    position: absolute;
-    top: -57px;
-    right: 0px;
+	display: flex;
+	font-family: 'Poppins', sans-serif;
+	font-size: 15px;
+	border: 1px solid #01bce9;
+	border-radius: 5px;
+	padding: 9px 12px 9px 8px;
+	color: #01bce9;
+	gap: 4px;
+	width: 84px;
+	position: absolute;
+	top: -57px;
+	right: 0px;
 }
 
 .submit-info-txt {
-  position: absolute;
-  top: -55px;
-  left: 2px;
-  font-size: 25px;
-  font-weight: 600;
+	position: absolute;
+	top: -55px;
+	left: 2px;
+	font-size: 25px;
+	font-weight: 600;
 }
 
-.patient-text{                       /*for top text*/
-    font-weight: 500;
-    font-size: 20px;
-    padding-bottom: 5px;
+.patient-text { /*for top text*/
+	font-weight: 500;
+	font-size: 20px;
+	padding-bottom: 5px;
 }
 
-.inc-height{
-    height: 125px;
-  }
-
-  .inc-inp-height{
-    height: 108px!important;
-  }
-
-
-  textarea { resize: none; }     /*for text area col*/
-
-  
-  .custom-date-input {          /*for setting the calendar icon*/
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
-
-
-  .custom-date-input .custom-date-icon {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    padding-right: 10px;
-  } 
-
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    background: transparent;
-    bottom: 0;
-    color: transparent;
-    cursor: pointer;
-    height: auto;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: auto;
+.inc-height {
+	height: 125px;
 }
 
-input[type="file"]{
-  height: 49px;
-    padding: 12px;
+.inc-inp-height {
+	height: 108px !important;
 }
 
-.iti, .iti--allow-dropdown{          /*Managed the phone col*/
-  width: 100%;
-  height: 100%;
+textarea {
+	resize: none;
+} /*for text area col*/
+.custom-date-input { /*for setting the calendar icon*/
+	position: relative;
+	display: inline-block;
+	width: 100%;
 }
 
-.iti__selected-flag, .phoneflags{
-  height: 80%;
+.custom-date-input .custom-date-icon {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	padding-right: 10px;
 }
 
-.phonecolheight{
-  height: 100%;
+input[type="date"]::-webkit-calendar-picker-indicator {
+	background: transparent;
+	bottom: 0;
+	color: transparent;
+	cursor: pointer;
+	height: auto;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: auto;
 }
 
-.phonecol-height-1{
-	height:73px!important;
+input[type="file"] {
+	height: 49px;
+	padding: 12px;
 }
 
-.iti__flag-container{
-  height: 80%;
+.iti, .iti--allow-dropdown { /*Managed the phone col*/
+	width: 100%;
+	height: 100%;
+}
+
+.iti__selected-flag, .phoneflags {
+	height: 80%;
+}
+
+.phonecolheight {
+	height: 100%;
+}
+
+.phonecol-height-1 {
+	height: 73px !important;
+}
+
+.iti__flag-container {
+	height: 80%;
 }
 
 .iti__country-list {
-  z-index: 300!important;
+	z-index: 300 !important;
 }
 
-.iti *{
-  width: 100%;
+.iti * {
+	width: 100%;
 }
 
-.iti-mobile , .iti--container{
-  width: 37%!important;
-  height: 30%!important;
+.iti-mobile, .iti--container {
+	width: 37% !important;
+	height: 30% !important;
 }
 
-.form-control:focus{            /*To remove the box shadow on focus*/
-    box-shadow: none;
-    border: 2px soild #01bce9;
+.form-control:focus { /*To remove the box shadow on focus*/
+	box-shadow: none;
+	border: 2px soild #01bce9;
 }
 
-.form-floating>.form-control:focus~label{
-    color: #01bce9;
+.form-floating>.form-control:focus ~label {
+	color: #01bce9;
 }
 
-
-.file-upload-btn{                /*Upload button customization*/
-  background-color: #01bce9;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
+.file-upload-btn { /*Upload button customization*/
+	background-color: #01bce9;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 5px;
 }
 
 ::-webkit-file-upload-button {
-display: none;
+	display: none;
 }
 
-.bottom-btns{                     /* Submit and Cancel Buttons*/
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+.bottom-btns { /* Submit and Cancel Buttons*/
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
 }
 
-
-.bottom-btns-submit{
-  background-color: #01bce9;
-  color: white;
-  border: 1px solid #01bce9;
-  border-radius: 3px;
-  border-radius: 5px;
-  padding: 7px 10px;
+.bottom-btns-submit {
+	background-color: #01bce9;
+	color: white;
+	border: 1px solid #01bce9;
+	border-radius: 3px;
+	border-radius: 5px;
+	padding: 7px 10px;
 }
 
-.bottom-btns-cancel{
-  background-color: white;
-  color: #01bce9;
-  border: 1px solid #01bce9;
-  border-radius: 3px;
-  border-radius: 5px;
-  padding: 7px 10px;
+.bottom-btns-cancel {
+	background-color: white;
+	color: #01bce9;
+	border: 1px solid #01bce9;
+	border-radius: 3px;
+	border-radius: 5px;
+	padding: 7px 10px;
 }
 
-.bottom-btns-edit{
-  background-color: #01bce9;
-  color: white;
-  border: 1px solid #01bce9;
-  border-radius: 3px;
-  border-radius: 5px;
-  padding: 7px 15px;
+.bottom-btns-edit {
+	background-color: #01bce9;
+	color: white;
+	border: 1px solid #01bce9;
+	border-radius: 3px;
+	border-radius: 5px;
+	padding: 7px 15px;
 }
 
-.map-text-flex{
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  border: 1px solid #01bce9;
-  border-radius: 5px;
-  width: 16%;
-  height: 78%;
+.map-text-flex {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	border: 1px solid #01bce9;
+	border-radius: 5px;
+	width: 16%;
+	height: 78%;
 }
 
-.map-icon{
-  height: auto;
-  width: 18px;
+.map-icon {
+	height: auto;
+	width: 18px;
 }
 
-.map-text{
-  color: #01bce9;
-  font-size: 15px;
+.map-text {
+	color: #01bce9;
+	font-size: 15px;
 }
 
-.map-text-flex-patient-profile-only{
-  width: 50%;
+.map-text-flex-patient-profile-only {
+	width: 50%;
 }
 
-.common-btn-onboarding{
-  border: 1px solid #01bce9;
-  border-radius: 5px;
-  background-color: #01bce9;
-  color: white;
-  padding: 6px 12px;
+.common-btn-onboarding {
+	border: 1px solid #01bce9;
+	border-radius: 5px;
+	background-color: #01bce9;
+	color: white;
+	padding: 6px 12px;
 }
 
 @media screen and (max-width:1440px) {
-  .map-text-flex{
-    width: 20%;
-  }
-
-  .map-text-flex-patient-profile-only{
-    width: 70%!important;
-  }
+	.map-text-flex {
+		width: 20%;
+	}
+	.map-text-flex-patient-profile-only {
+		width: 70% !important;
+	}
 }
 
 @media screen and (max-width:1024px) {
-  .patient-form{
-    width: 80%;
-  }
+	.patient-form {
+		width: 80%;
+	}
 }
 
-@media screen and (max-width:900px){
-  .patient-form{
-    width: 90%;
-  }
+@media screen and (max-width:900px) {
+	.patient-form {
+		width: 90%;
+	}
 }
 
 @media screen and (max-width:768px) {
-  .phonecolheight {
-    height: 140%;
-}
-
-.business-req-only, .concierge-req-only, .only-family-friend-margin-top{
-  margin-top: 24px;
-}
-
-.phonecolheight-patient-profile-only{
-  height: 100%!important;
-}
-
-.map-text-flex{
-  width: 28%;
-}
-
-.map-text-flex{
-  width: 90px;
-  height: 50px;
-  margin-bottom: 10px;
-}
-
-.map-text-flex-patient-profile-only{
-  height: 57px;
-  width: 90px!important;
-}
-
-.add-extra-margin{
-  margin-top: 22px;
-}
-
-.patient-text{
-  font-size: 18px;
-}
-
-label{
-  font-size: 14px;
-}
-
-.optional-toggle{
-  display: none;
-}
-
-input[type="tel"]::placeholder{
-  font-size: 14px;
-}
-
-.back-btn-top{
-  font-size: 14px;
-}
-
-.back-btn-top img{
-  height: auto;
-  width: 15px;
-}
-
+	.phonecolheight {
+		height: 140%;
+	}
+	.business-req-only, .concierge-req-only, .only-family-friend-margin-top
+		{
+		margin-top: 24px;
+	}
+	.phonecolheight-patient-profile-only {
+		height: 100% !important;
+	}
+	.map-text-flex {
+		width: 28%;
+	}
+	.map-text-flex {
+		width: 90px;
+		height: 50px;
+		margin-bottom: 10px;
+	}
+	.map-text-flex-patient-profile-only {
+		height: 57px;
+		width: 90px !important;
+	}
+	.add-extra-margin {
+		margin-top: 22px;
+	}
+	.patient-text {
+		font-size: 18px;
+	}
+	label {
+		font-size: 14px;
+	}
+	.optional-toggle {
+		display: none;
+	}
+	input[type="tel"]::placeholder {
+		font-size: 14px;
+	}
+	.back-btn-top {
+		font-size: 14px;
+	}
+	.back-btn-top img {
+		height: auto;
+		width: 15px;
+	}
 }
 
 @media screen and (max-width:550px) {
-  .back-btn-top{
-    transform: scale(0.89);
-  }
-
-  .shrink-btns{
-    transform: scale(0.89);
-  }
-
-  .bottom-btns{
-    gap: 8px;
-  }
-
-  .submit-info-txt{
-    font-size: 22px;
-    top: -50px;
-  }
+	.back-btn-top {
+		transform: scale(0.89);
+	}
+	.shrink-btns {
+		transform: scale(0.89);
+	}
+	.bottom-btns {
+		gap: 8px;
+	}
+	.submit-info-txt {
+		font-size: 22px;
+		top: -50px;
+	}
 }
 
 @media screen and (max-width:425px) {
-  .patient-form{
-    width: 95%;
-  }
-  /* .patient-text{
+	.patient-form {
+		width: 95%;
+	}
+	/* .patient-text{
     font-size: 15px;
   } */
-
-  .back-btn-top{
-    /* height: 39px;
+	.back-btn-top {
+		/* height: 39px;
     width: 71px;   */
-    padding-right: 8px;
-    padding-left: 5px;
-  }
-
-  .upload-txt{
-    display: none;
-  }
+		padding-right: 8px;
+		padding-left: 5px;
+	}
+	.upload-txt {
+		display: none;
+	}
 }
-
-
-
-

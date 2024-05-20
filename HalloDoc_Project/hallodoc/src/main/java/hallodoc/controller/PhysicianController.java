@@ -1,6 +1,7 @@
 package hallodoc.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
+import hallodoc.dto.CreateShiftDto;
+import hallodoc.dto.EditShiftDetailsDto;
+import hallodoc.dto.EditShiftDto;
+import hallodoc.dto.EventsDto;
 import hallodoc.dto.PhysicianRequestDataDto;
+import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.RequestDocumentsDto;
 import hallodoc.dto.RequestFiltersDto;
 import hallodoc.dto.SendAgreementDto;
@@ -29,6 +35,7 @@ import hallodoc.dto.ViewNotesDto;
 import hallodoc.helper.Constants;
 import hallodoc.model.AspNetUsers;
 import hallodoc.model.CaseTag;
+import hallodoc.model.Physician;
 import hallodoc.model.Region;
 import hallodoc.model.Request;
 import hallodoc.model.User;
@@ -216,51 +223,107 @@ public class PhysicianController {
 		return new RedirectView("../provider-dashboard");
 	}
 
-	@RequestMapping(value="/provider-profile", method = RequestMethod.GET)
+	@RequestMapping(value = "/provider-profile", method = RequestMethod.GET)
 	public String viewProviderProfile(HttpServletRequest httpServletRequest, Model m) {
-		
-		int physicianId = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser")).getPhysician().getPhysicianId();
-		
+
+		int physicianId = ((AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser")).getPhysician()
+				.getPhysicianId();
+
 		String prefix = Constants.CONTEXT_PATH;
-		String uploadPath =  String.format("%s/%s/%s/%s/%d", prefix, "resources", "fileuploads", "provider", physicianId);
-		
-		 
+		String uploadPath = String.format("%s/%s/%s/%s/%d", prefix, "resources", "fileuploads", "provider",
+				physicianId);
+
 		ShowProviderDetailsDto providerData = this.adminService.getProviderDetails(physicianId);
-		m.addAttribute("uploadPath",uploadPath);
+		m.addAttribute("uploadPath", uploadPath);
 		m.addAttribute("providerData", providerData);
 		return "provider/provider-my-profile";
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/change-provider-password", method = RequestMethod.POST)
-	public String changeProviderPassword(@RequestParam("pass") String pass,HttpServletRequest httpServletRequest) {
-		AspNetUsers physician = ((AspNetUsers)httpServletRequest.getSession().getAttribute("aspUser"));
-		return this.physicianService.changePassword(physician,pass);
-		
+	@RequestMapping(value = "/change-provider-password", method = RequestMethod.POST)
+	public String changeProviderPassword(@RequestParam("pass") String pass, HttpServletRequest httpServletRequest) {
+		AspNetUsers physician = ((AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser"));
+		return this.physicianService.changePassword(physician, pass);
+
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/send-request-to-admin", method = RequestMethod.POST)
-	public String sendRequestToAdmin(@RequestParam("desc") String description,HttpServletRequest httpServletRequest) {
-		return this.physicianService.sendRequestToAdmin(httpServletRequest,description);
+	@RequestMapping(value = "/send-request-to-admin", method = RequestMethod.POST)
+	public String sendRequestToAdmin(@RequestParam("desc") String description, HttpServletRequest httpServletRequest) {
+		return this.physicianService.sendRequestToAdmin(httpServletRequest, description);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/get-physician-request-filtered-data", method = RequestMethod.POST)
-	public List<PhysicianRequestDataDto> getFilteredPhysicianRequest(RequestFiltersDto requestFiltersDto, HttpServletRequest httpServletRequest){
+	@RequestMapping(value = "/get-physician-request-filtered-data", method = RequestMethod.POST)
+	public List<PhysicianRequestDataDto> getFilteredPhysicianRequest(RequestFiltersDto requestFiltersDto,
+			HttpServletRequest httpServletRequest) {
 		return this.physicianService.getFilteredPhysicianRequests(requestFiltersDto, httpServletRequest);
 	}
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public RedirectView logoutUser(HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
 		session.invalidate();
-		
+
 		RedirectView redirectView = new RedirectView(request.getServletContext().getContextPath() + "/patient_login",
 				false);
 		return redirectView;
 
+	}
+
+	@RequestMapping(value = "/provider-schedule", method = RequestMethod.GET)
+	public String providerSchedule(Model m, HttpServletRequest httpServletRequest) {
+		Physician physician = ((AspNetUsers) httpServletRequest.getSession().getAttribute("aspUser")).getPhysician();
+		List<Region> physicianRegion = this.physicianService.getPhysicianRegion(physician.getPhysicianId());
+		m.addAttribute("phyRegion", physicianRegion);
+		m.addAttribute("physicianName", "Dr. " + physician.getFirstName() + " " + physician.getLastName());
+		m.addAttribute("physicianId", physician.getPhysicianId());
+		return "provider/provider-schedule";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/get-physician-details-scheduling", method = RequestMethod.POST)
+	public List<PhysicianResources> getPhysicianDetails(HttpServletRequest httpServletRequest,
+			@RequestParam("regionId") int regionId) {
+		return this.adminService.getAllPhysicianDetails(httpServletRequest, regionId);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/get-physician-events", method = RequestMethod.POST)
+	public List<EventsDto> getEventsData(@RequestParam("regionId") int regionId,
+			HttpServletRequest httpServletRequest) {
+		return this.physicianService.getAllActivePhysicianEvents(regionId, httpServletRequest);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/create-shift", method = RequestMethod.POST)
+	public boolean createShift(CreateShiftDto createShiftDto, HttpServletRequest httpServletRequest) {
+		return this.physicianService.createNewShift(createShiftDto, httpServletRequest);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/get-event-details", method = RequestMethod.POST)
+	public EditShiftDto getEventDetails(@RequestParam("eventId") int eventId) {
+		return this.physicianService.getEventDetails(eventId);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/edit-old-shift-details", method = RequestMethod.POST)
+	public boolean editRequestedShift(EditShiftDetailsDto editShiftDetailsDto, HttpServletRequest httpServletRequest) {
+		return this.physicianService.editShiftDetails(editShiftDetailsDto, httpServletRequest);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete-shift",method=RequestMethod.POST)
+	public String deleteShift(@RequestParam("shiftDetailId") int shiftDetailId) {
+		return this.physicianService.deleteShift(shiftDetailId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/download-encounter-form", method = RequestMethod.POST)
+	public String downloadPdf(@RequestParam("reqId") int reqId, HttpServletRequest httpServletRequest) throws IOException{
+		return this.physicianService.creatingPdf(reqId, httpServletRequest);
 	}
 
 }

@@ -163,6 +163,9 @@ public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private PhysicianService physicianService;
 
 	private String resendCreatePasswordMail(User user, HttpServletRequest httpServletRequest) {
 
@@ -217,7 +220,7 @@ public class UserService {
 				if (verified) {
 
 					List<Region> regionList = regionDao.getAllRegions();
-
+					
 					 
 					HttpSession session = request.getSession();
 					session.setAttribute("aspUser", user);

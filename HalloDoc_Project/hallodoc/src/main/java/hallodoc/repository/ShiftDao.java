@@ -60,6 +60,23 @@ public class ShiftDao {
 
 	}
 
+	public List<ShiftDetails> getAllActivePhysicianShifts(int regionId, int physicianId) {
+		Session s = this.sessionFactory.openSession();
+		Query hql;
+		if (regionId == 0) {
+			String query = "FROM ShiftDetails sd WHERE sd.isDeleted=false AND sd.shiftId.physicianId.physicianId =:phyId";
+			hql = s.createQuery(query);
+		} else {
+			String query = "FROM ShiftDetails sd WHERE sd.isDeleted=false AND sd.regionId =: regionId AND sd.shiftId.physicianId.physicianId =:phyId";
+			hql = s.createQuery(query);
+			hql.setParameter("regionId", regionId);
+		}
+		hql.setParameter("phyId", physicianId);
+		List<ShiftDetails> list = hql.list();
+		s.close();
+		return list;
+	}
+
 	public List<ShiftDetails> getAllActiveShifts(int regionId) {
 		Session s = this.sessionFactory.openSession();
 		Query hql;
@@ -97,9 +114,9 @@ public class ShiftDao {
 		s.close();
 		return "Toggled Status";
 	}
-	
+
 	@Transactional
-		public String approveShifts(List<Integer> shiftDetailIds) {
+	public String approveShifts(List<Integer> shiftDetailIds) {
 		Session s = this.sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		String queryString = "UPDATE ShiftDetails sd SET sd.status = 1 WHERE sd.shiftDetailId IN (:shiftDetailIds)";
@@ -123,7 +140,7 @@ public class ShiftDao {
 		s.close();
 		return "Shift Deleted";
 	}
-	
+
 	@Transactional
 	public String deleteShifts(List<Integer> shiftDetailIds) {
 		Session s = this.sessionFactory.openSession();
@@ -136,16 +153,16 @@ public class ShiftDao {
 		s.close();
 		return "Selected Shifts Deleted";
 	}
-	
-	public List<ProviderOnCallStatusDto> getProviderOnCallStatus(){
-		Session s = this.sessionFactory.openSession();
-		String queryString = "";
-		Query q = s.createQuery(queryString);
-		List<ProviderOnCallStatusDto> providerOnCallStatusDtos = q.list();
-		s.close();
-		return providerOnCallStatusDtos;
-	}
 
+//	public List<ProviderOnCallStatusDto> getProviderOnCallStatus(){
+//		Session s = this.sessionFactory.openSession();
+//		String queryString = "";
+//		"select new hallodoc.dto.ProviderOnCallStatusDto(re.requestId,physician.physicianId,physician.firstName,physician.lastName,re.createdDate,re.status,ad.adminId,ad.firstName,ad.lastName,count(ref.request.requestId)) from Physician phy LEFT JOIN ShiftDetails sd ON phy.physicianId = sd.shiftId.physicianId.physicianId WHERE 2 BETWEEN 1 AND 3" 
+//		Query q = s.createQuery(queryString);
+//		List<ProviderOnCallStatusDto> providerOnCallStatusDtos = q.list();
+//		s.close();
+//		return providerOnCallStatusDtos;
+//	}
 
 	public List<ShiftDetails> getFilteredShiftReviewDetails(int regionId, int pageNo) {
 
@@ -179,7 +196,7 @@ public class ShiftDao {
 		return list;
 
 	}
-	
+
 	public Long getFilteredShiftReviewDetailsCount(int regionId, int pageNo) {
 
 		Session s = this.sessionFactory.openSession();
@@ -197,11 +214,45 @@ public class ShiftDao {
 		}
 
 		predicates[1] = cb.equal(root.get("status"), 0);
-		
+
 		cr.select(cb.count(root)).where(predicates);
 		Long total = s.createQuery(cr).getSingleResult();
 		s.close();
 		return total;
+
+	}
+
+	public List<ShiftDetails> getOnGoingShifts(LocalTime time, int regionId) {
+
+		Session s = this.sessionFactory.openSession();
+
+		CriteriaBuilder cb = s.getCriteriaBuilder();
+		CriteriaQuery<ShiftDetails> cr = cb.createQuery(ShiftDetails.class);
+		Root<ShiftDetails> root = cr.from(ShiftDetails.class);
+
+		Predicate[] predicates = new Predicate[3];
+
+		predicates[0] = cb.equal(root.get("isDeleted"), false);
+
+		if (regionId == 0) {
+			predicates[1] = cb.equal(root.get("isDeleted"), false);
+		} else {
+			predicates[1] = cb.equal(root.get("regionId"), regionId);
+		}
+
+		Predicate startTimePredicate = cb.greaterThanOrEqualTo(root.<LocalTime>get("startTime"), time);
+		Predicate endTimePredicate = cb.lessThanOrEqualTo(root.<LocalTime>get("endTime"), time);
+
+		Predicate isWithinTimeRange = cb.and(startTimePredicate, endTimePredicate);
+
+		predicates[2] = cb.and(startTimePredicate, endTimePredicate);
+		cr.select(root).where(predicates);
+		
+		Query<ShiftDetails> query = s.createQuery(cr);
+		
+		List<ShiftDetails> shiftDetails = query.getResultList();
+		s.close();
+		return shiftDetails;
 
 	}
 }

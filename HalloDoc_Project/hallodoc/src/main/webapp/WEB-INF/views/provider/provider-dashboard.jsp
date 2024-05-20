@@ -153,14 +153,17 @@
 						<div class="inner-table-top-flex-left">
 
 							<div class="relativity search-1">
-								<input class="form-control search-btn" onblur="filterRequest()" id="patient-name-search" type="text"
+								<input class="form-control search-btn" onblur="filterRequest()"
+									id="patient-name-search" type="text"
 									placeholder="Search Patients"> <img
 									src="<c:url value='/resources/images/search.svg' />" alt=""
 									class="search-img">
 							</div>
 
 							<div class="relativity ms-2 search-2">
-								<select class="form-select select-dropdown-admin" onchange="filterRequest()" id="region-name-search" type="button">
+								<select class="form-select select-dropdown-admin"
+									onchange="filterRequest()" id="region-name-search"
+									type="button">
 									<option value="All"><a class="dropdown-item" href="#">All
 											Regions</a></option>
 									<c:forEach items="${regionList}" var="region">
@@ -371,9 +374,8 @@
 									<div class="action-dropdown-flex dropdown-item">
 										<img
 											src="<c:url value='/resources/images/order-delivery.png' />"
-											class="dropdown-icons" alt=""> <a
-											href="" class="send-order-details action-dropdown-text"
-											type="button">Orders</a>
+											class="dropdown-icons" alt=""> <a href=""
+											class="send-order-details action-dropdown-text" type="button">Orders</a>
 									</div>
 								</li>
 
@@ -502,7 +504,7 @@
 
 							<div class="row p-3 text-center">
 
-								
+
 
 								<div class="col-6 mb-3">
 									<a
@@ -510,7 +512,7 @@
 										role="button" data-bs-toggle="modal"
 										data-bs-target="#send-agreement">Send Agreement</a>
 								</div>
-								
+
 								<div class="col-6 mb-3">
 									<a
 										class="accordion-btn-admin orange-background-btn send-agreement-btn"
@@ -529,10 +531,11 @@
 										class="accordion-btn-admin green-background-btn" role="button">View
 										Uploads</a>
 								</div>
-								
+
 								<div class="col-6 mb-3">
 									<a href="view-uploads-patient-conclude.html"
-										class="accordion-btn-admin green-background-btn" role="button">Conclude Care</a>
+										class="accordion-btn-admin green-background-btn" role="button">Conclude
+										Care</a>
 								</div>
 
 								<div class="col-6 mb-3">
@@ -958,8 +961,8 @@
 				<div class="modal-header modal-title-background">
 					<h2 class="modal-title fs-5" id="staticBackdropLabel">Select
 						Type Of Care</h2>
-					<button type="button" class="btn-close close-call-type-btn" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close close-call-type-btn"
+						data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form id="callTypeFormId" method="post">
 					<div class="modal-body">
@@ -984,27 +987,26 @@
 		</div>
 	</div>
 	<!-- house-call-status -->
-	
-	<div class="modal fade" id="finalized-encounter-form" data-bs-backdrop="static"
-		data-bs-keyboard="false" tabindex="-1"
+
+	<div class="modal fade" id="finalized-encounter-form"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header modal-title-background">
-					<button type="button" class="btn-close close-call-type-btn" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close close-call-type-btn"
+						data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				
-					<div class="modal-body">
-						<div>
-							The encounter form is already finalized.
-						</div>
-						<div class="continue-cancel-flex">
-							<button type="button" class="else-type-btn"
-								data-bs-dismiss="modal">Cancel</button>
-						</div>
+
+				<div class="modal-body">
+					<div>The encounter form is already finalized.</div>
+					<div class="continue-cancel-flex">
+						<a type="button" href="" download="" class="me-type-btn download-encounter-form">Download</a>
+						<button type="button" class="else-type-btn"
+							data-bs-dismiss="modal">Cancel</button>
 					</div>
-				
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -1032,8 +1034,6 @@
 						{
 							utilsScript : "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 						});
-
-	
 	</script>
 	<script src="<c:url value='/resources/js/loader.js' />"></script>
 	<script type="text/javascript">

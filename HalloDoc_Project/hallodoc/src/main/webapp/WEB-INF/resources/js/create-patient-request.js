@@ -76,7 +76,7 @@ function validatePassword() {
 }
 
 function validateConfirmPassword() {
-
+	debugger
 	var pass = document.getElementById("floatingPassword-pass1").value;;
 	var confPass = document.getElementById("floatingPassword-pass2").value;
 	var passError = document.getElementById("passError");
@@ -102,7 +102,7 @@ function validateEmail() {
 	var emailError = document.getElementById("emailErrorField");
 	var passwordRow = document.getElementById("passwordRowId").style;
 	var isExsistingPatient = document.getElementById("isExsistingPatient");
-	
+
 	var validRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	if (email == '') {
 		emailError.innerHTML = "Please enter email!";
@@ -116,9 +116,9 @@ function validateEmail() {
 	}
 	else {
 		emailError.innerHTML = "";
-		  ;
+		;
 		var trimmedEmail = email.trim().toLowerCase();
-		  ;
+		;
 
 		$.ajax({
 			url: 'isPatientValidByEmail',
@@ -129,14 +129,14 @@ function validateEmail() {
 			},
 
 			success: function(data) {
-//				  
+				//				  
 				if (data == "failure") {
-//					  
+					//					  
 					passwordRow.display = "flex";
 					isExsistingPatient.value = "false";
 				}
 				else {
-//					  
+					//					  
 					passwordRow.display = "none";
 					isExsistingPatient.value = "true";
 				}
@@ -158,7 +158,7 @@ function validatePatientState() {
 	}
 	else {
 		var trimmedState = state.trim().toLowerCase();
-		  ;
+		;
 
 		$.ajax({
 			url: 'isPatientStateValid',
@@ -169,22 +169,22 @@ function validatePatientState() {
 			},
 
 			success: function(data) {
-//				  
+				//				  
 				if (data == "failure") {
-//					  
+					//					  
 					stateError.innerHTML = "We don't provide service here."
 					submitBtn.disabled = true;
 					submitBtn.style.opacity = 0.7;
 				}
 				else {
-//					  
+					//					  
 					stateError.innerHTML = "";
 					submitBtn.disabled = false;
 					submitBtn.style.opacity = 1;
 				}
 			},
-			
-			error: function(){
+
+			error: function() {
 				alert("An error occured.......")
 			}
 
@@ -192,5 +192,157 @@ function validatePatientState() {
 	}
 
 }
+
+$.validator.addMethod("password", function(value, element) {
+	return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+}, "Password must contain at least one letter, one digit, and one special character and 8 digit in length.");
+
+$("#patientRequestForm").validate({
+	rules: {
+		firstName: {
+			required: true,
+			minlength: 3
+		},
+		lastName: {
+			required: true,
+			minlength: 3
+		},
+		dob: {
+			required: true,
+		},
+		email: {
+			required: true,
+			email: true
+		},
+		mobileNumber: {
+			required: true,
+			minlength: 10,
+			digits: true
+		},
+		street: {
+			required: true,
+			minlength: 2,
+		},
+		city: {
+			required: true,
+			minlength: 2,
+		},
+		state: {
+			required: true,
+			minlength: 2,
+		},
+		zipcode: {
+			required: true,
+			minlength: 6,
+		},
+		password: {
+			required: true,
+			password: true,
+		},
+		confirmPassword: {
+			password: true,
+			required: true,
+			equalTo: "#floatingPassword-pass1"
+		}
+	},
+	messages: {
+		firstName: {
+			required: "Please enter your first name",
+			minlength: "Your name must be at least 3 characters long"
+		},
+		lastName: {
+			required: "Please enter your first name",
+			minlength: "Your name must be at least 3 characters long"
+		},
+		email: {
+			required: "Please enter your email address",
+			email: "Please enter a valid email address"
+		},
+		dob: {
+			required: "Please select your date of birth",
+		},
+		mobileNumber: {
+			required: "Please enter your mobile number",
+			digits: "Your mobile number should only contain digits",
+			minlength: "Your mobile number must be at 10 characters long"
+		},
+		street: {
+			required: "Please enter your street",
+			minlength: "Your street name must be at least 2 characters long"
+		},
+		city: {
+			required: "Please enter your city",
+			minlength: "Your city name must be at least 2 characters long"
+		},
+		state: {
+			required: "Please enter your state",
+			minlength: "Your state name must be at least 2 characters long"
+		},
+		zipcode: {
+			required: "Please enter your zipcode",
+			digits: "Your zipcode should only contain digits",
+			minlength: "Your zipcode must be at least 6 characters long",
+		},
+		password: {
+			required: "Please enter password"
+		},
+		confirmPassword: {
+			required: "Please enter confirm password",
+			equalTo: "Please enter confirm password same as password"
+		}
+
+	},
+	errorPlacement: function(error, element) {
+		if (element.attr("name") == "firstName") {
+			error.appendTo("#firstNameError");
+			$('#firstNameError').addClass('visible');
+		} else if (element.attr("name") == "lastName") {
+			error.appendTo("#lastNameError");
+			$('#lastNameError').addClass('visible');
+		} else if (element.attr("name") == "dob") {
+			error.appendTo("#dobError");
+			$('#dobError').addClass('visible');
+		} else if (element.attr("name") == "email") {
+			error.appendTo("#emailErrorField");
+			$('#emailErrorField').addClass('visible');
+		} else if (element.attr("name") == "mobileNumber") {
+			error.appendTo("#mobileNumberError");
+			$('#mobileNumberError').addClass('visible');
+		} else if (element.attr("name") == "street") {
+			error.appendTo("#streetError");
+			$('#streetError').addClass('visible');
+		} else if (element.attr("name") == "city") {
+			error.appendTo("#cityError");
+			$('#cityError').addClass('visible');
+		} else if (element.attr("name") == "state") {
+			error.appendTo("#stateError");
+			$('#stateError').addClass('visible');
+		} else if (element.attr("name") == "zipcode") {
+			error.appendTo("#zipError");
+			$('#zipError').addClass('visible');
+		} else if (element.attr("name") == "password") {
+			error.appendTo("#passError1");
+		} else if (element.attr("name") == "confirmPassword") {
+			error.appendTo("#passError");
+		}
+
+		else {
+			error.insertAfter(element);
+		}
+	},
+	highlight: function(element) {
+		$(element).addClass('invalid');
+		$(element).next().next().addClass('visible');
+
+	},
+	unhighlight: function(element) {
+		$(element).removeClass('invalid');
+		$(element).next().next().removeClass('visible');
+	},
+	submitHandler: function(form) {
+		showLoader()
+		form.submit();
+	}
+});
 
 

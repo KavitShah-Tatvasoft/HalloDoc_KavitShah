@@ -47,6 +47,7 @@ import hallodoc.dto.MenusDto;
 import hallodoc.dto.NewProviderAccountDto;
 import hallodoc.dto.NewRequestDataDto;
 import hallodoc.dto.NewStatePageDataDto;
+import hallodoc.dto.OnCallDataList;
 import hallodoc.dto.PhysicianAssignCaseDto;
 import hallodoc.dto.PhysicianResources;
 import hallodoc.dto.ProviderMailingDto;
@@ -575,19 +576,19 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="get-physician-events", method = RequestMethod.POST)
+	@RequestMapping(value="/get-physician-events", method = RequestMethod.POST)
 	public List<EventsDto> getEventsData(@RequestParam("regionId") int regionId){
 		return this.adminService.getAllActiveEvents(regionId);
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="get-event-details", method = RequestMethod.POST)
+	@RequestMapping(value="/get-event-details", method = RequestMethod.POST)
 	public EditShiftDto getEventDetails(@RequestParam("eventId") int eventId) {
 		return this.adminService.getEventDetails(eventId);
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="edit-old-shift-details", method = RequestMethod.POST)
+	@RequestMapping(value="/edit-old-shift-details", method = RequestMethod.POST)
 	public boolean editRequestedShift(EditShiftDetailsDto editShiftDetailsDto, HttpServletRequest httpServletRequest) {
 		return this.adminService.editShiftDetails(editShiftDetailsDto, httpServletRequest);
 	}
@@ -632,12 +633,13 @@ public class AdminController {
 		return "admin/provider-on-call";
 	}
 	
-	
-	@RequestMapping(value="/get-provider-on-call-data", method = )
-	public String getProviderOnCallStatus() {
-		List<ProviderOnCallStatusDto> onCallStatusDtos = this.adminService.getProviderOnCallStauts();
-		return "admin/provider-on-call";
+	@ResponseBody
+	@RequestMapping(value="/get-provider-on-call-data", method = RequestMethod.POST)
+	public List<OnCallDataList> getProviderOnCallStatus(@RequestParam("regionId") int regionId) {
+		return this.adminService.getProviderOnCallStauts(regionId);
 	}
+	
+	
 	
 	
 }

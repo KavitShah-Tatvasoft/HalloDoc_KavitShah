@@ -19,6 +19,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
@@ -42,7 +45,7 @@
 
 	<div class="loader-container">
 		<div class="loader"></div>
-	</div>	
+	</div>
 
 	<div
 		class="container-fluid patient-form footer-container shadow p-3 bg-white rounded relative-position extra-margin">
@@ -54,7 +57,8 @@
 		</div>
 		<!--         </a> -->
 
-		<form action="addPatientRequest" method="post" enctype="multipart/form-data" onsubmit="showLoader()">
+		<form action="addPatientRequest" method="post" id="patientRequestForm"
+			enctype="multipart/form-data">
 			<div class="row">
 				<!--Row 1-->
 
@@ -78,11 +82,11 @@
 				</div>
 				<div class="col-12 col-md-6">
 					<!--First Name col-->
-					<div class="form-floating mb-3 inp">
+					<div class="form-floating inp">
 						<input type="text" class="form-control input-2"
 							id="floatingInput-2" placeholder="First Name" name="firstName"
-							autocomplete="off" required="required"> <label for="floatingInput-2">First
-							Name</label>
+							autocomplete="off"> <label for="floatingInput-2">First
+							Name</label> <span id="firstNameError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -92,7 +96,7 @@
 						<input type="text" class="form-control input-1"
 							id="floatingInput-3" placeholder="Last Name" name="lastName"
 							autocomplete="off"> <label for="floatingInput-3">Last
-							Name</label>
+							Name</label> <span id="lastNameError" class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -104,7 +108,8 @@
 							autocomplete="off" name="dob"> <label
 							for="floatingInput-4">Date of Birth</label> <img
 							src="<c:url value="/resources/images/calendar4-week.svg" />"
-							alt="" class="custom-date-icon">
+							alt="" class="custom-date-icon"> <span id="dobError"
+							class="error-class-span"></span>
 					</div>
 				</div>
 			</div>
@@ -125,18 +130,19 @@
 							onblur="validateEmail()"> <label for="emailField">Email</label>
 						<span id="emailErrorField" style="color: red; padding-left: 5px;"></span>
 					</div>
-					
-					<input type="hidden" name="isExsistingPatient" value="false" id="isExsistingPatient" />
+
+					<input type="hidden" name="isExsistingPatient" value="false"
+						id="isExsistingPatient" />
 
 				</div>
 
 				<div class="col-12 col-md-6">
 					<!--Phone Number col-->
-					<div
-						class="form-floating inp phonecolheight phonecol-height-1">
+					<div class="form-floating inp phonecolheight phonecol-height-1">
 						<input type="tel" name="mobileNumber"
 							class="form-control phoneflags" id="phone" />
 					</div>
+					<span id="mobileNumberError" class="error-class-span"></span>
 				</div>
 
 			</div>
@@ -146,32 +152,57 @@
 			<div class="row" id="passwordRowId">
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
+						<!-- 						<input type="password" class="form-control input-1" -->
+						<!-- 							id="floatingPassword-pass1" onblur="validatePassword()" -->
+						<!-- 							placeholder="Password" name="password"> <label -->
+						<!-- 							for="floatingPassword-pass1">Password</label> <a href="#" -->
+						<!-- 							onclick="showPass()"><img -->
+						<%-- 							src="<c:url value="/resources/images/password-eye.svg" />" --%>
+						<!-- 							alt="view pass" class="open-eye" id="open-eye-id"></a> <a -->
+						<!-- 							href="#" onclick="hidePass()"><img -->
+						<%-- 							src="<c:url value="/resources/images/password-eye-slash.svg" />" --%>
+						<!-- 							alt="hide pass" class="close-eye" id="close-eye-id"></a> <span -->
+						<!-- 							id="passError1" class="error-class-span"></span> -->
 						<input type="password" class="form-control input-1"
 							id="floatingPassword-pass1"
-							onblur="validatePassword()" placeholder="Password" name="password"> <label
+							placeholder="Password" name="password"> <label
 							for="floatingPassword-pass1">Password</label> <a href="#"
 							onclick="showPass()"><img
 							src="<c:url value="/resources/images/password-eye.svg" />"
 							alt="view pass" class="open-eye" id="open-eye-id"></a> <a
 							href="#" onclick="hidePass()"><img
 							src="<c:url value="/resources/images/password-eye-slash.svg" />"
-							alt="hide pass" class="close-eye" id="close-eye-id"></a>
-							<span id="passError1"></span>
+							alt="hide pass" class="close-eye" id="close-eye-id"></a> <span
+							id="passError1" class="error-class-span visible"></span>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-6">
 					<div class="form-floating mb-3 inp">
-						<input type="password" onblur="validateConfirmPassword()" class="form-control input-1"
-							id="floatingPassword-pass2" placeholder="Confirm Password" name="confirmPassword"> <label
+						<!-- 						<input type="password" onblur="validateConfirmPassword()" -->
+						<!-- 							class="form-control input-1" id="floatingPassword-pass2" -->
+						<!-- 							placeholder="Confirm Password" name="confirmPassword"> <label -->
+						<!-- 							for="floatingPassword-pass2">Confirm Password</label> <a href="#" -->
+						<!-- 							onclick="showPass1()"><img -->
+						<%-- 							src="<c:url value="/resources/images/password-eye.svg" />" --%>
+						<!-- 							alt="view pass" class="open-eye" id="open-eye-id-1"></a> <a -->
+						<!-- 							href="#" onclick="hidePass1()"><img -->
+						<%-- 							src="<c:url value="/resources/images/password-eye-slash.svg" />" --%>
+						<!-- 							alt="hide pass" class="close-eye" id="close-eye-id-1"></a> <span -->
+						<!-- 							id="passError" class="error-class-span visible"></span> -->
+
+						<input type="password" class="form-control input-1"
+							id="floatingPassword-pass2" placeholder="Confirm Password"
+							name="confirmPassword"> <label
 							for="floatingPassword-pass2">Confirm Password</label> <a href="#"
 							onclick="showPass1()"><img
 							src="<c:url value="/resources/images/password-eye.svg" />"
 							alt="view pass" class="open-eye" id="open-eye-id-1"></a> <a
 							href="#" onclick="hidePass1()"><img
 							src="<c:url value="/resources/images/password-eye-slash.svg" />"
-							alt="hide pass" class="close-eye" id="close-eye-id-1"></a>
-							<span id="passError"></span>
+							alt="hide pass" class="close-eye" id="close-eye-id-1"></a> <span
+							id="passError" class="error-class-span visible"></span>
+
 					</div>
 				</div>
 
@@ -191,7 +222,8 @@
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="street" class="form-control input-2"
 							id="floatingInput-7" placeholder="Street" autocomplete="off">
-						<label for="floatingInput-7">Street</label>
+						<label for="floatingInput-7">Street</label> <span id="streetError"
+							class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -200,7 +232,8 @@
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="city" class="form-control input-2"
 							id="floatingInput-8" placeholder="City" autocomplete="off">
-						<label for="floatingInput-8">City</label>
+						<label for="floatingInput-8">City</label> <span id="cityError"
+							class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -208,11 +241,12 @@
 					<!--State col-->
 					<div class="form-floating inp">
 						<input type="text" name="state" class="form-control input-2"
-							id="state" placeholder="State" onblur="validatePatientState()" autocomplete="off">
-						<label for="state">State</label>
-						<span id="stateErrorField"></span>
+							id="state" placeholder="State" onblur="validatePatientState()"
+							autocomplete="off"> <label for="state">State</label> <span
+							id="stateErrorField"></span> <span id="stateError"
+							class="error-class-span"></span>
 					</div>
-					
+
 				</div>
 
 				<div class="col-12 col-md-6">
@@ -220,7 +254,8 @@
 					<div class="form-floating mb-3 inp">
 						<input type="text" name="zipcode" class="form-control input-2"
 							id="floatingInput-10" placeholder="Zip Code" autocomplete="off">
-						<label for="floatingInput-10">Zip Code</label>
+						<label for="floatingInput-10">Zip Code</label> <span id="zipError"
+							class="error-class-span"></span>
 					</div>
 				</div>
 
@@ -231,6 +266,7 @@
 							id="floatingInput-11" placeholder="Room #/ Suite(Optional)"
 							autocomplete="off"> <label for="floatingInput-11">Room
 							#/ Suite(Optional)</label>
+
 					</div>
 				</div>
 
@@ -252,14 +288,16 @@
 							id="inputGroupFile02"> <label
 							class="input-group-text file-upload-btn" for="inputGroupFile02"><img
 							src="<c:url value="/resources/images/cloud-arrow-up-white.svg" />"
-							alt=""><span class="upload-txt">Upload</span></label>
+							alt=""><span class="upload-txt">Upload</span></label> <span
+							id="fileuploadError"></span>
 					</div>
 				</div>
 
 			</div>
 
 			<div class="bottom-btns mt-3">
-				<button type="submit" id="submit-btn-id"  class="bottom-btns-submit shrink-btns">Submit</button>
+				<button type="submit" id="submit-btn-id"
+					class="bottom-btns-submit shrink-btns">Submit</button>
 				<button type="reset" class="bottom-btns-cancel shrink-btns">Cancel</button>
 			</div>
 		</form>
@@ -276,6 +314,10 @@
 						{
 							utilsScript : "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 						});
+	</script>
+
+	<script type="text/javascript">
+		
 	</script>
 
 	<script src="<c:url value="/resources/js/darktheme.js" />"></script>

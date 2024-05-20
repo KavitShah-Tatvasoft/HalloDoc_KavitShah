@@ -1,5 +1,6 @@
 package hallodoc.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Transaction;
@@ -89,6 +90,25 @@ public class RegionDao {
 		List<Integer> list = q.list();
 		s.close();
 		return list;
+	}
+	
+	public List<Region> getPhysicianRegions(int phyId){
+		List<Region> regions = new ArrayList<Region>();
+		Session s = this.sessionFactory.openSession();
+		String queryString = "SELECT * FROM region WHERE region_id IN (SELECT phr.region_id FROM physician_region phr WHERE phr.physician_id=:phyId)";
+		Query q = s.createNativeQuery(queryString);
+		q.setParameter("phyId", phyId);
+		List<Object[]> list = q.list();
+		s.close();
+		
+		for (Object[] objects : list) {
+			Region region = new Region();
+			region.setAbbreviation((String)objects[2]);
+			region.setRegionId((Integer)objects[0]);
+			region.setName((String)objects[1]);
+			regions.add(region);
+		}
+		return regions;
 	}
 
 }

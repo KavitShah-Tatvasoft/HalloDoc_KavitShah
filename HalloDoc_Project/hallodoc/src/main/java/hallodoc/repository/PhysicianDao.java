@@ -3,6 +3,7 @@ package hallodoc.repository;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -31,15 +32,14 @@ public class PhysicianDao {
 
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
-	
-	
+
 	public Physician getPhysicianById(int id) {
 		Physician physician = this.hibernateTemplate.get(Physician.class, id);
 		return physician;
 	}
-	
-	public List<PhysicianAssignCaseDto> getPhysicianByRegion(int regionId){
-		
+
+	public List<PhysicianAssignCaseDto> getPhysicianByRegion(int regionId) {
+
 		Session s = this.sessionFactory.openSession();
 		String query = "SELECT phy.physician_id, phy.first_name, phy.last_name FROM physician phy INNER JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId";
 		Query sql = s.createNativeQuery(query);
@@ -47,11 +47,11 @@ public class PhysicianDao {
 		List<PhysicianAssignCaseDto> phyList = sql.list();
 		s.close();
 		return phyList;
-		
+
 	}
-	
-	public List<Integer> getPhysicianObByRegion(int regionId){
-		
+
+	public List<Integer> getPhysicianObByRegion(int regionId) {
+
 		Session s = this.sessionFactory.openSession();
 //		String query = "SELECT * FROM physician phy LEFT JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId AND phy.is_deleted = false";
 		String query = "SELECT phy.physician_id FROM physician phy LEFT JOIN physician_region phr ON phy.physician_id = phr.physician_id WHERE phr.region_id =:regionId AND phy.is_deleted = false";
@@ -60,22 +60,22 @@ public class PhysicianDao {
 		List<Integer> phyList = sql.list();
 		s.close();
 		return phyList;
-		
+
 	}
-	
-	public List<Physician> getAllActivePhysician(){
-		
+
+	public List<Physician> getAllActivePhysician() {
+
 		Session s = this.sessionFactory.openSession();
 		String query = "FROM Physician phy WHERE phy.isDeleted = false";
 		Query sql = s.createQuery(query);
 		List<Physician> phyList = sql.list();
 		s.close();
 		return phyList;
-		
+
 	}
-	
-	public List<Physician> getPhysicianByEmail(String email){
-		
+
+	public List<Physician> getPhysicianByEmail(String email) {
+
 		Session s = this.sessionFactory.openSession();
 		String query = "FROM Physician phy WHERE phy.email =:email";
 		Query sql = s.createQuery(query);
@@ -83,14 +83,14 @@ public class PhysicianDao {
 		List<Physician> phyList = sql.list();
 		s.close();
 		return phyList;
-		
+
 	}
-	
+
 	@Transactional
 	public void updatePhysician(Physician physician) {
 		this.hibernateTemplate.update(physician);
 	}
-	
+
 	@Transactional
 	public void deleteProviderAccount(Integer phyId) {
 		Session s = this.sessionFactory.openSession();
@@ -102,12 +102,25 @@ public class PhysicianDao {
 		tx.commit();
 		s.close();
 	}
-	
-	public List<Physician> getPhysicianByRegionList(List<Integer> list){
-		
+
+	public List<Physician> getPhysicianByRegionList(List<Integer> list) {
+
 		Session s = this.sessionFactory.openSession();
-		Query query = s.createQuery("FROM Physician phy WHERE phy.physicianId IN (:list) AND phy.isDeleted=false");
+		Query query = s.createQuery(
+				"FROM Physician phy WHERE phy.physicianId IN (:list) AND phy.isDeleted=false");
 		query.setParameter("list", list);
+		List<Physician> listPhysician = query.list();
+		s.close();
+		return listPhysician;
+	}
+
+	public List<Physician> getOffDutyPhysicianByRegionList(List<Integer> list, List<Integer> phyList) {
+
+		Session s = this.sessionFactory.openSession();
+		Query query = s.createQuery(
+				"FROM Physician phy WHERE phy.physicianId IN (:list) AND phy.physicianId NOT IN (:phyList)  AND phy.isDeleted=false");
+		query.setParameter("list", list);
+		query.setParameter("phyList", phyList);
 		List<Physician> listPhysician = query.list();
 		s.close();
 		return listPhysician;

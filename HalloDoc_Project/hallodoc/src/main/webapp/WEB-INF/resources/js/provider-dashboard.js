@@ -56,11 +56,11 @@ function filterRequest() {
 	var requestType = $(".button-class.active-btn").attr("data-value")
 	var statusType = $("#type-text").html();
 
-	
+
 
 	statusType = statusType.slice(1, -1).toLowerCase();
 	var current_state = statusType
-	
+
 	if (current_state == "to close") { current_state = "to-close" }
 
 	if (current_state == "active") {
@@ -236,6 +236,7 @@ function loadData(current_state) {
 					card.find(".encounter-form-btn").attr("type", "button")
 					card.find(".encounter-form-btn").attr("data-bs-toggle", "modal")
 					card.find(".encounter-form-btn").attr("data-bs-target", "#finalized-encounter-form")
+					loadDownloadLink(data.reqId)
 				} else if (data.callType != 0) {
 					card.find(".encounter-form-btn").attr("href", "../user/encounterForm/" + data.reqId)
 				} else {
@@ -273,6 +274,37 @@ function loadData(current_state) {
 		}
 
 	})
+}
+
+function loadDownloadLink(reqId) {
+	showLoader()
+	$.ajax({
+		url: 'download-encounter-form',
+		type: 'POST',
+		data: {
+
+			reqId: reqId
+
+		},
+		success: function(data) {
+			hideLoader()			
+			console.log("download-link found")
+			$(".download-encounter-form").attr("href",data)
+			$(".download-encounter-form").attr("download","EncounterForm_" + reqId + ".pdf")
+			$(".download-encounter-form").attr("onclick","openEncounterForm('"+ data + "')")
+		},
+		error: function(data) {
+			console.log("failed to get download link")
+			hideLoader()
+		}
+
+
+	});
+
+}
+
+function openEncounterForm(path){
+	window.open(path, '_blank');
 }
 
 function concludeCase(reqId) {

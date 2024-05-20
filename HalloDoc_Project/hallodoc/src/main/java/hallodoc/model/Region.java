@@ -18,7 +18,7 @@ public class Region {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "region_id")
-	private int regionId;
+	private Integer regionId;
 
 	@Column(name = "name")
 	private String name;
