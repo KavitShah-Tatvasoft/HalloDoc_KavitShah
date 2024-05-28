@@ -1,0 +1,130 @@
+#main-div{
+    display: flex;
+}
+
+#left-side-div{
+    display: flex;
+    flex-basis: 50%;
+    justify-content: center;
+    height: 100vh;
+    /*background-color: red;*/
+
+}
+
+#right-side-div{
+    display: flex;
+    flex-basis: 50%;
+    justify-content: center;
+    background-color: green;
+    height: 100vh;
+}
+
+#logo-login-div{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 80px;
+    /*background-color: aqua;*/
+}
+
+#logo-div{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    /*background-color: yellow;*/
+}
+
+#login-div{
+    display: flex;
+    flex-direction: column;
+    /*background-color: antiquewhite;*/
+    max-width: 1450px;
+    min-width: 360px;
+}
+
+.company-logo-top{
+    height: 125px;
+    width: 200px;
+}
+
+/*Floating Label*/
+
+.taskName {
+    height: 50px;
+
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: gray !important;
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.form-select:focus {
+    border-color: none !important;
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.select-core {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.floating-label-group {
+    position: relative;
+    margin-top: 11px;
+    margin-bottom: 11px;
+}
+
+.floating-label {
+    font-size: 16px;
+    color: #cccccc;
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    top: 13px;
+    left: 12px;
+    transition: all 0.1s ease;
+}
+
+input:focus ~ .floating-label,
+input:not(:focus):valid ~ .floating-label {
+    top: -8px;
+    bottom: 0px;
+    left: 10px;
+    font-size: 11px;
+    opacity: 1;
+    color: #404040;
+    background-color: white;
+    height: 12px;
+    padding: 0px 3px;
+}
+
+.uninor-blue-btn{
+    margin-top: 20px;
+    height: 45px;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color:#3750eb;
+    border: 1px solid #3750eb;
+}
+
+/*OTP Boxes*/
+
+.inputs input {
+    width: 40px;
+    height: 40px
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+}
