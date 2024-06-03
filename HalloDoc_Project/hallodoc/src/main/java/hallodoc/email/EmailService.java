@@ -42,7 +42,7 @@ import hallodoc.repository.UserDao;
 
 import hallodoc.helper.*;
 
-@Service("emailService")
+	@Service("emailService")
 public class EmailService {
 
 	@Autowired

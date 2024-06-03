@@ -633,12 +633,12 @@ public class AdminController {
 		return "admin/provider-on-call";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/get-provider-on-call-data", method = RequestMethod.POST)
-	public List<OnCallDataList> getProviderOnCallStatus(@RequestParam("regionId") int regionId) {
-		return this.adminService.getProviderOnCallStauts(regionId);
-	}
-	
+//	@ResponseBody
+//	@RequestMapping(value="/get-provider-on-call-data", method = RequestMethod.POST)
+//	public List<OnCallDataList> getProviderOnCallStatus(@RequestParam("regionId") int regionId) {
+//		return this.adminService.getProviderOnCallStauts(regionId);
+//	}
+//	
 	
 	
 	

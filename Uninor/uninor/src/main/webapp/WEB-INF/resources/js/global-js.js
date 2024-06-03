@@ -1,0 +1,1 @@
+const CONTEXT_PATH = "/uninor"

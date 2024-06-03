@@ -1530,47 +1530,48 @@ public class AdminService {
 //		return this.shiftDao.getProviderOnCallStatus();
 //	}
 	
-	public OnCallDataList getProviderOnCallStauts(int regionId){
-		
-		List<Integer> regions = Arrays.asList(regionId);
-		LocalTime curreTime = LocalTime.now();
-		List<Integer> physicianIds = new ArrayList<Integer>();
-		List<ProviderOnCallStatusDto> onCallList = new ArrayList<ProviderOnCallStatusDto>();
-		List<ProviderOnCallStatusDto> offCallList = new ArrayList<ProviderOnCallStatusDto>();
-		List<OnCallDataList> onCallDataLists = new ArrayList<OnCallDataList>();
-		List<ShiftDetails> shiftDetails = this.shiftDao.getOnGoingShifts(curreTime,regionId);
-		
-		for (ShiftDetails shiftDetail : shiftDetails) {
-			physicianIds.add(shiftDetail.getShiftId().getPhysicianId().getPhysicianId());
-			Physician physician = shiftDetail.getShiftId().getPhysicianId();
-			String path = Constants.PROVIDER_DOC_PATH + File.separator + physician.getPhysicianId() + File.separator
-					+ physician.getPhoto();
-			ProviderOnCallStatusDto callStatusDto = new ProviderOnCallStatusDto();
-			callStatusDto.setPhoto(path);
-			callStatusDto.setProviderFirstName(physician.getFirstName());
-			callStatusDto.setProviderId(physician.getPhysicianId());
-			callStatusDto.setProviderLastName(physician.getLastName());
-			onCallList.add(callStatusDto);
-		}
-		
-		List<Physician> offDutyPhysicians = this.physicianDao.getPhysicianByRegionList(regions,physicianIds);
-		for (Physician physician : offDutyPhysicians) {
-			String path = Constants.PROVIDER_DOC_PATH + File.separator + physician.getPhysicianId() + File.separator
-					+ physician.getPhoto();
-			ProviderOnCallStatusDto callStatusDto = new ProviderOnCallStatusDto();
-			
-			callStatusDto.setPhoto(path);
-			callStatusDto.setProviderFirstName(physician.getFirstName());
-			callStatusDto.setProviderId(physician.getPhysicianId());
-			callStatusDto.setProviderLastName(physician.getLastName());
-			onCallList.add(callStatusDto);
-			offCallList.add(callStatusDto);
-		}
-		
-		OnCallDataList callDataList = new OnCallDataList();
-		callDataList.setOffDutyPhysicians(offCallList);
-		callDataList.setOnClassPhysicians(onCallList);
-		return callDataList;
-		
-	}
+//	public OnCallDataList getProviderOnCallStauts(int regionId){
+//		
+//		List<Integer> regions = Arrays.asList(regionId);
+//		LocalTime curreTime = LocalTime.now();
+//		List<Integer> physicianIds = new ArrayList<Integer>();
+//		List<ProviderOnCallStatusDto> onCallList = new ArrayList<ProviderOnCallStatusDto>();
+//		List<ProviderOnCallStatusDto> offCallList = new ArrayList<ProviderOnCallStatusDto>();
+//		List<OnCallDataList> onCallDataLists = new ArrayList<OnCallDataList>();
+//		List<ShiftDetails> shiftDetails = this.shiftDao.getOnGoingShifts(curreTime,regionId);
+//		
+//		for (ShiftDetails shiftDetail : shiftDetails) {
+//			physicianIds.add(shiftDetail.getShiftId().getPhysicianId().getPhysicianId());
+//			Physician physician = shiftDetail.getShiftId().getPhysicianId();
+//			String path = Constants.PROVIDER_DOC_PATH + File.separator + physician.getPhysicianId() + File.separator
+//					+ physician.getPhoto();
+//			ProviderOnCallStatusDto callStatusDto = new ProviderOnCallStatusDto();
+//			callStatusDto.setPhoto(path);
+//			callStatusDto.setProviderFirstName(physician.getFirstName());
+//			callStatusDto.setProviderId(physician.getPhysicianId());
+//			callStatusDto.setProviderLastName(physician.getLastName());
+//			onCallList.add(callStatusDto);
+//		}
+//		
+//		List<Physician> offDutyPhysicians = this.physicianDao.getPhysicianByRegionList(regions,physicianIds);
+//		for (Physician physician : offDutyPhysicians) {
+//			String path = Constants.PROVIDER_DOC_PATH + File.separator + physician.getPhysicianId() + File.separator
+//					+ physician.getPhoto();
+//			ProviderOnCallStatusDto callStatusDto = new ProviderOnCallStatusDto();
+//			
+//			callStatusDto.setPhoto(path);
+//			callStatusDto.setProviderFirstName(physician.getFirstName());
+//			callStatusDto.setProviderId(physician.getPhysicianId());
+//			callStatusDto.setProviderLastName(physician.getLastName());
+//			onCallList.add(callStatusDto);
+//			offCallList.add(callStatusDto);
+//		}
+//		
+//		OnCallDataList callDataList = new OnCallDataList();
+//		callDataList.setOffDutyPhysicians(offCallList);
+//		callDataList.setOnClassPhysicians(onCallList);
+//		return callDataList;
+//		
+//	}
+}
 }

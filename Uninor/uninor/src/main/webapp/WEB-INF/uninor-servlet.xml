@@ -61,7 +61,11 @@
         <!-- annotated classes -->
         <property name="annotatedClasses">
             <list>
-<!--                <value>com.demo.model.Names</value>-->
+                <value>com.uninor.model.OtpLogs</value>
+                <value>com.uninor.model.Users</value>
+                <value>com.uninor.model.Client</value>
+                <value>com.uninor.model.Companies</value>
+                <value>com.uninor.model.SimCard</value>
             </list>
         </property>
     </bean>

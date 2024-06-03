@@ -1,10 +1,20 @@
+*{
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+}
+
+select{
+    color: #b4a6a6 !important;
+}
+
 #main-div{
     display: flex;
 }
 
 #left-side-div{
     display: flex;
-    flex-basis: 50%;
+    flex-basis: 40%;
     justify-content: center;
     height: 100vh;
     /*background-color: red;*/
@@ -13,9 +23,9 @@
 
 #right-side-div{
     display: flex;
-    flex-basis: 50%;
+    flex-basis: 60%;
     justify-content: center;
-    background-color: green;
+    /*background-color: green;*/
     height: 100vh;
 }
 
@@ -23,12 +33,12 @@
     display: flex;
     flex-direction: column;
     align-content: center;
-    gap: 80px;
+    gap: 100px;
     /*background-color: aqua;*/
 }
 
 #logo-div{
-    margin-top: 40px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     /*background-color: yellow;*/
@@ -57,13 +67,13 @@
 .form-control:focus {
     color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
-    border-color: gray !important;
+    border-color: gray;
     outline: 0;
     box-shadow: none !important;
 }
 
 .form-select:focus {
-    border-color: none !important;
+    border-color: none ;
     outline: 0;
     box-shadow: none !important;
 }
@@ -91,14 +101,19 @@
     transition: all 0.1s ease;
 }
 
+span.error-class{
+    color: #f62222;
+    padding-left: 3px;
+}
+
 input:focus ~ .floating-label,
-input:not(:focus):valid ~ .floating-label {
+input:not(:focus):valid ~ .floating-label, input:read-only ~ .floating-label {
     top: -8px;
     bottom: 0px;
     left: 10px;
     font-size: 11px;
     opacity: 1;
-    color: #404040;
+    color: #00b9f0;
     background-color: white;
     height: 12px;
     padding: 0px 3px;
@@ -109,9 +124,46 @@ input:not(:focus):valid ~ .floating-label {
     height: 45px;
     color: white;
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color:#3750eb;
     border: 1px solid #3750eb;
+}
+
+.form-control{
+    border: 1px solid #b4a6a6;
+}
+
+.form-control:focus{
+    border: 1px solid #00b9f0;
+}
+
+.floating-label{
+ color: #b4a6a6;
+}
+
+.floating-label:focus{
+    color: #00b9f0;
+}
+
+.carousel-inner{
+    display: flex;
+    align-items: center;
+}
+.carousel-item, .carousel.slide{
+    height: 100vh;
+    width: 95%;
+}
+
+.max-height{
+    height: 95vh;
+}
+
+.slide-btn-clr{
+    background-color: #3750eb !important;
+}
+
+.resize-img{
+    height: 95vh;
 }
 
 /*OTP Boxes*/
@@ -127,4 +179,8 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0
+}
+
+@media screen and (max-width: 1024px) {
+
 }

@@ -1,0 +1,211 @@
+.main-container{
+    height: 100vh;
+    width: 100%;
+}
+
+.inner-main-container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-side{
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.form-side{
+    height: 100%;
+    width: 50%;
+    position: relative;
+    top: 0;
+    left: 50%;
+}
+
+.carousel-main-container{
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-inner{
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-inner .carousel-item{
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item img{
+    width: 100%;
+    height: 100%;
+}
+
+.slide-btn-clr{
+    background-color: #3750eb !important;
+}
+
+.logo-form-container{
+    position: relative;
+    top: 15%;
+}
+
+.company-logo-top{
+    height: 125px;
+    width: 200px;
+}
+
+.logo-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#resend-otp-link{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*Floating Label*/
+
+.taskName {
+    height: 50px;
+
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: gray;
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.form-select:focus {
+    border-color: none ;
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.select-core {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.floating-label-group {
+    position: relative;
+    margin-top: 11px;
+    margin-bottom: 11px;
+}
+
+.floating-label {
+    font-size: 16px;
+    color: #cccccc;
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    top: 13px;
+    left: 12px;
+    transition: all 0.1s ease;
+}
+
+input:focus ~ .floating-label,
+input:not(:focus):valid ~ .floating-label, input:read-only ~ .floating-label {
+    top: -8px;
+    bottom: 0px;
+    left: 10px;
+    font-size: 11px;
+    opacity: 1;
+    color: #00b9f0;
+    background-color: white;
+    height: 12px;
+    padding: 0px 3px;
+}
+
+.form-control{
+    border: 1px solid #b4a6a6;
+}
+
+.form-control:focus{
+    border: 1px solid #00b9f0;
+}
+
+.floating-label{
+    color: #b4a6a6;
+}
+
+.floating-label:focus{
+    color: #00b9f0;
+}
+
+span.error-class{
+    color: #f62222;
+    padding-left: 3px;
+}
+
+.uninor-blue-btn{
+    margin-top: 20px;
+    height: 45px;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background-color:#3750eb;
+    border: 1px solid #3750eb;
+}
+
+.form-container{
+    margin-top: 15px!important;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+
+
+@media screen and (max-width:768px) {
+    .form-side {
+        left: 0%;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .carousel-side{
+        width: 100%;
+        opacity: 0.2;
+    }
+
+    .form-container{
+        max-width: 320px;
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        box-shadow: 0px 0px 9px 1px rgba(0,0,0,0.75);
+    }
+
+}
+
+@media screen and (max-width: 512px) {
+    .carousel-side{
+        display: none;
+    }
+
+    .form-container{
+        max-width: 320px;
+        background-color: transparent;
+        padding: 15px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .form-container{
+        max-width: 270px;
+    }
+}
