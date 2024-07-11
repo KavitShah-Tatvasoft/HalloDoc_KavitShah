@@ -29,4 +29,8 @@ public class CompaniesRepository {
         return list;
     }
 
+    public Companies getCompanyDetails(int id){
+        return (Companies)this.hibernateTemplate.get(Companies.class, id);
+    }
+
 }

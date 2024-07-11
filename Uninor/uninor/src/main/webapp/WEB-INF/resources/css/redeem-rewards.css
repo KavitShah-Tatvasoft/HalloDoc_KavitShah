@@ -1,0 +1,296 @@
+.no-coupons-text-flex{
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-cupon-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.no-cupon-heading{
+    font-size: 30px;
+    font-weight: 600;
+    color: #cb4141;
+}
+
+.coupon-container{
+    width: 85%;
+}
+
+/*cupon card design start*/
+
+.coupon-only-text, .validity-text, .validity-text-heading{
+    color: white;
+}
+
+.max-amount-div{
+    margin-top: 5px;
+    color: white;
+}
+
+.redeem-btn{
+    background: white;
+    width: fit-content;
+    padding: 5px 12px;
+    border-radius: 8px;
+    color: #2a47fd;
+    cursor: pointer;
+}
+
+.redeem-btn-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px
+}
+
+
+.coupon {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: auto;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    text-transform: uppercase;
+}
+.coupon::before,
+.coupon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: -1;
+}
+
+.coupon::before {
+    left: 0;
+    background-image: radial-gradient(
+            circle at 0 50%,
+            transparent 25px,
+            #2a47fd  26px
+    );
+}
+
+.coupon::after {
+    right: 0;
+    background-image: radial-gradient(
+            circle at 100% 50%,
+            transparent 25px,
+            #2a47fd 26px
+    );
+}
+
+.coupon > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left {
+    width: 20%;
+    border-right: 2px dashed rgb(255 255 255 / 80%);
+}
+.left div {
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    left: -25px;
+}
+
+.center {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.right {
+    width: 80px;
+    background-image: radial-gradient(
+            circle at 100% 50%,
+            transparent 25px,
+            white 26px
+    );
+}
+.right div {
+    font-size: 2.5rem;
+    font-weight: 400;
+    transform: rotate(-90deg);
+    color:#2a47fd;
+    position: absolute;
+    right: -15px;
+}
+
+.center h2 {
+    /*background: #000;*/
+   color: #FDE02A;
+    padding: 0 10px;
+    font-size: 2.15rem;
+    white-space: nowrap;
+}
+
+.center h3 {
+    font-size: 1.8rem;
+}
+.center small {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.center small{
+    font-size: 0.95rem;
+}
+
+/*.coupon-container{*/
+/*    width: 60%;*/
+/*}*/
+
+@media screen and (max-width:358px){
+    .coupon {
+        display:grid;
+        grid-template-columns:1fr;
+    }
+    .left div {
+        transform: rotate(0deg);
+    }
+    .right div {
+        transform: rotate(0deg);
+
+    }
+
+}
+
+/*jnasjdnjsanjsandan*/
+
+
+/*cupon card design over*/
+
+.coupon-row > div:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)){
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 1440px){
+    .coupon-container{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1300px){
+    .coupon-col{
+        width: 50%;
+    }
+
+    .coupon-row > div:not(:nth-child(1)):not(:nth-child(2)){
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 1146px){
+
+    .recharge-container{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .coupon{
+        transform: scale(0.9);
+    }
+
+    .no-cupon-image{
+        height: 430px;
+        width: auto;
+    }
+
+    .no-coupons-text-flex{
+        flex-direction: column;
+    }
+
+    .no-cupon-flex{
+        position: relative;
+        align-items: center;
+        padding-left: 30px;
+        top: -40px;
+    }
+
+}
+
+@media screen and (max-width: 690px){
+    .coupon-col{
+        width: 100%;
+    }
+
+    .coupon-container{
+        width: 75%;
+    }
+
+    .coupon-row > div:not(:nth-child(1)):not(:nth-child(2)){
+        margin-top: 0px;
+    }
+
+}
+
+@media screen and (max-width: 520px){
+
+    .coupon-container{
+        width: 100%;
+    }
+
+    .coupon{
+        transform: scale(0.85);
+    }
+
+    .center small {
+        font-size: 0.80rem;
+    }
+}
+
+@media screen and (max-width: 375px){
+    main{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .left div {
+        left: -32px;
+    }
+
+    .center h2 {
+        font-size: 1.9 rem;
+    }
+
+    .center h3{
+        font-size: 1.4 rem;
+    }
+
+    .right div {
+        font-size: 2.0rem;
+        right: -6px;
+    }
+
+    .coupon-col{
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width:425px){
+    .no-cupon-image{
+        height: 340px;
+        width: auto;
+    }
+
+    .no-cupon-heading {
+        font-size: 25px;
+    }
+}
+

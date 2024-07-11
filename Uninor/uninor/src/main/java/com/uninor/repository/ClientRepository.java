@@ -1,6 +1,7 @@
 package com.uninor.repository;
 
 import com.uninor.model.Client;
+import com.uninor.model.SimCard;
 import com.uninor.model.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,6 +32,8 @@ public class ClientRepository {
         return list;
     }
 
+
+
     @Transactional
     public void updateClient(Client client){
         this.hibernateTemplate.update(client);
@@ -44,4 +47,17 @@ public class ClientRepository {
     public Client getClientById(int id){
         return this.hibernateTemplate.get(Client.class, id);
     }
+
+    @Transactional
+    public Client getClientBYNumber(String phoneNumber){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM SimCard WHERE phoneNumber=:phoneNumber";
+        Query<SimCard> q = s.createQuery(queryString);
+        q.setParameter("phoneNumber", phoneNumber);
+        List<SimCard> list = q.list();
+        Client client = list.get(0).getClient();
+        s.close();
+        return client;
+    }
+
 }

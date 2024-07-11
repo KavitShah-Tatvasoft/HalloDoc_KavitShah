@@ -51,11 +51,14 @@ public class Client {
     @Column(name = "pan_number")
     private String panNumber;
 
+    @Column(name = "aadhar_number")
+    private String aadharNumber;
+
     @Column(name = "gst_number")
     private String gstNumber;
 
     @Column(name = "wallet_amount")
-    private String walletAmount;
+    private Double walletAmount;
 
     @Column(name = "email")
     private String email;
@@ -77,25 +80,8 @@ public class Client {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public Client(int clientId, Users user, String firstName, String lastName, LocalDate dateOfBirth, String street, String city, String state, String zipcode, String panNumber, String gstNumber, String walletAmount, String email, LocalDateTime createdDate, LocalDateTime modifiedDate, boolean isDocValidated, int validationAttempts, boolean isDeleted) {
-        super();
-        this.clientId = clientId;
-        this.user = user;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.zipcode = zipcode;
-        this.panNumber = panNumber;
-        this.gstNumber = gstNumber;
-        this.walletAmount = walletAmount;
-        this.email = email;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.isDocValidated = isDocValidated;
-        this.validationAttempts = validationAttempts;
-        this.isDeleted = isDeleted;
-    }
+    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private ClientDocuments clientDocuments;
+
+
 }

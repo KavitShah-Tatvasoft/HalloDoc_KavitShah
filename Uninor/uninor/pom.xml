@@ -117,12 +117,52 @@
         <version>3.4.5</version>
       </dependency>
 
+<!--      <dependency>-->
+<!--        <groupId>com.itextpdf</groupId>-->
+<!--        <artifactId>itext7-core</artifactId>-->
+<!--        <version>8.0.4</version>-->
+<!--        <type>pom</type>-->
+<!--      </dependency>-->
+
       <dependency>
-        <groupId>com.itextpdf</groupId>
-        <artifactId>itext7-core</artifactId>
-        <version>8.0.4</version>
-        <type>pom</type>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>itextpdf</artifactId>
+          <version>5.5.13.4</version>
       </dependency>
+
+      <dependency>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>itext7-core</artifactId>
+          <version>8.0.4</version>
+          <type>pom</type>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.itextpdf/layout -->
+      <dependency>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>layout</artifactId>
+          <version>8.0.4</version>
+      </dependency>
+
+
+      <!-- https://mvnrepository.com/artifact/com.itextpdf/kernel -->
+      <dependency>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>kernel</artifactId>
+          <version>8.0.4</version>
+      </dependency>
+
+<!--      &lt;!&ndash; https://mvnrepository.com/artifact/com.itextpdf/itextpdf &ndash;&gt;-->
+<!--      <dependency>-->
+<!--          <groupId>com.itextpdf</groupId>-->
+<!--          <artifactId>itextpdf</artifactId>-->
+<!--          <version>5.5.13.4</version>-->
+<!--      </dependency>-->
+
+      <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+
+
+
 
       <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
       <dependency>
@@ -166,6 +206,12 @@
           <version>2.5</version>
       </dependency>
 
+      <!-- Spring Data Commons for Page implementation -->
+      <dependency>
+          <groupId>org.springframework.data</groupId>
+          <artifactId>spring-data-commons</artifactId>
+          <version>2.6.0</version>
+      </dependency>
 
 
   </dependencies>

@@ -1,28 +1,33 @@
 package com.uninor.service;
 
 import com.uninor.Email.EmailService;
-import com.uninor.dto.SignUpDataDto;
-import com.uninor.dto.SignupRequestDto;
-import com.uninor.dto.SimSuggestionsDto;
+import com.uninor.dto.*;
 import com.uninor.enumeration.RoleEnum;
+import com.uninor.enumeration.SimType;
+import com.uninor.exceptions.DataNotFoundException;
+import com.uninor.exceptions.InvalidFileException;
+import com.uninor.exceptions.SimNotAvailableException;
 import com.uninor.helper.EntityDtoMappers;
 import com.uninor.model.*;
 import com.uninor.repository.*;
-import com.uninor.utilities.Helper;
+import com.uninor.helper.Helper;
+import com.uninor.sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class RegistrationService {
@@ -45,27 +50,31 @@ public class RegistrationService {
     @Autowired
     private SimCardRepository simCardRepository;
 
-    public ResponseEntity<Map<String,String>> generateOtp(SignupRequestDto signupRequestDto) throws UnsupportedEncodingException {
+    @Autowired
+    private SmsService smsService;
+
+
+    public ResponseEntity<Map<String, String>> generateOtp(SignupRequestDto signupRequestDto) throws UnsupportedEncodingException {
 
         signupRequestDto.setEmail(signupRequestDto.getEmail().toLowerCase());
         signupRequestDto.setFname(Helper.capitalize(signupRequestDto.getFname()));
         signupRequestDto.setLname(Helper.capitalize(signupRequestDto.getLname()));
         Users user = null;
 
-        if(!userRepository.getUserByEmail(signupRequestDto.getEmail()).isEmpty()){
+        if (!userRepository.getUserByEmail(signupRequestDto.getEmail()).isEmpty()) {
             user = userRepository.getUserByEmail(signupRequestDto.getEmail()).get(0);
         }
 
         OtpLogs otpLogs = new OtpLogs();
-        Map<String, String > responseMap = new HashMap<>();
-        String randomPin = String.valueOf((int)(Math.random() * 900000) + 100000);
+        Map<String, String> responseMap = new HashMap<>();
+        String randomPin = String.valueOf((int) (Math.random() * 900000) + 100000);
 
-        if( user != null && user.isRegistered()){
-            responseMap.put("errors","User already registered");
+        if (user != null && user.isRegistered()) {
+            responseMap.put("errors", "User already registered");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.CONFLICT);
         }
 
-        if(user != null && !user.isRegistered()) {
+        if (user != null && !user.isRegistered()) {
 
 
             Client client = clientRepository.getUserByEmail(signupRequestDto.getEmail()).get(0);
@@ -86,15 +95,15 @@ public class RegistrationService {
 
             otpLogsRepository.addOTPLog(otpLogs);
 
-            this.emailService.sendOTP(signupRequestDto,randomPin);
+            this.emailService.sendOTP(signupRequestDto, randomPin);
 
             String clientId = String.valueOf(client.getClientId());
             String encodedClientId = Base64.getEncoder().encodeToString(clientId.getBytes("utf-8"));
 
-            responseMap.put("messages","An OTP has been sent on your email");
+            responseMap.put("messages", "An OTP has been sent on your email");
             responseMap.put("clientId", encodedClientId);
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
-        }else {
+        } else {
 
             Users newUser = new Users();
             Client newClient = new Client();
@@ -115,12 +124,12 @@ public class RegistrationService {
             otpLogs.setOtpCode(randomPin);
 
             otpLogsRepository.addOTPLog(otpLogs);
-            this.emailService.sendOTP(signupRequestDto,randomPin);
+            this.emailService.sendOTP(signupRequestDto, randomPin);
 
             String clientId = String.valueOf(newClient.getClientId());
             String encodedClientId = Base64.getEncoder().encodeToString(clientId.getBytes("utf-8"));
 
-            responseMap.put("messages","An OTP has been sent on your email");
+            responseMap.put("messages", "An OTP has been sent on your email");
             responseMap.put("clientId", encodedClientId);
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
         }
@@ -128,55 +137,317 @@ public class RegistrationService {
 
     }
 
-    public ResponseEntity<Map<String,String>> validateOtp(SignUpDataDto signUpDataDto, HttpServletRequest httpServletRequest){
-        List<OtpLogs> otpLogsList = this.otpLogsRepository.getOtpForClient(signUpDataDto.getEmail(), signUpDataDto.getOtp());
-        Map<String, String > responseMap = new HashMap<>();
+    public ResponseEntity<Map<String, String>> validateOtp(SignUpDataDto signUpDataDto, HttpServletRequest httpServletRequest) {
+        List<OtpLogs> otpLogsList = this.otpLogsRepository.getOtpForClient(signUpDataDto.getEmail());
+        Map<String, String> responseMap = new HashMap<>();
         try {
             OtpLogs otpLogs = otpLogsList.get(0);
 
-            if(LocalDateTime.now().isBefore(otpLogs.getSentDateTime().plusMinutes(5))){
+            if (LocalDateTime.now().isBefore(otpLogs.getSentDateTime().plusMinutes(5))){
+                if( !otpLogs.getOtpCode().equals(signUpDataDto.getOtp())){
+                    responseMap.put("errors", "OTP is not valid.");
+                    return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
+                }
                 responseMap.put("messages", "Valid OTP!");
                 return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
-            }else {
-                responseMap.put("errors","OTP Expired. Please try again");
+            } else {
+                responseMap.put("errors", "OTP Expired. Please try again");
                 return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
             }
-        }catch (Exception e){
-            responseMap.put("errors","OTP is not valid.");
+
+        }catch (IndexOutOfBoundsException ex){
+            responseMap.put("errors", "OTP is not valid.");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
     }
 
-    public List<Companies> getAllCompanyDetails(){
+    public List<Companies> getAllCompanyDetails() {
         return this.companiesRepository.getCompanyDetails();
     }
 
-    public String decodeClientId(String encodedClientId){
+    public String decodeClientId(String encodedClientId) {
         byte[] decodedClientId = Base64.getDecoder().decode(encodedClientId);
         return new String(decodedClientId);
     }
 
-    public ResponseEntity<Map<String,String>> getClientData(String clientId){
+    public ResponseEntity<Map<String, String>> getClientData(String clientId) {
 
-        Map<String, String > responseMap = new HashMap<>();
+        Map<String, String> responseMap = new HashMap<>();
+        if(clientId.isEmpty()){
+            throw new DataNotFoundException("Client not found! Please signup and try again!");
+        }
         try {
             Client client = this.clientRepository.getClientById(Integer.parseInt(decodeClientId(clientId)));
-            responseMap.put("fname",client.getFirstName());
-            responseMap.put("lname",client.getLastName());
-            responseMap.put("email",client.getEmail());
+            if (client == null) {
+                throw new DataNotFoundException("Client not found! Please signup and try again!");
+            }
+            responseMap.put("fname", client.getFirstName());
+            responseMap.put("lname", client.getLastName());
+            responseMap.put("email", client.getEmail());
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
-        }catch (Exception e){
-            responseMap.put("errors","No such client found. Please signup again");
-            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
+        } catch (DataNotFoundException ex) {
+            responseMap.put("errors", ex.getMessage());
+            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
     }
 
 
-    public List<SimSuggestionsDto> getNumberSuggestions(){
+    public List<SimSuggestionsDto> getNumberSuggestions() {
 
         List<SimCard> simCardSuggestions = this.simCardRepository.getAvailableSimCardSuggestions();
         return EntityDtoMappers.simSuggestionsDtoMapper(simCardSuggestions);
 
     }
 
+    private Client updateUserDetails(RegistrationDataDto registrationDataDto) {
+
+        try {
+            Client client = this.clientRepository.getClientById(Integer.parseInt(decodeClientId(registrationDataDto.getClientId())));
+            if (client == null) {
+                throw new DataNotFoundException("No such client found. Please signup and try again!");
+            }
+            Users user = client.getUser();
+            user.setRegistered(true);
+
+            client.setUser(user);
+            client.setCity(registrationDataDto.getCity());
+            client.setEmail(registrationDataDto.getEmail());
+            client.setDeleted(false);
+            client.setFirstName(registrationDataDto.getFname());
+            client.setLastName(registrationDataDto.getLname());
+            LocalDate dob = Helper.parseToLocalDate(registrationDataDto.getDob());
+            client.setDateOfBirth(dob);
+            client.setDocValidated(false);
+            if (!registrationDataDto.getGSTNumber().isEmpty()) {
+                client.setGstNumber(registrationDataDto.getGSTNumber());
+            }
+            client.setAadharNumber(registrationDataDto.getAadharCardNumber());
+            client.setPanNumber(registrationDataDto.getPanNumber());
+            client.setState(registrationDataDto.getState());
+            client.setCity(registrationDataDto.getCity());
+            client.setZipcode(registrationDataDto.getZipcode());
+            client.setValidationAttempts(0);
+            client.setWalletAmount(0.0  );
+
+            return client;
+        } catch (DataNotFoundException ex) {
+            throw new DataNotFoundException(ex.getMessage());
+        }
+
+    }
+
+    private static String calculateCheckDigit(String imei) {
+        int sum = 0;
+        for (int i = imei.length() - 1; i >= 0; i--) {
+            int digit = Integer.parseInt(String.valueOf(imei.charAt(i)));
+            if ((i % 2) == 0) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            sum += digit;
+        }
+        int checkDigit = (10 - (sum % 10)) % 10;
+        return String.valueOf(checkDigit);
+    }
+
+    private String getImeiNumber() {
+        Random random = new Random();
+        String imei = "350091"; // India's MCC (Mobile Country Code)
+        imei += String.format("%02d", random.nextInt(10));
+        imei += String.format("%06d", random.nextInt(1000000));
+        imei += calculateCheckDigit(imei);
+        return imei;
+    }
+
+    private String getPUKCode() {
+        return String.valueOf((int) (Math.random() * 900000) + 100000);
+    }
+
+    private SimCard addNewSimDetails(RegistrationDataDto registrationDataDto, Client client) {
+        List<SimCard> availableSimCard = this.simCardRepository.getSimCardDetailsByNumber(registrationDataDto.getMobileNumber());
+        if (!availableSimCard.isEmpty()) {
+            throw new SimNotAvailableException("Number not available for port! Please contact admin for further queries!");
+        }
+        SimCard simCard = new SimCard();
+        simCard.setClient(client);
+        simCard.setPhoneNumber(registrationDataDto.getMobileNumber());
+        simCard.setIccidNumber(getIccidNumber());
+        simCard.setImsiNumber(getImsiNumber());
+        simCard.setImeiNumber(getImeiNumber());
+        if (registrationDataDto.getSimType() == 1) {
+            simCard.setSimType(SimType.PREPAID.getSimCardTypeId());
+        } else {
+            simCard.setSimType(SimType.POSTPAID.getSimCardTypeId());
+        }
+
+        simCard.setPukNumber(getPUKCode());
+        simCard.setAvailable(false);
+        simCard.setStatus(false);
+        simCard.setBlocked(false);
+        simCard.setRoamingActive(false);
+        simCard.setPlanActive(false);
+        return simCard;
+    }
+
+    private static String generateRandomNumber(int length) {
+        Random random = new Random();
+        StringBuilder number = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            number.append(random.nextInt(10));
+        }
+        return number.toString();
+    }
+
+    private String getIccidNumber() {
+        String random = generateRandomNumber(14);
+        return "8991" + random + "41";
+    }
+
+    private String getImsiNumber() {
+        String random = generateRandomNumber(10);
+        return "08991" + random;
+    }
+
+    private String uploadDocuments(CommonsMultipartFile file, int clientId, String filename) {
+        try {
+            String path = System.getenv("UninorUploadPath");
+            String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.') + 1);
+            String fullPath = path + clientId + "/" + filename + "." + fileExtension;
+
+            byte[] data = file.getBytes();
+            FileOutputStream fos = new FileOutputStream(fullPath);
+            fos.write(data);
+            fos.close();
+            return fileExtension;
+        } catch (Exception e) {
+            throw new InvalidFileException("File Upload Failed. Try again!");
+        }
+    }
+
+
+    public ResponseEntity<Map<String, String>> registerUserDetails(RegistrationDataDto registrationDataDto) {
+        Map<String, String> responseMap = new HashMap<>();
+        try {
+            int requestType = registrationDataDto.getSelector();
+            Client client = updateUserDetails(registrationDataDto);
+            SimCard simCard;
+            if (requestType == 1) {
+                Companies companies = this.companiesRepository.getCompanyDetails(registrationDataDto.getCompanyId());
+                this.emailService.portNumberEmail(companies.getCompanyEmail(), companies.getCompanyName(), registrationDataDto.getMobileNumber());
+                simCard = addNewSimDetails(registrationDataDto, client);
+            } else {
+                simCard = this.simCardRepository.getSimCardById(registrationDataDto.getMobileId());
+                if (simCard == null) {
+                    throw new DataNotFoundException("No SIM Card found! Try again.");
+                }
+                simCard.setClient(client);
+                simCard.setAvailable(false);
+                if (registrationDataDto.getSimType() == 1) {
+                    simCard.setSimType(SimType.PREPAID.getSimCardTypeId());
+                } else {
+                    simCard.setSimType(SimType.POSTPAID.getSimCardTypeId());
+                }
+            }
+
+            String createDirectoryPath = System.getenv("UninorUploadPath") + client.getClientId();
+
+            File f1 = new File(createDirectoryPath);
+            if (!f1.exists()) {
+                f1.mkdirs();
+            }
+
+
+            CommonsMultipartFile photo = registrationDataDto.getProfilePicUploadedFile();
+            CommonsMultipartFile panCardFile = registrationDataDto.getPanCardUploadedFile();
+            CommonsMultipartFile aadharCardFile = registrationDataDto.getAadharCardUploadedFile();
+
+            String photoExtension = uploadDocuments(photo, client.getClientId(), "ProfilePhoto");
+            String panCardExtension = uploadDocuments(panCardFile, client.getClientId(), "PANCard");
+            String aadharCardExtension = uploadDocuments(aadharCardFile, client.getClientId(), "AadharCard");
+
+            ClientDocuments clientDocuments = new ClientDocuments();
+            clientDocuments.setClient(client);
+            clientDocuments.setAadharCardExtension(aadharCardExtension);
+            clientDocuments.setPanCardExtension(panCardExtension);
+            clientDocuments.setProfilePhotoExtension(photoExtension);
+            clientDocuments.setAadharCardVerified(false);
+            clientDocuments.setPanCardVerified(false);
+            client.setClientDocuments(clientDocuments);
+
+            this.clientRepository.updateClient(client);
+            this.simCardRepository.addOrUpdateSimCard(simCard);
+
+
+        } catch (DataNotFoundException ex) {
+            responseMap.put("errors", ex.getMessage());
+            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+        this.emailService.registrationEmail(registrationDataDto.getEmail(),registrationDataDto.getFname() + " " + registrationDataDto.getLname(), registrationDataDto.getMobileNumber());
+        responseMap.put("messages", "User registered successfully!");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, String>> generateLoginOtp(String number) {
+
+        Map<String, String> responseMap = new HashMap<>();
+        String pattern = "^[1-9][0-9]{9}$";
+
+        if (!number.matches(pattern)) {
+            responseMap.put("errors", "Invalid Mobile Number!");
+            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
+
+        List<SimCard> simCard = this.simCardRepository.getClientSimCardDetailsByNumber(number);
+        if (simCard.isEmpty()) {
+            responseMap.put("errors", "Mobile Number not registered! Please use a valid number!");
+            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+
+        String randomPin = String.valueOf((int) (Math.random() * 900000) + 100000);
+
+        OtpLogs otpLogs = new OtpLogs();
+        otpLogs.setMobileNumber(number);
+        otpLogs.setOtpCode(randomPin);
+        this.otpLogsRepository.addOTPLog(otpLogs);
+        this.smsService.sendLoginOtpSms(number,randomPin);
+
+        responseMap.put("messages", "An OTP has been sent on your mobile number!");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @Transactional
+    public ResponseEntity<Map<String,String>> validateLoginOtp(LoginDto loginDto, HttpServletRequest httpServletRequest){
+
+        List<OtpLogs> otpLogsList = this.otpLogsRepository.getLatestOtpByNumber(loginDto.getNumber());
+        Map<String, String> responseMap = new HashMap<>();
+        try {
+            OtpLogs otpLogs = otpLogsList.get(0);
+
+            if (LocalDateTime.now().isBefore(otpLogs.getSentDateTime().plusMinutes(5))){
+                if( !otpLogs.getOtpCode().equals(loginDto.getOtp())){
+                    responseMap.put("errors", "OTP is not valid.");
+                    return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
+                }
+                responseMap.put("messages", "Valid OTP!");
+                Client client = this.clientRepository.getClientBYNumber(loginDto.getNumber());
+                HttpSession session = httpServletRequest.getSession();
+                session.setAttribute("loggedInMobile",loginDto.getNumber());
+                session.setAttribute("clientId",client.getClientId());
+                session.setAttribute("clientEmail",client.getEmail());
+                session.setAttribute("isRechargeForOthers","false");
+                responseMap.put("docValidation", String.valueOf(client.isDocValidated()));
+                responseMap.put("clientId",String.valueOf(client.getClientId()));
+                return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+            } else {
+                responseMap.put("errors", "OTP Expired. Please try again");
+                return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (IndexOutOfBoundsException ex){
+            responseMap.put("errors", "OTP is not valid.");
+            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

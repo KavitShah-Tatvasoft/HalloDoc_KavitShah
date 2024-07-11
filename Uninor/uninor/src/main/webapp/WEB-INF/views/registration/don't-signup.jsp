@@ -81,7 +81,12 @@
                 </div>
 
                 <button class="uninor-blue-btn w-100 submit-sign-up-btn d-none" onclick="getOTPCode()">SIGN UP</button>
+
+
                 </form>
+
+
+
             </div>
 
         </div>

@@ -590,26 +590,26 @@
             }
         });
 
-        const fileInput_1 = document.getElementById('patietent-file-input-1');
-        const fileNameField_1 = document.getElementById('selected-file-by-patietent-1');
+            const fileInput_1 = document.getElementById('patietent-file-input-1');
+            const fileNameField_1 = document.getElementById('selected-file-by-patietent-1');
 
-        // Listen for the change event on the file input element
-        fileInput_1.addEventListener('change', (event) => {
-            // Get the selected file(s)
-            const files = event.target.files;
+            // Listen for the change event on the file input element
+            fileInput_1.addEventListener('change', (event) => {
+                // Get the selected file(s)
+                const files = event.target.files;
 
-            // If one or more files are selected
-            if (files.length > 0) {
-                // Get the name of the first file
-                const fileName = files[0].name;
+                // If one or more files are selected
+                if (files.length > 0) {
+                    // Get the name of the first file
+                    const fileName = files[0].name;
 
-                // Update the value of the input field with the file name
-                fileNameField_1.value = fileName;
-            } else {
-                // If no files are selected, clear the input field
-                fileNameField_1.value = '';
-            }
-        });
+                    // Update the value of the input field with the file name
+                    fileNameField_1.value = fileName;
+                } else {
+                    // If no files are selected, clear the input field
+                    fileNameField_1.value = '';
+                }
+            });
 
       
 

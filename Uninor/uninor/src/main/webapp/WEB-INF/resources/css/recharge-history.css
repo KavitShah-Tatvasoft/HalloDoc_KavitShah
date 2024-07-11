@@ -1,0 +1,281 @@
+.no-invoice-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    row-gap: 25px;
+}
+
+.no-invoice-image{
+    height:415px;
+}
+
+.no-invoice-text{
+    font-size: 45px;
+}
+
+.single-invoice-flex{
+    background-color: white;
+    width: 100%;
+    padding: 15px 15px;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.plan-details-flex{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.invoice-container{
+    width: 80%;
+}
+
+.plan-amount{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.plan-text{
+    font-size : 16px;
+}
+
+.purchase-date{
+    font-size: 12px;
+    color: #524f4f;
+}
+
+hr.hr-1 {
+    width: 100%;
+}
+
+.single-detail-flex{
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.details-flex{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.download-invoice-flex{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download-invoice-btn{
+    transform: scale(0.95);
+    font-size: 15px;
+    border: 1px solid #3750eb;
+    border-radius: 20px;
+    padding: 6px 12px;
+    color: white;
+    background: #3705eb;
+    cursor: pointer;
+}
+
+.paid-plans-text{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.add-btm-margin{
+    margin-bottom: 30px;
+}
+
+
+
+/*Pagination CSS*/
+
+#page-size-id{
+    border-radius: 20px;
+    height: 35px;
+    width: 62px;
+    padding: 0px 10px;
+    background-color: #d1d5e1;
+    border: 1px solid #d1d5e1;
+}
+
+.pagination {
+    transform: scale(0.94);
+    width: 415px;
+    height: 66px;
+    /* background: #e0e0e0; */
+    border-radius: 50px;
+    /* box-shadow: inset 5px 5px 1px #717171, inset -5px -5px 1px #ffffff; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0 1em 0;
+}
+
+.pagination-flex{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+}
+
+.pagination ul li {
+    margin: 0 5px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    text-align: center;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.pagination ul li:hover {
+    background: linear-gradient(270deg, #0023ff, #526278);
+    color: #fff;
+    font-weight: 600;
+    transform: scale(0.96);
+}
+
+.pagination ul li.active {
+    background: linear-gradient(270deg, #0023ff, #526278);
+    color: #fff;
+    font-weight: 600;
+}
+
+.pagination button {
+    width: 75px;
+    height: 35px;
+    border: 0;
+    background-color: hsla(220, 15%, 58%, .29);
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+
+}
+
+.pagination button:hover {
+    transform: scale(0.96);
+    color: #fff;
+    background: linear-gradient(270deg, #0023ff, #526278);
+
+}
+
+.pagination button:disabled {
+    background: hsla(220, 15%, 58%, .3);
+    color: #746a6a;
+}
+
+.pagination button:disabled:hover {
+    background: hsla(220, 15%, 58%, .1);
+    color: #b2b3b5;
+    transform: scale(1);
+}
+
+.pagination button.active {
+    background-color: rgba(0, 0, 0, 0.07);
+    background: linear-gradient(90deg, #0895FF, #37D5FF);
+}
+
+#pageList{
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+
+#page-size-id:focus-visible{
+    border: 1px solid #d1d5e1!important;
+    outline: none;
+}
+
+@media screen and (max-width: 667px) {
+    .pagination {
+        width: 100%;
+    }
+}
+
+/*Pagination CSS Over*/
+
+@media screen and (max-width: 1110px){
+    .invoice-container{
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .no-invoice-image{
+        height: 320px;
+    }
+
+    .no-invoice-text{
+        font-size: 38px;
+    }
+
+    .invoice-container{
+        width: 80%;
+    }
+
+    .pagination-flex{
+        align-items: flex-end;
+        flex-direction: column-reverse;
+    }
+
+    #page-size-id{
+        margin-right: 15px;
+    }
+}
+
+@media screen and (max-width: 470px){
+    .no-invoice-image{
+        height: 290px;
+    }
+
+    .no-invoice-text{
+        font-size: 34px;
+    }
+
+    .invoice-container{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .no-invoice-image{
+        height: 260px;
+    }
+
+    .no-invoice-text{
+        font-size: 34px;
+    }
+}
+
+@media screen and (max-width: 410px){
+    .pagination-flex{
+        transform : scale(0.9);
+    }
+}
+
+@media screen and (max-width: 375px){
+    main{
+        padding: 30px 13px 0px 13px;
+    }
+}

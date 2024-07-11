@@ -20,7 +20,7 @@ public class SimCard {
     @Column(name = "sim_card_id")
     private int simCardId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
@@ -39,7 +39,7 @@ public class SimCard {
     @Column(name = "imei_number")
     private String imeiNumber;
 
-    @Column(name = "sim_type")
+    @Column(name = "sim_type") // 1- prepaid 2-postpaid
     private int simType;
 
     @Column(name = "is_available")
@@ -47,6 +47,9 @@ public class SimCard {
 
     @Column(name = "puk_number")
     private String pukNumber;
+
+    @Column(name = "status")
+    private boolean status;
 
     @Column(name = "is_blocked")
     private boolean isBlocked;
@@ -57,7 +60,7 @@ public class SimCard {
     @Column(name = "is_plan_active")
     private boolean isPlanActive;
 
-    public SimCard(int simCardId, Client client, String phoneNumber, LocalDateTime activationDate, String iccidNumber, String imsiNumber, String imeiNumber, int simType, boolean isAvailable, String pukNumber, boolean isBlocked, boolean isRoamingActive, boolean isPlanActive) {
+    public SimCard(int simCardId, Client client, String phoneNumber, LocalDateTime activationDate, String iccidNumber, String imsiNumber, String imeiNumber, int simType, boolean isAvailable, String pukNumber, boolean status, boolean isBlocked, boolean isRoamingActive, boolean isPlanActive) {
         this.simCardId = simCardId;
         this.client = client;
         this.phoneNumber = phoneNumber;
@@ -68,6 +71,7 @@ public class SimCard {
         this.simType = simType;
         this.isAvailable = isAvailable;
         this.pukNumber = pukNumber;
+        this.status = status;
         this.isBlocked = isBlocked;
         this.isRoamingActive = isRoamingActive;
         this.isPlanActive = isPlanActive;

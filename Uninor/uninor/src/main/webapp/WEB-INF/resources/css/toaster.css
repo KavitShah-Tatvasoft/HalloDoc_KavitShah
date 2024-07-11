@@ -13,6 +13,11 @@
 	overflow: hidden;
 	transform: translateX(calc(100% + 30px));
 	transition: all 0.5s cubic-bezier(0.68, -0.55, 0.25, 1.35);
+
+}
+
+.toast{
+	z-index: 9999;
 }
 
 .toaster.active {

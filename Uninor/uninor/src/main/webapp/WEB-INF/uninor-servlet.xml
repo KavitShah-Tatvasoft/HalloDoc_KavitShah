@@ -20,7 +20,6 @@
     <mvc:annotation-driven/>
     <mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"/>
 
-
     <context:component-scan base-package="com.uninor"></context:component-scan>
 
     <bean
@@ -66,6 +65,19 @@
                 <value>com.uninor.model.Client</value>
                 <value>com.uninor.model.Companies</value>
                 <value>com.uninor.model.SimCard</value>
+                <value>com.uninor.model.ClientDocuments</value>
+                <value>com.uninor.model.PlanCategories</value>
+                <value>com.uninor.model.Plan</value>
+                <value>com.uninor.model.CuponCategory</value>
+                <value>com.uninor.model.Cupon</value>
+                <value>com.uninor.model.ClientCupons</value>
+                <value>com.uninor.model.PlanActivation</value>
+                <value>com.uninor.model.PlanUsage</value>
+                <value>com.uninor.model.OrderTable</value>
+                <value>com.uninor.model.InvoiceTable</value>
+                <value>com.uninor.model.RoamingActivation</value>
+                <value>com.uninor.model.ClientDailyDataUsage</value>
+                <value>com.uninor.model.ClientRequest</value>
             </list>
         </property>
     </bean>

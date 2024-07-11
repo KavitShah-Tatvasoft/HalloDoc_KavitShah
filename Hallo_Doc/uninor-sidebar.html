@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <head>
+      <meta charset="utf-8" />
+      <title>Double navigation with sidenav under navbar - code helper</title>
+      <base href="/snippets/" />
+
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:type" content="article" />
+      <meta
+        property="article:publisher"
+        content="https://www.facebook.com/mdbootstrap"
+      />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@MDBootstrap" />
+      <meta name="twitter:creator" content="@MDBootstrap" />
+      <meta name="description" content="" />
+      <meta
+        property="og:title"
+        content="Double navigation with sidenav under navbar - code helper"
+      />
+      <meta
+        property="og:image"
+        content="https://mdbootstrap.com/api/snippets/static/screenshots/4686708.jpeg"
+      />
+      <meta
+        property="og:image:secure_url"
+        content="https://mdbootstrap.com/api/snippets/static/screenshots/4686708.jpeg"
+      />
+      <meta property="og:description" content="" />
+      <meta
+        property="og:url"
+        content="https://mdbootstrap.com/snippets/jquery/mdbootstrap/4686708"
+      />
+      <meta
+        property="og:site_name"
+        content="MDBootstrap Snippets - Double navigation with sidenav under navbar"
+      />
+      <meta
+        property="twitter:image"
+        content="https://mdbootstrap.com/api/snippets/static/screenshots/4686708.jpeg"
+      />
+      <meta name="twitter:description" content="" />
+
+      <link rel="icon" type="image/x-icon" href="favicon.ico" />
+      <link rel="stylesheet" href="styles.d52e1207a08e592e6f99.css" />
+      <script
+        async=""
+        src="https://www.googletagmanager.com/gtm.js?id=GTM-W7MBMN"
+      ></script>
+      <script type="text/javascript">
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+          j.async = true;
+          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", "GTM-W7MBMN");
+      </script>
+      <style>
+        body[_ngcontent-serverApp-c0] {
+          margin: 0;
+          overflow-y: hidden;
+        }
+        .container-fluid[_ngcontent-serverApp-c0],
+        body[_ngcontent-serverApp-c0],
+        html[_ngcontent-serverApp-c0],
+        main[_ngcontent-serverApp-c0] {
+          height: 100%;
+        }
+        main[_ngcontent-serverApp-c0] {
+          padding-top: 59px;
+          padding-bottom: 51px;
+        }
+        .container-fluid.container-columns[_ngcontent-serverApp-c0],
+        .content[_ngcontent-serverApp-c0] {
+          display: flex;
+        }
+        .content[_ngcontent-serverApp-c0],
+        .content[_ngcontent-serverApp-c0] .y-scroll[_ngcontent-serverApp-c0] {
+          flex: 1;
+        }
+        .content[_ngcontent-serverApp-c0] .y-scroll[_ngcontent-serverApp-c0] {
+          overflow-y: scroll;
+        }
+        .snippets-tabs[_ngcontent-serverApp-c0] {
+          margin: 0;
+          border-radius: 0;
+          padding: 0;
+          background-color: #7283a7;
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+            0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+        }
+        .snippets-tabs[_ngcontent-serverApp-c0]
+          .nav-link.active[_ngcontent-serverApp-c0] {
+          border-radius: 0 !important;
+        }
+        .editor-dark[_ngcontent-serverApp-c0] {
+          background-color: #1e1e1e;
+        }
+        .navbar[_ngcontent-serverApp-c0]
+          .dropdown-menu[_ngcontent-serverApp-c0]
+          .active[_ngcontent-serverApp-c0] {
+          background-color: #313131;
+          color: #fff !important;
+        }
+      </style>
+      <style>
+        .form-control-feedback[_ngcontent-serverApp-c1]
+          p[_ngcontent-serverApp-c1] {
+          text-align: center !important;
+          font-weight: 200;
+          margin: 0;
+          font-size: smaller;
+          color: #d9534f;
+        }
+        .invalid[_ngcontent-serverApp-c1] input[_ngcontent-serverApp-c1],
+        .invalid[_ngcontent-serverApp-c1] textarea[_ngcontent-serverApp-c1] {
+          border-bottom: 1px solid #f44336;
+          box-shadow: 0 1px 0 0 #f44336;
+        }
+        .valid[_ngcontent-serverApp-c1] input[_ngcontent-serverApp-c1],
+        .valid[_ngcontent-serverApp-c1] textarea[_ngcontent-serverApp-c1] {
+          border-bottom: 1px solid #14cc4b;
+          box-shadow: 0 1px 0 0 #14cc4b;
+        }
+        .perf-preloader[_ngcontent-serverApp-c1] {
+          background: rgba(255, 255, 255, 0.5);
+        }
+        main[_ngcontent-serverApp-c1] {
+          padding-top: 59.5px;
+          padding-bottom: 51px;
+          height: 100% !important;
+        }
+      </style>
+      <style>
+        .btn-snippet-link[_ngcontent-serverApp-c2]:hover {
+          background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+      </style>
+      <style>
+        .active[_ngcontent-serverApp-c2] {
+          background-color: #313131;
+          color: #fff !important;
+        }
+        .snippet-title-span[_ngcontent-serverApp-c2] {
+          max-width: 400px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        .button-equaler[_ngcontent-serverApp-c2] {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        @media all and (max-width: 1445px) {
+          .snippet-title-span[_ngcontent-serverApp-c2] {
+            max-width: 350px;
+          }
+        }
+        @media all and (max-width: 1395px) {
+          .snippet-title-span[_ngcontent-serverApp-c2] {
+            max-width: 200px;
+          }
+        }
+        @media all and (max-width: 991px) {
+          .navbar-list-container[_ngcontent-serverApp-c2] {
+            display: flex;
+            flex-direction: column !important;
+          }
+          .button-equaler[_ngcontent-serverApp-c2] {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            width: 100%;
+          }
+        }
+        a.snippet-title-link[_ngcontent-serverApp-c2] {
+          color: #fff !important;
+        }
+        .navbar[_ngcontent-serverApp-c2] {
+          box-shadow: none !important;
+        }
+        .btn.btn-link[_ngcontent-serverApp-c2] {
+          color: #fff !important;
+          text-decoration: none;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+        .btn.btn-link.danger[_ngcontent-serverApp-c2] {
+          color: #f44 !important;
+          text-decoration: none;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+        nav[_ngcontent-serverApp-c2] {
+          height: 60px;
+        }
+      </style>
+      <style>
+        .iframe-container[_ngcontent-serverApp-c4] {
+          overflow: scroll !important;
+          -webkit-overflow-scrolling: touch !important;
+        }
+        .iframe-container[_ngcontent-serverApp-c4]::-webkit-scrollbar {
+          display: none;
+        }
+        #col-code.horizontal[_ngcontent-serverApp-c4],
+        #live-preview.horizontal[_ngcontent-serverApp-c4] {
+          height: 100%;
+        }
+        .horizontal[_ngcontent-serverApp-c4] {
+          float: left;
+          overflow: hidden;
+        }
+        #col-live-preview.horizontal[_ngcontent-serverApp-c4] {
+          height: 100%;
+        }
+        .vertical[_ngcontent-serverApp-c4] {
+          overflow: hidden;
+        }
+        #consoleErrors[_ngcontent-serverApp-c4] {
+          background-color: #2e3440;
+          border-radius: 0 !important;
+        }
+        .hideCode[_ngcontent-serverApp-c4] {
+          height: 0 !important;
+        }
+        .fullscreenARV[_ngcontent-serverApp-c4] {
+          position: absolute;
+          min-height: 100% !important;
+          min-width: 100%;
+          top: 56px;
+        }
+        .preview-tab[_ngcontent-serverApp-c4] {
+          height: 95vh !important;
+        }
+        .rotation-btn[_ngcontent-serverApp-c4] {
+          position: absolute;
+          top: 6px;
+          right: 16px;
+          z-index: 100;
+        }
+      </style>
+      <style>
+        .alerts-wrapper[_ngcontent-serverApp-c5] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding-top: 75px;
+          padding-bottom: 60px;
+          margin-right: 20px;
+          height: 100%;
+          max-height: 100%;
+          overflow: auto;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          z-index: 1000;
+        }
+        .alerts-wrapper[_ngcontent-serverApp-c5]::-webkit-scrollbar {
+          display: none;
+        }
+      </style>
+      <style>
+        div#step-welcome[_ngcontent-serverApp-c6] {
+          position: fixed !important;
+          right: 10%;
+          bottom: 2%;
+        }
+        .btn.btn-link[_ngcontent-serverApp-c6] {
+          color: #fff !important;
+          text-decoration: none;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+      </style>
+      <style>
+        .tab-content[_ngcontent-serverApp-c9] {
+          padding-bottom: 47px;
+        }
+        .editor-tabs[_ngcontent-serverApp-c9] a[_ngcontent-serverApp-c9] {
+          transition: unset !important;
+        }
+        .tabs-container[_ngcontent-serverApp-c9] {
+          position: relative;
+        }
+        .format-btn[_ngcontent-serverApp-c9] {
+          position: absolute;
+          bottom: 6px;
+          right: 10px;
+          z-index: 100;
+        }
+      </style>
+      <style>
+        .CodeMirror[_ngcontent-serverApp-c9] {
+          font-family: monospace;
+          height: 300px;
+          color: #000;
+          direction: ltr;
+        }
+        .CodeMirror-lines[_ngcontent-serverApp-c9] {
+          padding: 4px 0;
+        }
+        .CodeMirror-gutter-filler[_ngcontent-serverApp-c9],
+        .CodeMirror-scrollbar-filler[_ngcontent-serverApp-c9] {
+          background-color: #fff;
+        }
+        .CodeMirror-gutters[_ngcontent-serverApp-c9] {
+          border-right: 1px solid #ddd;
+          background-color: #f7f7f7;
+          white-space: nowrap;
+        }
+        .CodeMirror-linenumber[_ngcontent-serverApp-c9] {
+          padding: 0 3px 0 5px;
+          min-width: 20px;
+          text-align: right;
+          color: #999;
+          white-space: nowrap;
+        }
+        .CodeMirror-guttermarker[_ngcontent-serverApp-c9] {
+          color: #000;
+        }
+        .CodeMirror-guttermarker-subtle[_ngcontent-serverApp-c9] {
+          color: #999;
+        }
+        .CodeMirror-cursor[_ngcontent-serverApp-c9] {
+          border-left: 1px solid #000;
+          border-right: none;
+          width: 0;
+        }
+        .CodeMirror[_ngcontent-serverApp-c9]
+          div.CodeMirror-secondarycursor[_ngcontent-serverApp-c9] {
+          border-left: 1px solid silver;
+        }
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-cursor[_ngcontent-serverApp-c9] {
+          width: auto;
+          border: 0 !important;
+          background: #7e7;
+        }
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          div.CodeMirror-cursors[_ngcontent-serverApp-c9] {
+          z-index: 1;
+        }
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-line[_ngcontent-serverApp-c9]::selection,
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::selection,
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::selection {
+          background: 0 0;
+        }
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-line[_ngcontent-serverApp-c9]::-moz-selection,
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::-moz-selection,
+        .cm-fat-cursor[_ngcontent-serverApp-c9]
+          .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::-moz-selection {
+          background: 0 0;
+        }
+        .cm-fat-cursor[_ngcontent-serverApp-c9] {
+          caret-color: transparent;
+        }
+        @keyframes blink {
+          50% {
+            background-color: transparent;
+          }
+        }
+        .cm-tab[_ngcontent-serverApp-c9] {
+          display: inline-block;
+          text-decoration: inherit;
+        }
+        .CodeMirror-rulers[_ngcontent-serverApp-c9] {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: -50px;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .CodeMirror-ruler[_ngcontent-serverApp-c9] {
+          border-left: 1px solid #ccc;
+          top: 0;
+          bottom: 0;
+          position: absolute;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-header[_ngcontent-serverApp-c9] {
+          color: #00f;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-quote[_ngcontent-serverApp-c9] {
+          color: #090;
+        }
+        .cm-negative[_ngcontent-serverApp-c9] {
+          color: #d44;
+        }
+        .cm-positive[_ngcontent-serverApp-c9] {
+          color: #292;
+        }
+        .cm-header[_ngcontent-serverApp-c9],
+        .cm-strong[_ngcontent-serverApp-c9] {
+          font-weight: 700;
+        }
+        .cm-em[_ngcontent-serverApp-c9] {
+          font-style: italic;
+        }
+        .cm-link[_ngcontent-serverApp-c9] {
+          text-decoration: underline;
+        }
+        .cm-strikethrough[_ngcontent-serverApp-c9] {
+          text-decoration: line-through;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-keyword[_ngcontent-serverApp-c9] {
+          color: #708;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-atom[_ngcontent-serverApp-c9] {
+          color: #219;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-number[_ngcontent-serverApp-c9] {
+          color: #164;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-def[_ngcontent-serverApp-c9] {
+          color: #00f;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-variable-2[_ngcontent-serverApp-c9] {
+          color: #05a;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-type[_ngcontent-serverApp-c9],
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-variable-3[_ngcontent-serverApp-c9] {
+          color: #085;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-comment[_ngcontent-serverApp-c9] {
+          color: #a50;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-string[_ngcontent-serverApp-c9] {
+          color: #a11;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-string-2[_ngcontent-serverApp-c9] {
+          color: #f50;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-meta[_ngcontent-serverApp-c9],
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-qualifier[_ngcontent-serverApp-c9] {
+          color: #555;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-builtin[_ngcontent-serverApp-c9] {
+          color: #30a;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-bracket[_ngcontent-serverApp-c9] {
+          color: #997;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-tag[_ngcontent-serverApp-c9] {
+          color: #170;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-attribute[_ngcontent-serverApp-c9] {
+          color: #00c;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9] .cm-hr[_ngcontent-serverApp-c9] {
+          color: #999;
+        }
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-link[_ngcontent-serverApp-c9] {
+          color: #00c;
+        }
+        .cm-invalidchar[_ngcontent-serverApp-c9],
+        .cm-s-default[_ngcontent-serverApp-c9]
+          .cm-error[_ngcontent-serverApp-c9] {
+          color: red;
+        }
+        .CodeMirror-composing[_ngcontent-serverApp-c9] {
+          border-bottom: 2px solid;
+        }
+        div.CodeMirror[_ngcontent-serverApp-c9]
+          span.CodeMirror-matchingbracket[_ngcontent-serverApp-c9] {
+          color: #0b0;
+        }
+        div.CodeMirror[_ngcontent-serverApp-c9]
+          span.CodeMirror-nonmatchingbracket[_ngcontent-serverApp-c9] {
+          color: #a22;
+        }
+        .CodeMirror-matchingtag[_ngcontent-serverApp-c9] {
+          background: rgba(255, 150, 0, 0.3);
+        }
+        .CodeMirror-activeline-background[_ngcontent-serverApp-c9] {
+          background: #e8f2ff;
+        }
+        .CodeMirror[_ngcontent-serverApp-c9] {
+          position: relative;
+          overflow: hidden;
+          background: #fff;
+        }
+        .CodeMirror-scroll[_ngcontent-serverApp-c9] {
+          overflow: scroll !important;
+          margin-bottom: -50px;
+          margin-right: -50px;
+          padding-bottom: 50px;
+          height: 100%;
+          outline: 0;
+          position: relative;
+          z-index: 0;
+        }
+        .CodeMirror-sizer[_ngcontent-serverApp-c9] {
+          position: relative;
+          border-right: 50px solid transparent;
+        }
+        .CodeMirror-gutter-filler[_ngcontent-serverApp-c9],
+        .CodeMirror-hscrollbar[_ngcontent-serverApp-c9],
+        .CodeMirror-scrollbar-filler[_ngcontent-serverApp-c9],
+        .CodeMirror-vscrollbar[_ngcontent-serverApp-c9] {
+          position: absolute;
+          z-index: 6;
+          display: none;
+          outline: 0;
+        }
+        .CodeMirror-vscrollbar[_ngcontent-serverApp-c9] {
+          right: 0;
+          top: 0;
+          overflow-x: hidden;
+          overflow-y: scroll;
+        }
+        .CodeMirror-hscrollbar[_ngcontent-serverApp-c9] {
+          bottom: 0;
+          left: 0;
+          overflow-y: hidden;
+          overflow-x: scroll;
+        }
+        .CodeMirror-scrollbar-filler[_ngcontent-serverApp-c9] {
+          right: 0;
+          bottom: 0;
+        }
+        .CodeMirror-gutter-filler[_ngcontent-serverApp-c9] {
+          left: 0;
+          bottom: 0;
+        }
+        .CodeMirror-gutters[_ngcontent-serverApp-c9] {
+          position: absolute;
+          left: 0;
+          top: 0;
+          min-height: 100%;
+          z-index: 3;
+        }
+        .CodeMirror-gutter[_ngcontent-serverApp-c9] {
+          white-space: normal;
+          height: 100%;
+          display: inline-block;
+          vertical-align: top;
+          margin-bottom: -50px;
+        }
+        .CodeMirror-gutter-wrapper[_ngcontent-serverApp-c9] {
+          position: absolute;
+          z-index: 4;
+          background: 0 0 !important;
+          border: none !important;
+        }
+        .CodeMirror-gutter-background[_ngcontent-serverApp-c9] {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          z-index: 4;
+        }
+        .CodeMirror-gutter-elt[_ngcontent-serverApp-c9] {
+          position: absolute;
+          cursor: default;
+          z-index: 4;
+        }
+        .CodeMirror-gutter-wrapper[_ngcontent-serverApp-c9]
+          [_ngcontent-serverApp-c9]::selection {
+          background-color: transparent;
+        }
+        .CodeMirror-gutter-wrapper[_ngcontent-serverApp-c9]
+          [_ngcontent-serverApp-c9]::-moz-selection {
+          background-color: transparent;
+        }
+        .CodeMirror-lines[_ngcontent-serverApp-c9] {
+          cursor: text;
+          min-height: 1px;
+        }
+        .CodeMirror[_ngcontent-serverApp-c9]
+          pre.CodeMirror-line[_ngcontent-serverApp-c9],
+        .CodeMirror[_ngcontent-serverApp-c9]
+          pre.CodeMirror-line-like[_ngcontent-serverApp-c9] {
+          padding: 0 4px;
+          border-radius: 0;
+          border-width: 0;
+          background: 0 0;
+          font-family: inherit;
+          font-size: inherit;
+          margin: 0;
+          white-space: pre;
+          word-wrap: normal;
+          line-height: inherit;
+          color: inherit;
+          z-index: 2;
+          position: relative;
+          overflow: visible;
+          -webkit-tap-highlight-color: transparent;
+          font-variant-ligatures: contextual;
+        }
+        .CodeMirror-wrap[_ngcontent-serverApp-c9]
+          pre.CodeMirror-line[_ngcontent-serverApp-c9],
+        .CodeMirror-wrap[_ngcontent-serverApp-c9]
+          pre.CodeMirror-line-like[_ngcontent-serverApp-c9] {
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          word-break: normal;
+        }
+        .CodeMirror-linebackground[_ngcontent-serverApp-c9] {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          z-index: 0;
+        }
+        .CodeMirror-linewidget[_ngcontent-serverApp-c9] {
+          position: relative;
+          z-index: 2;
+          padding: 0.1px;
+        }
+        .CodeMirror-rtl[_ngcontent-serverApp-c9] pre[_ngcontent-serverApp-c9] {
+          direction: rtl;
+        }
+        .CodeMirror-code[_ngcontent-serverApp-c9] {
+          outline: 0;
+        }
+        .CodeMirror-gutter[_ngcontent-serverApp-c9],
+        .CodeMirror-gutters[_ngcontent-serverApp-c9],
+        .CodeMirror-linenumber[_ngcontent-serverApp-c9],
+        .CodeMirror-scroll[_ngcontent-serverApp-c9],
+        .CodeMirror-sizer[_ngcontent-serverApp-c9] {
+          box-sizing: content-box;
+        }
+        .CodeMirror-measure[_ngcontent-serverApp-c9] {
+          position: absolute;
+          width: 100%;
+          height: 0;
+          overflow: hidden;
+          visibility: hidden;
+        }
+        .CodeMirror-cursor[_ngcontent-serverApp-c9] {
+          position: absolute;
+          pointer-events: none;
+        }
+        .CodeMirror-measure[_ngcontent-serverApp-c9]
+          pre[_ngcontent-serverApp-c9] {
+          position: static;
+        }
+        div.CodeMirror-cursors[_ngcontent-serverApp-c9] {
+          visibility: hidden;
+          position: relative;
+          z-index: 3;
+        }
+        .CodeMirror-focused[_ngcontent-serverApp-c9]
+          div.CodeMirror-cursors[_ngcontent-serverApp-c9],
+        div.CodeMirror-dragcursors[_ngcontent-serverApp-c9] {
+          visibility: visible;
+        }
+        .CodeMirror-selected[_ngcontent-serverApp-c9] {
+          background: #d9d9d9;
+        }
+        .CodeMirror-focused[_ngcontent-serverApp-c9]
+          .CodeMirror-selected[_ngcontent-serverApp-c9] {
+          background: #d7d4f0;
+        }
+        .CodeMirror-crosshair[_ngcontent-serverApp-c9] {
+          cursor: crosshair;
+        }
+        .CodeMirror-line[_ngcontent-serverApp-c9]::selection,
+        .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::selection,
+        .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::selection {
+          background: #d7d4f0;
+        }
+        .CodeMirror-line[_ngcontent-serverApp-c9]::-moz-selection,
+        .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::-moz-selection,
+        .CodeMirror-line[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]
+          > span[_ngcontent-serverApp-c9]::-moz-selection {
+          background: #d7d4f0;
+        }
+        .cm-searching[_ngcontent-serverApp-c9] {
+          background-color: rgba(255, 255, 0, 0.4);
+        }
+        .cm-force-border[_ngcontent-serverApp-c9] {
+          padding-right: 0.1px;
+        }
+        @media print {
+          .CodeMirror[_ngcontent-serverApp-c9]
+            div.CodeMirror-cursors[_ngcontent-serverApp-c9] {
+            visibility: hidden;
+          }
+        }
+        .cm-tab-wrap-hack[_ngcontent-serverApp-c9]:after {
+          content: "";
+        }
+        span.CodeMirror-selectedtext[_ngcontent-serverApp-c9] {
+          background: 0 0;
+        }
+        .CodeMirror-simplescroll-horizontal[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9],
+        .CodeMirror-simplescroll-vertical[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9] {
+          position: absolute;
+          background: #ccc;
+          box-sizing: border-box;
+          border: 1px solid #bbb;
+          border-radius: 2px;
+        }
+        .CodeMirror-simplescroll-horizontal[_ngcontent-serverApp-c9],
+        .CodeMirror-simplescroll-vertical[_ngcontent-serverApp-c9] {
+          position: absolute;
+          z-index: 6;
+          background: #eee;
+        }
+        .CodeMirror-simplescroll-horizontal[_ngcontent-serverApp-c9] {
+          bottom: 0;
+          left: 0;
+          height: 8px;
+        }
+        .CodeMirror-simplescroll-horizontal[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9] {
+          bottom: 0;
+          height: 100%;
+        }
+        .CodeMirror-simplescroll-vertical[_ngcontent-serverApp-c9] {
+          right: 0;
+          top: 0;
+          width: 8px;
+        }
+        .CodeMirror-simplescroll-vertical[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9] {
+          right: 0;
+          width: 100%;
+        }
+        .CodeMirror-overlayscroll[_ngcontent-serverApp-c9]
+          .CodeMirror-gutter-filler[_ngcontent-serverApp-c9],
+        .CodeMirror-overlayscroll[_ngcontent-serverApp-c9]
+          .CodeMirror-scrollbar-filler[_ngcontent-serverApp-c9] {
+          display: none;
+        }
+        .CodeMirror-overlayscroll-horizontal[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9],
+        .CodeMirror-overlayscroll-vertical[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9] {
+          position: absolute;
+          background: #bcd;
+          border-radius: 3px;
+        }
+        .CodeMirror-overlayscroll-horizontal[_ngcontent-serverApp-c9],
+        .CodeMirror-overlayscroll-vertical[_ngcontent-serverApp-c9] {
+          position: absolute;
+          z-index: 6;
+        }
+        .CodeMirror-overlayscroll-horizontal[_ngcontent-serverApp-c9] {
+          bottom: 0;
+          left: 0;
+          height: 6px;
+        }
+        .CodeMirror-overlayscroll-horizontal[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9] {
+          bottom: 0;
+          height: 100%;
+        }
+        .CodeMirror-overlayscroll-vertical[_ngcontent-serverApp-c9] {
+          right: 0;
+          top: 0;
+          width: 6px;
+        }
+        .CodeMirror-overlayscroll-vertical[_ngcontent-serverApp-c9]
+          div[_ngcontent-serverApp-c9] {
+          right: 0;
+          width: 100%;
+        }
+        .editor-header[_ngcontent-serverApp-c9] {
+          text-align: left;
+        }
+        .editor-header[_ngcontent-serverApp-c9],
+        .editor-header.active[_ngcontent-serverApp-c9] {
+          font-size: 1.1rem !important;
+          font-weight: 300 !important;
+          border-radius: 0 !important;
+          padding: 8px 16px;
+        }
+        .editor-header.editor-light[_ngcontent-serverApp-c9] {
+          background-color: rgba(0, 0, 0, 0.03);
+          color: #999;
+          border: 1px solid rgba(0, 0, 0, 0.125) !important;
+        }
+        .editor-header.active.editor-light[_ngcontent-serverApp-c9] {
+          color: #000;
+          background-color: rgba(0, 0, 0, 0.125);
+        }
+        .vertical[_ngcontent-serverApp-c9] {
+          float: left;
+          overflow: hidden;
+          width: 100%;
+        }
+        .editor[_ngcontent-serverApp-c9] {
+          height: 100%;
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+          position: relative;
+        }
+        .editor-code[_ngcontent-serverApp-c9] {
+          height: 100%;
+          position: absolute;
+          padding-top: 39px;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+        }
+        .editor-tabs[_ngcontent-serverApp-c9] {
+          margin: 0;
+          border-radius: 0;
+          padding: 0;
+          background-color: rgba(0, 0, 0, 0.03);
+          box-shadow: initial !important;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+          text-align: left !important;
+        }
+      </style>
+      <style></style>
+      <link
+        rel="canonical"
+        href="https://mdbootstrap.com/snippets/jquery/mdbootstrap/4686708/"
+      />
+    </head>
+  </head>
+  <body class="fixed-sn light-blue-skin">
+    <!--Double navigation-->
+    <header>
+      <!-- Sidebar navigation -->
+      <div id="slide-out" class="side-nav sn-bg-4 fixed">
+        <ul class="custom-scrollbar">
+          <!-- Logo -->
+          <li>
+            <div class="logo-wrapper waves-light">
+              <a href="#"
+                ><img
+                  src="https://mdbootstrap.com/img/logo/mdb-transparent.png"
+                  class="img-fluid flex-center"
+              /></a>
+            </div>
+          </li>
+          <!--/. Logo -->
+          <!--Social-->
+          <li>
+            <ul class="social">
+              <li>
+                <a href="#" class="icons-sm fb-ic"
+                  ><i class="fab fa-facebook"> </i
+                ></a>
+              </li>
+              <li>
+                <a href="#" class="icons-sm pin-ic"
+                  ><i class="fab fa-pinterest"> </i
+                ></a>
+              </li>
+              <li>
+                <a href="#" class="icons-sm gplus-ic"
+                  ><i class="fab fa-google-plus"> </i
+                ></a>
+              </li>
+              <li>
+                <a href="#" class="icons-sm tw-ic"
+                  ><i class="fab fa-twitter"> </i
+                ></a>
+              </li>
+            </ul>
+          </li>
+          <!--/Social-->
+          <!--Search Form-->
+          <li>
+            <form class="search-form" role="search">
+              <div class="form-group md-form mt-0 pt-1 waves-light">
+                <input type="text" class="form-control" placeholder="Search" />
+              </div>
+            </form>
+          </li>
+          <!--/.Search Form-->
+          <!-- Side navigation links -->
+          <li>
+            <ul class="collapsible collapsible-accordion">
+              <li>
+                <a class="collapsible-header waves-effect arrow-r"
+                  ><i class="fas fa-chevron-right"></i> Submit blog<i
+                    class="fas fa-angle-down rotate-icon"
+                  ></i
+                ></a>
+                <div class="collapsible-body">
+                  <ul>
+                    <li><a href="#" class="waves-effect">Submit listing</a></li>
+                    <li>
+                      <a href="#" class="waves-effect">Registration form</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <a class="collapsible-header waves-effect arrow-r"
+                  ><i class="far fa-hand-pointer"></i> Instruction<i
+                    class="fas fa-angle-down rotate-icon"
+                  ></i
+                ></a>
+                <div class="collapsible-body">
+                  <ul>
+                    <li><a href="#" class="waves-effect">For bloggers</a></li>
+                    <li><a href="#" class="waves-effect">For authors</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <a class="collapsible-header waves-effect arrow-r"
+                  ><i class="far fa-eye"></i> About<i
+                    class="fas fa-angle-down rotate-icon"
+                  ></i
+                ></a>
+                <div class="collapsible-body">
+                  <ul>
+                    <li><a href="#" class="waves-effect">Introduction</a></li>
+                    <li>
+                      <a href="#" class="waves-effect">Monthly meetings</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <a class="collapsible-header waves-effect arrow-r"
+                  ><i class="far fa-envelope"></i> Contact me<i
+                    class="fas fa-angle-down rotate-icon"
+                  ></i
+                ></a>
+                <div class="collapsible-body">
+                  <ul>
+                    <li><a href="#" class="waves-effect">FAQ</a></li>
+                    <li>
+                      <a href="#" class="waves-effect">Write a message</a>
+                    </li>
+                    <li><a href="#" class="waves-effect">FAQ</a></li>
+                    <li>
+                      <a href="#" class="waves-effect">Write a message</a>
+                    </li>
+                    <li><a href="#" class="waves-effect">FAQ</a></li>
+                    <li>
+                      <a href="#" class="waves-effect">Write a message</a>
+                    </li>
+                    <li><a href="#" class="waves-effect">FAQ</a></li>
+                    <li>
+                      <a href="#" class="waves-effect">Write a message</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!--/. Side navigation links -->
+        </ul>
+        <div class="sidenav-bg mask-strong"></div>
+      </div>
+      <!--/. Sidebar navigation -->
+      <!-- Navbar -->
+      <nav
+        class="navbar fixed-top navbar-toggleable-md navbar-expand-lg double-nav"
+      >
+        <!-- SideNav slide-out button -->
+        <div class="float-left">
+          <a href="#" data-activates="slide-out" class="button-collapse"
+            ><i class="fa fa-bars"></i
+          ></a>
+        </div>
+        <!-- Breadcrumb-->
+        <div class="breadcrumb-dn mr-auto">
+          <p>Material Design for Bootstrap</p>
+        </div>
+        <ul class="nav navbar-nav nav-flex-icons ml-auto">
+          <li class="nav-item">
+            <a class="nav-link"
+              ><i class="fa fa-envelope"></i>
+              <span class="clearfix d-none d-sm-inline-block">Contact</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+              ><i class="fa fa-comments-o"></i>
+              <span class="clearfix d-none d-sm-inline-block">Support</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+              ><i class="fa fa-user"></i>
+              <span class="clearfix d-none d-sm-inline-block">Account</span></a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownMenuLink"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Dropdown
+            </a>
+            <div
+              class="dropdown-menu dropdown-menu-right"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.Navbar -->
+    </header>
+    <!--/.Double navigation-->
+
+    <!--Main Layout-->
+    <main>
+      <div class="container-fluid mt-5">
+        <h2>
+          Advanced Double Navigation with fixed SideNav under fixed Navbar:
+        </h2>
+        <br />
+        <h5>1. Fixed side menu, hidden on small devices.</h5>
+        <h5>
+          2. Fixed Navbar. It will always stay visible on the top, even when you
+          scroll down.
+        </h5>
+        <div style="height: 2000px"></div>
+      </div>
+    </main>
+    <!--Main Layout-->
+
+    <script
+      type="text/javascript"
+      src="runtime.2f29e12616932f0ed037.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="polyfills.20611c32a17ef88827ee.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="scripts.8f1eabe356ade07ab5c6.js"
+    ></script>
+    <script type="text/javascript" src="main.555434f577e77a3bb37f.js"></script>
+  </body>
+</html>
+
+<style>
+  .navbar {
+    z-index: 1040;
+  }
+  .side-nav {
+    margin-top: 45px !important;
+  }
+
+  .double-nav .breadcrumb-dn p {
+    color: #fff;
+  }
+
+  @media (min-width: 1200px) {
+    .fixed-sn main {
+      margin-left: 20% !important;
+      margin-right: 20% !important;
+    }
+  }
+</style>
+
+<script>
+  $(document).ready(function () {
+    $(".button-collapse").sideNav({
+      breakpoint: 1200,
+    });
+    // SideNav Scrollbar Initialization
+    var sideNavScrollbar = document.querySelector(".custom-scrollbar");
+    var ps = new PerfectScrollbar(sideNavScrollbar);
+  });
+</script>

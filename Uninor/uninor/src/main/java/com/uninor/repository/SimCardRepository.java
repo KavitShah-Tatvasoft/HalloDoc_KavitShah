@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -28,6 +29,35 @@ public class SimCardRepository {
         List<SimCard> list = q.list();
         s.close();
         return list;
+    }
+
+    public List<SimCard> getSimCardDetailsByNumber(String number){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM SimCard WHERE phoneNumber =: number";
+        Query<SimCard> q = s.createQuery(queryString);
+        q.setParameter("number", number);
+        List<SimCard> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public List<SimCard> getClientSimCardDetailsByNumber(String number){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM SimCard WHERE phoneNumber =: number AND isAvailable = false";
+        Query<SimCard> q = s.createQuery(queryString);
+        q.setParameter("number", number);
+        List<SimCard> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public SimCard getSimCardById(int id){
+        return (SimCard) this.hibernateTemplate.get(SimCard.class, id);
+    }
+
+    @Transactional
+    public void addOrUpdateSimCard(SimCard simCard){
+        this.hibernateTemplate.saveOrUpdate(simCard);
     }
 
 }

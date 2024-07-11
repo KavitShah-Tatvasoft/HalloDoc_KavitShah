@@ -27,15 +27,27 @@ public class OTPLogsRepository {
         return (Integer) this.hibernateTemplate.save(otpLogs);
     }
 
-    public List<OtpLogs> getOtpForClient(String email, String otp){
+    public List<OtpLogs> getOtpForClient(String email){
         Session s = this.sessionFactory.openSession();
-        String queryString = "FROM OtpLogs ol WHERE ol.email=:email AND ol.otpCode=:otp";
+        String queryString = "FROM OtpLogs ol WHERE ol.email=:email ORDER BY ol.sentDateTime DESC";
         Query<OtpLogs> q = s.createQuery(queryString);
         q.setParameter("email", email);
-        q.setParameter("otp", otp);
+        q.setMaxResults(1);
         List<OtpLogs> list = q.list();
         s.close();
         return list;
     }
+
+    public List<OtpLogs> getLatestOtpByNumber(String mobileNumber){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM OtpLogs ol WHERE ol.mobileNumber=:mobileNumber ORDER BY ol.sentDateTime DESC";
+        Query<OtpLogs> q = s.createQuery(queryString);
+        q.setParameter("mobileNumber", mobileNumber);
+        q.setMaxResults(1);
+        List<OtpLogs> list = q.list();
+        s.close();
+        return list;
+    }
+
 
 }

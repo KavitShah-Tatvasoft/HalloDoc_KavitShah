@@ -15,6 +15,7 @@
 <head>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>Sign Up</title>
+    <link rel="icon" href="<c:url value="/resources/images/white-logo.png" />" type="image/icon type">
     <%--    font link--%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,7 +100,7 @@
 
                         <button data-value="2" class="uninor-blue-btn w-100 submit-sign-up-btn d-none">SIGN UP</button>
                     </form>
-
+                    <span class="login-here-span">Signed Up already?  &nbsp;<a class="span-underline">Login here!</a></span>
                 </div>
             </div>
         </div>
