@@ -2,10 +2,7 @@ package com.uninor.repository;
 
 import com.uninor.dto.RechargePlanFilter;
 import com.uninor.dto.RechargePlanFilter;
-import com.uninor.model.Client;
-import com.uninor.model.OtpLogs;
-import com.uninor.model.Plan;
-import com.uninor.model.PlanCategories;
+import com.uninor.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,6 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +34,32 @@ public class PlanRepository {
         String queryString = "FROM Plan WHERE isDeleted=false ORDER BY categoryId.planId ASC, rechargeAmount ASC";
         Query<Plan> q = s.createQuery(queryString);
         List<Plan> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public List<PlanActivation> getExpiringPlans(LocalDate now){
+        LocalDate inSevenDays = now.plusDays(7);
+        Session s = this.sessionFactory.openSession();
+        String query = "FROM PlanActivation p WHERE p.expirationDate BETWEEN :now AND :inSevenDays AND p.isExpired=false";
+        Query<PlanActivation> q = s.createQuery(query, PlanActivation.class);
+        q.setParameter("now", now);
+        q.setParameter("inSevenDays", inSevenDays);
+        List<PlanActivation> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public List<PlanActivation> getExpiredPlans(){
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDateTime startOfDay = yesterday.atStartOfDay();
+        LocalDateTime endOfDay = yesterday.atTime(LocalTime.MAX);
+        Session s = this.sessionFactory.openSession();
+        String query = "FROM PlanActivation p WHERE p.expirationDate BETWEEN :startOfDay AND :endOfDay";
+        Query<PlanActivation> q = s.createQuery(query, PlanActivation.class);
+        q.setParameter("startOfDay", startOfDay);
+        q.setParameter("endOfDay", endOfDay);
+        List<PlanActivation> list = q.list();
         s.close();
         return list;
     }

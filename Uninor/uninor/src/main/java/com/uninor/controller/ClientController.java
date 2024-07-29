@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -197,6 +198,48 @@ public class ClientController {
     @RequestMapping(value = "/create-sim-deactivation-request", method = RequestMethod.GET)
     public ResponseEntity<Map<String,String >> cerateSimDeactivationRequest(HttpServletRequest httpServletRequest){
         return this.clientService.simDeactivationRequest(httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update-user-profile", method = RequestMethod.POST)
+    public ResponseEntity<Map<String ,String>>  updateUserProfile(@Valid @RequestBody UpdateProfileDetailsDto updateProfileDetailsDto, HttpServletRequest httpServletRequest) {
+            return this.clientService.updateUserProfile(updateProfileDetailsDto,httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update-profile-photo", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,String>> updateUserProfilePhoto(@RequestParam("profilePhoto")CommonsMultipartFile profilePhoto, HttpServletRequest httpServletRequest){
+        return this.clientService.updateProfilePhoto(profilePhoto,httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/check-postpaid-dues", method = RequestMethod.GET)
+    public ResponseEntity<Map<String,String>> checkAvailablePostpaidDues(HttpServletRequest httpServletRequest){
+        return this.clientDashboardService.checkPostpaidBillDues(httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/get-client-notifications", method = RequestMethod.GET)
+    public ResponseEntity<Map<String , List<NotificationDto>>> getRecentClientNotifications(HttpServletRequest httpServletRequest){
+        return this.clientService.getAllCurrentClientNotificaitons(httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/remove-notification", method = RequestMethod.POST)
+    public ResponseEntity<Map<String , String>> deleteNotification(@RequestParam("notificationId") int notificationId, HttpServletRequest httpServletRequest){
+        return this.clientService.removeClientNotification(notificationId,httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/remove-all-notification", method = RequestMethod.GET)
+    public ResponseEntity<Map<String , String>> removeAllNotifications(HttpServletRequest httpServletRequest){
+        return this.clientService.removeAllClientNotification(httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update-read-receipts", method = RequestMethod.GET)
+    public ResponseEntity<Map<String , String>> updateReadReceipts(HttpServletRequest httpServletRequest){
+        return this.clientService.updateReadReciepts(httpServletRequest);
     }
 
 }

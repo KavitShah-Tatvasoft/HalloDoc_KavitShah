@@ -31,61 +31,26 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<c:url value='/resources/fonts/icomoon/style.css' />">
-
     <link rel="stylesheet" href="<c:url value='/resources/css/owl.carousel.min.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/client-dashboard.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/notification-tab.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/toaster-1.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/loader.css' />">
 
     <!-- Style -->
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
 </head>
-<body class="show-sidebar body" onload="getDashboardData()">
+<body class="show-sidebar body" onload="getDashboardData(),getNotificationDetails()">
 
 <header>
-    <div class="navbar-main-container">
-        <div class="navbar-inner-container">
-            <div class="menu-logo-flex">
-                <img src="<c:url value='/resources/icons/menu-animate.svg' />" class="menu-icon menu-logo-left  d-none" />
-                <div class="logo-name-flex"><img
-                        src="<c:url value='/resources/images/white-logo-removebg-preview.png' />" class="nav-logo"/>
-                    <span class="nav-company-name">Uninor</span></div>
-            </div>
-
-            <div class="bell-profile-logout-flex">
-                <img src="<c:url value='/resources/icons/bell-animate.svg' />" class="menu-icon"/>
-                <div class="pic-name-flex">
-                    <div class="nav-profile-image"><img src="<c:url value='/resources/images/profile-pic.jpg'/>"
-                                                        class="profile-pic"/></div>
-                    <%--                    <span class="profile-name">John Snow</span>--%>
-                </div>
-                <img src="<c:url value='/resources/icons/logout-animate.svg' />" class="menu-icon"/>
-            </div>
-        </div>
-    </div>
+    <%@include file="navbar.jsp" %>
 </header>
 
 <div class="outermost-contianer ">
-    <aside class="sidebar">
-
-        <div class="side-inner">
-
-            <div class="nav-menu">
-                <ul>
-                    <li class="active"><img src="<c:url value='/resources/icons/home.svg' />">Feed</li>
-                    <li><a href="#"><span class="icon-search2 mr-3"></span>Explore</a></li>
-                    <li><a href="#"><span class="icon-notifications mr-3"></span>Notifications</a></li>
-                    <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
-                    <li><a href="#"><span class="icon-pie-chart mr-3"></span>Stats</a></li>
-                    <li><a href="#"><span class="icon-sign-out mr-3"></span>Sign out</a></li>
-                </ul>
-            </div>
-        </div>
-
-    </aside>
-    <div class="custom-overlay"></div>
+    <%@include file="sidebar.jsp" %>
     <div class="custom-background"></div>
     <main>
+        <%@include file="notification-tab.jsp" %>
         <div class="container-fluid dashboard-container">
             <div class="row">
                 <div class="col-12 col-md-6  user-card user-wallet-row">
@@ -99,9 +64,9 @@
                             </div>
 
                             <div class="profile-arrow">
-                                <div class="profile-arrow-bg"><img
+                                <a class="profile-arrow-bg" href="${pageContext.request.contextPath}/client/client-profile"><img
                                         src="<c:url value='/resources/icons/chevron-right-animated.svg'/> "
-                                        class="profile-arrow"></div>
+                                        class="profile-arrow"></a>
                             </div>
                         </div>
                         <div class="phone-number-flex-col">
@@ -166,7 +131,7 @@
                             </div>
 
                             <div class="add-data-button-flex add-additional-data">
-                                <button class="add-data-button ">Add Data</button>
+                                <a class="add-data-button " href="${pageContext.request.contextPath}/client/recharge-tab">Add Data</a>
                             </div>
 
                             <div class="left-data extra-data-flex d-none">
@@ -216,7 +181,7 @@
                             <span class="plan-expire-text">Please recharge your number before it gets disconnected!</span>
                         </div>
                         <div class="add-data-button-flex">
-                            <button class="add-data-button">Buy Plan</button>
+                            <a type="button" href="${pageContext.request.contextPath}/client/recharge-tab" class="add-data-button">Buy Plan</a>
                         </div>
                     </div>
                 </div>
@@ -241,7 +206,7 @@
                                         </div>
                                     </div>
 
-                                        <div class="icon-name-flex">
+                                        <a class="icon-name-flex" href="${pageContext.request.contextPath}/client/redeem-rewards">
                                             <div class="single-icon">
                                                 <img src="<c:url value='/resources/icons/gift.svg'/> "
                                                      class="person-filled-icon">
@@ -252,7 +217,7 @@
                                             </span>
                                                 <span>Rewards</span>
                                             </div>
-                                        </div>
+                                        </a>
 
                                         <div class="icon-name-flex activate-roaming-btn" onclick="hideConfirmError()" data-bs-toggle="modal"  data-bs-target="#toggle-roaming-service">
                                             <div class="single-icon">
@@ -279,12 +244,25 @@
                                         </div>
                                     </div>
 
+                                    <div class="icon-name-flex d-none pay-bill-btn" onclick="checkPostPaidBillDue()" >
+                                        <div class="single-icon">
+                                            <img src="<c:url value='/resources/icons/roaming-plans.svg'/> "
+                                                 class="person-filled-icon">
+                                        </div>
+                                        <div class="text-flex-features">
+                                            <span>
+                                                Pay
+                                            </span>
+                                            <span>Bills</span>
+                                        </div>
+                                    </div>
+
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-6 features-col-2">
                                     <div class="features-icon-flex features-icon-flex-2">
-                                        <div class="icon-name-flex">
+                                        <a class="icon-name-flex" href="${pageContext.request.contextPath}/client/recharge-history">
                                             <div class="single-icon">
                                                 <img src="<c:url value='/resources/icons/recharge-history.svg'/> "
                                                      class="person-filled-icon">
@@ -295,7 +273,7 @@
                                             </span>
                                                 <span>History</span>
                                             </div>
-                                        </div>
+                                        </a>
 
                                         <div class="icon-name-flex switch-postpaid-btn" type="button" onclick="hideConfirmError()" data-bs-toggle="modal" data-bs-target="#toggle-service">
                                             <div class="single-icon">
@@ -439,6 +417,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="modal fade" id="toggle-unblock-service" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content block-toggle-service-main-content">
@@ -455,6 +434,30 @@
                                 <span class="confirm-error-text d-none">Please enter valid PUK code!</span>
                                 <div class="button-div">
                                     <button id="confirmUnblockSwitchButton" class="mt-4" onclick="createUnblockRequest()">Unblock Sim</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="payment-confirmation-service" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content payment-confirmation-main-content ">
+                        <div class="modal-header payment-confirmation-main-header">
+                            <header class="payment-confirmation-toggle-service">
+                                <span class=" payment-confirmation-type-text">Pay Postpaid Bills?</span>
+                                <div class="close close-toggle-modal"><i class="uil uil-times"></i></div>
+                            </header>
+                        </div>
+                        <div class="modal-body">
+                            <div class="content">
+                                <p>You are about to pay dues of current postpaid plan. As you would know your current plan is not expired still. Once paid, then your current plan would expired immediately.</p>
+                                <input type="text" class="payment-confirm-input" placeholder="Enter confirm to continue"/>
+                                <span class="confirm-error-text d-none">Please type confirm correctly to continue</span>
+                                <div class="button-div">
+                                    <button id="confirmPayDueSwitchButton" class="mt-4" onclick="showRechargeModal()">Confirm Payment</button>
                                 </div>
                             </div>
                         </div>
@@ -524,11 +527,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recharge-plan">
-                Recharge Now
-            </button>
 
             <div class="modal recharge-plan-modal fade fade-scale in" id="recharge-plan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog recharge-plan-modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -610,9 +608,6 @@
                                 </div>
                             </div>
                             <div class="recharge-summary-flex">
-                                <%--                            <div class="recharge-summary-top">--%>
-                                <%--                                <div class="recharge-summary-title">Recharge Summary</div>--%>
-                                <%--                            </div>--%>
                                 <div class="summary-details">
                                     <div class="summary-row-flex">
                                         <input type="text" class="plan-id-field" hidden="hidden"/>
@@ -755,10 +750,6 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#statusSuccessModal">Success Modal</button>
-            <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#statusErrorsModal">Error Modal</button>
-            <button type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#toggle-roaming-service">Roaming Modal</button>
-            <button type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#toggle-block-service">Block Modal</button>
         </div>
 
 
@@ -773,6 +764,7 @@
 <script src="<c:url value='/resources/js/client-dashboard.js' />"></script>
 <script src="<c:url value='/resources/js/toasters-1.js' />"></script>
 <script src="<c:url value='/resources/js/loader.js' />"></script>
+<script src="<c:url value='/resources/js/notification-tab.js' />"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -782,6 +774,14 @@
         src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <%--<script src="https://www.gstatic.com/charts/loader.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<%--//web socket------%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>
@@ -890,9 +890,5 @@
     }
 </style>
 
-<script>
-
-
-</script>
 
 

@@ -37,7 +37,21 @@ public class ErrorsMapper {
         globalMap.put("planAmount", "Plan Amount");
         globalMap.put("currentPage", "Current Page");
         globalMap.put("pageSize", "Page Size");
-
+        globalMap.put("firstName", "First Name");
+        globalMap.put("lastName", "Last Name");
+        globalMap.put("gstNumber", "GST Number");
+        globalMap.put("requestType", "Request Type");
+        globalMap.put("profileImage", "Profile Image");
+        globalMap.put("mobile", "Mobile Number");
+        globalMap.put("statusType", "Status Type");
+        globalMap.put("token", "Token");
+        globalMap.put("couponType", "Coupon Type");
+        globalMap.put("couponName", "Coupon Name");
+        globalMap.put("rewardPercentage", "Reward Percentage");
+        globalMap.put("rewardMB", "Reward in MB");
+        globalMap.put("validity", "Validity");
+        globalMap.put("maxReward", "Max Rewards");
+        globalMap.put("couponDescription", "Coupon Description");
     }
 
 }

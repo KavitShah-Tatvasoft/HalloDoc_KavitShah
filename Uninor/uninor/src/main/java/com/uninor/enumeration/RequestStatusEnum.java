@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum RequestStatusEnum {
 
     PENDING(1, "Pending"),
-    COMPLETED(2, "Completed");
+    COMPLETED(2, "Completed"),
+    REJECTED(3, "Rejected");
 
     private final int requestStatusId;
     private final String requestStatusType;

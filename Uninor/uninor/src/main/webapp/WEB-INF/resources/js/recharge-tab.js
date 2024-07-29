@@ -206,11 +206,13 @@ function  buyPostPaidPlan(planId){
             planId: planId
         },
         success: function (data) {
+            $("#confirm-postpaid-recharge").modal("hide")
             $(".success-message-modal").addClass("d-none")
             $(".success-message-heading-modal").text("Recharge done successfully!")
             $('#statusSuccessModal').modal('show');
         },
         error: function(xhr, status, error) {
+            $("#confirm-postpaid-recharge").modal("hide")
             if (xhr.status === 400 || xhr.status === 401 || xhr.status === 405 || xhr.status === 409) {
                 let errorResponse;
                 try {

@@ -11,19 +11,20 @@
     <div class="navbar-main-container">
         <div class="navbar-inner-container">
             <div class="menu-logo-flex">
-                <img src="<c:url value='/resources/icons/menu-animate.svg' />" class="menu-icon menu-logo-left  d-none"
-                / >
+                <img src="<c:url value='/resources/icons/menu-animate.svg' />" class="menu-icon menu-logo-left  d-none" />
                 <div class="logo-name-flex"><img
                         src="<c:url value='/resources/images/white-logo-removebg-preview.png' />" class="nav-logo"/>
                     <span class="nav-company-name">Uninor</span></div>
             </div>
 
             <div class="bell-profile-logout-flex">
-                <img src="<c:url value='/resources/icons/bell-animate.svg' />" class="menu-icon"/>
+                <div class="bell-new-notification-flex">
+                    <div class="count-span-noti red-noti-background"></div>
+                    <img src="<c:url value='/resources/icons/bell-animate.svg' />" class="bell-menu-icon" data-bs-toggle="offcanvas" data-bs-target="#notification-tab-id" aria-controls="offcanvasRight"/>
+                </div>
                 <div class="pic-name-flex">
-                    <div class="nav-profile-image"><img src="<c:url value='/resources/images/profile-pic.jpg'/>"
-                                                        class="profile-pic"/></div>
-                    <%--                    <span class="profile-name">John Snow</span>--%>
+                    <a class="nav-profile-image" href="${pageContext.request.contextPath}/client/client-profile"><img src="<c:url value='/resources/icons/person-filled-animated.svg'/>"
+                                                        class="profile-pic"/></a>
                 </div>
                 <img src="<c:url value='/resources/icons/logout-animate.svg' />" class="menu-icon"/>
             </div>

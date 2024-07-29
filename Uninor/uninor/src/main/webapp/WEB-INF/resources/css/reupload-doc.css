@@ -1,0 +1,25 @@
+.hidden-class{
+    display: inline;
+}
+
+.reupload-heading{
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.btn-center-reupload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.reuplaod-submit{
+    border: 1px solid #3750eb;
+    background-color: #3750eb;
+    color: white;
+    border-radius: 6px;
+    padding: 6px 12px;
+}

@@ -2,6 +2,30 @@
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   background-color: #fcfcfc; } */
 
+.sidebar-list a img {
+    height: 19px;
+}
+
+aside .side-inner .nav-menu ul li{
+    padding: 3px 15px !important;
+}
+
+aside .side-inner .nav-menu ul li a:hover img, .active-link-sidebar img{
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(286deg) brightness(103%) contrast(103%);
+}
+
+.sidebar-list a span {
+    margin-top: 3px;
+    font-size: 17px;
+}
+
+.sidebar-single-flex{
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+
 .outermost-contianer{
     position: relative;
     display: flex;      /* block*/
@@ -131,7 +155,7 @@ aside .side-inner .nav-menu ul li a {
     padding-right: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
-    color: #8b8b8b;
+    color: #3b2424;
     position: relative;
     -webkit-transition: .3s padding-left ease;
     -o-transition: .3s padding-left ease;
@@ -143,7 +167,7 @@ aside .side-inner .nav-menu ul li a:before {
     top: 0;
     bottom: 0;
     width: 0px;
-    background-color: #ff7315;
+    background-color: transparent;
     opacity: 0;
     visibility: hidden;
     -webkit-transition: .3s opacity ease, .3s visibility ease, .3s width ease;
@@ -151,9 +175,10 @@ aside .side-inner .nav-menu ul li a:before {
     transition: .3s opacity ease, .3s visibility ease, .3s width ease; }
 aside .side-inner .nav-menu ul li a:active, aside .side-inner .nav-menu ul li a:focus, aside .side-inner .nav-menu ul li a:hover {
     outline: none; }
-aside .side-inner .nav-menu ul li a:hover {
-    background: #fcfcfc;
-    color: #000; }
+aside .side-inner .nav-menu ul li a:hover , .active-link-sidebar{
+    background: #3750eb;
+    color: #fff !important;
+    border-radius: 10px 10px 10px 10px; }
 aside .side-inner .nav-menu ul li a:hover:before {
     width: 4px;
     opacity: 1;

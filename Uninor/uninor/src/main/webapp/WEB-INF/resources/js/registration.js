@@ -171,6 +171,8 @@ function hideCompanyInput(){
 //
 // }
 
+
+
 $.validator.addMethod("onlyCharacters", function(value, element) {
     return this.optional(element) || /^[a-zA-Z]+$/.test(value);
 }, "Should only contain characters.");

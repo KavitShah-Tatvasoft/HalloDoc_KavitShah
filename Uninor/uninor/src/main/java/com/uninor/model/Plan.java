@@ -53,11 +53,19 @@ public class Plan {
     @Column(name = "extra_data")
     private Double extraData;
 
-    @Column(name = "created_by")
-    private int createdBy;
+//    @Column(name = "created_by")
+//    private int createdBy;
 
-    @Column(name = "modified_by")
-    private int modidfiedBy;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private Admin createdBy;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "modified_by")
+    private Admin modidfiedBy;
+
+//    @Column(name = "modified_by")
+//    private int modidfiedBy;
 
     @CreationTimestamp
     @Column(name="created_date")

@@ -46,11 +46,9 @@ $.validator.addMethod("emailregex", function (value, element) {
 
 $("#login-form").validate({
     rules: {
-        number: {
+        email: {
             required: true,
-            minlength: 10,
-            maxlength: 10,
-            number: true
+            emailregex: true
         }
     },
     messages: {
@@ -96,8 +94,6 @@ function getOtpInput() {
             hideLoader()
             console.log("In success")
             if(status){
-                console.log("XHR: " + xhr)
-                console.log("Inside Check condition")
                 let successResponse;
 
                 try {
@@ -115,7 +111,6 @@ function getOtpInput() {
                 if (successResponse.clientId) {
                     $(".hidden-user-id").val(successResponse.clientId)
                     localStorage.setItem("clientId",successResponse.clientId)
-                    console.log("Hereeeee: " +successResponse.clientId)
                 }
 
                 $(".get-otp-btn-hide").addClass("d-none").removeClass("active-submit")
@@ -142,6 +137,12 @@ function getOtpInput() {
                     let errorMessage = errorResponse.errors
                     showAlert(true,errorMessage,"faliure")
                 }
+
+                if(errorResponse.docError){
+                    let errorMessage = errorResponse.docError
+                    showAlert(true,errorMessage,"faliure")
+                }
+
             } else {
                 console.log("Some other error")
             }
@@ -222,4 +223,11 @@ function submitSignUpForm(OTP){
             }
         }
     })
+}
+
+function showOnLoadMessages(){
+    var showReuploadSubmitMessgae = localStorage.getItem("showReuploadSubmitMessgae")
+    if(showReuploadSubmitMessgae === "true"){
+        showAlert(true,"Files uploaded successfully","success")
+    }
 }

@@ -18,6 +18,7 @@ import com.uninor.dto.*;
 import com.uninor.enumeration.*;
 import com.uninor.exceptions.DataNotFoundException;
 import com.uninor.exceptions.InvalidDataFoundException;
+import com.uninor.exceptions.InvalidFileException;
 import com.uninor.exceptions.SimNotAvailableException;
 import com.uninor.helper.Helper;
 import com.uninor.helper.InvoiceNumberGenerator;
@@ -30,6 +31,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 //import com.itextpdf.text.pdf.PdfPTable;
 //import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -39,11 +41,14 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.beans.Transient;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ClientService {
@@ -81,7 +86,10 @@ public class ClientService {
 
     @Autowired
     private ClientRequestRepository clientRequestRepository;
-    
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
 
     private ShowPlanDto createPopularPlanDto(List<Plan> planList, String planCategory){
         ShowPlanDto popularPlans = new ShowPlanDto();
@@ -581,6 +589,7 @@ public class ClientService {
         invoiceTable.setExtraDataCharges(0);
         invoiceTable.setExtraSmsUsed(0);
         invoiceTable.setExtraSmsCharges(0);
+        invoiceTable.setPlanBoughtDate(LocalDateTime.now());
         return invoiceTable;
 
     }
@@ -1041,6 +1050,13 @@ public class ClientService {
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
         }
 
+        if(simCard.getSimType() == SimType.POSTPAID.getSimCardTypeId()){
+            List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPostpaidPlan(simCard);
+            if(!planActivationList.isEmpty()){
+                throw new InvalidDataFoundException("Pay all current dues then only you can deactivate the SIM");
+            }
+        }
+
         ClientRequest clientRequest = new ClientRequest();
         clientRequest.setRequestType(ClientRequestTypeEnum.DEACTIVATION.getRequestTypeId());
         clientRequest.setRequestStatus(RequestStatusEnum.PENDING.getRequestStatusId());
@@ -1051,6 +1067,158 @@ public class ClientService {
         responseMap.put("message","Sim deactivation request created!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
 
+    }
+
+    public ResponseEntity<Map<String,String>> updateUserProfile(UpdateProfileDetailsDto updateProfileDetailsDto, HttpServletRequest httpServletRequest){
+        Map<String,String> responseMap = new HashMap<>();
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client == null){
+            throw new DataNotFoundException("Client data not found");
+        }
+
+        String gstPattern = "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$";
+        Pattern pattern = Pattern.compile(gstPattern);
+        Matcher matcher = pattern.matcher(updateProfileDetailsDto.getGstNumber());
+
+        if(!updateProfileDetailsDto.getGstNumber().isEmpty() && !matcher.matches()){
+            throw new InvalidDataFoundException("Invalid GST number");
+        }
+
+        client.setFirstName(updateProfileDetailsDto.getFirstName());
+        client.setLastName(updateProfileDetailsDto.getLastName());
+        client.setEmail(updateProfileDetailsDto.getEmail());
+        client.setStreet(updateProfileDetailsDto.getStreet());
+        client.setCity(updateProfileDetailsDto.getCity());
+        client.setState(updateProfileDetailsDto.getState());
+        client.setZipcode(updateProfileDetailsDto.getZipcode());
+        client.setGstNumber(updateProfileDetailsDto.getGstNumber());
+
+        this.clientRepository.updateClient(client);
+        responseMap.put("message","Profile Details Updated");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String ,String>> updateProfilePhoto(CommonsMultipartFile profilePhoto, HttpServletRequest httpServletRequest){
+
+        Map<String,String> responseMap = new HashMap<>();
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client == null){
+            throw new DataNotFoundException("Client data not found");
+        }
+
+        if((double)profilePhoto.getSize()/ (1024 * 1024) > 2){
+            throw new InvalidDataFoundException("Invalid profile photo");
+        }
+
+        String fileExtension = profilePhoto.getOriginalFilename().substring(profilePhoto.getOriginalFilename().lastIndexOf('.') + 1);
+
+        if(!fileExtension.equals("jpeg") && !fileExtension.equals("jpg") && !fileExtension.equals("png")){
+            throw new InvalidDataFoundException("Invalid profile photo");
+        }
+
+        ClientDocuments clientDocuments = client.getClientDocuments();
+        clientDocuments.setProfilePhotoExtension(fileExtension);
+
+        client.setClientDocuments(clientDocuments);
+        try {
+            String path = System.getenv("UninorUploadPath");
+            String fullPath = path + clientId + "/" + "ProfilePhoto" + "." + fileExtension;
+
+            byte[] data = profilePhoto.getBytes();
+            FileOutputStream fos = new FileOutputStream(fullPath);
+            fos.write(data);
+            fos.close();
+
+        } catch (Exception e) {
+            throw new InvalidFileException("File Upload Failed. Try again!");
+        }
+        client.setClientDocuments(clientDocuments);
+        clientRepository.updateClient(client);
+        responseMap.put("profilePhotoUpdate","Profile Photo Successfully Updated");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,List<NotificationDto>>> getAllCurrentClientNotificaitons(HttpServletRequest httpServletRequest){
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client == null){
+            throw new DataNotFoundException("Client data not found");
+        }
+
+        Map<String , List<NotificationDto>> responseMap = new HashMap<>();
+        List<NotificationDto> notificationDtos = new ArrayList<>();
+        Object[] getNotificationData = this.notificationRepository.getCurrentAvailableClientCoupons(clientId);
+        List<Notification> notificationList = (List<Notification>) getNotificationData[0];
+        int count = (Integer) getNotificationData[1];
+
+        if(!notificationList.isEmpty()){
+            for (Notification notification : notificationList) {
+                NotificationDto notificationDto = new NotificationDto();
+                notificationDto.setHeader(notification.getNotificationHeader());
+                notificationDto.setMessage(notification.getMessage());
+                notificationDto.setNotificationId(notification.getNotificationId());
+                notificationDto.setNewCount(count);
+                notificationDto.setNotificationType(notification.getNotificationType().getNotificationId());
+                notificationDto.setSendDate(Helper.getNotificationTime(notification.getCreatedDate()));
+                notificationDtos.add(notificationDto);
+            }
+        }
+
+        responseMap.put("notificationDetails", !notificationDtos.isEmpty()?notificationDtos:null);
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,String>> removeClientNotification(int notificationId, HttpServletRequest httpServletRequest){
+
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client == null){
+            throw new DataNotFoundException("Client data not found");
+        }
+
+        String regex = "^[1-9]\\d*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(String.valueOf(notificationId));
+        Map<String,String> responseMap = new HashMap<>();
+        if (!matcher.matches()){
+            throw new InvalidDataFoundException("Invalid notification id");
+        }
+        this.notificationRepository.deleteNotification(notificationId,clientId);
+        responseMap.put("message","Notification Deleted");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,String>> removeAllClientNotification(HttpServletRequest httpServletRequest){
+
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client == null){
+            throw new DataNotFoundException("Client data not found");
+        }
+        Map<String,String> responseMap = new HashMap<>();
+        this.notificationRepository.deleteAllClientNotification(clientId);
+        responseMap.put("message","All Notification Deleted");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,String>> updateReadReciepts(HttpServletRequest httpServletRequest){
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client == null){
+            throw new DataNotFoundException("Client data not found");
+        }
+        Map<String,String> responseMap = new HashMap<>();
+        this.notificationRepository.updateClientNotificatinReadReciepts(clientId);
+        responseMap.put("message","All Notification Read Receipts updates");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 }
 

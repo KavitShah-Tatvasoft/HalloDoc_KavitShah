@@ -1,4 +1,5 @@
 .modal#statusSuccessModal .modal-content,
+.modal#statusSuccessModal .modal-content,
 .modal#statusErrorsModal .modal-content {
     border-radius: 30px;
 }
@@ -144,10 +145,7 @@
 .recharge-plan-modal-body .accordion-item {
     border: none;
 }
-/*.accordion-collapse.collapse {*/
-/*    height: 0;*/
-/*    opacity: 0;*/
-/*}*/
+
 .accordion-button.custom-icon.collapsed::after {
     content: url(/uninor/resources/icons/plus-animated.svg);
     filter: invert(0%) sepia(100%) saturate(7500%) hue-rotate(17deg) brightness(113%) contrast(114%);
@@ -324,15 +322,15 @@
 
 
 /*Payment modal*/
-.toggle-service-main-content, .roaming-toggle-service-main-content, .block-toggle-service-main-content{
+.toggle-service-main-content, .roaming-toggle-service-main-content, .block-toggle-service-main-content, .payment-confirmation-main-content{
     border-radius: 18px;
 }
 
-.toggle-service-main-content .modal-body{
+.toggle-service-main-content .modal-body, .payment-confirmation-main-content .modal-body{
     padding: 20px 0px;
 }
 
-.toggle-service-main-header, .roaming-toggle-service-main-header, .block-toggle-service-main-header{
+.toggle-service-main-header, .roaming-toggle-service-main-header, .block-toggle-service-main-header, .payment-confirmation-main-header{
     padding: 0px;
     width: 100%;
 }
@@ -343,7 +341,7 @@
     align-items: center;
 }
 
-.confirm-input, .roaming-confirm-input, .block-confirm-input, .unblock-confirm-input{
+.confirm-input, .roaming-confirm-input, .block-confirm-input, .unblock-confirm-input, .payment-confirm-input{
     height: 30px;
     width: 100%;
     outline: none;
@@ -352,7 +350,7 @@
     padding: 15px;
 }
 
-.toggle-service, .roaming-toggle-service, .block-toggle-service{
+.toggle-service, .roaming-toggle-service, .block-toggle-service, .payment-confirmation-toggle-service{
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -619,6 +617,8 @@ button:focus:not(:focus-visible){
 }
 
 .add-data-button{
+    display: flex;
+    justify-content: center;
     width: 75%;
     border-radius: 25px;
     padding: 6px 12px;
@@ -809,6 +809,7 @@ button:focus:not(:focus-visible){
 }
 
 .text-flex-features{
+    color: black;
     display: flex;
     flex-direction: column;
     align-items: center;

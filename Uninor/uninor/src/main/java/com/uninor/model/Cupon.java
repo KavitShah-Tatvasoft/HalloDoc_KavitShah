@@ -39,11 +39,16 @@ public class Cupon {
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
-    @Column(name = "created_by")
-    private int createdBy;
+    @OneToOne
+    @JoinColumn(name = "created_by")
+    private Admin createdBy;
 
-    @Column(name = "modified_by")
-    private int modifiedBy;
+//    @Column(name = "modified_by")
+//    private int modifiedBy;
+
+    @OneToOne
+    @JoinColumn(name = "modified_by")
+    private Admin modifiedBy;
 
     @OneToOne
     @JoinColumn(name = "cupon_category")

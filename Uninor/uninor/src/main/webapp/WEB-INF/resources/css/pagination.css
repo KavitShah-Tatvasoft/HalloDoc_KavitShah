@@ -1,0 +1,126 @@
+#page-size-id{
+    border-radius: 20px;
+    height: 35px;
+    width: 62px;
+    padding: 0px 10px;
+    background-color: #d1d5e1;
+    border: 1px solid #d1d5e1;
+}
+
+.pagination {
+    transform: scale(0.94);
+    width: 415px;
+    height: 66px;
+    /* background: #e0e0e0; */
+    border-radius: 50px;
+    /* box-shadow: inset 5px 5px 1px #717171, inset -5px -5px 1px #ffffff; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0 1em 0;
+}
+
+.pagination-flex{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+}
+
+.pagination ul li {
+    margin: 0 5px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    text-align: center;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.pagination ul li:hover {
+    background: linear-gradient(270deg, #0023ff, #526278);
+    color: #fff;
+    font-weight: 600;
+    transform: scale(0.96);
+}
+
+.pagination ul li.active {
+    background: linear-gradient(270deg, #0023ff, #526278);
+    color: #fff;
+    font-weight: 600;
+}
+
+.pagination button {
+    width: 75px;
+    height: 35px;
+    border: 0;
+    background-color: hsla(220, 15%, 58%, .29);
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+
+}
+
+.pagination button:hover {
+    transform: scale(0.96);
+    color: #fff;
+    background: linear-gradient(270deg, #0023ff, #526278);
+
+}
+
+.pagination button:disabled {
+    background: hsla(220, 15%, 58%, .3);
+    color: #746a6a;
+}
+
+.pagination button:disabled:hover {
+    background: hsla(220, 15%, 58%, .1);
+    color: #b2b3b5;
+    transform: scale(1);
+}
+
+.pagination button.active {
+    background-color: rgba(0, 0, 0, 0.07);
+    background: linear-gradient(90deg, #0895FF, #37D5FF);
+}
+
+#pageList{
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+
+#page-size-id:focus-visible{
+    border: 1px solid #d1d5e1!important;
+    outline: none;
+}
+
+.pagination-page-size-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px){
+    .pagination-page-size-flex{
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 667px) {
+    .pagination {
+        width: 100%;
+    }
+}

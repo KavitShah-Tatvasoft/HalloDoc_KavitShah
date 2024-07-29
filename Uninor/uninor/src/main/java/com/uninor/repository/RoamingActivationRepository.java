@@ -1,8 +1,6 @@
 package com.uninor.repository;
 
-import com.uninor.model.PlanActivation;
 import com.uninor.model.RoamingActivation;
-import com.uninor.model.SimCard;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -25,15 +23,15 @@ public class RoamingActivationRepository {
 
     @Transactional
     public int saveRoamingActivationDetails(RoamingActivation roamingActivation) {
-        return (Integer)this.hibernateTemplate.save(roamingActivation);
+        return (Integer) this.hibernateTemplate.save(roamingActivation);
     }
 
     @Transactional
     public void updateRoamingActivationDetails(RoamingActivation roamingActivation) {
-       this.hibernateTemplate.update(roamingActivation);
+        this.hibernateTemplate.update(roamingActivation);
     }
 
-    public void expireAllUnexpiredRoamingSimPlan(int simId){
+    public void expireAllUnexpiredRoamingSimPlan(int simId) {
         Session s = this.sessionFactory.openSession();
         Transaction tx = s.beginTransaction();
         String queryString = "UPDATE RoamingActivation pa SET pa.isExpired=true, pa.isActive=false , pa.isServiceChange=true WHERE pa.simCard.simCardId =:simCardId AND pa.isExpired=false";
@@ -44,7 +42,7 @@ public class RoamingActivationRepository {
         s.close();
     }
 
-    public List<RoamingActivation> getCurrentSimRoamingPlan(int simId){
+    public List<RoamingActivation> getCurrentSimRoamingPlan(int simId) {
         Session s = this.sessionFactory.openSession();
         String queryString = "FROM RoamingActivation WHERE simCard.simCardId=:simId AND isExpired=false AND isActive=true";
         Query<RoamingActivation> q = s.createQuery(queryString);
@@ -54,7 +52,7 @@ public class RoamingActivationRepository {
         return list;
     }
 
-    public List<RoamingActivation> getActivableRoamingPlanByMobile(String mobile){
+    public List<RoamingActivation> getActivableRoamingPlanByMobile(String mobile) {
         Session s = this.sessionFactory.openSession();
         String queryString = "FROM RoamingActivation  WHERE simCard.phoneNumber =:mobileNumber AND isReactiveAvailable=true AND isExpired=false";
         Query<RoamingActivation> q = s.createQuery(queryString);
@@ -64,7 +62,7 @@ public class RoamingActivationRepository {
         return list;
     }
 
-    public List<RoamingActivation> getNextActivablePlan(String mobileNumber){
+    public List<RoamingActivation> getNextActivablePlan(String mobileNumber) {
         Session s = this.sessionFactory.openSession();
         String queryString = "FROM RoamingActivation pa WHERE pa.simCard.phoneNumber =:mobileNumber AND pa.isExpired=false ORDER BY pa.boughtDate ASC";
         Query<RoamingActivation> q = s.createQuery(queryString);
@@ -75,5 +73,26 @@ public class RoamingActivationRepository {
         return list;
     }
 
+    public void saveRoamingActivationList(List<RoamingActivation> roamingActivationList) {
+        Session s = this.sessionFactory.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+            for (RoamingActivation roamingActivation : roamingActivationList) {
+                s.save(roamingActivation);
+            }
+            tx.commit();
+        } finally {
+            s.close();
+        }
+    }
 
+    public List<RoamingActivation> getAllActiveRoamingPlans(){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM RoamingActivation pa WHERE pa.isExpired=false AND pa.isActive=true";
+        Query<RoamingActivation> q = s.createQuery(queryString);
+        List<RoamingActivation> list = q.list();
+        s.close();
+        return list;
+    }
 }
+

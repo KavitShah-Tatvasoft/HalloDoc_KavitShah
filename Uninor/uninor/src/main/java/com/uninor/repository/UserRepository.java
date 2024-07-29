@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UserRepository {
@@ -30,5 +32,7 @@ public class UserRepository {
         s.close();
         return list;
     }
+
+
 
 }

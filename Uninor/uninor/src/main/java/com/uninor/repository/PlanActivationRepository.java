@@ -1,5 +1,6 @@
 package com.uninor.repository;
 
+import com.uninor.model.Notification;
 import com.uninor.model.OtpLogs;
 import com.uninor.model.PlanActivation;
 import com.uninor.model.SimCard;
@@ -90,6 +91,38 @@ public class PlanActivationRepository {
         String queryString = "FROM PlanActivation pa WHERE pa.simCard.phoneNumber =:mobileNumber AND pa.isReactiveAvailable=true AND pa.isExpired=false";
         Query<PlanActivation> q = s.createQuery(queryString);
         q.setParameter("mobileNumber", mobileNumber);
+        List<PlanActivation> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public List<PlanActivation> getActiveSimPostpaidPlan(SimCard simCard){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM PlanActivation pa WHERE pa.simCard.simCardId =:simCardId AND pa.isActive=true";
+        Query<PlanActivation> q = s.createQuery(queryString);
+        q.setParameter("simCardId", simCard.getSimCardId());
+        List<PlanActivation> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public void updateAllPlans(List<PlanActivation> planActivations){
+        Session s = this.sessionFactory.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+            for (PlanActivation planActivation : planActivations) {
+                s.save(planActivation);
+            }
+            tx.commit();
+        } finally {
+            s.close();
+        }
+    }
+
+    public List<PlanActivation> getAllActivePlanActivation(){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM PlanActivation pa WHERE pa.isActive =true AND pa.isExpired=false";
+        Query<PlanActivation> q = s.createQuery(queryString);
         List<PlanActivation> list = q.list();
         s.close();
         return list;

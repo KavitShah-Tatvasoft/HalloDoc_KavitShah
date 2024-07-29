@@ -4,6 +4,7 @@ import com.uninor.model.Client;
 import com.uninor.model.SimCard;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -51,6 +52,28 @@ public class SimCardRepository {
         return list;
     }
 
+    public SimCard getClientSimCardDetailsByClientId(int clientId){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM SimCard WHERE client.clientId =: clientId";
+        Query<SimCard> q = s.createQuery(queryString);
+        q.setParameter("clientId", clientId);
+        List<SimCard> list = q.list();
+        s.close();
+        return list.isEmpty()?null:list.get(0);
+    }
+
+    @Transactional
+    public void deleteSimCardEntry(int simCardId){
+        Session s = this.sessionFactory.openSession();
+        Transaction tx = s.beginTransaction();
+        String hql = "DELETE FROM SimCard WHERE simCardId =:simCardId";
+        Query query = s.createQuery(hql);
+        query.setParameter("simCardId", simCardId);
+        query.executeUpdate();
+        tx.commit();
+        s.close();
+    }
+
     public SimCard getSimCardById(int id){
         return (SimCard) this.hibernateTemplate.get(SimCard.class, id);
     }
@@ -58,6 +81,15 @@ public class SimCardRepository {
     @Transactional
     public void addOrUpdateSimCard(SimCard simCard){
         this.hibernateTemplate.saveOrUpdate(simCard);
+    }
+
+    public List<SimCard> getAllActiveSimDetails(){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM SimCard sc WHERE sc.isAvailable=false";
+        Query<SimCard> q = s.createQuery(queryString);
+        List<SimCard> list = q.list();
+        s.close();
+        return list;
     }
 
 }

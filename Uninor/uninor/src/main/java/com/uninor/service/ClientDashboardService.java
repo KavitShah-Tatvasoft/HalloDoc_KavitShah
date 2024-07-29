@@ -15,13 +15,11 @@ import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.text.DocumentException;
 import com.uninor.dto.*;
 import com.uninor.enumeration.*;
-import com.uninor.exceptions.DataNotFoundException;
-import com.uninor.exceptions.InvalidDataFoundException;
-import com.uninor.helper.Helper;
-import com.uninor.helper.InvoiceNumberGenerator;
+import com.uninor.exceptions.*;
+import com.uninor.helper.*;
 import com.uninor.model.*;
 import com.uninor.repository.*;
-import com.uninor.sms.SmsService;
+import com.uninor.sms.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -231,13 +229,13 @@ public class ClientDashboardService {
         if (simCard.isRoamingActive()) {
             if (roamingActivationList.isEmpty()) {
                 throw new DataNotFoundException("No Plan Found! Please try again");
-            }else {
+            } else {
                 Plan plan = roamingActivationList.get(0).getRoamingPlan();
                 PlanDetailsDto planDetailsDto = getPlanDetials(plan);
                 responseMap.put("Plan", planDetailsDto);
                 return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
             }
-        }else {
+        } else {
             try {
                 Plan plan = planActivation.get(0).getPlan();
                 PlanDetailsDto planDetailsDto = getPlanDetials(plan);
@@ -290,7 +288,7 @@ public class ClientDashboardService {
             responseMap.put("payment", "false");
 
         } else {
-            List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPlan(simCard);
+            List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPostpaidPlan(simCard);
             if (planActivationList.isEmpty()) {
                 simCard.setSimType(1);
                 responseMap.put("messages", "Switched to prepaid");
@@ -315,60 +313,61 @@ public class ClientDashboardService {
         SimCard simCard = simCardList.get(0);
         Client client = simCard.getClient();
         Map<String, PostPaidPlanDetailsPaymentDto> responseMap = new HashMap<>();
-        List<PlanActivation> listActivePlan = this.planActivationRepository.getActiveSimPlan(simCard);
-        try {
-            Plan plan = listActivePlan.get(0).getPlan();
-            PlanUsage planUsage = listActivePlan.get(0).getPlanUsage();
-            PostPaidPlanDetailsPaymentDto planDetails = new PostPaidPlanDetailsPaymentDto();
-            planDetails.setPlanId(plan.getPlanId());
-            planDetails.setPlanAmount(plan.getRechargeAmount());
-            planDetails.setPlanValidity(plan.getValidity());
-            planDetails.setSmsAllowance(plan.getSmsAllowance());
-            planDetails.setDataAmount((plan.getDataAllowance() / 1000));
-            planDetails.setAdditionalData((plan.getExtraData() / 1000));
-            planDetails.setDailyRefreshing(plan.getIsRefreshing());
-            planDetails.setVoiceAllowance(plan.getVoiceAllowance());
-            Double totalData;
-            if (plan.getIsRefreshing()) {
-                totalData = (plan.getDataAllowance() / 1000) * plan.getValidity() + plan.getExtraData();
-            } else {
-                totalData = (plan.getDataAllowance() / 1000) + plan.getExtraData();
-            }
-
-            planDetails.setTotalData(totalData);
-            planDetails.setWalletAmount(client.getWalletAmount());
-            Double taxApplied = (Helper.CGST + Helper.SGST) / 100;
-            Double planPrice = plan.getRechargeAmount() / (1 + taxApplied);
-            planPrice = Double.valueOf(String.format("%.2f", planPrice));
-
-            Double taxAmount = planPrice * taxApplied;
-            taxAmount = Double.valueOf(String.format("%.2f", taxAmount));
-
-            planDetails.setTaxAmount(taxAmount);
-            planDetails.setPlanPriceWithoutTax(planPrice);
-            if (planUsage.isPostpaidDataOver()) {
-                planDetails.setSmsUsed(planUsage.getSmsUsage() + " SMS");
-                planDetails.setSmsCharge(planUsage.getSmsUsage() * Helper.POSTPAID_SMS_CHARGES);
-                planDetails.setDataUsed(getAvailableData(planUsage.getDataUsage()));
-                planDetails.setDataCharges(planUsage.getDataUsage() / 1000 * Helper.POSTPAID_DATA_CHARGES);
-                planDetails.setTotalAmount(plan.getRechargeAmount() + planUsage.getSmsUsage() * Helper.POSTPAID_SMS_CHARGES + planUsage.getDataUsage() / 1000 * Helper.POSTPAID_DATA_CHARGES);
-                planDetails.setPayableAmount(plan.getRechargeAmount() + planUsage.getSmsUsage() * Helper.POSTPAID_SMS_CHARGES + planUsage.getDataUsage() / 1000 * Helper.POSTPAID_DATA_CHARGES);
-            } else {
-                planDetails.setSmsUsed("0 SMS");
-                planDetails.setSmsCharge(0.0);
-                planDetails.setDataUsed("0.00 GB");
-                planDetails.setDataCharges(0.0);
-                planDetails.setTotalAmount(plan.getRechargeAmount());
-                planDetails.setPayableAmount(plan.getRechargeAmount());
-            }
-            planDetails.setExtraDataCharges("Rs." + Helper.POSTPAID_DATA_CHARGES + "/GB");
-            planDetails.setExtraSmsCharges("Rs." + Helper.POSTPAID_SMS_CHARGES + "/SMS");
-
-            responseMap.put("Plan", planDetails);
-            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
-        } catch (NullPointerException e) {
-            throw new DataNotFoundException("No Plan Found! Please try again");
+        List<PlanActivation> listActivePlan = this.planActivationRepository.getActiveSimPostpaidPlan(simCard);
+        if (listActivePlan.isEmpty()) {
+            throw new DataNotFoundException("No Active Plan! Please try again");
         }
+
+        Plan plan = listActivePlan.get(0).getPlan();
+        PlanUsage planUsage = listActivePlan.get(0).getPlanUsage();
+        PostPaidPlanDetailsPaymentDto planDetails = new PostPaidPlanDetailsPaymentDto();
+        planDetails.setPlanId(plan.getPlanId());
+        planDetails.setPlanAmount(plan.getRechargeAmount());
+        planDetails.setPlanValidity(plan.getValidity());
+        planDetails.setSmsAllowance(plan.getSmsAllowance());
+        planDetails.setDataAmount((plan.getDataAllowance() / 1000));
+        planDetails.setAdditionalData((plan.getExtraData() / 1000));
+        planDetails.setDailyRefreshing(plan.getIsRefreshing());
+        planDetails.setVoiceAllowance(plan.getVoiceAllowance());
+        Double totalData;
+        if (plan.getIsRefreshing()) {
+            totalData = (plan.getDataAllowance() / 1000) * plan.getValidity() + plan.getExtraData();
+        } else {
+            totalData = (plan.getDataAllowance() / 1000) + plan.getExtraData();
+        }
+
+        planDetails.setTotalData(totalData);
+        planDetails.setWalletAmount(client.getWalletAmount());
+        Double taxApplied = (Helper.CGST + Helper.SGST) / 100;
+        Double planPrice = plan.getRechargeAmount() / (1 + taxApplied);
+        planPrice = Double.valueOf(String.format("%.2f", planPrice));
+
+        Double taxAmount = planPrice * taxApplied;
+        taxAmount = Double.valueOf(String.format("%.2f", taxAmount));
+
+        planDetails.setTaxAmount(taxAmount);
+        planDetails.setPlanPriceWithoutTax(planPrice);
+        if (planUsage.isPostpaidDataOver()) {
+            planDetails.setSmsUsed(planUsage.getSmsUsage() + " SMS");
+            planDetails.setSmsCharge(planUsage.getSmsUsage() * Helper.POSTPAID_SMS_CHARGES);
+            planDetails.setDataUsed(getAvailableData(planUsage.getDataUsage()));
+            planDetails.setDataCharges(planUsage.getDataUsage() / 1000 * Helper.POSTPAID_DATA_CHARGES);
+            planDetails.setTotalAmount(plan.getRechargeAmount() + planUsage.getSmsUsage() * Helper.POSTPAID_SMS_CHARGES + planUsage.getDataUsage() / 1000 * Helper.POSTPAID_DATA_CHARGES);
+            planDetails.setPayableAmount(plan.getRechargeAmount() + planUsage.getSmsUsage() * Helper.POSTPAID_SMS_CHARGES + planUsage.getDataUsage() / 1000 * Helper.POSTPAID_DATA_CHARGES);
+        } else {
+            planDetails.setSmsUsed("0 SMS");
+            planDetails.setSmsCharge(0.0);
+            planDetails.setDataUsed("0.00 GB");
+            planDetails.setDataCharges(0.0);
+            planDetails.setTotalAmount(plan.getRechargeAmount());
+            planDetails.setPayableAmount(plan.getRechargeAmount());
+        }
+        planDetails.setExtraDataCharges("Rs." + Helper.POSTPAID_DATA_CHARGES + "/GB");
+        planDetails.setExtraSmsCharges("Rs." + Helper.POSTPAID_SMS_CHARGES + "/SMS");
+
+        responseMap.put("Plan", planDetails);
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+
     }
 
     public ResponseEntity<Map<String, UpdatePostpaidPaymentDetailsDto>> verifyPostPaidBillingDetails(CuponWalletDto cuponWalletDto, HttpServletRequest httpServletRequest) {
@@ -380,7 +379,7 @@ public class ClientDashboardService {
         if (simCardList.isEmpty()) {
             throw new DataNotFoundException("No SimCard Found");
         }
-        List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPlan(simCardList.get(0));
+        List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPostpaidPlan(simCardList.get(0));
         Plan plan = planActivationList.get(0).getPlan();
         PlanUsage planUsage = planActivationList.get(0).getPlanUsage();
         Map<String, UpdatePostpaidPaymentDetailsDto> responseMap = new HashMap<>();
@@ -585,7 +584,7 @@ public class ClientDashboardService {
             throw new DataNotFoundException("No SimCard Found");
         }
         SimCard simCard = simCardList.get(0);
-        List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPlan(simCard);
+        List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPostpaidPlan(simCard);
         PlanActivation planActivation = planActivationList.get(0);
         Plan plan = planActivation.getPlan();
         PlanUsage planUsage = planActivationList.get(0).getPlanUsage();
@@ -745,7 +744,7 @@ public class ClientDashboardService {
             throw new InvalidDataFoundException(cuponErrorMessage + walletErrorMessage);
         } else {
             OrderTable orderTable = saveOrderDetails(client, plan, simCard, finalpayableAmount, finalDiscountApplied);
-            InvoiceTable invoiceTable = saveInvoiceTableDetails(client, orderTable, mobileNumber, finalDiscountApplied, finalTaxApplied, finalpayableAmount, finalTaxableAmount, walletAmountUsed, planUsage, extraDataCharges, extraSmsCharges);
+            InvoiceTable invoiceTable = saveInvoiceTableDetails(client, orderTable, mobileNumber, finalDiscountApplied, finalTaxApplied, finalpayableAmount, finalTaxableAmount, walletAmountUsed, planUsage, extraDataCharges, extraSmsCharges, planActivation);
 
             if (!cuponError && !cuponList.isEmpty()) {
                 ClientCupons updateClientCupon = cuponList.get(0);
@@ -921,7 +920,7 @@ public class ClientDashboardService {
         return filePath;
     }
 
-    public InvoiceTable saveInvoiceTableDetails(Client client, OrderTable orderTable, String mobileNumber, double discountAmount, double taxAmount, double totalAmount, double taxableAmount, double walletAmountUsed, PlanUsage planUsage, double extraDataCharges, double extraSmsCharges) {
+    public InvoiceTable saveInvoiceTableDetails(Client client, OrderTable orderTable, String mobileNumber, double discountAmount, double taxAmount, double totalAmount, double taxableAmount, double walletAmountUsed, PlanUsage planUsage, double extraDataCharges, double extraSmsCharges, PlanActivation planActivation) {
 
         InvoiceNumberGenerator generator = InvoiceNumberGenerator.getInstance();
 
@@ -948,6 +947,7 @@ public class ClientDashboardService {
         invoiceTable.setExtraSmsCharges(extraSmsCharges);
         invoiceTable.setExtraDataUnitCharges(Helper.POSTPAID_DATA_CHARGES);
         invoiceTable.setExtraSmsUnitCharges(Helper.POSTPAID_SMS_CHARGES);
+        invoiceTable.setPlanBoughtDate(planActivation.getBoughtDate());
         return invoiceTable;
 
     }
@@ -1149,6 +1149,7 @@ public class ClientDashboardService {
         int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
         String mobileNumber = (String) httpServletRequest.getSession().getAttribute("loggedInMobile");
         List<SimCard> simCardList = this.simCardRepository.getSimCardDetailsByNumber(mobileNumber);
+
         Pageable pageable = PageRequest.of(currentPage - 1, userPageSize);
         Page<InvoiceTable> getPaginatedRechargeHistoryData = this.invoiceTableRepository.getPaginatedInvoiceData(pageable, clientId, mobileNumber);
         List<RechargeHistoryDashboardDataDto> paidList = new ArrayList<>();
@@ -1217,22 +1218,22 @@ public class ClientDashboardService {
         }
     }
 
-    public ResponseEntity<Map<String,String>> createBlockRequest(HttpServletRequest httpServletRequest){
+    public ResponseEntity<Map<String, String>> createBlockRequest(HttpServletRequest httpServletRequest) {
         String mobileNumber = (String) httpServletRequest.getSession().getAttribute("loggedInMobile");
         List<SimCard> simCardList = this.simCardRepository.getSimCardDetailsByNumber(mobileNumber);
         Map<String, String> responseMap = new HashMap<>();
-        if(simCardList.isEmpty()){
+        if (simCardList.isEmpty()) {
             throw new DataNotFoundException("Client data not found!");
         }
 
         SimCard simCard = simCardList.get(0);
-        if(simCard.isBlocked()){
+        if (simCard.isBlocked()) {
             responseMap.put("message", "Sim Card already blocked");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
         }
 
         List<ClientRequest> clientRequests = this.clientRequestRepository.getClientBlockRequests(simCard);
-        if(!clientRequests.isEmpty()){
+        if (!clientRequests.isEmpty()) {
             responseMap.put("message", "Sim Card block request already created!");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
         }
@@ -1244,26 +1245,26 @@ public class ClientDashboardService {
         this.clientRequestRepository.saveClientRequest(clientRequest);
         this.smsService.sendNewRequestSms(simCard.getPhoneNumber(), "block");
 
-        responseMap.put("message","Sim block request created!");
+        responseMap.put("message", "Sim block request created!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String,String>> createUnblockRequest(HttpServletRequest httpServletRequest, String pukCode){
+    public ResponseEntity<Map<String, String>> createUnblockRequest(HttpServletRequest httpServletRequest, String pukCode) {
         String mobileNumber = (String) httpServletRequest.getSession().getAttribute("loggedInMobile");
         List<SimCard> simCardList = this.simCardRepository.getSimCardDetailsByNumber(mobileNumber);
         Map<String, String> responseMap = new HashMap<>();
-        if(simCardList.isEmpty()){
+        if (simCardList.isEmpty()) {
             throw new DataNotFoundException("Client data not found!");
         }
 
         SimCard simCard = simCardList.get(0);
-        if(!simCard.isBlocked()){
+        if (!simCard.isBlocked()) {
             responseMap.put("message", "Sim Card already unblocked");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
         }
 
         List<ClientRequest> clientRequests = this.clientRequestRepository.getClientUnblockRequests(simCard);
-        if(!clientRequests.isEmpty()){
+        if (!clientRequests.isEmpty()) {
             responseMap.put("message", "Sim Card unblock request already created!");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
         }
@@ -1271,7 +1272,7 @@ public class ClientDashboardService {
         String regex = "^\\d{6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(pukCode);
-        if(!matcher.matches() || !simCard.getPukNumber().equals(pukCode)){
+        if (!matcher.matches() || !simCard.getPukNumber().equals(pukCode)) {
             throw new InvalidDataFoundException("Invalid PUK code");
         }
 
@@ -1282,25 +1283,25 @@ public class ClientDashboardService {
         this.clientRequestRepository.saveClientRequest(clientRequest);
         this.smsService.sendNewRequestSms(simCard.getPhoneNumber(), "unblock");
 
-        responseMap.put("message","Sim unblock request created!");
+        responseMap.put("message", "Sim unblock request created!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String,ClientProfileDto>> getClientDashboardDetails(HttpServletRequest httpServletRequest){
-        int clientId = (Integer)httpServletRequest.getSession().getAttribute("clientId");
-        String mobileNumber = (String)httpServletRequest.getSession().getAttribute("loggedInMobile");
+    public ResponseEntity<Map<String, ClientProfileDto>> getClientDashboardDetails(HttpServletRequest httpServletRequest) {
+        int clientId = (Integer) httpServletRequest.getSession().getAttribute("clientId");
+        String mobileNumber = (String) httpServletRequest.getSession().getAttribute("loggedInMobile");
         Client client = this.clientRepository.getClientById(clientId);
-        if(client == null){
+        if (client == null) {
             throw new DataNotFoundException("Client data not found!");
         }
         ClientDocuments clientDocuments = this.clientDocumentsRepository.getClientDocumentDetails(clientId);
         ClientProfileDto clientProfileDto = getClientProfileDetails(client, mobileNumber, httpServletRequest, clientDocuments);
-        Map<String,ClientProfileDto> responseMap = new HashMap<>();
+        Map<String, ClientProfileDto> responseMap = new HashMap<>();
         responseMap.put("clientProfileDto", clientProfileDto);
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    private ClientProfileDto getClientProfileDetails(Client client, String mobileNumber, HttpServletRequest httpServletRequest, ClientDocuments clientDocuments){
+    private ClientProfileDto getClientProfileDetails(Client client, String mobileNumber, HttpServletRequest httpServletRequest, ClientDocuments clientDocuments) {
 
         String profilePicPath = httpServletRequest.getContextPath() + File.separator + System.getenv("UninorDownloadPath") + client.getClientId() + File.separator + "ProfilePhoto." + clientDocuments.getProfilePhotoExtension();
 
@@ -1321,10 +1322,10 @@ public class ClientDashboardService {
         return clientProfileDto;
     }
 
-    private SimDetailsDto getCurrentClientSimDetails(SimCard simCard){
+    private SimDetailsDto getCurrentClientSimDetails(SimCard simCard) {
         SimDetailsDto simDetailsDto = new SimDetailsDto();
         Client client = simCard.getClient();
-        simDetailsDto.setSimType(simCard.getSimType()==1?"Prepaid":"Postpaid");
+        simDetailsDto.setSimType(simCard.getSimType() == 1 ? "Prepaid" : "Postpaid");
         simDetailsDto.setFirstName(client.getFirstName());
         simDetailsDto.setLastName(client.getLastName());
         simDetailsDto.setMobileNumber(simCard.getPhoneNumber());
@@ -1332,23 +1333,61 @@ public class ClientDashboardService {
         simDetailsDto.setImsiNumber(simCard.getImsiNumber());
         simDetailsDto.setImeiNumber(simCard.getImeiNumber());
         simDetailsDto.setPukNumber(simCard.getPukNumber());
-        simDetailsDto.setBlockStatus(simCard.isBlocked()?"Blocked":"Unblocked");
-        simDetailsDto.setRoamingStatus(simCard.isRoamingActive()?"Active":"Inactive");
+        simDetailsDto.setBlockStatus(simCard.isBlocked() ? "Blocked" : "Unblocked");
+        simDetailsDto.setRoamingStatus(simCard.isRoamingActive() ? "Active" : "Inactive");
         return simDetailsDto;
     }
 
-    public ResponseEntity<Map<String ,SimDetailsDto>> getCurrentClientSimDetails(HttpServletRequest httpServletRequest){
+    public ResponseEntity<Map<String, SimDetailsDto>> getCurrentClientSimDetails(HttpServletRequest httpServletRequest) {
         String mobileNumber = (String) httpServletRequest.getSession().getAttribute("loggedInMobile");
         List<SimCard> simCardList = this.simCardRepository.getSimCardDetailsByNumber(mobileNumber);
-        if(simCardList.isEmpty()){
+        if (simCardList.isEmpty()) {
             throw new DataNotFoundException("Client data not found!");
         }
 
         SimCard simCard = simCardList.get(0);
         SimDetailsDto simDetailsDto = getCurrentClientSimDetails(simCard);
-        Map<String,SimDetailsDto> responseMap = new HashMap<>();
+        Map<String, SimDetailsDto> responseMap = new HashMap<>();
         responseMap.put("simDetailsDto", simDetailsDto);
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, String>> checkPostpaidBillDues(HttpServletRequest httpServletRequest) {
+        Map<String, String> responseMap = new HashMap<>();
+        String mobileNumber = (String) httpServletRequest.getSession().getAttribute("loggedInMobile");
+        List<SimCard> simCardList = this.simCardRepository.getSimCardDetailsByNumber(mobileNumber);
+        if (simCardList.isEmpty()) {
+            throw new DataNotFoundException("Client data not found!");
+        }
+
+        SimCard simCard = simCardList.get(0);
+        if (simCard.getSimType() == SimType.POSTPAID.getSimCardTypeId()) {
+            List<PlanActivation> planActivationList = this.planActivationRepository.getActiveSimPlan(simCard);
+            List<PlanActivation> postpaidPlanActivationList = this.planActivationRepository.getActiveSimPostpaidPlan(simCard);
+
+//            if(!postpaidPlanActivationList.isEmpty()){
+//                responseMap.put("isPlanAvailable","true");
+//            }else {
+//                responseMap.put("isPlanAvailable","false");
+//            }
+
+            if(postpaidPlanActivationList.isEmpty()){
+                throw new InvalidDataFoundException("No dues left to pay!");
+            }
+
+            if (!planActivationList.isEmpty()) {
+                responseMap.put("expirationStatus", "false");
+                return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+            }else {
+                responseMap.put("expirationStatus", "true");
+            }
+        }else {
+            throw new InvalidDataFoundException("Can only proceed with Postpaid Sim");
+        }
+
+        responseMap.put("expirationStatus", "true");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+
     }
 
 }

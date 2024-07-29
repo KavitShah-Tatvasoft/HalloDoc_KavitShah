@@ -138,20 +138,42 @@
                         <label class="floating-label place-holder">Roaming Status</label>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="row">
                 <div class="col-12">
                     <div class="sim-deactivation-flex">
-                        <button class="deactivation-btn">Deactivate Sim</button>
+                        <button class="deactivation-btn" data-bs-toggle="modal" data-bs-target="#deactivate-modal">Deactivate Sim</button>
                     </div>
                 </div>
             </div>
 
         </div>
     </main>
+
+    <div class="modal fade" id="deactivate-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content deactivate-modal-service-main-content">
+                <div class="modal-header deactivate-service-main-header">
+                    <header class="deactivate-toggle-service">
+                        <span class="block-toggle-type-text">Sim Deactivation</span>
+                        <div class="close close-block-toggle-modal"><i class="uil uil-times"></i></div>
+                    </header>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <p class="deactivation-text">You are about to deactivate you sim card. Once you deactivate your sim you cannot access the services provided.</p>
+                        <input type="text" class="deactivate-confirm-input" placeholder="Enter Confirm to continue"/>
+                        <span class="confirm-error-text d-none">Please enter confirm properly to deactivate sim!</span>
+                        <div class="button-div">
+                            <button id="deactivateSwitchButton" class="mt-4" onclick="deactivateSim()">Unblock Sim</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="toast toast-failure">
 
@@ -226,6 +248,7 @@
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -243,5 +266,106 @@
 </body>
 </html>
 
+<style>
+
+    .deactivation-text{
+        color: #232323;
+        font-weight: 500;
+    }
+
+    .deactivate-modal-service-main-content{
+        border-radius: 18px;
+    }
+
+    .toggle-service-main-content .modal-body{
+        padding: 20px 0px;
+    }
+
+    .deactivate-service-main-header{
+        padding: 0px;
+        width: 100%;
+    }
+
+    .button-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .deactivate-confirm-input{
+        height: 30px;
+        width: 100%;
+        outline: none;
+        border: 1px solid #5b5c5f;
+        border-radius: 6px;
+        padding: 15px;
+    }
+
+    .deactivate-toggle-service{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 15px 25px 15px 25px;
+        background-color: #3750EB;
+        border-radius: 15px 15px 0px 0px;
+        color: white;
+    }
+
+
+
+    .content{
+        padding: 0px 25px 0px 25px;
+    }
+
+    button{
+        background-color: #3750eb;
+        padding: 6px 12px;
+        color: white;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.1s linear, border-color 0.1s linear, color 0.1s linear;
+    }
+
+    .popup :is(header, .icons, .field){
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .popup header{
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ebedf9;
+    }
+    header span{
+        font-size: 21px;
+        font-weight: 600;
+    }
+    header .close, .icons a{
+        display: flex;
+        align-items: center;
+        border-radius: 50%;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+    }
+    header .close{
+        color: black;
+        font-size: 17px;
+        background: white;
+        height: 33px;
+        width: 33px;
+        cursor: pointer;
+    }
+    header .close:hover{
+        background: #ebedf9;
+    }
+    .popup .content{
+        margin: 20px 0;
+    }
+    .popup .icons{
+        margin: 15px 0 20px 0;
+    }
+</style>
 
 

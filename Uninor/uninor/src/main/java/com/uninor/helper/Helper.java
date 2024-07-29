@@ -19,11 +19,46 @@ public class Helper {
         return LocalDate.parse(str, formatter);
     }
 
+
+
     public static String formatLocalDateTime(LocalDateTime dateTime) {
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
         return dateTime.format(outputFormatter);
     }
 
+    public static String formatBirthDate(LocalDate dateTime) {
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return dateTime.format(outputFormatter);
+    }
+
+    public static String getNotificationTime(LocalDateTime dateTime) {
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        return dateTime.format(outputFormatter);
+    }
+
+    public static String getPlanExpirationNotificationMessage(String mobilenumber, long daysLeft){
+        return "Your recharge plan on mobile number " + mobilenumber + " is about to expire in " + daysLeft + " days. Please recharge to continue the services.";
+    }
+
+    public static String getPlanExpiredMessage(String mobilenumber){
+        return "Your recharge plan on mobile number " + mobilenumber + " is expired. Any upcoming plan would be activated accordingly or else please recharge to continue the services.";
+    }
+
+    public static String getRechargeSuccessfulMessage(String planAmount){
+        return "Recharge Successfully of Rs." + planAmount +". Your plan would activate as soon as current plan gets expired";
+    }
+
+    public static String getDataUsageMessage(int percentage, String sentDateTime){
+        return "You have used "+ percentage +"% of your daily data as of "+ sentDateTime +". To know more view your current usage on the website.";
+    }
+
+    public static String getDataUsageHeader(int percentage){
+        return percentage + "% Data Used";
+    }
+
+    public static final int VALIDATION_ATTEMPTS = 3;
+    public static final String PLAN_EXPIRATION_HEADER = "Plan Expiration Notice";
+    public static final String RECHARGE_SUCCESSFUL_HEADER = "Recharge Successfully";
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final String ORDER_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int COUPON_LENGTH = 6;

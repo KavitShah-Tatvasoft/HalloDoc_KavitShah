@@ -26,7 +26,7 @@ public class ClientDocuments {
     @Column(name = "profile_photo_extension")
     private String profilePhotoExtension;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 

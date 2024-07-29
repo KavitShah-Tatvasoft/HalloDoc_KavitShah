@@ -60,6 +60,9 @@ public class SimCard {
     @Column(name = "is_plan_active")
     private boolean isPlanActive;
 
+    @Column(name = "sim_accquired_type")
+    private int simAcquiredType;
+
     public SimCard(int simCardId, Client client, String phoneNumber, LocalDateTime activationDate, String iccidNumber, String imsiNumber, String imeiNumber, int simType, boolean isAvailable, String pukNumber, boolean status, boolean isBlocked, boolean isRoamingActive, boolean isPlanActive) {
         this.simCardId = simCardId;
         this.client = client;

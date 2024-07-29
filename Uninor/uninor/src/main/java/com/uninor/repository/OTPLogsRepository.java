@@ -49,5 +49,17 @@ public class OTPLogsRepository {
         return list;
     }
 
+    public List<OtpLogs> getLatestOtpByEmail(String email){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM OtpLogs ol WHERE ol.email=:email ORDER BY ol.sentDateTime DESC";
+        Query<OtpLogs> q = s.createQuery(queryString);
+        q.setParameter("email", email);
+        q.setMaxResults(1);
+        List<OtpLogs> list = q.list();
+        s.close();
+        return list;
+    }
+
+
 
 }

@@ -11,13 +11,14 @@
     <div class="side-inner">
 
         <div class="nav-menu">
-            <ul>
-                <li class="active"><img src="<c:url value='/resources/icons/home.svg' />">Feed</li>
-                <li><a href="#"><span class="icon-search2 mr-3"></span>Explore</a></li>
-                <li><a href="#"><span class="icon-notifications mr-3"></span>Notifications</a></li>
-                <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
-                <li><a href="#"><span class="icon-pie-chart mr-3"></span>Stats</a></li>
-                <li><a href="#"><span class="icon-sign-out mr-3"></span>Sign out</a></li>
+            <ul class="sidebar-list">
+                <li><a href="${pageContext.request.contextPath}/client/dashboard" class="sidebar-single-flex active-common-class active-link-sidebar"><img src="<c:url value='/resources/icons/home.svg' />" class="margin-right"> <span>Dashboard</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/client/recharge-tab" class="sidebar-single-flex active-common-class"><img src="<c:url value='/resources/icons/home.svg' />" class="margin-right"> <span>Recharge</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/client/client-profile" class="sidebar-single-flex active-common-class"><img src="<c:url value='/resources/icons/home.svg' />" class="margin-right"> <span>User Profile</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/client/sim-details" class="sidebar-single-flex active-common-class"><img src="<c:url value='/resources/icons/home.svg' />" class="margin-right"> <span>Sim Details</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/client/redeem-rewards" class="sidebar-single-flex active-common-class"><img src="<c:url value='/resources/icons/home.svg' />" class="margin-right"> <span>Rewards</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/client/recharge-history" class="sidebar-single-flex active-common-class"><img src="<c:url value='/resources/icons/home.svg' />" class="margin-right"> <span>Recharge History</span></a></li>
+
             </ul>
         </div>
     </div>

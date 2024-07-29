@@ -41,6 +41,22 @@ function getSimDetails(){
 
 }
 
+$(".close-block-toggle-modal").click(function (){
+    $('#deactivate-modal').modal('hide');
+    $(".deactivate-confirm-input").text("").val("")
+    $(".confirm-error-text").addClass("d-none")
+    $(".modal-backdrop").removeClass("show")
+})
+
+function deactivateSim(){
+    var text = $(".deactivate-confirm-input").val().toUpperCase()
+    if(text === "CONFIRM"){
+        createDeactivationRequest()
+    }else {
+        $(".confirm-error-text").removeClass('d-none')
+    }
+}
+
 function createDeactivationRequest(){
 
     $.ajax({
@@ -49,6 +65,8 @@ function createDeactivationRequest(){
         dataType: 'json',
         success: function (xhr, status, error) {
             console.log(xhr)
+            $(".close-block-toggle-modal").click()
+            showAlert(true,xhr["message"],"success")
         },
         error: function(xhr, status, error) {
             debugger
