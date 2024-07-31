@@ -1,5 +1,6 @@
 package com.uninor.repository;
 
+import com.uninor.dto.PlanCategoriesDto;
 import com.uninor.dto.RechargePlanFilter;
 import com.uninor.dto.RechargePlanFilter;
 import com.uninor.model.*;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class PlanRepository {
@@ -32,6 +34,15 @@ public class PlanRepository {
     public List<Plan> getActivePlan(){
         Session s = this.sessionFactory.openSession();
         String queryString = "FROM Plan WHERE isDeleted=false ORDER BY categoryId.planId ASC, rechargeAmount ASC";
+        Query<Plan> q = s.createQuery(queryString);
+        List<Plan> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public List<Plan> getAllPlan(){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM Plan ORDER BY categoryId.planId ASC, rechargeAmount ASC";
         Query<Plan> q = s.createQuery(queryString);
         List<Plan> list = q.list();
         s.close();
@@ -60,6 +71,220 @@ public class PlanRepository {
         q.setParameter("startOfDay", startOfDay);
         q.setParameter("endOfDay", endOfDay);
         List<PlanActivation> list = q.list();
+        s.close();
+        return list;
+    }
+
+    public List<Plan> getAllFilteredPlan(RechargePlanFilter filters){
+        Session s = this.sessionFactory.openSession();
+
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Plan> cr = cb.createQuery(Plan.class);
+        Root<Plan> root = cr.from(Plan.class);
+
+        Join<Plan, PlanCategories> categoriesJoin = root.join("categoryId");
+
+        Predicate predicate;
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        String[] refreshingData = filters.getRefreshingPlanFilters().split(",");
+
+        int refreshingDataFilterCount = 0;
+        for (String str : refreshingData) {
+            refreshingDataFilterCount++;
+            if(Integer.parseInt(str) == 1){
+                predicate = cb.equal(categoriesJoin.get("planId"),refreshingDataFilterCount);
+                predicates.add(predicate);
+            }
+        }
+
+        String[] fixedData = filters.getFixedDataPlanFilters().split(",");
+
+        int fixedDataCount = 0;
+        for (String str : fixedData) {
+            fixedDataCount++;
+
+            switch (fixedDataCount){
+                case 1:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),6),cb.between(root.get("dataAllowance"), 0, 200000));
+                        predicates.add(predicate);
+                    }
+                    break;
+
+                case 2:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),6),cb.between(root.get("dataAllowance"), 200000, 300000));
+                        predicates.add(predicate);
+                    }
+                    break;
+                case 3:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),6),cb.greaterThanOrEqualTo(root.get("dataAllowance"), 300000));
+                        predicates.add(predicate);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        String[] addOnData = filters.getAddOnDataFilters().split(",");
+
+        int addOnDataCount = 0;
+        for (String str : addOnData) {
+            addOnDataCount++;
+
+            switch (addOnDataCount){
+                case 1:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),7),cb.between(root.get("dataAllowance"), 0, 25000));
+                        predicates.add(predicate);
+                    }
+                    break;
+
+                case 2:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),7),cb.between(root.get("dataAllowance"), 25000, 50000));
+                        predicates.add(predicate);
+                    }
+                    break;
+                case 3:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),7),cb.between(root.get("dataAllowance"), 50000, 100000));
+                        predicates.add(predicate);
+                    }
+                    break;
+                case 4:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),7),cb.greaterThanOrEqualTo(root.get("dataAllowance"), 100000));
+                        predicates.add(predicate);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        String[] roamingData = filters.getRoamingDataFilters().split(",");
+
+        int roamingDataCount = 0;
+        for (String str : roamingData) {
+            roamingDataCount++;
+
+            switch (roamingDataCount){
+                case 1:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),9),cb.equal(root.get("voiceAllowance"), "None"));
+                        predicates.add(predicate);
+                    }
+                    break;
+
+                case 2:
+                    if(Integer.parseInt(str) == 1){
+                        predicate = cb.and(cb.equal(categoriesJoin.get("planId"),9),cb.notEqual(root.get("voiceAllowance"), "None"), cb.notEqual(root.get("voiceAllowance"), "Unlimited"));
+                        predicates.add(predicate);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+//        Predicate categoryPredicates = cb.or(predicates.toArray(new Predicate[0]));
+
+        String[] amountFilters = filters.getAmountFilters().split(",");
+        List<Predicate> amountPredicates = new ArrayList<>();
+        int amountFilterCount = 0;
+        for (String str : amountFilters) {
+            amountFilterCount++;
+            switch (amountFilterCount) {
+                case 1:
+                    if(Integer.parseInt(str) == 1){
+                        amountPredicates.add(cb.between(root.get("rechargeAmount"), 20, 300)); // Example range
+                    }
+                    break;
+                case 2:
+                    if(Integer.parseInt(str) == 1){
+                        amountPredicates.add(cb.between(root.get("rechargeAmount"), 301, 600)); // Example range
+                    }
+                    break;
+                case 3:
+                    if(Integer.parseInt(str) == 1){
+                        amountPredicates.add(cb.between(root.get("rechargeAmount"), 601, 900)); // Example range
+                    }
+                    break;
+                case 4:
+                    if(Integer.parseInt(str) == 1){
+                        amountPredicates.add(cb.greaterThanOrEqualTo(root.get("rechargeAmount"), 900)); // Example value
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+//        Predicate amountPredicate = cb.or(amountPredicates.toArray(new Predicate[0]));
+
+        String[] validityFilters = filters.getValidityFilters().split(",");
+        List<Predicate> validityPredicates = new ArrayList<>();
+        int validityFilterCount = 0;
+        for (String str : validityFilters) {
+            validityFilterCount++;
+            switch (validityFilterCount) {
+                case 1:
+                    if(Integer.parseInt(str) == 1){
+                        validityPredicates.add(cb.lessThanOrEqualTo(root.get("validity"), 30)); // Example range
+                    }
+                    break;
+                case 2:
+                    if(Integer.parseInt(str) == 1){
+                        validityPredicates.add(cb.between(root.get("validity"), 31, 60)); // Example range
+                    }
+                    break;
+                case 3:
+                    if(Integer.parseInt(str) == 1){
+                        validityPredicates.add(cb.greaterThanOrEqualTo(root.get("validity"), 61)); // Example range
+                    }
+                    break;
+                case 4:
+                    if(Integer.parseInt(str) == 1){
+                        validityPredicates.add(cb.greaterThanOrEqualTo(root.get("validity"), 300)); // Example value
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+//        Predicate validityPredicate = cb.or(validityPredicates.toArray(new Predicate[0]));
+
+        Predicate categoryPredicate = predicates.isEmpty() ? null : cb.or(predicates.toArray(new Predicate[0]));
+
+        Predicate amountPredicate = amountPredicates.isEmpty() ? null : cb.or(amountPredicates.toArray(new Predicate[0]));
+
+        Predicate validityPredicate = validityPredicates.isEmpty() ? null : cb.or(validityPredicates.toArray(new Predicate[0]));
+
+        List<Predicate> finalPredicates = new ArrayList<>();
+
+        if (categoryPredicate != null) {
+            finalPredicates.add(categoryPredicate);
+        }
+        if (amountPredicate != null){
+            finalPredicates.add(amountPredicate);
+        }
+        if (validityPredicate != null){
+            finalPredicates.add(validityPredicate);
+        }
+
+        Predicate finalPredicate = cb.and(finalPredicates.toArray(new Predicate[0]));
+
+        cr.where(finalPredicate);
+        Query<Plan> query = s.createQuery(cr);
+
+        List<Plan> list = query.getResultList();
         s.close();
         return list;
     }
@@ -308,6 +533,107 @@ public class PlanRepository {
         q.executeUpdate();
         tx.commit();
         s.close();
+    }
+
+    public List<PlanCategoriesDto> getAllPlanCategories(){
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM PlanCategories pc ORDER BY pc.planId";
+        Query<PlanCategories> q = s.createQuery(queryString);
+        List<PlanCategories> list = q.list();
+        s.close();
+
+        return list.stream()
+                .map(category -> new PlanCategoriesDto(category.getPlanId(), category.getPlanCategory()))
+                .collect(Collectors.toList());
+    }
+
+    public boolean isSamePlanAvailable(int isPlanNew, Integer planId, int planCategory, double rechargeAmount, int smsAllowance, String voiceAllowance, double dataAllowance, double extraDataAllowance, int validity,int isAvailable, int isExtraDataAvailable, int isRefreshing){
+
+        Session s = this.sessionFactory.openSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Plan> cr = cb.createQuery(Plan.class);
+        Root<Plan> root = cr.from(Plan.class);
+        Join<Plan, PlanCategories> categoriesJoin = root.join("categoryId");
+
+        Predicate predicate;
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if(isPlanNew == 0){
+            predicate = cb.notEqual(root.get("planId"), planId);
+            predicates.add(predicate);
+        }
+        predicate = cb.equal(categoriesJoin.get("planId"), planCategory);
+        predicates.add(predicate);
+
+        predicate = cb.equal(root.get("rechargeAmount"), rechargeAmount);
+        predicates.add(predicate);
+
+        predicate = cb.equal(root.get("smsAllowance"), smsAllowance);
+        predicates.add(predicate);
+
+        predicate = cb.equal(root.get("voiceAllowance"),voiceAllowance);
+        predicates.add(predicate);
+
+        predicate = cb.equal(root.get("dataAllowance"),dataAllowance);
+        predicates.add(predicate);
+
+        predicate = cb.equal(root.get("extraData"),extraDataAllowance);
+        predicates.add(predicate);
+
+        predicate = cb.equal(root.get("validity"),validity);
+        predicates.add(predicate);
+
+        if(isAvailable == 0){
+            predicate = cb.equal(root.get("isDeleted"),false);
+        }else {
+            predicate = cb.equal(root.get("isDeleted"),true);
+        }
+        predicates.add(predicate);
+
+        if(isExtraDataAvailable == 0){
+            predicate = cb.equal(root.get("isExtraDataAvailable"),false);
+        }else {
+            predicate = cb.equal(root.get("isExtraDataAvailable"),true);
+        }
+        predicates.add(predicate);
+
+        if(isRefreshing == 0){
+            predicate = cb.equal(root.get("isRefreshing"),false);
+        }else {
+            predicate = cb.equal(root.get("isRefreshing"),true);
+        }
+        predicates.add(predicate);
+
+        Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
+
+        cr.where(finalPredicate);
+        Query<Plan> query = s.createQuery(cr);
+
+        List<Plan> list = query.getResultList();
+        s.close();
+        return !list.isEmpty();
+    }
+
+    public PlanCategories getPlanCategoriesById(int planId){
+
+        Session s = this.sessionFactory.openSession();
+        String queryString = "FROM PlanCategories pc WHERE pc.planId=:planId";
+        Query<PlanCategories> q = s.createQuery(queryString);
+        q.setParameter("planId", planId);
+        List<PlanCategories> list = q.list();
+        s.close();
+        return list.isEmpty()?null:list.get(0);
+    }
+
+    @Transactional
+    public int savePlanDetails(Plan plan){
+        return (Integer) this.hibernateTemplate.save(plan);
+    }
+
+    @Transactional
+    public void updatePlanDetails(Plan plan){
+        this.hibernateTemplate.update(plan);
     }
 
 }

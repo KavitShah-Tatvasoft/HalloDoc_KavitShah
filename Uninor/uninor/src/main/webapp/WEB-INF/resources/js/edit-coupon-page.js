@@ -266,6 +266,8 @@ $.validator.addMethod("notZero", function(value, element) {
         return value !== "0";
     },"Please select a value.");
 
+
+
 $("#update-coupon-form").validate({
     rules: {
         couponNameUpdate: {

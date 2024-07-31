@@ -2,6 +2,7 @@ package com.uninor.controller;
 
 import com.uninor.dto.*;
 import com.uninor.model.CuponCategory;
+import com.uninor.model.PlanCategories;
 import com.uninor.service.AdminDashboardService;
 import com.uninor.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,15 @@ public class AdminController {
         return "admin/edit-coupon-page";
     }
 
+    @RequestMapping(value = "/users-details", method = RequestMethod.GET)
+    public String showUserDetailsPage(){
+        return "admin/users-details";
+    }
+
     @RequestMapping(value = "/edit-plan-page", method = RequestMethod.GET)
     public String showEditPlanPage(Model model){
+        List<PlanCategoriesDto> planCategories = this.adminService.getPlanCategories();
+        model.addAttribute("planCategories", planCategories);
         return "admin/edit-plan-page";
     }
 
@@ -67,6 +75,12 @@ public class AdminController {
     public ResponseEntity<Map<String, ClientRequestPaginatedDto>> getFilteredClientRequest(@Valid @RequestBody FilterUserRequest filterUserRequest){
         return this.adminDashboardService.getFilteredClientRequests(filterUserRequest);
     }
+
+//    @ResponseBody
+//    @RequestMapping(value = "/get-filtered-users-details", method = RequestMethod.POST)
+//    public ResponseEntity<Map<String,ClientDetailsPaginatedDto>> getFilteredUsersDetials(@Valid @RequestBody FilterUserRequest filterUserRequest){
+//        return this.adminDashboardService.getFilteredUsersDetails(filterUserRequest);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/get-request-data", method = RequestMethod.POST)
@@ -163,4 +177,23 @@ public class AdminController {
     public ResponseEntity<Map<String, PlanDetailsDto>> getRechargePlanDetails(@RequestParam("planId") int planId) {
         return this.adminService.getPlanDetails(planId);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/get-updating-plan-details", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,PreUpdatePlanDetailsDto>> getUpdatingPlanDetails(@RequestParam("planId") int planId) {
+        return this.adminService.getUpdatingPlanDetails(planId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/add-new-plan", method = RequestMethod.POST)
+    public ResponseEntity<Map<String ,String >> saveNewPlanDetails(@Valid @RequestBody PreUpdatePlanDetailsDto preUpdatePlanDetailsDto, HttpServletRequest httpServletRequest){
+        return this.adminService.saveNewPlanDetails(preUpdatePlanDetailsDto,httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update-current-plan-details", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,String>> updatePlanDetails(@Valid @RequestBody PreUpdatePlanDetailsDto preUpdatePlanDetailsDto, HttpServletRequest httpServletRequest){
+        return this.adminService.updatePlanDetails(preUpdatePlanDetailsDto,httpServletRequest);
+    }
+
 }

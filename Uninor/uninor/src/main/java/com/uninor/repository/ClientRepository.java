@@ -1,16 +1,25 @@
 package com.uninor.repository;
 
+import com.uninor.dto.FilterUserRequest;
+import com.uninor.enumeration.ClientRequestTypeEnum;
+import com.uninor.enumeration.RequestStatusEnum;
 import com.uninor.model.Client;
+import com.uninor.model.ClientRequest;
 import com.uninor.model.SimCard;
 import com.uninor.model.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,15 +130,60 @@ public class ClientRepository {
         return map;
     }
 
-//    public Client getClientByUserId(int userId){
-//        Session s = this.sessionFactory.openSession();
-//        String queryString = "SELECT * FROM client ct WHERE ct.user_id=:userId";
-//        Query q = s.createNativeQuery(queryString);
-//        q.setParameter("userId", userId);
-//        Object[] result = (Object[]) q.getSingleResult();
-//        s.close();
-//
-//        Client client
-//    }
+    public Page<Client> getPaginatedClientData(Pageable pageable, FilterUserRequest filterUserRequest){
+        Session s = this.sessionFactory.openSession();
+
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Client> cr = cb.createQuery(Client.class);
+        Root<Client> root = cr.from(Client.class);
+
+        Join<Client, Users> userJoin = root.join("user");
+        Predicate predicate;
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if (filterUserRequest.getRequestType() == 2) {
+            predicate = cb.equal(userJoin.get("isRegistered"), false);
+            predicates.add(predicate);
+        }else {
+            predicate = cb.equal(userJoin.get("isRegistered"), true);
+            predicates.add(predicate);
+
+            if(filterUserRequest.getStatusType() == 2){
+                predicate = cb.equal(root.get("isDocValidated"), true);
+                predicates.add(predicate);
+            }
+
+            if(filterUserRequest.getStatusType() == 1){
+                predicate = cb.equal(root.get("isDocValidated"), false);
+                predicates.add(predicate);
+            }
+        }
+
+
+
+        if (!filterUserRequest.getEmail().isEmpty()) {
+            predicate = cb.like(cb.lower(root.get("email")), "%" + filterUserRequest.getEmail().toLowerCase() + "%");
+            predicates.add(predicate);
+        }
+
+        Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
+        cr.where(finalPredicate);
+        Query<Client> query = s.createQuery(cr);
+        query.setMaxResults(pageable.getPageSize());
+        query.setFirstResult((int) pageable.getOffset());
+        List<Client> list = query.getResultList();
+
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        Root<Client> countRoot = countQuery.from(Client.class);
+        Join<Client, Users> usersJoinCount = countRoot.join("user");
+
+        countQuery.select(cb.count(countRoot)).where(predicates.toArray(new Predicate[0]));
+        Long count = s.createQuery(countQuery).getSingleResult();
+
+
+        s.close();
+        return new PageImpl<>(list, pageable, count);
+    }
 
 }

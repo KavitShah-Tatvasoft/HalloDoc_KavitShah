@@ -58,7 +58,7 @@
     width: auto;
 }
 
-.bell-menu-icon{
+.bell-menu-icon, .logout-icon{
     cursor: pointer;
     height: 30px;
     width: auto;
@@ -132,9 +132,10 @@
         height: 28px;
     }
 
-    .menu-logo-flex .menu-icon, .menu-logo-flex .bell-menu-icon{
+    .menu-logo-flex .menu-icon, .menu-logo-flex .bell-menu-icon, .menu-logo-flex .logout-icon{
         height: 28px;
     }
+
 
     .nav-logo{
         height: 45px;

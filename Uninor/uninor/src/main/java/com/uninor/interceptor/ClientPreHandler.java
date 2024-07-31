@@ -30,10 +30,14 @@ public class ClientPreHandler extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
-            System.out.println("In Interceptorr");
             Integer clientId = (Integer) request.getSession().getAttribute("clientId");
+            Integer adminId = (Integer) request.getSession().getAttribute("adminId");
+            if(clientId == null && adminId !=null){
+                throw new AuthorizationServiceException("Invalid user");
+            }else if(clientId != null && adminId == null){
 
-            if(clientId == null){
+            }
+            else {
                 throw new DataNotFoundException("Client not found");
             }
 
@@ -61,7 +65,7 @@ public class ClientPreHandler extends HandlerInterceptorAdapter {
         }
         catch (AuthorizationServiceException e){
             request.setAttribute("errorMessage", e.getMessage());
-            response.sendRedirect(request.getContextPath()+"error/authorization-error");
+            response.sendRedirect(request.getContextPath()+"/error/authorization-error");
         }
 
         return true;

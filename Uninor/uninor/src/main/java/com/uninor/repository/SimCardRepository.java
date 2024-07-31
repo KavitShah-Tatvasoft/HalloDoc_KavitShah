@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -90,6 +91,18 @@ public class SimCardRepository {
         List<SimCard> list = q.list();
         s.close();
         return list;
+    }
+
+    public void setActivationTime(LocalDateTime now, SimCard simCard){
+        Session s = this.sessionFactory.openSession();
+        Transaction tx = s.beginTransaction();
+        String queryString = "UPDATE SimCard sc SET sc.activationDate=:now WHERE sc.simCardId=:simCardId";
+        Query<SimCard> q = s.createQuery(queryString);
+        q.setParameter("now", now);
+        q.setParameter("simCardId",simCard.getSimCardId());
+        q.executeUpdate();
+        tx.commit();
+        s.close();
     }
 
 }

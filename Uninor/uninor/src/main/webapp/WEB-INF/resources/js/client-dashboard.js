@@ -66,9 +66,10 @@ function getDashboardData() {
                 $("#confirmSwitchButton").text("Switch to Prepaid")
                 $(".para-type-toggle").text("prepaid")
                 $(".add-additional-data").addClass("d-none")
-                $(".extra-data-flex").removeClass("d-none")
+                $(".extra-data-flex").addClass("d-none")
 
                 if (responseData.postpaidExtraDataUsed) {
+                    $(".extra-data-flex").removeClass("d-none")
                     $("#data-left-progress-top").text("0.00 GB")
                     $(".extra-data-usage").text(responseData.remainingDataAmount)
                     $(".data-progress-bar").css('width', '0%');

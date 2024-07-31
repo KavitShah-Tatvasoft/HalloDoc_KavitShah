@@ -93,7 +93,7 @@ function getProfileData(){
             $("#fname").val(details.firstName)
             $("#lname").val(details.lastName)
             $("#mobileNumber").val(details.phone).prop('readonly', true)
-            $("#email").val(details.email)
+            $("#email").val(details.email).prop('readonly', true)
             $("#dob").val(details.birthDate).prop('readonly', true)
             $("#street").val(details.street)
             $("#city").val(details.city)

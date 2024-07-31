@@ -80,11 +80,11 @@ function populateCategoryWisePlans(data) {
     var count = 1
     $.each(data, function (index, item) {
         if (index !== "Popular Plans") {
-            if(item.prepaid){
-                $(".filter-btn").removeClass("d-none")
-            }else {
-                $(".filter-btn").addClass("d-none")
-            }
+            // if(item.prepaid){
+            //     $(".filter-btn").removeClass("d-none")
+            // }else {
+            //     $(".filter-btn").addClass("d-none")
+            // }
             if (item.planCount != 0) {
                 var categoryContainer = $(".card-container-clone").clone().removeClass("d-none").removeClass("card-container-clone")
                 categoryContainer.find(".unique-aria-controls").attr("aria-controls", "plan-category-" + count)

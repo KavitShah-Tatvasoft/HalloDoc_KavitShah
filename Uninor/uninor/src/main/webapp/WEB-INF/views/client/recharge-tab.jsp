@@ -565,10 +565,7 @@
                 </div>
             </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view-plan-modal">
-                View Plan
-            </button>
+
 
             <!-- Modal -->
             <div class="modal fade" id="view-plan-modal" data-bs-keyboard="false" tabindex="-1"
@@ -639,10 +636,6 @@
                 </div>
             </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recharge-plan">
-                Recharge Now
-            </button>
 
             <!-- Modal -->
             <div class="modal recharge-plan-modal fade fade-scale in" id="recharge-plan" data-bs-backdrop="static"
@@ -936,12 +929,6 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#statusSuccessModal">
-            Success Modal
-        </button>
-        <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#statusErrorsModal">
-            Error Modal
-        </button>
 
     </main>
 

@@ -90,7 +90,7 @@ public class EmailService {
     }
 
 
-    public void registrationEmail(String email, String phoneNumber, String name) {
+    public void registrationEmail(String email, String name, String phoneNumber) {
 
         MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
             public void prepare(MimeMessage mimeMessage) throws Exception {

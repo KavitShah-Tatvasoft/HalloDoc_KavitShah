@@ -26,7 +26,7 @@
                     <a class="nav-profile-image" href="${pageContext.request.contextPath}/client/client-profile"><img src="<c:url value='/resources/icons/person-filled-animated.svg'/>"
                                                         class="profile-pic"/></a>
                 </div>
-                <img src="<c:url value='/resources/icons/logout-animate.svg' />" class="menu-icon"/>
+                <img src="<c:url value='/resources/icons/logout-animate.svg' />" class="logout-icon" onclick="logoutUser()" />
             </div>
         </div>
     </div>

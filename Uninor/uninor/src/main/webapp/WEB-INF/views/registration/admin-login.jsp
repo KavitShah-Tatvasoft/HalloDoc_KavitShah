@@ -30,7 +30,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
-<body>
+<body onload="showOnLoadMessages()">
 <div class="loader-container">
     <div class="loader"></div>
 </div>

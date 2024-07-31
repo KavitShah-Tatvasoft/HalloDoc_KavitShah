@@ -16,4 +16,5 @@ public class PlanDetailsDto {
     private Double additionalData;
     private boolean isDailyRefreshing;
     private String voiceAllowance;
+
 }

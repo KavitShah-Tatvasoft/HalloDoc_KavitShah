@@ -41,7 +41,7 @@
     <p class="description-text text-center">Unauthorized Access</p>
     <p>It seems like you don't have access to this page. If you think it's a mistake please contact the admin.</p>
     <div class="button-center">
-        <a href="${pageContext.request.contextPath}/login" type="button" class="login-btn-session">Login Page</a>
+        <a onclick="history.go(-1)" type="button" class="login-btn-session">GO BACK</a>
     </div>
 </div>
 </body>

@@ -40,8 +40,13 @@
     </div>
     <p class="description-text text-center">Session Expired</p>
     <p>It seems like you have timed out of a session. Please login again to continue the service.</p>
-    <div class="button-center">
-        <a href="${pageContext.request.contextPath}/login" type="button" class="login-btn-session">Login Page</a>
+    <div class="button-center-flex">
+        <div class="button-center">
+            <a href="${pageContext.request.contextPath}/login" type="button" class="login-btn-session">User Login Page</a>
+        </div>
+        <div class="button-center">
+            <a href="${pageContext.request.contextPath}/admin-login" type="button" class="login-btn-session">Admin Login Page</a>
+        </div>
     </div>
 
 </div>

@@ -5,6 +5,7 @@ import com.uninor.enumeration.SimType;
 import com.uninor.exceptions.DataNotFoundException;
 import com.uninor.exceptions.InvalidDataFoundException;
 import com.uninor.exceptions.InvalidFileException;
+import com.uninor.helper.Helper;
 import com.uninor.model.*;
 import com.uninor.repository.AdminRepository;
 import com.uninor.repository.CategoryRepository;
@@ -289,9 +290,9 @@ public class AdminService {
         List<Plan> availablePlans;
         List<Plan> popularPlans = this.planRepository.getPopularActivePlans();
         if (rechargePlanFilter.isIsfilterApplied()) {
-            availablePlans = this.planRepository.getActiveFilteredPlan(rechargePlanFilter);
+            availablePlans = this.planRepository.getAllFilteredPlan(rechargePlanFilter);
         } else {
-            availablePlans = this.planRepository.getActivePlan();
+            availablePlans = this.planRepository.getAllPlan();
         }
 
         ShowPlanDto popularPlan = createPopularPlanDto(popularPlans, "Popular Plans");
@@ -399,13 +400,45 @@ public class AdminService {
         return annualPlan;
     }
 
+    public ResponseEntity<Map<String,PreUpdatePlanDetailsDto>> getUpdatingPlanDetails(int planId){
+        if(planId == 0){
+            throw new DataNotFoundException("No such plan found!");
+        }
+
+        Map<String,PreUpdatePlanDetailsDto> responseMap = new HashMap<>();
+        Plan plan = this.planRepository.getPlanById(planId);
+
+        if(plan == null){
+            throw new DataNotFoundException("Plan Data not found");
+        }
+
+        PreUpdatePlanDetailsDto planDetailsDto = new PreUpdatePlanDetailsDto();
+        planDetailsDto.setPlanId(planId);
+        planDetailsDto.setPlanAmount(plan.getRechargeAmount());
+        planDetailsDto.setIsNewPlan(0);
+        planDetailsDto.setPlanCategoryId(plan.getCategoryId().getPlanId());
+        planDetailsDto.setDataAllowance(plan.getDataAllowance());
+        planDetailsDto.setValidityPeriod(plan.getValidity());
+        planDetailsDto.setSmsAllowance(plan.getSmsAllowance());
+        planDetailsDto.setDailyRefresh(plan.getIsRefreshing()?1:0);
+        planDetailsDto.setExtraDataAllowance(plan.getExtraData());
+        planDetailsDto.setExtraDataAvailable(plan.getIsExtraDataAvailable()?1:0);
+        planDetailsDto.setIsAvailable(plan.getIsDeleted()?0:1);
+        planDetailsDto.setVoiceAllowance(plan.getVoiceAllowance());
+
+        responseMap.put("planData",planDetailsDto);
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
     public ResponseEntity<Map<String,PlanDetailsDto>> getPlanDetails(int planId){
         if(planId == 0){
             throw new DataNotFoundException("No such plan found!");
         }
         Map<String,PlanDetailsDto> responseMap = new HashMap<>();
         Plan plan = this.planRepository.getPlanById(planId);
-        try {
+        if(plan == null){
+            throw new DataNotFoundException("Plan Data not found");
+        }
             PlanDetailsDto planDetails = new PlanDetailsDto();
             planDetails.setPlanId(plan.getPlanId());
             planDetails.setPlanAmount(plan.getRechargeAmount());
@@ -425,9 +458,76 @@ public class AdminService {
             planDetails.setTotalData(totalData);
             responseMap.put("Plan", planDetails);
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
-        }catch (NullPointerException e){
-            throw new DataNotFoundException("No Plan Found! Please try again");
+    }
+
+    public List<PlanCategoriesDto> getPlanCategories(){
+        return this.planRepository.getAllPlanCategories();
+    }
+
+    public ResponseEntity<Map<String,String>> saveNewPlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest){
+        int adminId = (Integer) httpServletRequest.getSession().getAttribute("adminId");
+        Admin admin = this.adminRepository.getAdminById(adminId);
+        if(admin == null){
+            throw new DataNotFoundException("Admin Data found!");
         }
+        boolean isPlanAvailable = this.planRepository.isSamePlanAvailable(dtoOb.getIsNewPlan(), dtoOb.getPlanId(), dtoOb.getPlanCategoryId(), dtoOb.getPlanAmount(), dtoOb.getSmsAllowance(), dtoOb.getVoiceAllowance(), dtoOb.getDataAllowance(), dtoOb.getExtraDataAllowance(), dtoOb.getValidityPeriod(),dtoOb.getIsAvailable(), dtoOb.getExtraDataAvailable(), dtoOb.getDailyRefresh());
+
+        if(isPlanAvailable){
+            throw new InvalidDataFoundException("Plan Already Available!");
+        }
+        Map<String,String> responseMap = new HashMap<>();
+        PlanCategories planCategories = this.planRepository.getPlanCategoriesById(dtoOb.getPlanCategoryId());
+        Plan plan = new Plan();
+        plan.setPlanCode(Helper.planCodeGenerator());
+        plan.setCategoryId(planCategories);
+        plan.setBoughtCount(0);
+        plan.setValidity(dtoOb.getValidityPeriod());
+        plan.setSmsAllowance(dtoOb.getSmsAllowance());
+        plan.setDataAllowance(dtoOb.getDataAllowance());
+        plan.setExtraData(dtoOb.getExtraDataAllowance());
+        plan.setCreatedBy(admin);
+        plan.setModidfiedBy(admin);
+        plan.setRechargeAmount(dtoOb.getPlanAmount());
+        plan.setVoiceAllowance(dtoOb.getVoiceAllowance());
+        plan.setIsRefreshing(dtoOb.getDailyRefresh() == 1);
+        plan.setIsExtraDataAvailable(dtoOb.getExtraDataAvailable() == 1);
+        plan.setIsDeleted(dtoOb.getIsAvailable() == 0);
+        this.planRepository.savePlanDetails(plan);
+
+        responseMap.put("message","Plan saved successfully!");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,String>> updatePlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest){
+        int adminId = (Integer) httpServletRequest.getSession().getAttribute("adminId");
+        Admin admin = this.adminRepository.getAdminById(adminId);
+        if(admin == null){
+            throw new DataNotFoundException("Admin Data found!");
+        }
+
+        Plan plan = this.planRepository.getPlanById(dtoOb.getPlanId());
+        if(plan == null){
+            throw new DataNotFoundException("Plan Data found!");
+        }
+
+        boolean isPlanAvailable = this.planRepository.isSamePlanAvailable(dtoOb.getIsNewPlan(), dtoOb.getPlanId(), dtoOb.getPlanCategoryId(), dtoOb.getPlanAmount(), dtoOb.getSmsAllowance(), dtoOb.getVoiceAllowance(), dtoOb.getDataAllowance(), dtoOb.getExtraDataAllowance(), dtoOb.getValidityPeriod(),dtoOb.getIsAvailable(), dtoOb.getExtraDataAvailable(), dtoOb.getDailyRefresh());
+        if(isPlanAvailable){
+            throw new InvalidDataFoundException("Plan Already Available!");
+        }
+        Map<String , String> responseMap = new HashMap<>();
+        plan.setValidity(dtoOb.getValidityPeriod());
+        plan.setSmsAllowance(dtoOb.getSmsAllowance());
+        plan.setDataAllowance(dtoOb.getDataAllowance());
+        plan.setExtraData(dtoOb.getExtraDataAllowance());
+        plan.setModidfiedBy(admin);
+        plan.setRechargeAmount(dtoOb.getPlanAmount());
+        plan.setVoiceAllowance(dtoOb.getVoiceAllowance());
+        plan.setIsRefreshing(dtoOb.getDailyRefresh() == 1);
+        plan.setIsExtraDataAvailable(dtoOb.getExtraDataAvailable() == 1);
+        plan.setIsDeleted(dtoOb.getIsAvailable() == 0);
+        this.planRepository.updatePlanDetails(plan);
+        responseMap.put("message","Plan updated successfully!");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
 }

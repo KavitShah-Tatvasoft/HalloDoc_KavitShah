@@ -141,7 +141,52 @@ function openNewPlanModal(){
 }
 
 function updatePlan(planId){
-    alert(planId)
+    $.ajax({
+        url: CONTEXT_PATH + '/admin/get-updating-plan-details',
+        type: 'POST',
+        data: {
+            planId: planId
+        },
+        success: function (xhr, status, error) {
+            console.log(xhr)
+
+            var response = xhr["planData"]
+            $("#updateRechargeAmount").val(response.planAmount)
+            $("#updateSmsAllowance").val(response.smsAllowance)
+            $("#updateVoiceAllowance").val(response.voiceAllowance)
+            $("#updateDataAllowance").val(response.dataAllowance)
+            $("#updateExtraData").val(response.extraDataAllowance)
+            $("#updateValidity").val(response.validityPeriod)
+            $("#updateIsAvailable").val(response.isAvailable)
+            $("#updateExtraDataAvailable").val(response.extraDataAvailable)
+            $("#updateRefreshesDaily").val(response.dailyRefresh)
+            $("#hiddenCouponTypeValue").val(response.planCategoryId)
+            $("#hiddenPlanIdValue").val(planId)
+            $("#update-coupon-modal").modal('show')
+        },
+        error: function(xhr, status, error) {
+            debugger
+            if (xhr.status === 400) {
+                let errorResponse;
+                try {
+                    errorResponse = JSON.parse(xhr.responseText);
+                } catch (e) {
+                    errorResponse = xhr.responseText;
+                }
+                console.log(errorResponse)
+                if (errorResponse.errors) {
+                    let errorMessage = errorResponse.errors
+                    $(".failure-message-heading").text("Some Error Occurred")
+                    $(".failure-message-modal").text(errorMessage)
+                    $('#statusErrorsModal').modal('show');
+                }
+            } else {
+                $(".failure-message-heading").text("Server Error")
+                $(".failure-message-modal").text("Some Error Occurred at server side!")
+                $('#statusErrorsModal').modal('show');
+            }
+        }
+    })
 }
 
 
@@ -205,6 +250,328 @@ $(document).ready(function(){
         $('#confirm-postpaid-recharge').modal('hide');
     })
 });
+
+$(document).ready(function() {
+    $.validator.addMethod("notZero", function(value, element) {
+        return value !== "0";
+    },"Please select a value.");
+
+    $.validator.addMethod("voiceAllowance", function (value,element){
+        return this.optional(element) || /^(Unlimited|\d+ minutes)$/.test(value);
+    }, "Please provide proper value")
+
+    $("#newPlanForm").validate({
+        rules: {
+            planCategory: {
+                required: true,
+                notZero: true,
+            },
+            rechargeAmount: {
+                required: true,
+                number: true,
+                min: 19,
+                max: 9999
+            },
+            smsAllowance: {
+                required: true,
+                number: true,
+                max: 1000
+            },
+            voiceAllowance: {
+                required: true,
+                voiceAllowance: true
+            },
+            dataAllowance: {
+                required: true,
+                number: true
+            },
+            extraData: {
+                required: true,
+                number: true
+            },
+            validity: {
+                required: true,
+                number: true,
+                min: 1,
+                max: 365
+            },
+            isAvailable: {
+                required: true
+            },
+            extraDataAvailable:{
+                required: true
+            },
+            refreshesDaily:{
+                required: true
+            },
+
+        },
+        messages: {
+            planCategory: {
+                required: "Plan Category Required",
+                notZero: "Select a plan category",
+            },
+            rechargeAmount: {
+                required: "Recharge amount required",
+                number: "Recharge amount should only be integer",
+                min: "Minimum recharge of Rs.19 required",
+                max: "Maximum recharge amount is 9999"
+            },
+            smsAllowance: {
+                required: "SMS allowance required",
+                number: "SMS allowance should only be integer",
+                max: "Maximum 1000 SMS can be provided"
+            },
+            voiceAllowance: {
+                required: "Voice allowance required",
+                voiceAllowance: "Provide valid details"
+            },
+            dataAllowance: {
+                required: "Data allowance required",
+                number: "Data amount should only be integer"
+            },
+            extraData: {
+                required: "Extra data amount required",
+                number: "Data amount should only be integer"
+            },
+            validity: {
+                required: "Validity days required",
+                number: "Validity days should only be integer",
+                min: "Minimum 1 day validity required",
+                max: "Maximum 365 days validity possible"
+            },
+            isAvailable: {
+                required: "Select a value"
+            },
+            extraDataAvailable:{
+                required: "Select a value"
+            },
+            refreshesDaily:{
+                required: "Select a value"
+            },
+        },
+        ignore: ":hidden",
+        errorElement: "span",
+        errorClass: "error-class",
+        submitHandler: function (form) {
+            addNewPlan()
+        }
+    });
+
+    $("#updatePlanForm").validate({
+        rules: {
+            updateRechargeAmount: {
+                required: true,
+                number: true,
+                min: 19,
+                max: 9999
+            },
+            updateSmsAllowance: {
+                required: true,
+                number: true,
+                max: 1000
+            },
+            updateVoiceAllowance: {
+                required: true,
+                voiceAllowance: true
+            },
+            updateDataAllowance: {
+                required: true,
+                number: true
+            },
+            updateExtraData: {
+                required: true,
+                number: true
+            },
+            updateValidity: {
+                required: true,
+                number: true,
+                min: 1,
+                max: 365
+            },
+            updateIsAvailable: {
+                required: true
+            },
+            updateExtraDataAvailable:{
+                required: true
+            },
+            updateRefreshesDaily:{
+                required: true
+            }
+        },
+        messages: {
+            updateRechargeAmount: {
+                required: "Recharge amount required",
+                number: "Recharge amount should only be integer",
+                min: "Minimum recharge of Rs.19 required",
+                max: "Maximum recharge amount is 9999"
+            },
+            updateSmsAllowance: {
+                required: "SMS allowance required",
+                number: "SMS allowance should only be integer",
+                max: "Maximum 1000 SMS can be provided"
+            },
+            updateVoiceAllowance: {
+                required: "Voice allowance required",
+                voiceAllowance: "Provide valid details"
+            },
+            updateDataAllowance: {
+                required: "Data allowance required",
+                number: "Data amount should only be integer"
+            },
+            updateExtraData: {
+                required: "Extra data amount required",
+                number: "Data amount should only be integer"
+            },
+            updateValidity: {
+                required: "Validity days required",
+                number: "Validity days should only be integer",
+                min: "Minimum 1 day validity required",
+                max: "Maximum 365 days validity possible"
+            },
+            updateIsAvailable: {
+                required: "Select a value"
+            },
+            updateExtraDataAvailable:{
+                required: "Select a value"
+            },
+            updateRefreshesDaily:{
+                required: "Select a value"
+            }
+        },
+        ignore: ":hidden",
+        errorElement: "span",
+        errorClass: "error-class",
+        submitHandler: function (form) {
+            updateCurrentPlan()
+        }
+    });
+
+});
+
+function updateCurrentPlan(){
+    var planId = $("#hiddenPlanIdValue").val()
+    var planCategory = $("#hiddenCouponTypeValue").val()
+    var rechargeAmount = $("#updateRechargeAmount").val()
+    var smsAllowance = $("#updateSmsAllowance").val()
+    var voiceAllowance = $("#updateVoiceAllowance").val()
+    var dataAllowance = $("#updateDataAllowance").val()
+    var extraData = $("#updateExtraData").val()
+    var validity = $("#updateValidity").val()
+    var isAvailable = $("#updateIsAvailable").val()
+    var extraDataAvailable = $("#updateExtraDataAvailable").val()
+    var refreshesDaily = $("#updateRefreshesDaily").val()
+
+    var payload = {}
+    payload["planId"] = planId
+    payload["planCategoryId"] = planCategory
+    payload["planAmount"] = rechargeAmount
+    payload["smsAllowance"] = smsAllowance
+    payload["voiceAllowance"] = voiceAllowance
+    payload["dataAllowance"] = dataAllowance
+    payload["extraDataAllowance"] = extraData
+    payload["validityPeriod"] = validity
+    payload["isAvailable"] = isAvailable
+    payload["extraDataAvailable"] = extraDataAvailable
+    payload["dailyRefresh"] = refreshesDaily
+    payload["isNewPlan"] = 0
+
+    $.ajax({
+        url: CONTEXT_PATH + '/admin/update-current-plan-details',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (xhr, status, error) {
+            console.log(xhr)
+            $('#updatePlanForm')[0].reset()
+            $(".new-plan-close-btn").click()
+            applyFilter(false)
+            showAlert(true,xhr['message'],"success")
+        },
+        error: function(xhr, status, error) {
+            $(".new-plan-close-btn").click()
+            debugger
+            if (xhr.status === 401 || xhr.status === 404 || xhr.status === 400 || xhr.status === 405 || xhr.status === 409) {
+                let errorResponse;
+                try {
+                    errorResponse = JSON.parse(xhr.responseText);
+                } catch (e) {
+                    errorResponse = xhr.responseText;
+                }
+                console.log(errorResponse)
+                if (errorResponse.errors) {
+                    let errorMessage = errorResponse.errors
+                    showAlert(true,errorMessage,"faliure")
+                }
+            } else {
+                showAlert(true,"Error at server side.","faliure")
+            }
+        }
+    })
+}
+
+function addNewPlan(){
+    var planCategory = $("#planCategory").val()
+    var rechargeAmount = $("#rechargeAmount").val()
+    var smsAllowance = $("#smsAllowance").val()
+    var voiceAllowance = $("#voiceAllowance").val()
+    var dataAllowance = $("#dataAllowance").val()
+    var extraData = $("#extraData").val()
+    var validity = $("#validity").val()
+    var isAvailable = $("#isAvailable").val()
+    var extraDataAvailable = $("#extraDataAvailable").val()
+    var refreshesDaily = $("#refreshesDaily").val()
+
+    var payload = {}
+    payload["planCategoryId"] = planCategory
+    payload["planAmount"] = rechargeAmount
+    payload["smsAllowance"] = smsAllowance
+    payload["voiceAllowance"] = voiceAllowance
+    payload["dataAllowance"] = dataAllowance
+    payload["extraDataAllowance"] = extraData
+    payload["validityPeriod"] = validity
+    payload["isAvailable"] = isAvailable
+    payload["extraDataAvailable"] = extraDataAvailable
+    payload["dailyRefresh"] = refreshesDaily
+    payload["isNewPlan"] = 1
+
+    $.ajax({
+        url: CONTEXT_PATH + '/admin/add-new-plan',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (xhr, status, error) {
+            console.log(xhr)
+            $('#newPlanForm')[0].reset()
+            $(".new-plan-close-btn").click()
+            applyFilter(false)
+            showAlert(true,xhr['message'],"success")
+        },
+        error: function(xhr, status, error) {
+            $(".new-plan-close-btn").click()
+            debugger
+            if (xhr.status === 401 || xhr.status === 404 || xhr.status === 400 || xhr.status === 405 || xhr.status === 409) {
+                let errorResponse;
+                try {
+                    errorResponse = JSON.parse(xhr.responseText);
+                } catch (e) {
+                    errorResponse = xhr.responseText;
+                }
+                console.log(errorResponse)
+                if (errorResponse.errors) {
+                    let errorMessage = errorResponse.errors
+                    showAlert(true,errorMessage,"faliure")
+                }
+            } else {
+                showAlert(true,"Error at server side.","faliure")
+            }
+        }
+    })
+}
+
+
 
 
 

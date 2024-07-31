@@ -4,14 +4,14 @@ function validateImageUpload(input) {
     const fileSizeLimit = 1024 * 1024 * 2; // 1MB
 
     if (file.size > fileSizeLimit) {
-        alert('File size exceeds the limit of 2MB');
+        showAlert(true,'File size exceeds the limit of 2MB',"faliure")
         input.value = '';
         return;
     }
 
     const fileExtension = file.name.split('.').pop().toLowerCase();
     if (!allowedExtensions.includes(fileExtension)) {
-        alert('Invalid file extension. Only jpg, jpeg, png are allowed');
+        showAlert(true,'Invalid file extension. Only jpg, jpeg, png are allowed',"faliure")
         input.value = '';
         return;
     }

@@ -81,77 +81,84 @@ function getOtpInput() {
     debugger
 
     var number = $("#number").val()
+    const regex = /^\d{10}$/;
 
-    showLoader()
-    $.ajax({
-        url: CONTEXT_PATH + '/get-login-otp',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            number : number
-        },
-        success: function (xhr, status, error) {
-            hideLoader()
-            console.log("In success")
-            if(status){
-                let successResponse;
+    if(!regex.test(number)){
+        showAlert(true,"Invalid Mobile Number!","faliure")
+    }else {
+        showLoader()
+        $.ajax({
+            url: CONTEXT_PATH + '/get-login-otp',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                number : number
+            },
+            success: function (xhr, status, error) {
+                hideLoader()
+                console.log("In success")
+                if(status){
+                    let successResponse;
 
-                try {
-                    successResponse = JSON.parse(xhr);
-                } catch (e) {
-                    successResponse = xhr;
+                    try {
+                        successResponse = JSON.parse(xhr);
+                    } catch (e) {
+                        successResponse = xhr;
 
+                    }
+
+                    if (successResponse.messages) {
+                        let successMessage = successResponse.messages
+                        showAlert(true,successMessage, "success")
+                    }
+
+                    if (successResponse.clientId) {
+                        $(".hidden-user-id").val(successResponse.clientId)
+                        localStorage.setItem("clientId",successResponse.clientId)
+                    }
+
+                    $(".get-otp-btn-hide").addClass("d-none").removeClass("active-submit")
+                    $("#number").attr("readonly", "readonly")
+                    $(".otp-toggle").removeClass("d-none")
+                    $(".submit-sign-up-btn").removeClass("d-none").addClass("active-submit")
+                    $(".otp-text").removeClass("d-none")
                 }
 
-                if (successResponse.messages) {
-                    let successMessage = successResponse.messages
-                    showAlert(true,successMessage, "success")
-                }
+            },
+            error: function(xhr, status, error) {
+                hideLoader()
+                debugger
+                if (xhr.status === 400 || xhr.status === 409 || xhr.status === 404) { // Bad Request
+                    console.log(xhr.status)
+                    let errorResponse;
+                    try {
+                        errorResponse = JSON.parse(xhr.responseText);
+                    } catch (e) {
+                        errorResponse = xhr.responseText;
+                    }
+                    console.log(errorResponse)
+                    if (errorResponse.errors) {
+                        let errorMessage = errorResponse.errors
+                        showAlert(true,errorMessage,"faliure")
+                    }
 
-                if (successResponse.clientId) {
-                    $(".hidden-user-id").val(successResponse.clientId)
-                    localStorage.setItem("clientId",successResponse.clientId)
-                }
+                    if(errorResponse.docError){
+                        let errorMessage = errorResponse.docError
+                        showAlert(true,errorMessage,"faliure")
+                    }
 
-                $(".get-otp-btn-hide").addClass("d-none").removeClass("active-submit")
-                $("#number").attr("readonly", "readonly")
-                $(".otp-toggle").removeClass("d-none")
-                $(".submit-sign-up-btn").removeClass("d-none").addClass("active-submit")
-                $(".otp-text").removeClass("d-none")
+                } else {
+                    console.log("Some other error")
+                }
             }
+        })
 
-        },
-        error: function(xhr, status, error) {
-            hideLoader()
-            debugger
-            if (xhr.status === 400 || xhr.status === 409 || xhr.status === 404) { // Bad Request
-                console.log(xhr.status)
-                let errorResponse;
-                try {
-                    errorResponse = JSON.parse(xhr.responseText);
-                } catch (e) {
-                    errorResponse = xhr.responseText;
-                }
-                console.log(errorResponse)
-                if (errorResponse.errors) {
-                    let errorMessage = errorResponse.errors
-                    showAlert(true,errorMessage,"faliure")
-                }
+        setTimeout(function () {
+            $(".otp-text").html("<span>* Didn't recieve the code yet? <a id='resend-otp-link' onclick='getOtpInput()'>Click here to resend</a>.</span>")
+        }, 10000);
+    }
 
-                if(errorResponse.docError){
-                    let errorMessage = errorResponse.docError
-                    showAlert(true,errorMessage,"faliure")
-                }
 
-            } else {
-                console.log("Some other error")
-            }
-        }
-    })
-
-    setTimeout(function () {
-        $(".otp-text").html("<span>* Didn't recieve the code yet? <a id='resend-otp-link' onclick='getOtpInput()'>Click here to resend</a>.</span>")
-    }, 10000);
 }
 
 function getOTPCode() {
@@ -227,7 +234,13 @@ function submitSignUpForm(OTP){
 
 function showOnLoadMessages(){
     var showReuploadSubmitMessgae = localStorage.getItem("showReuploadSubmitMessgae")
+    var showLogoutMessage = localStorage.getItem("showLogoutMessage")
     if(showReuploadSubmitMessgae === "true"){
         showAlert(true,"Files uploaded successfully","success")
+    }
+
+    if(showLogoutMessage === "true"){
+        showAlert(true,"Logout Successfully","success")
+        localStorage.removeItem("showLogoutMessage")
     }
 }

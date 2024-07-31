@@ -100,7 +100,7 @@
 
                         <button data-value="2" class="uninor-blue-btn w-100 submit-sign-up-btn d-none">SIGN UP</button>
                     </form>
-                    <span class="login-here-span">Signed Up already?  &nbsp;<a class="span-underline">Login here!</a></span>
+                    <span class="login-here-span">Signed Up already?&nbsp;<a class="span-underline" href="${pageContext.request.contextPath}/login">Login here!</a></span>
                 </div>
             </div>
         </div>

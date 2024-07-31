@@ -22,7 +22,7 @@
                     <a class="nav-profile-image" href=""><img src="<c:url value='/resources/icons/person-filled-animated.svg'/>"
                                                                                                                       class="profile-pic"/></a>
                 </div>
-                <img src="<c:url value='/resources/icons/logout-animate.svg' />" class="menu-icon"/>
+                <img src="<c:url value='/resources/icons/logout-animate.svg' />" onclick="logoutAdmin()" class="logout-icon"/>
             </div>
         </div>
     </div>

@@ -214,3 +214,12 @@ function submitSignUpForm(OTP){
         }
     })
 }
+
+function showOnLoadMessages(){
+
+    var showLogoutMessage = localStorage.getItem("showLogoutMessage")
+    if(showLogoutMessage === "true"){
+        showAlert(true,"Logout Successfully","success")
+        localStorage.removeItem("showLogoutMessage")
+    }
+}

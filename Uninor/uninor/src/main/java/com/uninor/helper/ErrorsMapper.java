@@ -52,6 +52,15 @@ public class ErrorsMapper {
         globalMap.put("validity", "Validity");
         globalMap.put("maxReward", "Max Rewards");
         globalMap.put("couponDescription", "Coupon Description");
+        globalMap.put("planCategoryId", "Plan Category");
+        globalMap.put("smsAllowance", "SMS Allowance");
+        globalMap.put("voiceAllowance", "Voice Allowance");
+        globalMap.put("dataAllowance", "Data Allowance");
+        globalMap.put("extraDataAllowance", "Extra Data Allowance");
+        globalMap.put("validityPeriod", "Validity");
+        globalMap.put("isAvailable", "Is Available");
+        globalMap.put("extraDataAvailable", "Extra Data Available");
+        globalMap.put("dailyRefresh", "Daily Refresh");
     }
 
 }

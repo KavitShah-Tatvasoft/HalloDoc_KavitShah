@@ -629,7 +629,7 @@ public class ClientService {
 
         if(simCard.getSimType() != planType){
             String message = planType == 1?"Prepaid":"Postpaid";
-            throw new InvalidDataFoundException("This Plan is not for " + message + " Sim");
+            throw new InvalidDataFoundException("This Plan is for " + message + " Sim");
         }
 
         if(isAddOn){
@@ -917,7 +917,7 @@ public class ClientService {
         table.addCell(new Cell().add(new Paragraph(invoice.getInvoiceNumber())).setFont(font).setFontSize(11).setPaddingLeft(14));
         table.addCell(new Cell().add(new Paragraph("Order Ref. No.:")).setFontSize(11).setPaddingLeft(14));
         table.addCell(new Cell().add(new Paragraph(order.getOrderRef())).setFont(font).setFontSize(11).setPaddingLeft(14));
-        if(!client.getGstNumber().isEmpty()){
+        if(client.getGstNumber() != null){
             table.addCell(new Cell().add(new Paragraph("GST No:")).setFontSize(11).setPaddingLeft(14));
             table.addCell(new Cell().add(new Paragraph(client.getGstNumber())).setFont(font).setFontSize(11).setPaddingLeft(14));
         }

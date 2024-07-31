@@ -25,7 +25,7 @@ public class UserRepository {
     public List<Users> getUserByEmail(String email){
 
         Session s = this.sessionFactory.openSession();
-        String queryString = "FROM Users WHERE emailAddress=:email";
+        String queryString = "FROM Users WHERE lower(emailAddress)=:email";
         Query<Users> q = s.createQuery(queryString);
         q.setParameter("email", email);
         List<Users> list = q.list();

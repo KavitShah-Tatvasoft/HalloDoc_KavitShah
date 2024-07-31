@@ -1,0 +1,305 @@
+.form-group {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.form-group input , .form-group select, .form-group textarea{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.form-group textarea{
+    resize: none;
+}
+
+.form-group select{
+    color: #7a7878;
+    font-size: 14px;
+}
+
+.select-label-float .form-group label{
+    top: -6px;
+    font-size: 12px;
+    color: #3750eb;
+    background-color: #ffffff;
+    padding: 0 4px;
+    border-radius: 4px;
+    left: 8px;
+    color: #777;
+}
+
+.form-group label {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    font-size: 14px;
+    color: #777;
+    transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+}
+
+.search-box i {
+    position: absolute;
+    z-index: 1;
+    font-size: 24px;
+    top: 10px;
+    right: 6px;
+    color: #777;
+}
+
+.form-group input:focus , .form-group textarea:focus, .form-group select:focus {
+    border-color: #3750eb;
+    outline: none;
+}
+
+.form-group input:focus ~ label, .form-group select:focus ~ label, .form-group textarea:focus ~ label {
+    top: -6px;
+    font-size: 12px;
+    color: #3750eb;
+    background-color: #ffffff;
+    padding: 0 4px;
+    border-radius: 4px;
+    left: 8px;
+}
+
+.form-group input:not(:placeholder-shown) ~ label, .form-group textarea:not(:placeholder-shown) ~ label {
+    top: -6px;
+    font-size: 12px;
+    color: #777;
+    background-color: #ffffff;
+    padding: 0 4px;
+    border-radius: 4px;
+    left: 8px;
+}
+
+/*Search Box css over*/
+
+.common-dashboard-white-card{
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    padding: 18px 20px;
+    height: 90%;
+    /*box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;*/
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.full-height{
+    height: 100%;
+}
+
+.card-heading{
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.button-type-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.common-btn-type{
+    border: none;
+    background-color: transparent;
+}
+
+.common-btn-type:hover{
+    border-bottom: 3px solid #3750eb;
+}
+
+.active-btn-type{
+    border-bottom: 3px solid #3750eb;
+}
+
+.accordion-common-body{
+    display: none;
+}
+
+.new-btn-green{
+    display: flex;
+    border: 1px solid green;
+    background-color: green;
+    color: white;
+    border-radius: 8px;
+    padding: 6px 2px;
+    justify-content: center;
+}
+
+.table-btn-font{
+    font-size: 14px;
+}
+
+.reupload-btn-yellow{
+    display: flex;
+    border: 1px solid #c8c836;
+    background-color: #c8c836;
+    color: black;
+    border-radius: 8px;
+    padding: 6px 6px;
+    justify-content: center;
+}
+
+.action-btn-tb{
+    display: flex;
+    border: 1px solid #3750eb;
+    background-color: #3750eb;
+    color: white;
+    border-radius: 8px;
+    padding: 6px 2px;
+    justify-content: center;
+}
+
+.contact-user{
+    cursor: pointer;
+}
+
+.no-caret{
+    width: 100%;
+}
+
+.no-caret::after {
+    display: none;
+}
+
+.no-data-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 25px;
+}
+
+.no-data-text{
+    font-size: 25px;
+    font-weight: 700;
+    color: #ff1a1a;
+}
+
+.accordion-request{
+    border: none;
+    outline: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: initial;
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.accordion-button:focus{
+    box-shadow: none;
+}
+
+.accordion-custom-clr, .accordion-custom-clr:not(.collapsed){
+    background-color: #3750eb;
+    color: white;
+    border-radius: 10px!important;
+}
+
+.accordion-custom-clr:not(.collapsed)::after, .accordion-custom-clr::after {
+    filter: brightness(0) invert(1); /* Change color to white */
+}
+
+.accordion-body-class{
+    background: #f0f1f6;
+    margin-top: 5px;
+    border-radius: 10px
+}
+
+.accordion-single-item-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.extra-width-new-btn-accordion{
+    width: 80px;
+}
+
+.action-btn-extra-width-accordion{
+    width: 150px;
+}
+
+.accordion-action-btn-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.accordion-common-body{
+    display: none;
+}
+
+/*Accordion css*/
+
+.th-class-color {
+    background-color: #3750eb!important;
+    color: white !important;
+    font-weight: 600;
+    text-wrap: nowrap;
+}
+
+.table-responsive {
+    border-radius: 5px;
+    border: 1px solid #9f9d9d;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px){
+    .accordion-common-body{
+        display: block;
+    }
+
+    .table-outer-class{
+        display: none;
+    }
+}
+
+@media screen and  (max-width: 575px){
+    .common-dashboard-card{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .no-data-found-img{
+        height: 150px;
+    }
+
+    .no-data-text{
+        font-size: 18px;
+    }
+}
+
+
+@media screen and (max-width: 454px){
+    .common-dashboard-white-card{
+        padding: 20px 20px 25px 20px
+    }
+
+    .button-type-flex {
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    .common-btn-type{
+        font-size: 15px;
+    }
+}

@@ -121,8 +121,6 @@ function getOtpInput() {
                         hideLoader()
                         console.log("In success")
                         if(status){
-                            console.log("XHR: " + xhr)
-                            console.log("Inside Check condition")
                             let successResponse;
 
                             try {

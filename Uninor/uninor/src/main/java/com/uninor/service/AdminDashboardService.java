@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -140,6 +141,17 @@ public class AdminDashboardService {
         }
     }
 
+//    public ResponseEntity<Map<String,ClientDetailsPaginatedDto>> getFilteredUsersDetails(FilterUserRequest filterUserRequest){
+//        Map<String, ClientDetailsPaginatedDto> responseMap = new HashMap<>();
+//        ClientDetailsPaginatedDto clientDetailsPaginatedDto = new ClientDetailsPaginatedDto();
+//        int userPageSize = filterUserRequest.getPageSize();
+//        int currentPage = filterUserRequest.getCurrentPage();
+//        Pageable pageable = PageRequest.of(currentPage - 1, userPageSize);
+//        List<UsersDetailsDto> usersDetailsDtos = new ArrayList<>();
+//        Page<Client> getPaginatedClientData = this.clientRepository.getPaginatedClientData(pageable, filterUserRequest);
+//
+//    }
+
     public ResponseEntity<Map<String, ClientRequestPaginatedDto>> getFilteredClientRequests(FilterUserRequest filterUserRequest){
         Map<String, ClientRequestPaginatedDto> responseMap = new HashMap<>();
         ClientRequestPaginatedDto clientRequestPaginatedDto = new ClientRequestPaginatedDto();
@@ -238,12 +250,11 @@ public class AdminDashboardService {
         }
 
         if(panVerified.equals("accepted") && aadharVerified.equals("accepted")){
-//            Users user = this.userRepository.getUserByEmail(client.getEmail()).get(0); //check
-//            user.setRegistered(true);
-//            client.setUser(user);
+
             client.setDocValidated(true);
             client.setClientDocuments(clientDocuments);
             this.clientRepository.updateClient(client);
+            this.simCardRepository.setActivationTime(LocalDateTime.now(), clientRequest.getSimCard());
         }else {
             int validationAttempts = client.getValidationAttempts();
             if(validationAttempts == 3){

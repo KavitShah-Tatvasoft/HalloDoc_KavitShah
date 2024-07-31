@@ -247,6 +247,7 @@ public class RegistrationService {
             }
             client.setAadharNumber(registrationDataDto.getAadharCardNumber());
             client.setPanNumber(registrationDataDto.getPanNumber());
+            client.setStreet(registrationDataDto.getStreet());
             client.setState(registrationDataDto.getState());
             client.setCity(registrationDataDto.getCity());
             client.setZipcode(registrationDataDto.getZipcode());
@@ -432,7 +433,7 @@ public class RegistrationService {
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
 
-        List<Users> usersList = this.userRepository.getUserByEmail(email);
+        List<Users> usersList = this.userRepository.getUserByEmail(email.toLowerCase());
         if (usersList.isEmpty()) {
             responseMap.put("errors", "Email Address not registered! Please enter a valid email address!");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
@@ -536,8 +537,9 @@ public class RegistrationService {
                 return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
             }
             responseMap.put("messages", "Valid OTP!");
-            Admin admin = this.adminRepository.getAdminByEmail(loginDto.getEmail());
+            Admin admin = this.adminRepository.getAdminByEmail(loginDto.getEmail().toLowerCase());
             HttpSession session = httpServletRequest.getSession();
+            System.out.println("AdminId :" + admin.getAdminId());
             session.setAttribute("adminId", admin.getAdminId());
             session.setAttribute("adminEmail",admin.getEmail());
             responseMap.put("adminId", String.valueOf(admin.getAdminId()));

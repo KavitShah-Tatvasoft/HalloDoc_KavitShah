@@ -833,7 +833,7 @@ public class ClientDashboardService {
         table.addCell(new Cell().add(new Paragraph(invoice.getInvoiceNumber())).setFont(font).setFontSize(11).setPaddingLeft(14));
         table.addCell(new Cell().add(new Paragraph("Order Ref. No.:")).setFontSize(11).setPaddingLeft(14));
         table.addCell(new Cell().add(new Paragraph(order.getOrderRef())).setFont(font).setFontSize(11).setPaddingLeft(14));
-        if (!client.getGstNumber().isEmpty()) {
+        if (client.getGstNumber() != null) {
             table.addCell(new Cell().add(new Paragraph("GST No:")).setFontSize(11).setPaddingLeft(14));
             table.addCell(new Cell().add(new Paragraph(client.getGstNumber())).setFont(font).setFontSize(11).setPaddingLeft(14));
         }
