@@ -33,11 +33,6 @@ public class OtpLogs {
     @Column(name = "email")
     private String email;
 
-    public OtpLogs(int otpLogId, String otpCode, LocalDateTime sentDateTime, String mobileNumber, String email) {
-        this.otpLogId = otpLogId;
-        this.otpCode = otpCode;
-        this.sentDateTime = sentDateTime;
-        this.mobileNumber = mobileNumber;
-        this.email = email;
-    }
+   @Column(name = "is_expired")
+   private boolean isExpired;
 }

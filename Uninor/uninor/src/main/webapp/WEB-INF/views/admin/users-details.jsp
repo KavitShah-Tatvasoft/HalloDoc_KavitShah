@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/users-details.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/toaster-1.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/success-faliure-modal.css' />">
 </head>
 
 <body class="show-sidebar body" onload="getFilteredUsersData(true)">
@@ -59,8 +60,8 @@
                     <div class="common-dashboard-white-card full-height">
                         <div class="card-heading">User Requests</div>
                         <div class="button-type-flex">
-                            <button class="common-btn-type active-btn-type" data-value="1" onclick="changeActiveRequestType(this)">Register Users</button>
-                            <button class="common-btn-type" data-value="2" onclick="changeActiveRequestType(this)">Sign Up Users</button>
+                            <button class="common-btn-type active-btn-type" data-value="1" onclick="changeActiveRequestType(this,1)">Register Users</button>
+                            <button class="common-btn-type" data-value="2" onclick="changeActiveRequestType(this,2)">Sign Up Users</button>
                         </div>
 
                         <div class="row mt-3">
@@ -93,7 +94,6 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" class="th-class-color">User Name</th>
-                                    <th scope="col" class="th-class-color">Mobile</th>
                                     <th scope="col" class="th-class-color">Email</th>
                                     <th scope="col" class="th-class-color text-center status-column-common">Status</th>
                                     <th scope="col" class="th-class-color text-center">Action</th>
@@ -102,18 +102,17 @@
 
                                 <tr class="clone-tr d-none">
                                     <td class="tr-name">Mark Zukerberg</td>
-                                    <td class="tr-number">9999999999</td>
                                     <td class="tr-email">kavitshah324@gmail.com</td>
                                     <td class="status-column-common">
                                         <div class="new-btn-green table-btn-font">
-                                            NEW
+                                            REGISTERED
                                         </div>
                                         <div class="reupload-btn-yellow table-btn-font">
-                                            REUPLOADED
+                                            PENDING
                                         </div>
                                     </td>
                                     <td class="action-class">
-                                        <div class="action-btn-tb contact-user table-btn-font">
+                                        <div class="action-btn-tb contact-user-btn table-btn-font">
                                             CONTACT USER
                                         </div>
                                         <button class="action-btn-tb table-btn-font dropdown-common-action dropdown-toggle no-caret"
@@ -150,27 +149,22 @@
                                             <div class="accordion-email">kavitshah2101@gmail.com</div>
                                         </div>
 
-                                        <div class="accordion-single-item-flex mt-1">
-                                            <div>Contact :</div>
-                                            <div class="accordion-number">9999999999</div>
-                                        </div>
-
                                         <div class="accordion-single-item-flex mt-1 status-column-common">
                                             <div>Status :</div>
                                             <div class="reupload-btn-yellow table-btn-font">
-                                                REUPLOADED
+                                                PENDING
                                             </div>
                                             <div class="new-btn-green table-btn-font extra-width-new-btn-accordion">
-                                                NEW
+                                                REGISTERED
                                             </div>
                                         </div>
                                         <div class="accordion-action-btn-flex mt-4">
-                                            <button class="action-btn-tb action-btn-extra-width-accordion view-doc-btn-accordion">View
+                                            <button class="action-btn-tb action-btn-extra-width-accordion contact-user-btn-accordion">View
                                                 Documents
                                             </button>
                                             <button class="action-btn-tb extra-width-new-btn-accordion accept-btn-accordion">Accept
                                             </button>
-                                            <button class="delete-request-btn-tb extra-width-new-btn-accordion reject-btn-accordion">
+                                            <button class="action-btn-tb extra-width-new-btn-accordion reject-btn-accordion">
                                                 Reject
                                             </button>
                                         </div>
@@ -397,36 +391,51 @@
                 </div>
             </div>
 
-            <div class="toast toast-failure">
 
-                <div class="toast-content toast-failure-content">
-                    <i class='bx bx-error icon'></i>
 
-                    <div class="message">
-                        <span class="text text-1">Failure</span> <span
-                            class="text text-2 toaster-failure-message"></span>
+            <div class="modal fade" id="verify-documents-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header approve-docs-heading">
+                            <h1 class="modal-title approve-docs-heading fs-5" id="staticBackdropLabel">Approve Documents</h1>
+                            <button type="button" class="btn-close approve-docs-btn-close" onclick="removeValidationError()" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="type-data-value-flex">
+                                <div class="font-600">Documents for </div>
+                                <div class="font-600 view-doc-name-div">Kavit Shah</div>
+                            </div>
+                            <div class="doc-name-btn-flex">
+                                <div>BIRTH DATE</div>
+                                <div class="approve-doc-bday view-doc-bday-div"></div>
+                            </div>
+                            <div class="doc-name-btn-flex">
+                                <div>AADHAR NUMBER</div>
+                                <div class="approve-doc-bday view-doc-aadhar-numb-div"></div>
+                            </div>
+                            <div class="doc-name-btn-flex mt-1">
+                                <div>PAN NUMBER</div>
+                                <div class="approve-doc-bday view-doc-pan-numb-div"></div>
+                            </div>
+                            <div class="doc-name-btn-flex mt-2">
+                                <div class="addhar-text-approve">AADHAR CARD</div>
+                                <div class="btn-flex-view-docs">
+                                    <div class="view-docs-modal-buttons view-aadhar-path-class"><img src="/uninor/resources/icons/eye-white.svg" class="modal-btn-icon"></div>
+                                </div>
+                            </div>
+                            <div class="doc-name-btn-flex mt-2">
+                                <div class="addhar-text-approve">PAN CARD</div>
+                                <div class="btn-flex-view-docs">
+                                    <div class="view-docs-modal-buttons view-pan-path-class"><img src="/uninor/resources/icons/eye-white.svg" class="modal-btn-icon"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer approve-docs-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
-                <i class='bx bx-x failure-close close'></i>
-
-
-                <div class="toast-progress toast-failure-progress"></div>
-            </div>
-
-            <div class="toast toast-success">
-
-                <div class="toast-content toast-success-content">
-                    <i class='bx bx-check icon'></i>
-
-                    <div class="message">
-                        <span class="text text-1">Success</span> <span
-                            class="text text-2 toaster-success-message"></span>
-                    </div>
-                </div>
-                <i class='bx bx-x success-close close'></i>
-
-
-                <div class="toast-progress toast-success-progress"></div>
             </div>
 
         </div>
@@ -464,14 +473,62 @@
                                       stroke-linecap="round" stroke-miterlimit="10"
                                       points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
                         </svg>
-                        <h4 class="text-success success-message-heading-modal  mt-3">Recharge done successfully!</h4>
-                        <p class="mt-3 success-message-modal d-none">Please check the entered details and try again.</p>
+                        <h4 class="text-success success-message-heading-modal  mt-3">Email sent successfully</h4>
+<%--                        <p class="mt-3 success-message-modal d-none">Please check the entered details and try again.</p>--%>
                         <button type="button" class="btn btn-sm mt-3 btn-success" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="toast toast-failure">
 
+            <div class="toast-content toast-failure-content">
+                <i class='bx bx-error icon'></i>
+
+                <div class="message">
+                    <span class="text text-1">Failure</span> <span
+                        class="text text-2 toaster-failure-message"></span>
+                </div>
+            </div>
+            <i class='bx bx-x failure-close close'></i>
+
+
+            <div class="toast-progress toast-failure-progress"></div>
+        </div>
+
+        <div class="toast toast-success">
+
+            <div class="toast-content toast-success-content">
+                <i class='bx bx-check icon'></i>
+
+                <div class="message">
+                    <span class="text text-1">Success</span> <span
+                        class="text text-2 toaster-success-message"></span>
+                </div>
+            </div>
+            <i class='bx bx-x success-close close'></i>
+
+
+            <div class="toast-progress toast-success-progress"></div>
+        </div>
+        <div class="modal fade" id="contactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content contact-modal-content">
+                    <div class="modal-header contact-modal-header">
+                        <h1 class="modal-title contact-modal-title fs-5 " id="contactModal1">Contact User</h1>
+                        <button type="button" class="btn-close contact-modal-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body contact-modal-body">
+                        <textarea name="contact-description" id="contact-description-textarea" class="contact-description-class" placeholder="Write here to send message to the user ...."></textarea>
+                        <input type="hidden" name="hidden-client-id-contact-form" id="hidden-client-id-contact-form">
+                    </div>
+                    <div class="modal-footer contact-modal-footer">
+                        <button type="button" class="contact-modal-btn" onclick="sendEmailToClient()">Send</button>
+                        <button type="button" class="contact-modal-btn" onclick="clearDescription()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
 

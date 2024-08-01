@@ -158,4 +158,40 @@ public class EmailService {
         mailSender.send(messagePreparator);
     }
 
+    public void sendContactMail(String email, String name, String description) {
+
+        MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                message.setFrom("hallodoc29@outlook.com");
+                message.setTo(email);
+                message.setSubject("Contact Email");
+                String content = "<html><h2> Hello, " + name + "</h2><br>"
+                        + "<p style=\"\"margin-top:20px;\"\">" + description +"<br> "
+                        + "<br><p>Thankyou,<br><h3>Team Uninor</h3></p>" + "</html>";
+                message.setText(content, true);
+            }
+        };
+
+        mailSender.send(messagePreparator);
+    }
+
+    public void signedUserNotificationMail(String email, String name) {
+
+        MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                message.setFrom("hallodoc29@outlook.com");
+                message.setTo(email);
+                message.setSubject("Registration Notification");
+                String content = "<html><h2> Hello, " + name + "</h2><br>"
+                        + "<p style=\"\"margin-top:30px;\"\">You have signed up with the uninor family. You are just a step away from joining us and enjoy the service provided. In case you haven't registered still signup again with the same email to continue with the registration process.<br> "
+                        + "<br>If you wish to continue, please start the registration process again and make sure to provide valid documents. In case of any issue please feel free to contact us on our toll free number."
+                        + "<br><p>Thankyou,<br><h3>Team Uninor</h3></p>" + "</html>";
+                message.setText(content, true);
+            }
+        };
+
+        mailSender.send(messagePreparator);
+    }
 }

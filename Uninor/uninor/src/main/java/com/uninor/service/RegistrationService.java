@@ -116,7 +116,7 @@ public class RegistrationService {
 
             otpLogs.setEmail(signupRequestDto.getEmail());
             otpLogs.setOtpCode(randomPin);
-
+            otpLogs.setExpired(false);
             otpLogsRepository.addOTPLog(otpLogs);
 
             this.emailService.sendOTP(signupRequestDto, randomPin);
@@ -167,7 +167,7 @@ public class RegistrationService {
         try {
             OtpLogs otpLogs = otpLogsList.get(0);
 
-            if (LocalDateTime.now().isBefore(otpLogs.getSentDateTime().plusMinutes(5))) {
+            if (LocalDateTime.now().isBefore(otpLogs.getSentDateTime().plusMinutes(5)) ) {
                 if (!otpLogs.getOtpCode().equals(signUpDataDto.getOtp())) {
                     responseMap.put("errors", "OTP is not valid.");
                     return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
@@ -444,6 +444,7 @@ public class RegistrationService {
         OtpLogs otpLogs = new OtpLogs();
         otpLogs.setEmail(email);
         otpLogs.setOtpCode(randomPin);
+        otpLogs.setExpired(false);
         this.otpLogsRepository.addOTPLog(otpLogs);
         this.emailService.sendLoginOTP(randomPin, email);
 
@@ -478,6 +479,7 @@ public class RegistrationService {
         OtpLogs otpLogs = new OtpLogs();
         otpLogs.setMobileNumber(number);
         otpLogs.setOtpCode(randomPin);
+        otpLogs.setExpired(false);
         this.otpLogsRepository.addOTPLog(otpLogs);
         this.smsService.sendLoginOtpSms(number, randomPin);
 

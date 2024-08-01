@@ -66,14 +66,21 @@ function previousButton() {
 
 // Pagination functions completed
 
-function changeActiveRequestType(element) {
+function changeActiveRequestType(element, type) {
     $(".common-btn-type").removeClass("active-btn-type")
     element.classList.add("active-btn-type");
     getFilteredUsersData(true)
+
+    if (type === 1) {
+        $(".status-type-search").removeClass("d-none")
+    } else {
+        $(".status-type-search").addClass("d-none")
+    }
 }
 
 
 function getFilteredUsersData(booleanValue) {
+
     var pageSize = $("#page-size-id").val()
     var requestType = $(".active-btn-type").attr("data-value")
     var email = $("#emailId").val()
@@ -84,6 +91,7 @@ function getFilteredUsersData(booleanValue) {
     var payload = {}
     if (booleanValue === true) {
         payload["currentPage"] = 1
+        currentPage = 1
     } else {
         payload["currentPage"] = currentPage
     }
@@ -94,13 +102,13 @@ function getFilteredUsersData(booleanValue) {
     payload["pageSize"] = parseInt(pageSize)
 
     $.ajax({
-        url: CONTEXT_PATH + '/admin/get-filtered-user-request',
+        url: CONTEXT_PATH + '/admin/get-filtered-users-details',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(payload),
         success: function (xhr, status, error) {
             console.log(xhr)
-            response = xhr['clientRequestPaginatedDto']
+            response = xhr['clientDataDto']
             totalPages = response.totalPages
             let paginationWidth = totalPages * 40 + 160; // Calculate width based on number of pages
             paginationContainer.style.width = `${paginationWidth}px`;
@@ -116,14 +124,6 @@ function getFilteredUsersData(booleanValue) {
                 $(".pagination-page-size-flex").removeClass("d-none")
                 $(".table-outer-class").removeClass("d-none")
                 $(".accordion-common-body").removeClass("d-none")
-            }
-
-            if (response.requestType == 1) {
-                $(".status-column-common").removeClass("d-none")
-                $(".status-type-search").removeClass("d-none")
-            } else {
-                $(".status-column-common").addClass("d-none")
-                $(".status-type-search").addClass("d-none")
             }
 
             populateTableAccordionData(response)
@@ -162,14 +162,12 @@ function populateTableAccordionData(response) {
         var trClone = $(".clone-tr").clone().removeClass("clone-tr").removeClass("d-none")
         var accordionClone = $(".accordion-clone-item").clone(true).removeClass("accordion-clone-item").removeClass("d-none")
         trClone.find(".tr-name").text(item.clientName)
-        trClone.find(".tr-number").text(item.clientPhone)
         trClone.find(".tr-email").text(item.clientEmail)
 
         id += 1
         accordionClone.find(".change-accordion-target").text(item.clientName).attr("data-bs-target", "#accordionId" + id)
         accordionClone.find(".change-accordion-id").attr("id", "accordionId" + id)
         accordionClone.find(".accordion-email").text(item.clientEmail)
-        accordionClone.find(".accordion-number").text(item.clientPhone)
 
 
         if (response.requestType === 1) {
@@ -188,48 +186,173 @@ function populateTableAccordionData(response) {
                 accordionClone.find(".reupload-btn-yellow").removeClass("d-none")
             }
 
-            trClone.find(".view-document-btn").removeClass("d-none").attr("onclick", "viewRequestData(" + item.requestId + ")")
-            trClone.find(".dropdown-common-action").addClass("d-none")
+            trClone.find(".contact-user-btn").addClass("d-none")
+            trClone.find(".dropdown-common-action").removeClass("d-none")
+            trClone.find(".accept-btn-tb").attr("onclick","viewDocument(" + item.clientId + ")")
+            trClone.find(".reject-btn-tb").attr("onclick","contactUser(" + item.clientId +")")
 
-            accordionClone.find(".view-doc-btn-accordion").removeClass("d-none")
-            accordionClone.find(".accept-btn-accordion").addClass("d-none")
-            accordionClone.find(".reject-btn-accordion").addClass("d-none")
+
+            accordionClone.find(".contact-user-btn-accordion").addClass("d-none")
+            accordionClone.find(".accept-btn-accordion").removeClass("d-none").attr("onclick","viewDocument(" + item.clientId + ")")
+            accordionClone.find(".reject-btn-accordion").removeClass("d-none").attr("onclick","contactUser(" + item.clientId +")")
 
 
         } else {
 
 
-            trClone.find(".view-document-btn").addClass("d-none")
-            trClone.find(".dropdown-common-action").removeClass("d-none")
+            trClone.find(".contact-user-btn").removeClass("d-none").text("Notify Client").attr("onclick","notifyClient(" + item.clientId +")")
+            trClone.find(".dropdown-common-action").addClass("d-none")
 
-            accordionClone.find(".view-doc-btn-accordion").addClass("d-none")
-            accordionClone.find(".accept-btn-accordion").removeClass("d-none")
-            accordionClone.find(".reject-btn-accordion").removeClass("d-none")
+            accordionClone.find(".contact-user-btn-accordion").removeClass("d-none")
+            accordionClone.find(".accept-btn-accordion").addClass("d-none")
+            accordionClone.find(".reject-btn-accordion").addClass("d-none")
 
-            if (response.requestType === 2) {
-                trClone.find(".accept-btn-tb").attr("onclick", "acceptDeactivationRequest(" + item.requestId + ")")
-                trClone.find(".reject-btn-tb").attr("onclick", "rejectDeactivationRequest(" + item.requestId + ")")
+            trClone.find(".new-btn-green").addClass("d-none")
+            accordionClone.find(".new-btn-green").addClass("d-none")
+            trClone.find(".reupload-btn-yellow").removeClass("d-none")
+            accordionClone.find(".reupload-btn-yellow").removeClass("d-none")
+            trClone.find(".reupload-btn-yellow").text("SIGNED UP")
+            accordionClone.find(".reupload-btn-yellow").text("SIGNED UP")
 
-                accordionClone.find(".accept-btn-accordion").attr("onclick", "acceptDeactivationRequest(" + item.requestId + ")")
-                accordionClone.find(".reject-btn-accordion").attr("onclick", "rejectDeactivationRequest(" + item.requestId + ")")
-            }
 
-            if (response.requestType === 3) {
-                trClone.find(".accept-btn-tb").attr("onclick", "acceptBlockRequest(" + item.requestId + ")")
-                trClone.find(".reject-btn-tb").attr("onclick", "rejectBlockRequest(" + item.requestId + ")")
-
-                accordionClone.find(".accept-btn-accordion").attr("onclick", "acceptBlockRequest(" + item.requestId + ")")
-                accordionClone.find(".reject-btn-accordion").attr("onclick", "rejectBlockRequest(" + item.requestId + ")")
-            }
-            if (response.requestType === 4) {
-                trClone.find(".accept-btn-tb").attr("onclick", "acceptUnblockRequest(" + item.requestId + ")")
-                trClone.find(".reject-btn-tb").attr("onclick", "rejectUnblockRequest(" + item.requestId + ")")
-
-                accordionClone.find(".accept-btn-accordion").attr("onclick", "acceptUnblockRequest(" + item.requestId + ")")
-                accordionClone.find(".reject-btn-accordion").attr("onclick", "rejectUnblockRequest(" + item.requestId + ")")
-            }
         }
         tbody.append(trClone)
         accordionBody.append(accordionClone)
     })
+}
+
+function contactUser(clientId){
+    $("#hidden-client-id-contact-form").val(clientId)
+    $(".contact-description-class").val("")
+    $("#contactModal").modal("show")
+}
+
+function viewUploadedFile(path) {
+    console.log(path)
+    window.open(path, '_blank');
+}
+
+function sendEmailToClient(){
+    var clientId = $("#hidden-client-id-contact-form").val()
+    var description = $("#contact-description-textarea").val()
+
+    if(description == null || clientId == null){
+        showAlert("true","Description or client id is empty", "failure")
+    } else{
+        $.ajax({
+            url: CONTEXT_PATH + '/admin/send-contact-email',
+            type: 'POST',
+            data: {
+                clientId: clientId,
+                description: description
+            },
+            success: function (xhr, status, error) {
+                $("#contactModal").modal("hide")
+                // showAlert("true",xhr['message'],"success")
+                $("#statusSuccessModal").modal('show')
+            },
+            error: function (xhr, status, error) {
+                debugger
+                if (xhr.status === 400 || xhr.status === 401 || xhr.status === 404 || xhr.status === 405 || xhr.status === 415) {
+                    let errorResponse;
+                    try {
+                        errorResponse = JSON.parse(xhr.responseText);
+                    } catch (e) {
+                        errorResponse = xhr.responseText;
+                    }
+                    console.log(errorResponse)
+                    if (errorResponse.errors) {
+                        let errorMessage = errorResponse.errors
+                        showAlert(true, errorMessage, "faliure")
+                    }
+                } else {
+                    showAlert(true, "Server side error", "faliure")
+                }
+            }
+        })
+    }
+
+
+}
+
+function notifyClient(clientId){
+    if(clientId == null){
+        showAlert("true","Description or client id is empty", "failure")
+    } else{
+        $.ajax({
+            url: CONTEXT_PATH + '/admin/send-signup-email',
+            type: 'POST',
+            data: {
+                clientId: clientId
+            },
+            success: function (xhr, status, error) {
+                $("#contactModal").modal("hide")
+                // showAlert("true",xhr['message'],"success")
+                $("#statusSuccessModal").modal('show')
+            },
+            error: function (xhr, status, error) {
+                debugger
+                if (xhr.status === 400 || xhr.status === 401 || xhr.status === 404 || xhr.status === 405 || xhr.status === 415) {
+                    let errorResponse;
+                    try {
+                        errorResponse = JSON.parse(xhr.responseText);
+                    } catch (e) {
+                        errorResponse = xhr.responseText;
+                    }
+                    console.log(errorResponse)
+                    if (errorResponse.errors) {
+                        let errorMessage = errorResponse.errors
+                        showAlert(true, errorMessage, "faliure")
+                    }
+                } else {
+                    showAlert(true, "Server side error", "faliure")
+                }
+            }
+        })
+    }
+}
+
+function viewDocument(clientId) {
+    if (clientId == null) {
+        showAlert(true, "Client Id not found!", "faliure")
+    } else {
+        $.ajax({
+            url: CONTEXT_PATH + '/admin/get-client-other-details',
+            type: 'POST',
+            data: {
+                clientId: clientId
+            },
+            success: function (xhr, status, error) {
+                console.log(xhr)
+                var response = xhr['clientDetails']
+                $(".view-doc-name-div").text(response.clientName)
+                $(".view-doc-bday-div").text(response.clientBDate)
+                $(".view-doc-aadhar-numb-div").text(response.clientAadharNumber)
+                $(".view-doc-pan-numb-div").text(response.clientPanNumber)
+                var aadharCardFilePath = response.aadharFilePath.replace(/\\/g, '/')
+                var panCardFilePath = response.panFilePath.replace(/\\/g, '/')
+                $(".view-aadhar-path-class").attr("onclick", "viewUploadedFile('" + aadharCardFilePath + "')")
+                $(".view-pan-path-class").attr("onclick", "viewUploadedFile('" + panCardFilePath + "')")
+                $("#verify-documents-modal").modal('show')
+            },
+            error: function (xhr, status, error) {
+                debugger
+                if (xhr.status === 400 || xhr.status === 401 || xhr.status === 404 || xhr.status === 405 || xhr.status === 415) {
+                    let errorResponse;
+                    try {
+                        errorResponse = JSON.parse(xhr.responseText);
+                    } catch (e) {
+                        errorResponse = xhr.responseText;
+                    }
+                    console.log(errorResponse)
+                    if (errorResponse.errors) {
+                        let errorMessage = errorResponse.errors
+                        showAlert(true, errorMessage, "faliure")
+                    }
+                } else {
+                    showAlert(true, "Server side error", "faliure")
+                }
+            }
+        })
+    }
 }

@@ -76,11 +76,11 @@ public class AdminController {
         return this.adminDashboardService.getFilteredClientRequests(filterUserRequest);
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/get-filtered-users-details", method = RequestMethod.POST)
-//    public ResponseEntity<Map<String,ClientDetailsPaginatedDto>> getFilteredUsersDetials(@Valid @RequestBody FilterUserRequest filterUserRequest){
-//        return this.adminDashboardService.getFilteredUsersDetails(filterUserRequest);
-//    }
+    @ResponseBody
+    @RequestMapping(value = "/get-filtered-users-details", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,ClientDetailsPaginatedDto>> getFilteredUsersDetails(@Valid @RequestBody FilterUserRequest filterUserRequest){
+        return this.adminService.getFilteredUsersDetails(filterUserRequest);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/get-request-data", method = RequestMethod.POST)
@@ -194,6 +194,24 @@ public class AdminController {
     @RequestMapping(value = "/update-current-plan-details", method = RequestMethod.POST)
     public ResponseEntity<Map<String,String>> updatePlanDetails(@Valid @RequestBody PreUpdatePlanDetailsDto preUpdatePlanDetailsDto, HttpServletRequest httpServletRequest){
         return this.adminService.updatePlanDetails(preUpdatePlanDetailsDto,httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/get-client-other-details", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,OtherClientDetailsDto>> getOtherClientDetails(@RequestParam("clientId") int clientId, HttpServletRequest httpServletRequest){
+        return this.adminService.getClientOtherDetails(clientId, httpServletRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/send-contact-email", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,String>> sendContactEmail(@RequestParam("description") String description,  @RequestParam("clientId") int clientId){
+        return this.adminService.sendClientContactEmail(description,clientId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/send-signup-email", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,String>> sendSignUpUserNotification(@RequestParam("clientId") int clientId){
+        return this.adminService.sendSignUpUserNotificationEmail(clientId);
     }
 
 }

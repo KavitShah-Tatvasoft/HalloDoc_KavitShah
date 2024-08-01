@@ -141,16 +141,7 @@ public class AdminDashboardService {
         }
     }
 
-//    public ResponseEntity<Map<String,ClientDetailsPaginatedDto>> getFilteredUsersDetails(FilterUserRequest filterUserRequest){
-//        Map<String, ClientDetailsPaginatedDto> responseMap = new HashMap<>();
-//        ClientDetailsPaginatedDto clientDetailsPaginatedDto = new ClientDetailsPaginatedDto();
-//        int userPageSize = filterUserRequest.getPageSize();
-//        int currentPage = filterUserRequest.getCurrentPage();
-//        Pageable pageable = PageRequest.of(currentPage - 1, userPageSize);
-//        List<UsersDetailsDto> usersDetailsDtos = new ArrayList<>();
-//        Page<Client> getPaginatedClientData = this.clientRepository.getPaginatedClientData(pageable, filterUserRequest);
-//
-//    }
+
 
     public ResponseEntity<Map<String, ClientRequestPaginatedDto>> getFilteredClientRequests(FilterUserRequest filterUserRequest){
         Map<String, ClientRequestPaginatedDto> responseMap = new HashMap<>();

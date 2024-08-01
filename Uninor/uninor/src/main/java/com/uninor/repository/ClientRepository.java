@@ -154,15 +154,16 @@ public class ClientRepository {
                 predicates.add(predicate);
             }
 
-            if(filterUserRequest.getStatusType() == 1){
+            if(filterUserRequest.getStatusType() == 3){
                 predicate = cb.equal(root.get("isDocValidated"), false);
                 predicates.add(predicate);
             }
+
+
         }
 
 
-
-        if (!filterUserRequest.getEmail().isEmpty()) {
+        if (filterUserRequest.getEmail() != null) {
             predicate = cb.like(cb.lower(root.get("email")), "%" + filterUserRequest.getEmail().toLowerCase() + "%");
             predicates.add(predicate);
         }

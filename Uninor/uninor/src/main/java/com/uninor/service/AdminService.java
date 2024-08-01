@@ -1,16 +1,15 @@
 package com.uninor.service;
 
+import com.uninor.Email.EmailService;
 import com.uninor.dto.*;
+import com.uninor.enumeration.AdminUserStatusEnum;
 import com.uninor.enumeration.SimType;
 import com.uninor.exceptions.DataNotFoundException;
 import com.uninor.exceptions.InvalidDataFoundException;
 import com.uninor.exceptions.InvalidFileException;
 import com.uninor.helper.Helper;
 import com.uninor.model.*;
-import com.uninor.repository.AdminRepository;
-import com.uninor.repository.CategoryRepository;
-import com.uninor.repository.CuponRepository;
-import com.uninor.repository.PlanRepository;
+import com.uninor.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +41,15 @@ public class AdminService {
 
     @Autowired
     private PlanRepository planRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientDocumentsRepository clientDocumentsRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public ResponseEntity<Map<String, String>> updateProfilePhoto(CommonsMultipartFile profilePhoto, HttpServletRequest httpServletRequest) {
 
@@ -400,15 +408,15 @@ public class AdminService {
         return annualPlan;
     }
 
-    public ResponseEntity<Map<String,PreUpdatePlanDetailsDto>> getUpdatingPlanDetails(int planId){
-        if(planId == 0){
+    public ResponseEntity<Map<String, PreUpdatePlanDetailsDto>> getUpdatingPlanDetails(int planId) {
+        if (planId == 0) {
             throw new DataNotFoundException("No such plan found!");
         }
 
-        Map<String,PreUpdatePlanDetailsDto> responseMap = new HashMap<>();
+        Map<String, PreUpdatePlanDetailsDto> responseMap = new HashMap<>();
         Plan plan = this.planRepository.getPlanById(planId);
 
-        if(plan == null){
+        if (plan == null) {
             throw new DataNotFoundException("Plan Data not found");
         }
 
@@ -420,62 +428,62 @@ public class AdminService {
         planDetailsDto.setDataAllowance(plan.getDataAllowance());
         planDetailsDto.setValidityPeriod(plan.getValidity());
         planDetailsDto.setSmsAllowance(plan.getSmsAllowance());
-        planDetailsDto.setDailyRefresh(plan.getIsRefreshing()?1:0);
+        planDetailsDto.setDailyRefresh(plan.getIsRefreshing() ? 1 : 0);
         planDetailsDto.setExtraDataAllowance(plan.getExtraData());
-        planDetailsDto.setExtraDataAvailable(plan.getIsExtraDataAvailable()?1:0);
-        planDetailsDto.setIsAvailable(plan.getIsDeleted()?0:1);
+        planDetailsDto.setExtraDataAvailable(plan.getIsExtraDataAvailable() ? 1 : 0);
+        planDetailsDto.setIsAvailable(plan.getIsDeleted() ? 0 : 1);
         planDetailsDto.setVoiceAllowance(plan.getVoiceAllowance());
 
-        responseMap.put("planData",planDetailsDto);
+        responseMap.put("planData", planDetailsDto);
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String,PlanDetailsDto>> getPlanDetails(int planId){
-        if(planId == 0){
+    public ResponseEntity<Map<String, PlanDetailsDto>> getPlanDetails(int planId) {
+        if (planId == 0) {
             throw new DataNotFoundException("No such plan found!");
         }
-        Map<String,PlanDetailsDto> responseMap = new HashMap<>();
+        Map<String, PlanDetailsDto> responseMap = new HashMap<>();
         Plan plan = this.planRepository.getPlanById(planId);
-        if(plan == null){
+        if (plan == null) {
             throw new DataNotFoundException("Plan Data not found");
         }
-            PlanDetailsDto planDetails = new PlanDetailsDto();
-            planDetails.setPlanId(plan.getPlanId());
-            planDetails.setPlanAmount(plan.getRechargeAmount());
-            planDetails.setPlanValidity(plan.getValidity());
-            planDetails.setSmsAllowance(plan.getSmsAllowance());
-            planDetails.setDataAmount((plan.getDataAllowance() / 1000));
-            planDetails.setAdditionalData((plan.getExtraData() / 1000));
-            planDetails.setDailyRefreshing(plan.getIsRefreshing());
-            planDetails.setVoiceAllowance(plan.getVoiceAllowance());
-            Double totalData;
-            if(plan.getIsRefreshing()){
-                totalData = (plan.getDataAllowance() / 1000) * plan.getValidity() + plan.getExtraData();
-            }else {
-                totalData = (plan.getDataAllowance() / 1000) + plan.getExtraData();
-            }
+        PlanDetailsDto planDetails = new PlanDetailsDto();
+        planDetails.setPlanId(plan.getPlanId());
+        planDetails.setPlanAmount(plan.getRechargeAmount());
+        planDetails.setPlanValidity(plan.getValidity());
+        planDetails.setSmsAllowance(plan.getSmsAllowance());
+        planDetails.setDataAmount((plan.getDataAllowance() / 1000));
+        planDetails.setAdditionalData((plan.getExtraData() / 1000));
+        planDetails.setDailyRefreshing(plan.getIsRefreshing());
+        planDetails.setVoiceAllowance(plan.getVoiceAllowance());
+        Double totalData;
+        if (plan.getIsRefreshing()) {
+            totalData = (plan.getDataAllowance() / 1000) * plan.getValidity() + plan.getExtraData();
+        } else {
+            totalData = (plan.getDataAllowance() / 1000) + plan.getExtraData();
+        }
 
-            planDetails.setTotalData(totalData);
-            responseMap.put("Plan", planDetails);
-            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+        planDetails.setTotalData(totalData);
+        responseMap.put("Plan", planDetails);
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    public List<PlanCategoriesDto> getPlanCategories(){
+    public List<PlanCategoriesDto> getPlanCategories() {
         return this.planRepository.getAllPlanCategories();
     }
 
-    public ResponseEntity<Map<String,String>> saveNewPlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest){
+    public ResponseEntity<Map<String, String>> saveNewPlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest) {
         int adminId = (Integer) httpServletRequest.getSession().getAttribute("adminId");
         Admin admin = this.adminRepository.getAdminById(adminId);
-        if(admin == null){
+        if (admin == null) {
             throw new DataNotFoundException("Admin Data found!");
         }
-        boolean isPlanAvailable = this.planRepository.isSamePlanAvailable(dtoOb.getIsNewPlan(), dtoOb.getPlanId(), dtoOb.getPlanCategoryId(), dtoOb.getPlanAmount(), dtoOb.getSmsAllowance(), dtoOb.getVoiceAllowance(), dtoOb.getDataAllowance(), dtoOb.getExtraDataAllowance(), dtoOb.getValidityPeriod(),dtoOb.getIsAvailable(), dtoOb.getExtraDataAvailable(), dtoOb.getDailyRefresh());
+        boolean isPlanAvailable = this.planRepository.isSamePlanAvailable(dtoOb.getIsNewPlan(), dtoOb.getPlanId(), dtoOb.getPlanCategoryId(), dtoOb.getPlanAmount(), dtoOb.getSmsAllowance(), dtoOb.getVoiceAllowance(), dtoOb.getDataAllowance(), dtoOb.getExtraDataAllowance(), dtoOb.getValidityPeriod(), dtoOb.getIsAvailable(), dtoOb.getExtraDataAvailable(), dtoOb.getDailyRefresh());
 
-        if(isPlanAvailable){
+        if (isPlanAvailable) {
             throw new InvalidDataFoundException("Plan Already Available!");
         }
-        Map<String,String> responseMap = new HashMap<>();
+        Map<String, String> responseMap = new HashMap<>();
         PlanCategories planCategories = this.planRepository.getPlanCategoriesById(dtoOb.getPlanCategoryId());
         Plan plan = new Plan();
         plan.setPlanCode(Helper.planCodeGenerator());
@@ -494,27 +502,27 @@ public class AdminService {
         plan.setIsDeleted(dtoOb.getIsAvailable() == 0);
         this.planRepository.savePlanDetails(plan);
 
-        responseMap.put("message","Plan saved successfully!");
+        responseMap.put("message", "Plan saved successfully!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String,String>> updatePlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest){
+    public ResponseEntity<Map<String, String>> updatePlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest) {
         int adminId = (Integer) httpServletRequest.getSession().getAttribute("adminId");
         Admin admin = this.adminRepository.getAdminById(adminId);
-        if(admin == null){
+        if (admin == null) {
             throw new DataNotFoundException("Admin Data found!");
         }
 
         Plan plan = this.planRepository.getPlanById(dtoOb.getPlanId());
-        if(plan == null){
+        if (plan == null) {
             throw new DataNotFoundException("Plan Data found!");
         }
 
-        boolean isPlanAvailable = this.planRepository.isSamePlanAvailable(dtoOb.getIsNewPlan(), dtoOb.getPlanId(), dtoOb.getPlanCategoryId(), dtoOb.getPlanAmount(), dtoOb.getSmsAllowance(), dtoOb.getVoiceAllowance(), dtoOb.getDataAllowance(), dtoOb.getExtraDataAllowance(), dtoOb.getValidityPeriod(),dtoOb.getIsAvailable(), dtoOb.getExtraDataAvailable(), dtoOb.getDailyRefresh());
-        if(isPlanAvailable){
+        boolean isPlanAvailable = this.planRepository.isSamePlanAvailable(dtoOb.getIsNewPlan(), dtoOb.getPlanId(), dtoOb.getPlanCategoryId(), dtoOb.getPlanAmount(), dtoOb.getSmsAllowance(), dtoOb.getVoiceAllowance(), dtoOb.getDataAllowance(), dtoOb.getExtraDataAllowance(), dtoOb.getValidityPeriod(), dtoOb.getIsAvailable(), dtoOb.getExtraDataAvailable(), dtoOb.getDailyRefresh());
+        if (isPlanAvailable) {
             throw new InvalidDataFoundException("Plan Already Available!");
         }
-        Map<String , String> responseMap = new HashMap<>();
+        Map<String, String> responseMap = new HashMap<>();
         plan.setValidity(dtoOb.getValidityPeriod());
         plan.setSmsAllowance(dtoOb.getSmsAllowance());
         plan.setDataAllowance(dtoOb.getDataAllowance());
@@ -526,7 +534,110 @@ public class AdminService {
         plan.setIsExtraDataAvailable(dtoOb.getExtraDataAvailable() == 1);
         plan.setIsDeleted(dtoOb.getIsAvailable() == 0);
         this.planRepository.updatePlanDetails(plan);
-        responseMap.put("message","Plan updated successfully!");
+        responseMap.put("message", "Plan updated successfully!");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, ClientDetailsPaginatedDto>> getFilteredUsersDetails(FilterUserRequest filterUserRequest) {
+        Map<String, ClientDetailsPaginatedDto> responseMap = new HashMap<>();
+        ClientDetailsPaginatedDto clientDetailsPaginatedDto = new ClientDetailsPaginatedDto();
+        int userPageSize = filterUserRequest.getPageSize();
+        int currentPage = filterUserRequest.getCurrentPage();
+        Pageable pageable = PageRequest.of(currentPage - 1, userPageSize);
+        List<UsersDetailsDto> usersDetailsDtos = new ArrayList<>();
+        Page<Client> getPaginatedClientData = this.clientRepository.getPaginatedClientData(pageable, filterUserRequest);
+
+        clientDetailsPaginatedDto.setDataAvailable(!getPaginatedClientData.isEmpty());
+        clientDetailsPaginatedDto.setTotalPages(getPaginatedClientData.getTotalPages());
+        clientDetailsPaginatedDto.setRequestType(filterUserRequest.getRequestType());
+
+        for (Client client : getPaginatedClientData.getContent() ){
+            UsersDetailsDto usersDetailsDto = getUsersDetailsDto(filterUserRequest, client);
+            usersDetailsDtos.add(usersDetailsDto);
+        }
+        clientDetailsPaginatedDto.setClientFilteredRequests(usersDetailsDtos);
+        responseMap.put("clientDataDto", clientDetailsPaginatedDto);
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    private static UsersDetailsDto getUsersDetailsDto(FilterUserRequest filterUserRequest, Client client) {
+        UsersDetailsDto usersDetailsDto = new UsersDetailsDto();
+        usersDetailsDto.setClientId(client.getClientId());
+        usersDetailsDto.setClientEmail(client.getEmail());
+        usersDetailsDto.setClientName(client.getFirstName() + " " + client.getLastName());
+
+        int currentStatus;
+
+        if(filterUserRequest.getRequestType() == 2){
+            currentStatus = AdminUserStatusEnum.SIGNED_UP.getUserStatusId();
+        }else {
+            if(client.isDocValidated()){
+                currentStatus = AdminUserStatusEnum.REGISTERED.getUserStatusId();
+            }else {
+                currentStatus = AdminUserStatusEnum.PENDING.getUserStatusId();
+            }
+        }
+
+        usersDetailsDto.setCurrentRequestStatus(currentStatus);
+        return usersDetailsDto;
+    }
+
+    public ResponseEntity<Map<String,OtherClientDetailsDto>> getClientOtherDetails(int clientId, HttpServletRequest httpServletRequest){
+        Map<String,OtherClientDetailsDto> responseMap = new HashMap<>();
+        if(clientId == 0){
+            throw new DataNotFoundException("Client Id Not Found!");
+        }
+
+        Client client = this.clientRepository.getClientById(clientId);
+        ClientDocuments clientDocuments = this.clientDocumentsRepository.getClientDocumentDetails(client.getClientId());
+        String aadharViewLink = httpServletRequest.getContextPath() + File.separator + System.getenv("UninorDownloadPath") + client.getClientId() + File.separator + "AadharCard." + clientDocuments.getAadharCardExtension();
+        String panViewLink = httpServletRequest.getContextPath() + File.separator + System.getenv("UninorDownloadPath") + client.getClientId() + File.separator + "PANCard." + clientDocuments.getPanCardExtension();
+        OtherClientDetailsDto otherClientDetailsDto = new OtherClientDetailsDto();
+        otherClientDetailsDto.setClientId(client.getClientId());
+        otherClientDetailsDto.setClientBDate(Helper.formatBirthDate(client.getDateOfBirth()));
+        otherClientDetailsDto.setClientPanNumber(client.getPanNumber());
+        otherClientDetailsDto.setClientAadharNumber(client.getAadharNumber());
+        otherClientDetailsDto.setClientName(client.getFirstName() + " " + client.getLastName());
+        otherClientDetailsDto.setAadharFilePath(aadharViewLink);
+        otherClientDetailsDto.setPanFilePath(panViewLink);
+        responseMap.put("clientDetails", otherClientDetailsDto);
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,String>> sendClientContactEmail(String description, int clientId){
+        if(clientId == 0){
+            throw new DataNotFoundException("Client Id Not Found!");
+        }
+
+        if(description == null){
+            throw new DataNotFoundException("Please provide description");
+        }
+
+        Map<String,String> responseMap = new HashMap<>();
+        Client client = this.clientRepository.getClientById(clientId);
+
+        if(client==null){
+            throw new DataNotFoundException("Client Data Not Found!");
+        }
+
+        this.emailService.sendContactMail(client.getEmail(),client.getFirstName() + " " + client.getLastName(), description);
+        responseMap.put("message","Email send to user");
+        return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String,String>> sendSignUpUserNotificationEmail(int clientId){
+        if(clientId == 0){
+            throw new DataNotFoundException("Client Data not found");
+        }
+
+        Map<String,String> responseMap = new HashMap<>();
+        Client client = this.clientRepository.getClientById(clientId);
+        if(client==null){
+            throw new DataNotFoundException("Client Data Not Found");
+        }
+
+        this.emailService.signedUserNotificationMail(client.getEmail(),client.getFirstName() + " " + client.getLastName());
+        responseMap.put("message","Email send to user");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 

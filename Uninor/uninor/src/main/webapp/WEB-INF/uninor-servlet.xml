@@ -32,11 +32,10 @@
             <bean class="com.uninor.interceptor.ClientPreHandler" />
         </mvc:interceptor>
 
-        <mvc:interceptor>
-            <mvc:mapping path="/admin/*" />
-            <!--            <mvc:exclude-mapping path="/admin/errorPage"/>-->
-            <bean class="com.uninor.interceptor.AdminPreHandler" />
-        </mvc:interceptor>
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/admin/*" />-->
+<!--            <bean class="com.uninor.interceptor.AdminPreHandler" />-->
+<!--        </mvc:interceptor>-->
 
     </mvc:interceptors>
 
