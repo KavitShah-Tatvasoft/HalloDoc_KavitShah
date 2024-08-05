@@ -47,9 +47,9 @@ public class ScheduledService {
     @Async("taskExecutor")
     @Scheduled(cron = "0 0 0 * * ?")
     public void midnightScheduler() {
-        updateExpiredPlan();
-        activateUpcomingPlan();
-        refreshDailyData();
+//        updateExpiredPlan();
+//        activateUpcomingPlan();
+//        refreshDailyData();
     }
 
     @Async("taskExecutor")

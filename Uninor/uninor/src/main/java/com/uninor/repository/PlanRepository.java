@@ -584,12 +584,12 @@ public class PlanRepository {
         predicate = cb.equal(root.get("validity"),validity);
         predicates.add(predicate);
 
-        if(isAvailable == 0){
-            predicate = cb.equal(root.get("isDeleted"),false);
-        }else {
-            predicate = cb.equal(root.get("isDeleted"),true);
-        }
-        predicates.add(predicate);
+//        if(isAvailable == 0){
+//            predicate = cb.equal(root.get("isDeleted"),false);
+//        }else {
+//            predicate = cb.equal(root.get("isDeleted"),true);
+//        }
+//        predicates.add(predicate);
 
         if(isExtraDataAvailable == 0){
             predicate = cb.equal(root.get("isExtraDataAvailable"),false);
@@ -605,9 +605,9 @@ public class PlanRepository {
         }
         predicates.add(predicate);
 
-        Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
+//        Predicate finalPredicate = cb.and(predicates.toArray(new Predicate[0]));
 
-        cr.where(finalPredicate);
+        cr.where(predicates.toArray(new Predicate[0]));
         Query<Plan> query = s.createQuery(cr);
 
         List<Plan> list = query.getResultList();

@@ -1063,7 +1063,7 @@ public class ClientService {
         clientRequest.setSimCard(simCard);
         this.clientRequestRepository.saveClientRequest(clientRequest);
         this.smsService.sendNewRequestSms(simCard.getPhoneNumber(), "deactivation");
-
+        this.clientRepository.setDeactivationFlag(simCard.getClient().getClientId(), true);
         responseMap.put("message","Sim deactivation request created!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
 

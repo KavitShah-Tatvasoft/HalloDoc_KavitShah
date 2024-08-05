@@ -54,6 +54,7 @@
     <div class="custom-background"></div>
     <main>
         <div class="container-fluid recharge-container">
+
             <div class="row ">
                 <div class="col-12">
                     <div class="create-plan-container">
@@ -78,7 +79,10 @@
             </div>
         </div>
         <div class="container-fluid recharge-container">  <!-- Change inside content and class-->
-
+            <div class="no-data-div mt-5 d-none">
+                <img src="/uninor/resources/images/kavit.png" class="no-data-found-img">
+                <span class="no-data-text">NO FILTERED PLAN AVAILABLE!</span>
+            </div>
             <div class="card-recharge single-recharge-card-clone d-none col-12 col-sm-6 col-md-4">
                 <div class="our_solution_category">
                     <div class="solution_cards_box">
@@ -521,10 +525,6 @@
                 </div>
             </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view-plan-modal">
-                View Plan
-            </button>
 
             <!-- Modal -->
             <div class="modal fade" id="view-plan-modal" data-bs-keyboard="false" tabindex="-1"
@@ -587,10 +587,6 @@
                 </div>
             </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recharge-plan">
-                Recharge Now
-            </button>
 
             <!-- Modal -->
             <div class="modal recharge-plan-modal fade fade-scale in" id="recharge-plan" data-bs-backdrop="static"
@@ -1023,9 +1019,9 @@
             <div class="modal-dialog modal-dialog-centered">
 
                 <div class="modal-content">
-                    <form id="updatePlanForm" name="newPlanForm">
+                    <form id="updatePlanForm" name="updatePlanForm">
                         <div class="modal-header new-plan-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel1">Update</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel1">Update Plan</h1>
                             <button type="button" class="btn-close new-plan-close-btn" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                         </div>

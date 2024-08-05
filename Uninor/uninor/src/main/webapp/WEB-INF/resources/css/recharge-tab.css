@@ -604,10 +604,37 @@ button {
     justify-content: flex-start;
 }
 
+.no-data-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 25px;
+}
+
+.no-data-found-img{
+    height: 250px;
+}
+
+.no-data-text{
+    font-size: 25px;
+    font-weight: 700;
+    color: #ff1a1a;
+}
+
+
 @media screen and (max-width: 575px) {
     .col-xs{
         flex: 0 0 50%;
         max-width: 50%;
+    }
+
+    .no-data-found-img{
+        height: 150px;
+    }
+
+    .no-data-text{
+        font-size: 18px;
     }
 }
 

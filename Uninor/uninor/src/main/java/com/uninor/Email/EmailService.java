@@ -194,4 +194,23 @@ public class EmailService {
 
         mailSender.send(messagePreparator);
     }
+
+    public void sendSucessfullVerificationEmail(String email, String name) {
+        MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                message.setFrom("hallodoc29@outlook.com");
+                message.setTo(email);
+                message.setSubject("Successful Document Verification");
+                String content = "<html><br>" + "<h2> Hello, " + name + "</h2><br>"
+                        + "<p style=\"\"margin-top:30px;\"\">Congratulations on being a part of uninor family."
+                        + "Now you can use the various services provided by us.<br> "
+                        + "<p>If you face any issue feel free to contact us on out toll free number.</p>" + "</html>";
+                message.setText(content, true);
+            }
+        };
+
+        mailSender.send(messagePreparator);
+    }
+
 }

@@ -29,7 +29,7 @@ public class OTPLogsRepository {
 
     public List<OtpLogs> getOtpForClient(String email){
         Session s = this.sessionFactory.openSession();
-        String queryString = "FROM OtpLogs ol WHERE ol.email=:email ORDER BY ol.sentDateTime DESC";
+        String queryString = "FROM OtpLogs ol WHERE ol.email=:email AND ol.isExpired=false ORDER BY ol.sentDateTime DESC ";
         Query<OtpLogs> q = s.createQuery(queryString);
         q.setParameter("email", email);
         q.setMaxResults(1);
@@ -40,7 +40,7 @@ public class OTPLogsRepository {
 
     public List<OtpLogs> getLatestOtpByNumber(String mobileNumber){
         Session s = this.sessionFactory.openSession();
-        String queryString = "FROM OtpLogs ol WHERE ol.mobileNumber=:mobileNumber ORDER BY ol.sentDateTime DESC";
+        String queryString = "FROM OtpLogs ol WHERE ol.mobileNumber=:mobileNumber AND ol.isExpired=false ORDER BY ol.sentDateTime DESC";
         Query<OtpLogs> q = s.createQuery(queryString);
         q.setParameter("mobileNumber", mobileNumber);
         q.setMaxResults(1);
@@ -51,7 +51,7 @@ public class OTPLogsRepository {
 
     public List<OtpLogs> getLatestOtpByEmail(String email){
         Session s = this.sessionFactory.openSession();
-        String queryString = "FROM OtpLogs ol WHERE ol.email=:email ORDER BY ol.sentDateTime DESC";
+        String queryString = "FROM OtpLogs ol WHERE ol.email=:email AND ol.isExpired=false ORDER BY ol.sentDateTime DESC";
         Query<OtpLogs> q = s.createQuery(queryString);
         q.setParameter("email", email);
         q.setMaxResults(1);
@@ -60,6 +60,10 @@ public class OTPLogsRepository {
         return list;
     }
 
+    @Transactional
+    public void updateOtpLog(OtpLogs otpLogs){
+        this.hibernateTemplate.update(otpLogs);
+    }
 
 
 }

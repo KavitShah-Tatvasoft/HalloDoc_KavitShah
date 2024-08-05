@@ -246,11 +246,12 @@ public class AdminDashboardService {
             client.setClientDocuments(clientDocuments);
             this.clientRepository.updateClient(client);
             this.simCardRepository.setActivationTime(LocalDateTime.now(), clientRequest.getSimCard());
+            this.emailService.sendSucessfullVerificationEmail(client.getEmail(),client.getFirstName() + " " + client.getLastName());
         }else {
             int validationAttempts = client.getValidationAttempts();
-            if(validationAttempts == 3){
+            if(validationAttempts == Helper.VALIDATION_ATTEMPTS){
                 this.emailService.unregistrtionEmail(client.getEmail(), client.getFirstName() + " " + client.getLastName());
-                unregisterUser(client);
+                unregisterUser(client,clientDocuments,validationAttempts,httpServletRequest);
             }else{
                 this.emailService.reuploadEmail(client.getEmail(), client.getFirstName() + " " + client.getLastName(), httpServletRequest);
                 client.setValidationAttempts(validationAttempts+1);
@@ -265,11 +266,14 @@ public class AdminDashboardService {
         return new ResponseEntity<>(resposeMap,new HttpHeaders(),HttpStatus.OK);
     }
 
-    private void unregisterUser(Client client){
+    private void unregisterUser(Client client, ClientDocuments clientDocuments, int validationAttempts, HttpServletRequest httpServletRequest){
         SimCard simCard = this.simCardRepository.getClientSimCardDetailsByClientId(client.getClientId());
 
         if(simCard.getSimAcquiredType() == SimAccquireTypeEnum.PORT.getSimAccquireTypeId()){
-            this.simCardRepository.deleteSimCardEntry(simCard.getSimCardId());
+            this.emailService.reuploadEmail(client.getEmail(), client.getFirstName() + " " + client.getLastName(), httpServletRequest);
+            client.setValidationAttempts(validationAttempts+1);
+            client.setClientDocuments(clientDocuments);
+            this.clientRepository.updateClient(client);
         }else{
             simCard.setClient(null);
             simCard.setAvailable(true);
@@ -277,16 +281,19 @@ public class AdminDashboardService {
             simCard.setRoamingActive(false);
             simCard.setActivationDate(null);
             this.simCardRepository.addOrUpdateSimCard(simCard);
+
+//            ClientDocuments clientDocs = this.clientDocumentsRepository.getClientDocumentDetails(client.getClientId());
+            clientDocuments.setAadharCardVerified(false);
+            clientDocuments.setPanCardVerified(false);
+            client.setValidationAttempts(0);
+            client.setValidationAttemptsOver(true);
+            Users user = this.userRepository.getUserByEmail(client.getEmail()).get(0); //check
+            user.setRegistered(false);
+            client.setUser(user);
+            client.setClientDocuments(clientDocuments);
+            this.clientRepository.updateClient(client);
         }
-        ClientDocuments clientDocuments = this.clientDocumentsRepository.getClientDocumentDetails(client.getClientId());
-        clientDocuments.setAadharCardVerified(false);
-        clientDocuments.setPanCardVerified(false);
-        client.setValidationAttempts(0);
-        Users user = this.userRepository.getUserByEmail(client.getEmail()).get(0); //check
-        user.setRegistered(false);
-        client.setUser(user);
-        client.setClientDocuments(clientDocuments);
-        this.clientRepository.updateClient(client);
+
 
     }
 
@@ -340,6 +347,7 @@ public class AdminDashboardService {
         clientRequest.setRequestStatus(RequestStatusEnum.REJECTED.getRequestStatusId());
         this.clientRequestRepository.updateClientRequest(clientRequest);
         this.smsService.sendRejectDeactivationRequestMessage(simCard.getPhoneNumber());
+        this.clientRepository.setDeactivationFlag(simCard.getClient().getClientId(), false);
         responseMap.put("messages", "Deactivation request rejected!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }

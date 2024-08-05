@@ -34,7 +34,7 @@ public class PreUpdatePlanDetailsDto {
     private double extraDataAllowance;
 
     @NotNull
-    @Min(1)
+//    @Min(1)  checked for min in service based on category
     @Max(365)
     private int validityPeriod;
 

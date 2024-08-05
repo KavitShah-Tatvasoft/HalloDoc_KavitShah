@@ -24,4 +24,8 @@ public class CuponWalletDto {
 
     @Pattern(regexp = "^(\\d+(\\.\\d+)?)?$", message = "Wallet Amount must consist of decimals")
     private String enteredWalletAmount;
+
+    @Pattern(regexp = "^(true|false)$", message = "Must be 'true' or 'false'")
+    private String toggleService;
+
 }

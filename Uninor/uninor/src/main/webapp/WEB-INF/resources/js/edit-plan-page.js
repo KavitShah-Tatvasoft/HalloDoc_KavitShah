@@ -63,6 +63,22 @@ function applyFilter(bool) {
             console.log(data)
             $(".popular-plan-count").html("(" + data["Popular Plans"].planCount + ")")
             populateCategoryWisePlans(data)
+            var totalPlanCount = 0
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const plan = data[key];
+                    // Check if the planCategory is not 'Popular Plans' before adding the count
+                    if (plan.planCategory !== 'Popular Plans') {
+                        totalPlanCount += plan.planCount;
+                    }
+                }
+            }
+
+            if(totalPlanCount === 0){
+                $(".no-data-div").removeClass("d-none")
+            }else {
+                $(".no-data-div").addClass("d-none")
+            }
         },
         error: function (data) {
             $(".failure-message-heading").text("Server Error")
@@ -260,6 +276,15 @@ $(document).ready(function() {
         return this.optional(element) || /^(Unlimited|\d+ minutes)$/.test(value);
     }, "Please provide proper value")
 
+    $.validator.addMethod("validityField", function(value, element, params) {
+        var hiddenFieldValue = $(params).val();
+        if (hiddenFieldValue === "7") {
+            return value === '0'; // Allow 0 only if hidden field is 1
+        } else {
+            return value !== '0'; // Disallow 0 if hidden field is not 1
+        }
+    }, "Invalid plan validity.");
+
     $("#newPlanForm").validate({
         rules: {
             planCategory: {
@@ -292,7 +317,7 @@ $(document).ready(function() {
             validity: {
                 required: true,
                 number: true,
-                min: 1,
+                validityField: "#planCategory",
                 max: 365
             },
             isAvailable: {
@@ -337,7 +362,7 @@ $(document).ready(function() {
             validity: {
                 required: "Validity days required",
                 number: "Validity days should only be integer",
-                min: "Minimum 1 day validity required",
+                validityField: "Minimum 1 day validity required",
                 max: "Maximum 365 days validity possible"
             },
             isAvailable: {
@@ -386,7 +411,7 @@ $(document).ready(function() {
             updateValidity: {
                 required: true,
                 number: true,
-                min: 1,
+                validityField: "#hiddenCouponTypeValue",
                 max: 365
             },
             updateIsAvailable: {
@@ -426,7 +451,7 @@ $(document).ready(function() {
             updateValidity: {
                 required: "Validity days required",
                 number: "Validity days should only be integer",
-                min: "Minimum 1 day validity required",
+                validityField: "Minimum 1 day validity required",
                 max: "Maximum 365 days validity possible"
             },
             updateIsAvailable: {
@@ -487,7 +512,10 @@ function updateCurrentPlan(){
             $('#updatePlanForm')[0].reset()
             $(".new-plan-close-btn").click()
             applyFilter(false)
-            showAlert(true,xhr['message'],"success")
+            // showAlert(true,xhr['message'],"success")
+            $(".success-message-heading-modal").text("Plan Updated!")
+            $(".success-message-modal").text(xhr['message'])
+            $("#statusSuccessModal").modal('show')
         },
         error: function(xhr, status, error) {
             $(".new-plan-close-btn").click()
@@ -502,10 +530,16 @@ function updateCurrentPlan(){
                 console.log(errorResponse)
                 if (errorResponse.errors) {
                     let errorMessage = errorResponse.errors
-                    showAlert(true,errorMessage,"faliure")
+                    // showAlert(true,errorMessage,"faliure")
+                    $(".failure-message-heading").text("Plan update failed")
+                    $(".failure-message-modal").text(errorMessage)
+                    $("#statusErrorsModal").modal('show')
                 }
             } else {
-                showAlert(true,"Error at server side.","faliure")
+                // showAlert(true,"Error at server side.","faliure")
+                $(".failure-message-heading").text("Plan update failed")
+                $(".failure-message-modal").text("Error at server side.")
+                $("#statusErrorsModal").modal('show')
             }
         }
     })
@@ -547,7 +581,10 @@ function addNewPlan(){
             $('#newPlanForm')[0].reset()
             $(".new-plan-close-btn").click()
             applyFilter(false)
-            showAlert(true,xhr['message'],"success")
+            // showAlert(true,xhr['message'],"success")
+            $(".success-message-heading-modal").text("Plan Created!")
+            $(".success-message-modal").text(xhr['message'])
+            $("#statusSuccessModal").modal('show')
         },
         error: function(xhr, status, error) {
             $(".new-plan-close-btn").click()
@@ -562,10 +599,16 @@ function addNewPlan(){
                 console.log(errorResponse)
                 if (errorResponse.errors) {
                     let errorMessage = errorResponse.errors
-                    showAlert(true,errorMessage,"faliure")
+                    // showAlert(true,errorMessage,"faliure")
+                    $(".failure-message-heading").text("Failed to create plan")
+                    $(".failure-message-modal").text(errorMessage)
+                    $("#statusErrorsModal").modal('show')
                 }
             } else {
-                showAlert(true,"Error at server side.","faliure")
+                // showAlert(true,"Error at server side.","faliure")
+                $(".failure-message-heading").text("Failed to create plan")
+                $(".failure-message-modal").text("Error at server side.")
+                $("#statusErrorsModal").modal('show')
             }
         }
     })

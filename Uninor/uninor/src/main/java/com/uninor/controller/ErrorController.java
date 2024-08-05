@@ -29,4 +29,9 @@ public class ErrorController {
         return "error-pages/authorization-error";
     }
 
+    @RequestMapping(value = "/deactivation-request", method = RequestMethod.GET)
+    public String deactivationRequestPage(){
+        return "error-pages/deactivation-request";
+    }
+
 }

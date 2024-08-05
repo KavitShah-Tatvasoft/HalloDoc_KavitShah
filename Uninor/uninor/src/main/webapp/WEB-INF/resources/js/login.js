@@ -235,12 +235,21 @@ function submitSignUpForm(OTP){
 function showOnLoadMessages(){
     var showReuploadSubmitMessgae = localStorage.getItem("showReuploadSubmitMessgae")
     var showLogoutMessage = localStorage.getItem("showLogoutMessage")
+    var showRegistrationSuccessMessage = localStorage.getItem("showRegistrationMessage")
+
     if(showReuploadSubmitMessgae === "true"){
         showAlert(true,"Files uploaded successfully","success")
+        localStorage.removeItem("showReuploadSubmitMessgae")
     }
 
     if(showLogoutMessage === "true"){
         showAlert(true,"Logout Successfully","success")
         localStorage.removeItem("showLogoutMessage")
     }
+
+    if(showRegistrationSuccessMessage === "true"){
+        showAlert(true, "Details registered successfully","success")
+        localStorage.removeItem("showRegistrationMessage")
+    }
+
 }

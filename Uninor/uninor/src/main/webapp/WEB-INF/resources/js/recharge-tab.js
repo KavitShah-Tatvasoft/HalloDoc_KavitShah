@@ -59,12 +59,29 @@ function applyFilter(bool) {
         type: 'POST',
         data: payload,
         success: function (data) {
-            console.log("Helloooo")
             console.log(data)
             $(".popular-plan-count").html("(" + data["Popular Plans"].planCount + ")")
             populatePopularPlanCards(data["Popular Plans"])
 
             populateCategoryWisePlans(data)
+            let totalPlanCount = 0;
+
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const plan = data[key];
+                    // Check if the planCategory is not 'Popular Plans' before adding the count
+                    if (plan.planCategory !== 'Popular Plans') {
+                        totalPlanCount += plan.planCount;
+                    }
+                }
+            }
+
+            if(totalPlanCount === 0){
+                $(".no-data-div").removeClass("d-none")
+            }else {
+                $(".no-data-div").addClass("d-none")
+            }
+
         },
         error: function (data) {
             $(".failure-message-heading").text("Server Error")

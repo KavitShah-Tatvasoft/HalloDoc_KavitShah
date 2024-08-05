@@ -31,4 +31,6 @@ public class DashboardDataDto {
     private List<Double> usageAmountList;
     private String voiceUsage;
     private boolean isSimBlocked;
+    private boolean isPrepaidDataOver;
+    private String additionalDataAmount;
 }

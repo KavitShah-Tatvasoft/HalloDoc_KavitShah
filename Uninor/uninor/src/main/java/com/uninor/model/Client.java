@@ -83,5 +83,9 @@ public class Client {
     @OneToOne(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ClientDocuments clientDocuments;
 
+    @Column(name = "is_validation_attempts_over")
+    private boolean isValidationAttemptsOver;
 
+    @Column(name = "is_deactivation_request_created")
+    private boolean isDeactivationRequestCreated;
 }

@@ -119,6 +119,8 @@ public class ClientDashboardService {
             dateLabel.add(clientDailyDataUsage.getUsageDate().toString());
             dataUsage.add(clientDailyDataUsage.getDailyUsage());
         }
+        dashboardDataDto.setPrepaidDataOver(false);
+        dashboardDataDto.setAdditionalDataAmount(String.valueOf(0));
         dashboardDataDto.setSimBlocked(simCard.isBlocked());
         dashboardDataDto.setUsageDateList(dateLabel);
         dashboardDataDto.setUsageAmountList(dataUsage);
@@ -130,6 +132,7 @@ public class ClientDashboardService {
         dashboardDataDto.setRoamingActive(simCard.isRoamingActive());
         if (simCard.getSimType() == 1) {
             dashboardDataDto.setSimPrepaid(true);
+
         } else {
             dashboardDataDto.setSimPrepaid(false);
         }
@@ -205,6 +208,16 @@ public class ClientDashboardService {
                 dashboardDataDto.setRenewTime(renewsIn);
                 dashboardDataDto.setPlanAmount(plan.getRechargeAmount().toString());
                 dashboardDataDto.setPlanId(plan.getPlanId());
+
+                if (simCard.getSimType() == 1){
+                    if(availableDataPercentage == 0.0){
+                        dashboardDataDto.setPrepaidDataOver(true);
+                        dashboardDataDto.setAdditionalDataAmount("Additional " + Helper.formatInternetData(planUsage.getAdditionalData()) + " data available");
+                    }else {
+                        dashboardDataDto.setPrepaidDataOver(false);
+                        dashboardDataDto.setAdditionalDataAmount(String.valueOf(0));
+                    }
+                }
             }
         }
 
@@ -757,7 +770,7 @@ public class ClientDashboardService {
             client.setWalletAmount(client.getWalletAmount() - walletAmountUsed + cashbackAmount);
             this.clientRepository.updateClient(client);
             this.invoiceTableRepository.saveInvoiceTableDetails(invoiceTable);
-            String filePath = generatePostPaidPlanInvoice(client, simCard, invoiceTable, orderTable, plan);
+            String filePath = generatePostPaidPlanInvoice(client, simCard, invoiceTable, orderTable, plan, httpServletRequest);
             responseMap.put("filePath", filePath);
         }
         planActivation.setActive(false);
@@ -765,14 +778,16 @@ public class ClientDashboardService {
         planActivation.setServiceChange(true);
         this.planActivationRepository.updatePlanActivation(planActivation);
 
-        simCard.setSimType(1);
+        if(cuponWalletDto.getToggleService().equals("true")){
+            simCard.setSimType(SimType.PREPAID.getSimCardTypeId());
+        }
         simCard.setPlanActive(false);
         this.simCardRepository.addOrUpdateSimCard(simCard);
         responseMap.put("messages", "Bill paid successfully!");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
     }
 
-    public String generatePostPaidPlanInvoice(Client client, SimCard simCard, InvoiceTable invoice, OrderTable order, Plan plan) throws IOException, DocumentException {
+    public String generatePostPaidPlanInvoice(Client client, SimCard simCard, InvoiceTable invoice, OrderTable order, Plan plan, HttpServletRequest httpServletRequest) throws IOException, DocumentException {
 
         String folderPath = System.getenv("UninorUploadPath") + client.getClientId() + File.separator + "invoices";
         File folder = new File(folderPath);
@@ -781,6 +796,7 @@ public class ClientDashboardService {
             folder.mkdirs();
         }
         String filePath = folderPath + File.separator + "Invoice-" + invoice.getInvoiceNumber() + ".pdf";
+        String downloadPath = httpServletRequest.getContextPath() + File.separator + System.getenv("UninorDownloadPath") + client.getClientId() + File.separator + "invoices" + File.separator + "Invoice-" + invoice.getInvoiceNumber() + ".pdf";
         PdfWriter writer = new PdfWriter(filePath);
         PdfDocument pdf = new PdfDocument(writer);
         pdf.addNewPage();
@@ -917,7 +933,7 @@ public class ClientDashboardService {
                 .setMarginTop(30));
 
         document.close();
-        return filePath;
+        return downloadPath;
     }
 
     public InvoiceTable saveInvoiceTableDetails(Client client, OrderTable orderTable, String mobileNumber, double discountAmount, double taxAmount, double totalAmount, double taxableAmount, double walletAmountUsed, PlanUsage planUsage, double extraDataCharges, double extraSmsCharges, PlanActivation planActivation) {
@@ -1013,6 +1029,13 @@ public class ClientDashboardService {
             throw new InvalidDataFoundException("Invalid Coupon Code!");
         }
 
+        if(clientCupons.getCupon().getCuponCategory().getCuponCategoryId() == CouponCategoryEnum.NO_REWARD.getCouponCategoryId()){
+            clientCupons.setUsed(true);
+            this.couponRepository.updateClientCupons(clientCupons);
+            responseMap.put("success", "It was a no reward coupon. Better luck next time!");
+            return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
+        }
+
         if (clientCupons.getCupon().isDeductable() || clientCupons.getCupon().isCashback()) {
             throw new InvalidDataFoundException("Coupon cannot be redeemed here! Use it during recharge payment");
         }
@@ -1043,6 +1066,9 @@ public class ClientDashboardService {
                 }
             } else {
                 double currentUsage = planUsage.getDataUsage();
+                if(currentUsage + couponReward > planActivation.getPlan().getDataAllowance()){
+                    throw new InvalidDataFoundException("Coupon can be redeem after you use atleast " + Helper.formatInternetData(couponReward) +" data!");
+                }
                 planUsage.setDataUsage(currentUsage + couponReward);
             }
         }

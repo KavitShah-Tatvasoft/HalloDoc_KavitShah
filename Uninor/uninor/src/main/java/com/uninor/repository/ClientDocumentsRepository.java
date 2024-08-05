@@ -4,6 +4,7 @@ import com.uninor.model.Client;
 import com.uninor.model.ClientDocuments;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -45,6 +46,17 @@ public class ClientDocumentsRepository {
         List<ClientDocuments> list = q.list();
         s.close();
         return list.isEmpty()?null:list.get(0);
+    }
+
+    public void deleteClientDocuments(int clientId) {
+        Session s = this.sessionFactory.openSession();
+        Transaction tx = s.beginTransaction();
+        String queryString = "DELETE FROM ClientDocuments cd WHERE cd.client.clientId=:clientId";
+        Query<?> q = s.createQuery(queryString);
+        q.setParameter("clientId", clientId);
+        q.executeUpdate();
+        tx.commit();
+        s.close();
     }
 
 }

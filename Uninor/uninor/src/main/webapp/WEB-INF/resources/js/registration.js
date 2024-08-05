@@ -18,8 +18,7 @@ function getClientData(){
 
                 $("#fname").val(xhr.fname)
                 $("#lname").val(xhr.lname)
-                $("#email").val(xhr.email)
-                $("#email").attr("readonly", "readonly")
+                $("#email").val(xhr.email).attr("readonly", "readonly")
 
             }
         },
@@ -152,26 +151,6 @@ function hideCompanyInput(){
     $(".company-name-container").addClass("d-none")
     $(".mobile-placeholder").html("Mobile Number")
 }
-
-// function getNumberSuggestions(){
-//     showLoader()
-//     $.ajax({
-//         url: CONTEXT_PATH + '/get-available-number-suggestions',
-//         type: 'GET',
-//         success: function (res) {
-//             debugger
-//             hideLoader()
-//             console.log(res)
-//         },
-//         error: function(xhr, status, error) {
-//             hideLoader()
-//             console.log("Errorr")
-//         }
-//     })
-//
-// }
-
-
 
 $.validator.addMethod("onlyCharacters", function(value, element) {
     return this.optional(element) || /^[a-zA-Z]+$/.test(value);
@@ -498,6 +477,7 @@ function submitFormData(){
         success: function (xhr,status,error) {
             debugger
             hideLoader()
+            localStorage.setItem("showRegistrationMessage","true")
             window.location.assign(CONTEXT_PATH + "/login")
         },
         error: function(xhr, status, error) {

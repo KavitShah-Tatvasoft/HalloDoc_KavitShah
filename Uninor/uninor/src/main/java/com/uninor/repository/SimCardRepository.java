@@ -63,7 +63,6 @@ public class SimCardRepository {
         return list.isEmpty()?null:list.get(0);
     }
 
-    @Transactional
     public void deleteSimCardEntry(int simCardId){
         Session s = this.sessionFactory.openSession();
         Transaction tx = s.beginTransaction();

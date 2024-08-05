@@ -29,6 +29,7 @@ public class ClientPreHandler extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        boolean isDeactivation = false;
         try {
             Integer clientId = (Integer) request.getSession().getAttribute("clientId");
             Integer adminId = (Integer) request.getSession().getAttribute("adminId");
@@ -54,6 +55,11 @@ public class ClientPreHandler extends HandlerInterceptorAdapter {
                 throw new InvalidDataFoundException("Docment verification left");
             }
 
+            if(client.isDeactivationRequestCreated()){
+                isDeactivation = true;
+                throw new InvalidDataFoundException("Deactivation request created");
+            }
+
         }
         catch (DataNotFoundException e){
             request.setAttribute("errorMessage", e.getMessage());
@@ -61,7 +67,12 @@ public class ClientPreHandler extends HandlerInterceptorAdapter {
         }
         catch (InvalidDataFoundException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            response.sendRedirect(request.getContextPath()+"/document-under-verification");
+            if(isDeactivation){
+                response.sendRedirect(request.getContextPath()+"/error/deactivation-request");
+            }else{
+                response.sendRedirect(request.getContextPath()+"/document-under-verification");
+            }
+
         }
         catch (AuthorizationServiceException e){
             request.setAttribute("errorMessage", e.getMessage());

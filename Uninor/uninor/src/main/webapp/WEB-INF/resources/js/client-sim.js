@@ -57,6 +57,10 @@ function deactivateSim(){
     }
 }
 
+function redirectFunction(){
+    window.location.assign(CONTEXT_PATH + "/error/deactivation-request")
+}
+
 function createDeactivationRequest(){
 
     $.ajax({
@@ -67,6 +71,7 @@ function createDeactivationRequest(){
             console.log(xhr)
             $(".close-block-toggle-modal").click()
             showAlert(true,xhr["message"],"success")
+            setTimeout(redirectFunction(), 2000);
         },
         error: function(xhr, status, error) {
             debugger

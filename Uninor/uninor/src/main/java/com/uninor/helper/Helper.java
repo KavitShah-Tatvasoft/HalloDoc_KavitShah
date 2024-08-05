@@ -118,4 +118,13 @@ public class Helper {
         }
         return orderId.toString();
     }
+
+    public static String formatInternetData(double sizeInMB) {
+        if (sizeInMB >= 1000) {
+            double sizeInGB = sizeInMB / 1000.0;
+            return String.format("%.2f GB", sizeInGB);
+        } else {
+            return sizeInMB + " MB";
+        }
+    }
 }

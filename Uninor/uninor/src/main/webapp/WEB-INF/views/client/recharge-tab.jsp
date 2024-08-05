@@ -123,6 +123,11 @@
         </div>
         <div class="container-fluid recharge-container">  <!-- Change inside content and class-->
 
+            <div class="no-data-div mt-5 d-none">
+                <img src="/uninor/resources/images/kavit.png" class="no-data-found-img">
+                <span class="no-data-text">NO FILTERED PLAN AVAILABLE!</span>
+            </div>
+
             <div class="card-recharge single-recharge-card-clone d-none col-12 col-sm-6 col-md-4">
                 <div class="our_solution_category">
                     <div class="solution_cards_box">

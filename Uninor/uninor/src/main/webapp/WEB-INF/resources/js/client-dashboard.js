@@ -95,6 +95,13 @@ function getDashboardData() {
                 $(".renews-time-voice-flex").removeClass("d-none")
                 $(".renews-time-text-flex").addClass("d-none")
             } else {
+
+                if(responseData.simPrepaid && responseData.prepaidDataOver){
+                    $(".renews-in-text").css("color", "red")
+                    $("#left-data-single-id").addClass("d-none")
+                    $(".additional-data-class").removeClass("d-none").text(responseData.additionalDataAmount)
+                }
+
                 $(".roaming-toggle-type-text").text("Activate Roaming")
                 $(".roaming-type-toggle").text("on")
                 $(".roaming-status-text").text("deactivate")
@@ -276,7 +283,8 @@ function getPlanData() {
 
 $(".close-toggle-modal").click(function () {
     $('#toggle-service').modal('hide');
-
+    $("#payment-confirmation-service").modal('hide')
+    $(".payment-confirm-input").val("")
 })
 
 $(".close-roaming-toggle-modal").click(function () {
@@ -329,7 +337,7 @@ function validateWalletAmount() {
 }
 
 
-function getPaymentDetails() {
+function getPaymentDetails(booleanVal = true) {
     $.ajax({
         url: CONTEXT_PATH + '/client/postpaid-billing-details',
         type: 'GET',
@@ -364,7 +372,7 @@ function getPaymentDetails() {
             $("#recharge-payable-amount").text(plan.payableAmount)
             $("#recharge-total-amount").text(plan.totalAmount)
             $(".final-pay-amount-btn").text(plan.payableAmount)
-
+            $("#post-recharge-sim-toggle").val(booleanVal)
         },
         error: function (xhr, status, error) {
             debugger
@@ -582,13 +590,14 @@ function payPostPaidBill() {
     var cuponCode = $(".cupon-code-recharge-tab").val()
     var enteredWalletAmount = $(".recahrge-wallet-amount-input").val()
     enteredWalletAmount = Number(enteredWalletAmount).toFixed(2)
+    var toggleService = $("#post-recharge-sim-toggle").val()
     var payload = {}
 
     payload["clientId"] = localStorage.getItem("clientId")
     payload["planId"] = planId
     payload["cuponCode"] = cuponCode
     payload["enteredWalletAmount"] = enteredWalletAmount
-
+    payload["toggleService"] = toggleService
     var cuponVerification = validateCuponCode()
     var walletVerification = validateWalletAmount()
 
@@ -604,12 +613,20 @@ function payPostPaidBill() {
 
                 $('#recharge-plan').modal('hide');
                 $(".success-message-heading-modal").text("Payment Successful!");
-                $(".success-message-modal").text("Sim Service changed to prepaid.").removeClass("d-none")
+
+                if(toggleService === true){
+                    $(".success-message-modal").text("Sim Service changed to prepaid.").removeClass("d-none")
+                }else{
+                    $(".success-message-modal").text("Postpaid Bill paid successfully!").removeClass("d-none")
+                }
                 $('#statusSuccessModal').modal('show');
                 $(".switch-prepaid-btn").removeClass("d-none")
                 $(".switch-postpaid-btn").addClass("d-none")
                 getDashboardData()
-                window.open(xhr.filePath, '_blank');
+                alert("opening invoice")
+                var path = xhr.filePath.replace(/\\/g, '/')
+                alert(path)
+                window.open(path, '_blank');
             },
             error: function (xhr, status, error) {
                 debugger
@@ -660,7 +677,6 @@ function changeRoamingStatus() {
                 }
                 getDashboardData()
                 showAlert(true, xhr.message, "success")
-                console.log("heyy")
             },
             error: function (xhr, status, error) {
                 debugger
@@ -792,7 +808,7 @@ function checkPostPaidBillDue() {
                 if (xhr['expirationStatus'] === "false") {
                     $("#payment-confirmation-service").modal('show')
                 } else {
-                    getPaymentDetails()
+                    getPaymentDetails(false)
                     $("#recharge-plan").modal('show');
                 }
             }
@@ -825,7 +841,7 @@ function showRechargeModal() {
     if (paymentConfirm === "CONFIRM") {
         $("#payment-confirmation-service").modal('hide')
         $(".confirm-error-text").addClass("d-none")
-        getPaymentDetails()
+        getPaymentDetails(false)
         $("#recharge-plan").modal('show');
     } else {
         $(".confirm-error-text").removeClass("d-none")

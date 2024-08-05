@@ -111,9 +111,13 @@
                         </div>
                         <div class="data-usage-left-progress-flex">
                             <div class="left-data-add-flex">
-                                <div class="left-data">
+                                <div class="left-data" id="left-data-single-id">
                                     <span class="data-left" id="data-left-progress-top">1.29 GB</span>
                                     <span class="total-data">left of <span id="total-data-progress-top">1.5 GB</span></span>
+                                </div>
+
+                                <div>
+                                    <span class="additional-data-class d-none"></span>
                                 </div>
 
                             </div>
@@ -711,7 +715,7 @@
                             </div>
                         </div>
 
-
+                        <input type="hidden" name="post-recharge-sim-toggle" id="post-recharge-sim-toggle">
                         <div class="modal-footer recharge-plan-modal-footer">
                             <button type="button" class="pay-now" data-bs-dismiss="modal" onclick="payPostPaidBill()">Pay <span class="final-pay-amount-btn">666.00</span></button>
                         </div>

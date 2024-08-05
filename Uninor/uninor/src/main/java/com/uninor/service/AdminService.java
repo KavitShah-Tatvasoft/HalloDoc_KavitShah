@@ -473,6 +473,11 @@ public class AdminService {
     }
 
     public ResponseEntity<Map<String, String>> saveNewPlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest) {
+
+        if(dtoOb.getPlanCategoryId() != 7 && dtoOb.getValidityPeriod() == 0){
+            throw new DataNotFoundException("Plan validity cannot be 0 days!");
+        }
+
         int adminId = (Integer) httpServletRequest.getSession().getAttribute("adminId");
         Admin admin = this.adminRepository.getAdminById(adminId);
         if (admin == null) {
@@ -507,6 +512,11 @@ public class AdminService {
     }
 
     public ResponseEntity<Map<String, String>> updatePlanDetails(PreUpdatePlanDetailsDto dtoOb, HttpServletRequest httpServletRequest) {
+
+        if(dtoOb.getPlanCategoryId() != 7 && dtoOb.getValidityPeriod() == 0){
+            throw new DataNotFoundException("Plan validity cannot be 0 days!");
+        }
+
         int adminId = (Integer) httpServletRequest.getSession().getAttribute("adminId");
         Admin admin = this.adminRepository.getAdminById(adminId);
         if (admin == null) {

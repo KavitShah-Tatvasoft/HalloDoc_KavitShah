@@ -9,6 +9,7 @@ import com.uninor.model.SimCard;
 import com.uninor.model.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -185,6 +186,18 @@ public class ClientRepository {
 
         s.close();
         return new PageImpl<>(list, pageable, count);
+    }
+
+    public void setDeactivationFlag(int clientId, boolean flag){
+        Session s = this.sessionFactory.openSession();
+        Transaction tx = s.beginTransaction();
+        String queryString = "UPDATE Client ct SET ct.isDeactivationRequestCreated=:flag WHERE ct.clientId=:clientId";
+        Query<?> q = s.createQuery(queryString);
+        q.setParameter("flag", flag);
+        q.setParameter("clientId", clientId);
+        q.executeUpdate();
+        tx.commit();
+        s.close();
     }
 
 }

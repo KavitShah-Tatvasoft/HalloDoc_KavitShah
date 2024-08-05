@@ -61,6 +61,7 @@ public class ErrorsMapper {
         globalMap.put("isAvailable", "Is Available");
         globalMap.put("extraDataAvailable", "Extra Data Available");
         globalMap.put("dailyRefresh", "Daily Refresh");
+        globalMap.put("toggleService", "Toggle Service");
     }
 
 }

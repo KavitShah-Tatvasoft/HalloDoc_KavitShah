@@ -141,7 +141,8 @@ public class RegistrationService {
             newClient.setLastName(signupRequestDto.getLname());
             newClient.setEmail(signupRequestDto.getEmail());
             newClient.setUser(newUser);
-
+            newClient.setValidationAttemptsOver(false);
+            newClient.setDeactivationRequestCreated(false);
             clientRepository.saveClient(newClient);
 
             otpLogs.setEmail(signupRequestDto.getEmail());
@@ -173,6 +174,8 @@ public class RegistrationService {
                     return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
                 }
                 responseMap.put("messages", "Valid OTP!");
+                otpLogs.setExpired(true);
+                this.otpLogsRepository.updateOtpLog(otpLogs);
                 return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);
             } else {
                 responseMap.put("errors", "OTP Expired. Please try again");
@@ -180,7 +183,7 @@ public class RegistrationService {
             }
 
         } catch (IndexOutOfBoundsException ex) {
-            responseMap.put("errors", "OTP is not valid.");
+            responseMap.put("errors", "OTP is not valid!");
             return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
     }
@@ -395,6 +398,11 @@ public class RegistrationService {
             String panCardExtension = uploadDocuments(panCardFile, client.getClientId(), "PANCard");
             String aadharCardExtension = uploadDocuments(aadharCardFile, client.getClientId(), "AadharCard");
 
+            if(client.isValidationAttemptsOver()){
+                this.clientDocumentsRepository.deleteClientDocuments(client.getClientId());
+                client.setValidationAttemptsOver(false);
+            }
+
             ClientDocuments clientDocuments = new ClientDocuments();
             clientDocuments.setClient(client);
             clientDocuments.setAadharCardExtension(aadharCardExtension);
@@ -501,6 +509,8 @@ public class RegistrationService {
                     return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
                 }
                 responseMap.put("messages", "Valid OTP!");
+                otpLogs.setExpired(true);
+                this.otpLogsRepository.updateOtpLog(otpLogs);
                 Client client = this.clientRepository.getClientBYNumber(loginDto.getNumber());
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("loggedInMobile", loginDto.getNumber());
@@ -539,6 +549,8 @@ public class RegistrationService {
                 return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.NOT_FOUND);
             }
             responseMap.put("messages", "Valid OTP!");
+            otpLogs.setExpired(true);
+            this.otpLogsRepository.updateOtpLog(otpLogs);
             Admin admin = this.adminRepository.getAdminByEmail(loginDto.getEmail().toLowerCase());
             HttpSession session = httpServletRequest.getSession();
             System.out.println("AdminId :" + admin.getAdminId());
