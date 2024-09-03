@@ -14,7 +14,6 @@ public class NullOrFileFormatValidator implements ConstraintValidator<NullOrVali
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
 
         if(file == null || file.isEmpty()){
-            System.out.println("File is null");
             return true;
         }
 

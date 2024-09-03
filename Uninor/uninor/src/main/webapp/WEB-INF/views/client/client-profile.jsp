@@ -36,25 +36,31 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/toaster-1.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/loader.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/success-faliure-modal.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/notification-tab.css' />">
+
 
     <!-- Style -->
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/client-profile.css' />">
 </head>
-<body class="show-sidebar body" onload="getProfileData()">
+<body class="show-sidebar body" onload="getProfileData(),getNotificationDetails()">
 <%@include file="navbar.jsp" %>
 <div class="outermost-contianer ">
     <%@include file="sidebar.jsp" %>
     <div class="custom-background"></div>
     <main>
+        <%@include file="notification-tab.jsp" %>
         <div class="container-fluid  main-container">  <!-- Change inside content and class-->
              <form id="profile-form" method="post">
                 <div class="row">
                     <div class="col-12">
                         <div class="image-div">
-                            <label for="profile-image">
+                            <div  class="change-image-container">
                                 <img src="<c:url value='/resources/images/profile-pic.jpg' />" id="visible-profile-image">
-                            </label>
+                                <label for="profile-image" class="change-image-div">
+                                    <img src="<c:url value='/resources/icons/camera.svg' />" class="camera-img-class">
+                                </label>
+                            </div>
 
                             <input type="file" id="profile-image" onchange="validateImageUpload(this)" name="profile-pic" class="d-none">
                         </div>
@@ -177,7 +183,7 @@
                     <div class="col-12 mt-4">
                         <div class="submit-cancel-flex">
                             <button type="submit" class="submit-btn-register">Update Profile</button>
-                            <button type="button" onclick="getProfileData()" class="cancel-btn-register">Cancel</button>
+                            <button type="button" onclick="getProfileData()" class="cancel-btn-register">Reset</button>
                         </div>
                     </div>
 
@@ -275,6 +281,14 @@
 <script
         src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script src="<c:url value='/resources/js/client-profile.js' />"></script>
+<%--//web socket------%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="<c:url value='/resources/js/notification-tab.js' />"></script>
 </body>
 </html>
 

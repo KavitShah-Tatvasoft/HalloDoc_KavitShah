@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
+
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -37,18 +38,18 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/loader.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/redeem-rewards.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/success-faliure-modal.css' />">
-
+    <link rel="stylesheet" href="<c:url value='/resources/css/notification-tab.css' />">
     <!-- Style -->
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
 </head>
-<body class="show-sidebar body" onload="getClientCupons()">
+<body class="show-sidebar body" onload="getClientCupons(),getNotificationDetails()">
 <%@include file="navbar.jsp"%>
 
 <div class="outermost-contianer ">
     <%@include file="sidebar.jsp"%>
     <div class="custom-background"></div>
     <main>
-
+        <%@include file="notification-tab.jsp" %>
         <div class="container-fluid coupon-container no-coupon-container ">  <!-- Change inside content and class-->
             <div class="no-coupons-text-flex d-none">
                 <img src="<c:url value='/resources/images/no-cupons-removebg-preview.png' />" class="no-cupon-image">
@@ -174,5 +175,13 @@
 <script
         src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
+<%--//web socket------%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="<c:url value='/resources/js/notification-tab.js' />"></script>
 </body>
 </html>

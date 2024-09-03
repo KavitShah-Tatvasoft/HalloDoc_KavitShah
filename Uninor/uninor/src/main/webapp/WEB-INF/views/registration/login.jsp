@@ -83,7 +83,7 @@
 
                         <button data-value="2" class="uninor-blue-btn w-100 submit-sign-up-btn d-none">LOGIN</button>
                     </form>
-                    <span class="login-here-span">New User?&nbsp;<a class="span-underline">Sign Up!</a></span>
+                    <span class="login-here-span">New User?&nbsp;<a href="${pageContext.request.contextPath}/sign-up" class="span-underline">Sign Up!</a></span>
                 </div>
             </div>
         </div>

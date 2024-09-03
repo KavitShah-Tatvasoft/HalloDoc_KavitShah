@@ -6,6 +6,26 @@
     --text-color: #00005c;
 }
 
+.change-image-div{
+    display: flex;
+    justify-content: center;
+    background: #3705eb;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    position: absolute;
+    top: 110px;
+    right: 7px;
+}
+
+.change-image-container{
+    position: relative;
+}
+
+.camera-img-class{
+    height: 30px!important;
+    width: 26px!important;
+}
 .image-div{
     display: flex;
     justify-content: center;

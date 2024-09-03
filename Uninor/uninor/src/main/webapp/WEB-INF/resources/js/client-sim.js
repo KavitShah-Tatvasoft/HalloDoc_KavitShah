@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    $(".active-common-class").removeClass("active-link-sidebar")
+    $(".active-sim").addClass("active-link-sidebar")
+});
 function getSimDetails(){
 
     $.ajax({

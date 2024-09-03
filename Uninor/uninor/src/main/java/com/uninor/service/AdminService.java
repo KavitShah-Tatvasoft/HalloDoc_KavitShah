@@ -276,7 +276,7 @@ public class AdminService {
             cupon.setRewardAmount(updateCouponDetailsDto.getRewardPercentage() + " %");
             cupon.setMaxRewardAmount(updateCouponDetailsDto.getMaxReward());
         }
-        cupon.setAvailable(updateCouponDetailsDto.isAvailable());
+        cupon.setAvailable(updateCouponDetailsDto.isCouponAvailability());
         this.cuponRepository.updateCouponDetails(cupon);
         responseMap.put("message", "Coupon Updated Successfully");
         return new ResponseEntity<>(responseMap, new HttpHeaders(), HttpStatus.OK);

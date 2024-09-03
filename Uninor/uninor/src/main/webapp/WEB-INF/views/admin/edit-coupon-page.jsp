@@ -272,9 +272,9 @@
                         </div>
                     </div>
                     <div class="modal-footer coupon-footer">
-                        <button type="button" class="common-btn-coupon-modal coupon-class coupon-available-btn"
-                                onclick="toggleStatus('coupon',this)">Coupon Available
-                        </button>
+<%--                        <button type="button" class="common-btn-coupon-modal coupon-class coupon-available-btn"--%>
+<%--                                onclick="toggleStatus('coupon',this)">Coupon Available--%>
+<%--                        </button>--%>
                         <button type="submit" class="btn btn-primary theme-background update-create-btn">Create
                         </button>
                         <button type="reset" class="btn btn-primary theme-background">Reset</button>
@@ -343,6 +343,18 @@
                                 </div>
                             </div>
 
+                            <div class="col-12 extra-mb-bottom">
+                                <div class="search-box">
+                                    <div class="form-group">
+                                        <select name="couponAvailability" id="couponAvailability">
+                                            <option value="1" >Coupon Available</option>
+                                            <option value="2" >Coupon Unavailable</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <input type="hidden" name="hidden-update-coupon-id" id="hidden-update-coupon-id">
                             <input type="hidden" name="hidden-coupon-type-id" id="hidden-coupon-type-id">
                             <div class="col-12">
@@ -357,9 +369,9 @@
                         </div>
                     </div>
                     <div class="modal-footer update-coupon-footer">
-                        <button type="button" class="common-btn-coupon-modal coupon-class coupon-available-btn"
-                                onclick="toggleStatus('coupon',this)">Coupon Available
-                        </button>
+<%--                        <button type="button" class="common-btn-coupon-modal coupon-class coupon-available-btn"--%>
+<%--                                onclick="toggleStatus('coupon',this)">Coupon Available--%>
+<%--                        </button>--%>
                         <button type="submit" class="btn btn-primary theme-background update-create-btn">Update
                         </button>
                         <button type="button" class="btn btn-primary reset-button-update theme-background">Reset</button>

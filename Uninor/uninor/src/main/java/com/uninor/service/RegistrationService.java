@@ -66,12 +66,15 @@ public class RegistrationService {
     @Autowired
     private ClientRequestRepository clientRequestRepository;
 
+    @Autowired
+    private DailyUsageRepository dailyUsageRepository;
+
 
     public ResponseEntity<Map<String, String>> generateOtp(SignupRequestDto signupRequestDto) throws UnsupportedEncodingException {
 
-        signupRequestDto.setEmail(signupRequestDto.getEmail().toLowerCase());
-        signupRequestDto.setFname(Helper.capitalize(signupRequestDto.getFname()));
-        signupRequestDto.setLname(Helper.capitalize(signupRequestDto.getLname()));
+        signupRequestDto.setEmail(signupRequestDto.getEmail());
+        signupRequestDto.setFname(signupRequestDto.getFname());
+        signupRequestDto.setLname(signupRequestDto.getLname());
         Users user = null;
         List<Users> usersList = null;
         if (!userRepository.getUserByEmail(signupRequestDto.getEmail()).isEmpty()) {
@@ -511,7 +514,12 @@ public class RegistrationService {
                 responseMap.put("messages", "Valid OTP!");
                 otpLogs.setExpired(true);
                 this.otpLogsRepository.updateOtpLog(otpLogs);
+
+                Random random = new Random();
+                int randomUsage = 10 + random.nextInt(91);
+
                 Client client = this.clientRepository.getClientBYNumber(loginDto.getNumber());
+                this.dailyUsageRepository.insertOrUpdateDailyUsage(randomUsage,client);
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("loggedInMobile", loginDto.getNumber());
                 session.setAttribute("clientId", client.getClientId());

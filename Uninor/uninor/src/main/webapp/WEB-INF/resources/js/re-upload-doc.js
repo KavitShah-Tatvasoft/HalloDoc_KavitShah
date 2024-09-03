@@ -1,3 +1,10 @@
+function setMinimumBdate(){
+    const today = new Date();
+    const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const formattedMinDate = minDate.toISOString().split('T')[0];
+    document.getElementById('dob').setAttribute('max', formattedMinDate);
+}
+
 const fileInput_1 = document.getElementById('panCardUploadedFile');
 const fileNameField_1 = document.getElementById('pan-card-name-id');
 
@@ -176,22 +183,6 @@ function submitFormData(){
     var panCardUploadedFile = $("#panCardUploadedFile")
     var aadharCardUploadedFile = $("#aadharCardUploadedFile")
 
-    // var formData = new FormData();
-    //
-    // formData.append("token", token)
-    // formData.append("dob",dob)
-    // formData.append("panNumber",panNumber)
-    // formData.append("aadharCardNumber",aadharCardNumber)
-    // formData.append("panCardUploadedFile",panCardUploadedFile[0].files[0])
-    // formData.append("aadharCardUploadedFile",aadharCardUploadedFile[0].files[0])
-
-    // var formData= new FormData();
-    // formData.append("hello",3)
-    // formData.append("hellofg",2)
-    // alert(CONTEXT_PATH)
-    //     // showLoader()
-    // console.log(formData)
-
     let formData1 = new FormData();
     formData1.append("token", token)
     formData1.append("dob",dob)
@@ -200,14 +191,12 @@ function submitFormData(){
     if(panCardUploadedFile[0].files[0] != null){
         formData1.append("panCardUploadedFile",panCardUploadedFile[0].files[0])
     }else {
-        alert("null")
         formData1.append("panCardUploadedFile",'')
     }
 
     if(aadharCardUploadedFile[0].files[0] != null){
         formData1.append("aadharCardUploadedFile",aadharCardUploadedFile[0].files[0])
     }else {
-        alert("null")
         formData1.append("aadharCardUploadedFile",'')
     }
 

@@ -40,13 +40,15 @@
     <!-- Style -->
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/client-sim.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/notification-tab.css' />">
 </head>
-<body class="show-sidebar body" onload="getSimDetails()">
+<body class="show-sidebar body" onload="getSimDetails(),getNotificationDetails()">
 <%@include file="navbar.jsp" %>
 <div class="outermost-contianer ">
     <%@include file="sidebar.jsp" %>
     <div class="custom-background"></div>
     <main>
+        <%@include file="notification-tab.jsp" %>
         <div class="container-fluid  main-container">  <!-- Change inside content and class-->
             <div class="row">
                 <div class="col-12  mb-2">
@@ -166,7 +168,7 @@
                         <input type="text" class="deactivate-confirm-input" placeholder="Enter Confirm to continue"/>
                         <span class="confirm-error-text d-none">Please enter confirm properly to deactivate sim!</span>
                         <div class="button-div">
-                            <button id="deactivateSwitchButton" class="mt-4" onclick="deactivateSim()">Unblock Sim</button>
+                            <button id="deactivateSwitchButton" class="mt-4" onclick="deactivateSim()">Deactivate Sim</button>
                         </div>
                     </div>
                 </div>
@@ -263,6 +265,14 @@
 <script
         src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script src="<c:url value='/resources/js/client-sim.js' />"></script>
+<%--//web socket------%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="<c:url value='/resources/js/notification-tab.js' />"></script>
 </body>
 </html>
 

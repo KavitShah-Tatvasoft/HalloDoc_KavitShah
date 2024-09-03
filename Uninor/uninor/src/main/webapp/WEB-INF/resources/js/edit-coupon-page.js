@@ -128,6 +128,7 @@ function getAllCouponData(booleanValue){
 
                 if(item.couponAvailable === true){
                    cuoponClone.find(".coupon-availability").text("Available").removeClass("unavailable-text")
+
                 }else {
                     cuoponClone.find(".coupon-availability").text("Unavailable").addClass("unavailable-text")
                 }
@@ -195,12 +196,16 @@ function updateCoupon(couponId){
             $("#validityPeriodUpdate").val(response.couponValidity)
             $("#couponDescriptionUpdate").val(response.couponDescription)
 
+            alert(response.couponAvailable)
             if(response.couponAvailable === true){
-                checkBoxStatus['coupon'] = true
-                $(".coupon-available-btn").addClass("green-btn-coupon-modal").removeClass("red-btn-coupon-modal").removeClass("d-none")
+
+                $("#couponAvailability").val(1)
+                // checkBoxStatus['coupon'] = true
+                // $(".coupon-available-btn").addClass("green-btn-coupon-modal").removeClass("red-btn-coupon-modal").removeClass("d-none")
             }else {
-                checkBoxStatus['coupon'] = false
-                $(".coupon-available-btn").addClass("red-btn-coupon-modal").removeClass("green-btn-coupon-modal").removeClass("d-none")
+                $("#couponAvailability").val(2)
+                // checkBoxStatus['coupon'] = false
+                // $(".coupon-available-btn").addClass("red-btn-coupon-modal").removeClass("green-btn-coupon-modal").removeClass("d-none")
             }
             $("#hidden-update-coupon-id").val(response.couponId)
             $("#hidden-coupon-type-id").val(parseInt(response.couponCategory,10))
@@ -435,6 +440,7 @@ $("#create-update-form").validate({
 });
 
 function updateCouponForm(){
+    debugger
     var couponId = $("#hidden-update-coupon-id").val()
     var couponType = $("#hidden-coupon-type-id").val()
     var couponName = $("#couponNameUpdate").val()
@@ -443,11 +449,15 @@ function updateCouponForm(){
     var validity = $("#validityPeriodUpdate").val()
     var maxReward = $("#maximumRewardUpdate").val()
     var couponDescription = $("#couponDescriptionUpdate").val()
-    var isAvailable = checkBoxStatus['coupon']
+    var isAvailable = $("#couponAvailability").val()
 
     var payload = {}
     payload['couponCategory'] = couponType
-    payload['isAvailable'] = isAvailable
+   if(isAvailable === "1"){
+       payload['couponAvailability'] = true
+   }else {
+       payload['couponAvailability'] = false
+   }
     payload['couponName'] = couponName
     payload['couponId'] = parseInt(couponId,10)
     if(parseInt(couponType,10) === 3){
@@ -472,6 +482,7 @@ function updateCouponForm(){
             console.log(xhr)
             $('#update-coupon-form')[0].reset()
             $(".update-coupon-close-button").click()
+            getAllCouponData(true)
             showAlert(true,xhr['message'],"success")
         },
         error: function(xhr, status, error) {
@@ -530,6 +541,7 @@ function submitCreateUpdateForm(){
             console.log(xhr)
             $('#create-update-form')[0].reset()
             $(".coupon-close-button").click()
+            getAllCouponData(true)
             showAlert(true,xhr['message'],"success")
         },
         error: function(xhr, status, error) {

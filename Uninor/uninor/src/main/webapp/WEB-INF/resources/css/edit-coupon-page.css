@@ -1,3 +1,11 @@
+#couponAvailability{
+    height: 93%;
+}
+
+.extra-mb-bottom{
+    margin-bottom: 12px;
+}
+
 .error-class{
     color: #f31b1b;
 }

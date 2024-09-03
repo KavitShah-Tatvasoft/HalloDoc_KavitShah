@@ -197,18 +197,18 @@
                         <div class="row">
                             <div class="col-12 col-md-6 features-col-1">
                                 <div class="features-icon-flex features-icon-flex-1">
-                                    <div type="button" onclick="alert('Hello')" class="icon-name-flex">
+                                    <a type="button" href="${pageContext.request.contextPath}/client/sim-details" class="icon-name-flex">
                                         <div class="single-icon">
-                                            <img src="<c:url value='/resources/icons/friend.svg'/> "
+                                            <img src="<c:url value='/resources/icons/sim.svg'/> "
                                                  class="person-filled-icon">
                                         </div>
                                         <div class="text-flex-features">
                                             <span>
-                                                Recharge for
+                                                SIM
                                             </span>
-                                            <span>a friend</span>
+                                            <span>Details</span>
                                         </div>
-                                    </div>
+                                    </a>
 
                                         <a class="icon-name-flex" href="${pageContext.request.contextPath}/client/redeem-rewards">
                                             <div class="single-icon">

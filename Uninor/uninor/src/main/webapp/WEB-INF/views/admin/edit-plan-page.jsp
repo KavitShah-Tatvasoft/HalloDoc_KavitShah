@@ -930,7 +930,7 @@
                                 <div class="search-box">
                                     <div class="form-group">
                                         <input type="text" placeholder=" " name="voiceAllowance" id="voiceAllowance">
-                                        <label for="validity">Voice Allowance (Minutes)</label>
+                                        <label for="voiceAllowance">Voice Allowance (Minutes)</label>
                                     </div>
                                 </div>
                             </div>

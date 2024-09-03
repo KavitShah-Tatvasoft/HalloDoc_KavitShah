@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    $(".active-common-class").removeClass("active-link-sidebar")
+    $(".active-history").addClass("active-link-sidebar")
+});
 const paginationContainer = document.querySelector('.pagination');
 const pageList = document.getElementById('pageList');
 const previousBtn = document.getElementById('previous');

@@ -1,3 +1,9 @@
+$(document).ready(function(){
+    $(".active-common-class").removeClass("active-link-sidebar")
+    $(".active-profile").addClass("active-link-sidebar")
+});
+
+
 function validateImageUpload(input) {
     const file = input.files[0];
     const allowedExtensions = ['jpg', 'jpeg', 'png'];

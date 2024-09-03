@@ -28,7 +28,7 @@
     <link rel="icon" href="<c:url value="/resources/images/white-logo.png" />" type="image/icon type">
 
 </head>
-<body onload="getReuploadFields()">
+<body onload="getReuploadFields(),setMinimumBdate()">
 <nav id="common-nav-1" class="d-flex justify-content-start align-items-center container-fluid">
     <div class="d-flex justify-content-between align-items-center" style="color: white; font-size: 24px;">
         <div class="logo-text-flex"><img src="/uninor/resources/images/white-logo-removebg-preview.png" class="nav-logo"> <span>Uninor</span></div>

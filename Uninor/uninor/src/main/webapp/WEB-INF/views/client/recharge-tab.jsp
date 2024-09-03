@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/navbar.css' />">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="<c:url value='/resources/css/notification-tab.css' />">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/recharge-tab.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/toaster-1.css' />">
 </head>
-<body class="show-sidebar body" onload="applyFilter(false)">
+<body class="show-sidebar body" onload="applyFilter(false),getNotificationDetails()">
 <%@include file="navbar.jsp" %>
 
 
@@ -56,7 +56,7 @@
     <%@include file="sidebar.jsp" %>
     <div class="custom-background"></div>
     <main>
-
+        <%@include file="notification-tab.jsp" %>
 
         <div class="slide-container swiper">
             <div class="slide-content">
@@ -960,6 +960,14 @@
 <script
         src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
+<%--//web socket------%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="<c:url value='/resources/js/notification-tab.js' />"></script>
 </body>
 </html>
 

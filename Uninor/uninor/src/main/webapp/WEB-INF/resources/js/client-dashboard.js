@@ -1,3 +1,5 @@
+$(".active-common-class").removeClass("active-link-sidebar")
+$(".active-dashboard").addClass("active-link-sidebar")
 function showLoginLoader() {
     var showToaster = localStorage.getItem("showLoginToaster")
     if (showToaster === "true") {

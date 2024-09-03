@@ -1,3 +1,9 @@
+function setMinimumBdate(){
+    const today = new Date();
+    const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const formattedMinDate = minDate.toISOString().split('T')[0];
+    document.getElementById('dob').setAttribute('max', formattedMinDate);
+}
 function getClientData(){
     debugger
     var clientId = localStorage.getItem("clientId")

@@ -1,3 +1,8 @@
+$(document).ready(function(){
+    $(".active-common-class").removeClass("active-link-sidebar")
+    $(".active-rewards").addClass("active-link-sidebar")
+});
+
 function getClientCupons(){
 
     $.ajax({

@@ -5,7 +5,6 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        alert('Connected: ' + frame);
         stompClient.subscribe('/topic/notifications', function (notification) {
             handleNotification(notification.body);
         });

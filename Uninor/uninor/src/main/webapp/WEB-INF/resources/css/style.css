@@ -1,7 +1,9 @@
 /* body {
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   background-color: #fcfcfc; } */
-
+.extra-size-icon{
+    height: 25px!important;
+}
 .sidebar-list a img {
     height: 19px;
 }
@@ -16,7 +18,6 @@ aside .side-inner .nav-menu ul li a:hover img, .active-link-sidebar img{
 
 .sidebar-list a span {
     margin-top: 3px;
-    font-size: 17px;
 }
 
 .sidebar-single-flex{

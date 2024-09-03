@@ -40,4 +40,6 @@ public class UpdatedCouponsDetails {
 
     private boolean isAvailable;
 
+    private boolean couponAvailability;
+
 }

@@ -5,13 +5,6 @@
   Time: 09:53
   To change this template use File | Settings | File Templates.
 --%>
-<%--
-  Created by IntelliJ IDEA.
-  User: pca25
-  Date: 30-05-2024
-  Time: 09:53
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -35,7 +28,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/loader.css' />">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body onload="getClientData()">
+<body onload="getClientData(),setMinimumBdate()">
 <div class="loader-container">
     <div class="loader"></div>
 </div>

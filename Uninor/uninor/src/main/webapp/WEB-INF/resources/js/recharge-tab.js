@@ -652,6 +652,9 @@ $(document).ready(function(){
     $(".close-confirm-postpaid-recharge-modal").click(function(){
         $('#confirm-postpaid-recharge').modal('hide');
     })
+
+    $(".active-common-class").removeClass("active-link-sidebar")
+    $(".active-recharge").addClass("active-link-sidebar")
 });
 
 

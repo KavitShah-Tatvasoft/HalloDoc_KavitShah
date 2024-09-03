@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,7 +50,8 @@
         </div>
         <h2>Page Not Found</h2>
         <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
-        <a href="#">Homepage</a>
+        <a href="${pageContext.request.contextPath}/login">User login</a>&nbsp;
+        <a href="${pageContext.request.contextPath}/admin-login">Admin login</a>
     </div>
 </div>
 

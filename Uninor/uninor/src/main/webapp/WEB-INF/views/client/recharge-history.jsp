@@ -40,13 +40,15 @@
     <!-- Style -->
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
     <link rel="stylesheet" href="<c:url value='/resources/css/recharge-history.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/notification-tab.css' />">
 </head>
-<body class="show-sidebar body" onload="getRechargeData()">
+<body class="show-sidebar body" onload="getRechargeData(),getNotificationDetails()">
 <%@include file="navbar.jsp" %>
 <div class="outermost-contianer ">
     <%@include file="sidebar.jsp" %>
     <div class="custom-background"></div>
     <main>
+        <%@include file="notification-tab.jsp" %>
         <div class="container-fluid invoice-container no-invoice-container ">  <!-- Change inside content and class-->
             <div class="no-invoice-flex d-none">
 <%--                <img src="<c:url value='/resources/images/no-invoice-found.jpg' />" class="no-invoice-image">--%>
@@ -209,6 +211,13 @@
 <script
         src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
-
+<%--//web socket------%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="<c:url value='/resources/js/notification-tab.js' />"></script>
 </body>
 </html>

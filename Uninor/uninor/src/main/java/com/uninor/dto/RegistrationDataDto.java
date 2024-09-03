@@ -1,5 +1,6 @@
 package com.uninor.dto;
 
+import com.uninor.customValidator.AtLeast18YearsOld;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,7 @@ public class RegistrationDataDto {
     @Email(message = "Enter a valid email")
     private String email;
 
+    @AtLeast18YearsOld
     @NotBlank(message = "DOB cannot be null")
     private String dob;
 
