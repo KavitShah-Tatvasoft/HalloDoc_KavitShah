@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="download-invoice-flex">
-                                <div class="download-invoice-btn download-prepaid-invoice">Download Invoice</div>
+                                <div class="download-invoice-btn download-prepaid-invoice">View Invoice</div>
                             </div>
                         </div>
                     </div>

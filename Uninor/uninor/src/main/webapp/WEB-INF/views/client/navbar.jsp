@@ -12,9 +12,9 @@
         <div class="navbar-inner-container">
             <div class="menu-logo-flex">
                 <img src="<c:url value='/resources/icons/menu-animate.svg' />" class="menu-icon menu-logo-left  d-none" />
-                <div class="logo-name-flex"><img
+                <a href="${pageContext.request.contextPath}/client/dashboard"><div class="logo-name-flex"><img
                         src="<c:url value='/resources/images/white-logo-removebg-preview.png' />" class="nav-logo"/>
-                    <span class="nav-company-name">Uninor</span></div>
+                    <span class="nav-company-name">Uninor</span></div></a>
             </div>
 
             <div class="bell-profile-logout-flex">

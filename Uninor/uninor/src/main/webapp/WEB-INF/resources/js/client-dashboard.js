@@ -16,12 +16,13 @@ let barChartOb
 let polarChartOb
 
 function getDashboardData() {
-    // showLoader()
+    showLoader()
     $.ajax({
         url: CONTEXT_PATH + '/client/get-dashboard-data',
         type: 'GET',
         dataType: 'json',
         success: function (xhr, status, error) {
+            hideLoader()
             var responseData = xhr.DashboardDetails
             console.log(responseData)
             if (responseData.simBlocked) {
@@ -210,7 +211,7 @@ function getDashboardData() {
 
         },
         error: function (xhr, status, error) {
-            // hideLoader()
+            hideLoader()
             debugger
             if (xhr.status === 400 || xhr.status === 404 || xhr.status === 401) {
                 let errorResponse;
@@ -237,10 +238,12 @@ function getDashboardData() {
 // });
 
 function getPlanData() {
+    showLoader()
     $.ajax({
         url: CONTEXT_PATH + '/client/get-active-plan-details',
         type: 'GET',
         success: function (data) {
+            hideLoader()
             var plan = data["Plan"]
             $(".recharge-modal-amount").text(plan.planAmount)
             $(".recharge-modal-validity").text(plan.planValidity)
@@ -262,7 +265,7 @@ function getPlanData() {
             myModal.show()
         },
         error: function (xhr, status, error) {
-            debugger
+            hideLoader()
             if (xhr.status === 400 || xhr.status === 401 || xhr.status === 404 || xhr.status === 405) {
                 let errorResponse;
                 try {
@@ -340,10 +343,12 @@ function validateWalletAmount() {
 
 
 function getPaymentDetails(booleanVal = true) {
+    showLoader()
     $.ajax({
         url: CONTEXT_PATH + '/client/postpaid-billing-details',
         type: 'GET',
         success: function (xhr, status, error) {
+            hideLoader()
             console.log(xhr)
             var plan = xhr.Plan
             localStorage.setItem("planId", plan.planId)
@@ -377,7 +382,7 @@ function getPaymentDetails(booleanVal = true) {
             $("#post-recharge-sim-toggle").val(booleanVal)
         },
         error: function (xhr, status, error) {
-            debugger
+            hideLoader()
             if (xhr.status === 400 || xhr.status === 401 || xhr.status === 405 || xhr.status === 409) {
                 let errorResponse;
                 try {
@@ -402,12 +407,13 @@ function toggleServiceType() {
     var confirmText = $(".confirm-input").val().toUpperCase()
     if (confirmText === "CONFIRM") {
         $(".confirm-error-text").addClass("d-none")
+        showLoader()
         $.ajax({
             url: CONTEXT_PATH + '/client/toggle-sim-type',
             type: 'GET',
             success: function (xhr, status, error) {
+                hideLoader()
                 $("#toggle-service").modal('hide');
-                console.log(xhr)
                 $(".success-message-modal").addClass("d-none")
                 if (xhr.serviceType === "prepaid" && xhr.payment === "true") {
                     localStorage.setItem("showErrorOnClose", "true")
@@ -435,7 +441,7 @@ function toggleServiceType() {
                 }
             },
             error: function (xhr, status, error) {
-                debugger
+                hideLoader()
                 $('#toggle-service').modal('hide');
                 if (xhr.status === 400 || xhr.status === 401 || xhr.status === 405 || xhr.status === 409) {
                     let errorResponse;
@@ -497,13 +503,14 @@ function verifyPostpaidCuponWalletChanges() {
     var walletVerification = validateWalletAmount()
 
     if (walletVerification && cuponVerification) {
+        showLoader()
         $.ajax({
             url: CONTEXT_PATH + '/client/verify-postpaid-payment-details',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify(payload),
             success: function (xhr, status, success) {
-                console.log(xhr)
+                hideLoader()
                 var plan = xhr.updatedDetails
                 localStorage.setItem("planId", plan.planId)
                 $(".recharge-modal-amount").text(plan.planAmount)
@@ -562,7 +569,7 @@ function verifyPostpaidCuponWalletChanges() {
 
             },
             error: function (xhr, status, error) {
-                debugger
+                hideLoader()
                 // $(".recharge-modal-close").click()
                 if (xhr.status === 400) {
                     let errorResponse;
@@ -602,7 +609,7 @@ function payPostPaidBill() {
     payload["toggleService"] = toggleService
     var cuponVerification = validateCuponCode()
     var walletVerification = validateWalletAmount()
-
+    showLoader()
     if (walletVerification && cuponVerification) {
         $.ajax({
             url: CONTEXT_PATH + '/client/pay-postpaid-bill',
@@ -610,7 +617,7 @@ function payPostPaidBill() {
             contentType: "application/json",
             data: JSON.stringify(payload),
             success: function (xhr, status, success) {
-                console.log(xhr)
+                hideLoader()
                 localStorage.setItem("showErrorOnClose", "false")
 
                 $('#recharge-plan').modal('hide');
@@ -631,7 +638,7 @@ function payPostPaidBill() {
                 window.open(path, '_blank');
             },
             error: function (xhr, status, error) {
-                debugger
+                hideLoader()
                 // $(".recharge-modal-close").click()
 
                 let errorResponse;
@@ -659,10 +666,12 @@ function changeRoamingStatus() {
     var confirmText = $(".roaming-confirm-input").val().toUpperCase()
     if (confirmText === "CONFIRM") {
         $(".confirm-error-text").addClass("d-none")
+        showLoader()
         $.ajax({
             url: CONTEXT_PATH + '/client/toggle-roaming-status',
             type: 'GET',
             success: function (xhr, status, error) {
+                hideLoader()
                 $("#toggle-roaming-service").modal('hide');
                 $(".change-roaming-btn-status").text(xhr.toggleTo)
                 $(".roaming-confirm-input").text("").val("")
@@ -681,7 +690,7 @@ function changeRoamingStatus() {
                 showAlert(true, xhr.message, "success")
             },
             error: function (xhr, status, error) {
-                debugger
+                hideLoader()
                 $('#toggle-roaming-service').modal('hide');
                 $(".roaming-confirm-input").text("").val("")
                 $(".confirm-error-text").addClass("d-none")
@@ -714,18 +723,18 @@ function createBlockRequest() {
         $(".confirm-error-text").addClass("d-none")
         $(".unblock-confirm-input").text("").val("")
         $(".block-confirm-input").text("").val("")
-
+        showLoader()
         $.ajax({
             url: CONTEXT_PATH + '/client/create-block-request',
             type: 'GET',
             success: function (xhr, status, error) {
-                console.log(xhr)
+                hideLoader()
                 $('#toggle-block-service').modal('hide')
 
                 showAlert(true, xhr.message, "success")
             },
             error: function (xhr, status, error) {
-                debugger
+                hideLoader()
                 $('#toggle-block-service').modal('hide')
                 if (xhr.status === 400 || xhr.status === 401 || xhr.status === 405 || xhr.status === 409) {
                     let errorResponse;
@@ -759,6 +768,7 @@ function createUnblockRequest() {
     var pukNumber = $(".unblock-confirm-input").val()
 
     if (onlyNumber(pukNumber)) {
+        showLoader()
         $(".confirm-error-text").addClass("d-none")
         $.ajax({
             url: CONTEXT_PATH + '/client/create-unblock-request',
@@ -767,12 +777,13 @@ function createUnblockRequest() {
                 pukCode: pukNumber
             },
             success: function (xhr, status, error) {
-                console.log(xhr)
+                hideLoader()
                 $('#toggle-unblock-service').modal('hide')
+                $(".unblock-confirm-input").text("").val("")
                 showAlert(true, xhr.message, "success")
             },
             error: function (xhr, status, error) {
-                debugger
+                hideLoader()
                 $('#toggle-unblock-service').modal('hide')
                 if (xhr.status === 400 || xhr.status === 401 || xhr.status === 405 || xhr.status === 409) {
                     let errorResponse;
@@ -798,11 +809,12 @@ function createUnblockRequest() {
 }
 
 function checkPostPaidBillDue() {
+    showLoader()
     $.ajax({
         url: CONTEXT_PATH + '/client/check-postpaid-dues',
         type: 'GET',
         success: function (xhr, status, error) {
-            console.log(xhr)
+            hideLoader()
 
             if (xhr['isPlanAvailable'] === "false") {
                 showAlert(true, "No active plan available.", "faliure")
@@ -816,7 +828,7 @@ function checkPostPaidBillDue() {
             }
         },
         error: function (xhr, status, error) {
-            debugger
+            hideLoader()
             $('#toggle-block-service').modal('hide')
             if (xhr.status === 400 || xhr.status === 401 || xhr.status === 405 || xhr.status === 409) {
                 let errorResponse;

@@ -59,7 +59,6 @@ function applyFilter(bool) {
         type: 'POST',
         data: payload,
         success: function (data) {
-            console.log("Helloooo")
             console.log(data)
             $(".popular-plan-count").html("(" + data["Popular Plans"].planCount + ")")
             populateCategoryWisePlans(data)

@@ -217,6 +217,7 @@ button {
     position: absolute;
     top: 2px;
     right: 0px;
+    cursor: pointer;
 }
 
 .add-cupon-text{

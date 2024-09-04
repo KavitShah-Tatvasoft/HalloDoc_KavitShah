@@ -744,6 +744,7 @@ public class ClientService {
                 updateBuyPlanDetailsDto.setCuponName(validCupon.getCuponName());
                 updateBuyPlanDetailsDto.setRewardAmount(validCupon.getRewardAmount());
                 updateBuyPlanDetailsDto.setMaxRewardAmount(validCupon.getMaxRewardAmount());
+                updateBuyPlanDetailsDto.setCuponApplied(true);
             }
         }
 

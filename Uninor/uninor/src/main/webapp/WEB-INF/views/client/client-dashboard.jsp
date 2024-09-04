@@ -41,7 +41,9 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css' />">
 </head>
 <body class="show-sidebar body" onload="getDashboardData(),getNotificationDetails()">
-
+<div class="loader-container">
+    <div class="loader"></div>
+</div>
 <header>
     <%@include file="navbar.jsp" %>
 </header>

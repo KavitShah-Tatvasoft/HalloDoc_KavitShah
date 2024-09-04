@@ -33,7 +33,7 @@ public class AdminPreHandler extends HandlerInterceptorAdapter {
 
             }
             else {
-                throw new DataNotFoundException("Client not found");
+                throw new DataNotFoundException("Admin details not found");
             }
 
             Admin admin = this.adminRepository.getAdminById(adminId);

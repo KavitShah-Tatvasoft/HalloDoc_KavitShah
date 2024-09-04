@@ -81,7 +81,7 @@ $(document).ready(function() {
     $.validator.addMethod("fileFormat", function (value, element) {
         // Check if the file extension is valid
         var fileExtension = value.split('.').pop().toLowerCase();
-        return this.optional(element) || (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'pdf' || fileExtension === 'png');
+        return this.optional(element) || (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'pdf');
     }, "Only .jpg, .jpeg, or .pdf files are allowed.");
 
     $.validator.addMethod("fileSize", function (value, element) {
@@ -174,7 +174,6 @@ $(document).ready(function() {
 });
 
 function submitFormData(){
-    alert("In resubmit method")
     debugger
     var token = $("#token").val()
     var dob = $("#dob").val()

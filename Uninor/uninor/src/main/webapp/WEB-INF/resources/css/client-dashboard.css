@@ -806,6 +806,7 @@ button:focus:not(:focus-visible){
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .text-flex-features{
